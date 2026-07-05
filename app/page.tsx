@@ -63,31 +63,31 @@ export default function LaunchingSoon() {
         </form>
       </main>
 
-      {/* --- INSERT THIS NEW PARTNER MARQUEE SECTION --- */}
+            {/* --- INSERT THIS NEW PARTNER MARQUEE SECTION --- */}
       <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
         <p className="text-[#555555] text-xs font-mono uppercase tracking-widest mb-8">
-          Our Partners
         </p>
         
-        {/* Marquee Wrapper with edge fade-out effect */}
+        {/* Marquee Wrapper */}
         <div className="relative flex overflow-x-hidden w-full max-w-4xl [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
           
           <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
             
-            {/* Logo Set 1 */}
-            <div className="flex gap-24 md:gap-32 pr-24 md:pr-32 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/redstone.PNG" alt="Redstone" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/chainlink.png" alt="Chainlink" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+            {/* Logo Set 1 - Added 'shrink-0' here */}
+            <div className="flex shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center">
+              {/* Added 'shrink-0 w-auto' to all images to force them to hold their shape */}
+              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/redstone.PNG" alt="Redstone" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/chainlink.png" alt="Chainlink" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner4.png" alt="Partner 4" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
 
-            {/* Logo Set 2 (Must be an exact duplicate of Set 1 for the seamless loop to work) */}
-            <div className="flex gap-16 md:gap-24 pr-16 md:pr-24 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/redstone.PNG" alt="Redstone" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/chainlink.png" alt="Chainlink" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+            {/* Logo Set 2 - Added 'shrink-0' here */}
+            <div className="flex shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center">
+              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/redstone.PNG" alt="Redstone" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/chainlink.png" alt="Chainlink" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner4.png" alt="Partner 4" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
 
           </div>
