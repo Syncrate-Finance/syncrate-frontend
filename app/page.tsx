@@ -76,7 +76,7 @@ export default function LaunchingSoon() {
             
             {/* Logo Set 1 */}
             <div className="flex gap-16 md:gap-24 pr-16 md:pr-24 items-center">
-              <Image src="/partner1.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/bawa.jpg" alt="Bawa Rocks LTD" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner2.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner3.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
@@ -84,7 +84,7 @@ export default function LaunchingSoon() {
 
             {/* Logo Set 2 (Must be an exact duplicate of Set 1 for the seamless loop to work) */}
             <div className="flex gap-16 md:gap-24 pr-16 md:pr-24 items-center">
-              <Image src="/partner1.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/bawa.jpg" alt="Bawa Rocks LTD" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner2.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner3.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
