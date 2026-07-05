@@ -7,18 +7,19 @@ const steps = ['/step1.PNG', '/step2.PNG', '/step3.PNG'];
 
 export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
       
-      // Get the position of the container relative to the viewport
-      const rect = (containerRef.current as HTMLElement).getBoundingClientRect();
-      const scrollProgress = -rect.top / 300;
+      const { top, height } = containerRef.current.getBoundingClientRect();
       
-      // Update the active step based on scroll depth
-      const nextStep = Math.max(0, Math.min(steps.length - 1, Math.floor(scrollProgress)));
+      // Calculate progress: how far through the section are we?
+      // We divide by a smaller value (e.g., 500) so it switches faster.
+      const progress = -top / 500; 
+      const nextStep = Math.max(0, Math.min(steps.length - 1, Math.floor(progress)));
+      
       setActiveStep(nextStep);
     };
 
@@ -27,9 +28,13 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section ref={containerRef} className="w-full max-w-xl mx-auto px-6 py-24 h-[300vh]">
-      {/* The single display window */}
-      <div className="sticky top-[20vh] w-full aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-2xl">
+    // We give it a height, but since it's sticky, it won't push the footer away.
+    <section ref={containerRef} className="w-full relative h-[150vh]">
+      {/* 
+         'sticky top-20' keeps the card in one place while the page scrolls.
+         The card will stay visible under your header as shown in image_4.png and image_5.png.
+      */}
+      <div className="sticky top-20 w-[90%] max-w-lg mx-auto aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-2xl">
         {steps.map((src, index) => (
           <div
             key={index}
