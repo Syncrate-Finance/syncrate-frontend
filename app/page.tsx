@@ -66,7 +66,7 @@ export default function LaunchingSoon() {
       {/* --- INSERT THIS NEW PARTNER MARQUEE SECTION --- */}
       <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
         <p className="text-[#555555] text-xs font-mono uppercase tracking-widest mb-8">
-          Backed by industry leaders
+          Our Partners
         </p>
         
         {/* Marquee Wrapper with edge fade-out effect */}
