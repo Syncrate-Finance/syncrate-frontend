@@ -47,7 +47,7 @@ export default function Blog() {
           <Link href="/blog/post-1" className="flex flex-col bg-[#161616] rounded-[32px] p-2 hover:bg-[#1A1A1A] transition-colors group cursor-pointer">
             <div className="overflow-hidden rounded-[24px] w-full aspect-[16/9]">
               <Image 
-                src="/blog1.png" 
+                src="/blog1.PNG" 
                 alt="The technology behind Living Liquid" 
                 width={800} 
                 height={450} 
