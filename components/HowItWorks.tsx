@@ -6,38 +6,36 @@ import Image from 'next/image';
 const steps = ['/step1.PNG', '/step2.PNG', '/step3.PNG'];
 
 export default function HowItWorks() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
   const containerRef = useRef(null);
 
-    useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      // Change the rootMargin: 
-      // '0px 0px -40% 0px' means: don't trigger until the section 
-      // has scrolled 40% up from the bottom of the screen.
-      { rootMargin: '0px 0px -40% 0px', threshold: 0 } 
-    );
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      
+      // Get the position of the container relative to the viewport
+      const rect = (containerRef.current as HTMLElement).getBoundingClientRect();
+      const scrollProgress = -rect.top / (rect.height / steps.length);
+      
+      // Update the active step based on scroll depth
+      const nextStep = Math.max(0, Math.min(steps.length - 1, Math.floor(scrollProgress)));
+      setActiveStep(nextStep);
+    };
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-    return () => observer.disconnect();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <section ref={containerRef} className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-center">
-      {/* The cards container will start at opacity-0 and fade in when scrolled */}
-      <div 
-        className={`w-full relative flex flex-col items-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-      >
+    <section ref={containerRef} className="w-full max-w-xl mx-auto px-6 py-24 h-[300vh]">
+      {/* The single display window */}
+      <div className="sticky top-[20vh] w-full aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-2xl">
         {steps.map((src, index) => (
           <div
             key={index}
-            className="sticky top-[15vh] md:top-[20vh] w-[90%] max-w-lg md:max-w-xl aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-[0_-15px_40px_rgba(0,0,0,0.8)] mb-[15vh]"
+            className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+              activeStep === index ? 'opacity-100' : 'opacity-0'
+            }`}
           >
             <Image
               src={src}
