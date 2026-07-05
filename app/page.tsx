@@ -78,7 +78,7 @@ export default function LaunchingSoon() {
             <div className="flex gap-24 md:gap-32 pr-24 md:pr-32 items-center">
               <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/redstone.PNG" alt="Redstone" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/partner3.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/chainlink.png" alt="Chainlink" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
 
@@ -86,7 +86,7 @@ export default function LaunchingSoon() {
             <div className="flex gap-16 md:gap-24 pr-16 md:pr-24 items-center">
               <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/redstone.PNG" alt="Redstone" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/partner3.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/chainlink.png" alt="Chainlink" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
 
