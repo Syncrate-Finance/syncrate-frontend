@@ -2,7 +2,7 @@ import './globals.css'
 
 // Tweak 1: This tells Safari/Chrome to color the top status bar and bottom areas
 export const viewport = {
-  themeColor: '#0F0F0F',
+  themeColor: '#030303',
 }
 
 export const metadata = {
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* TWEAK 2: This forces the absolute bottom layer of the site to be dark */}
-      <body className="bg-[#0F0F0F]">{children}</body>
+      <body className="bg-[#030303]">{children}</body>
     </html>
   )
 }
