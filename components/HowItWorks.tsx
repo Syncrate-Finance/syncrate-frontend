@@ -8,19 +8,19 @@ const steps = [
     id: '01',
     title: 'Deposit USDC',
     description: 'Provide liquidity by depositing USDC into our audited smart contracts to begin earning yield immediately.',
-    image: '/step1.png'
+    image: '/step1.PNG'
   },
   {
     id: '02',
     title: 'Gold financed via GoldBod',
     description: 'Your capital is seamlessly routed through the GoldBod aggregator to finance physical gold operations.',
-    image: '/step2.png'
+    image: '/step2.PNG'
   },
   {
     id: '03',
     title: 'Redeem USDS anytime',
     description: 'Maintain full control of your capital. Burn your position and redeem USDS whenever you choose.',
-    image: '/step3.png'
+    image: '/step3.PNG'
   }
 ];
 
