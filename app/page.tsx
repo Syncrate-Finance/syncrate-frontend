@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function LaunchingSoon() {
   return (
-    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
+    <div className={`min-h-screen bg-[#4D4D4D] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
       {/* Top Navigation Bar */}
       <header className="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
@@ -33,7 +33,7 @@ export default function LaunchingSoon() {
       </header>
 
       {/* Hero / Main Content - Left Aligned */}
-      <main className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-start text-left justify-center my-auto">
+      <main className="w-full max-w-6xl mx-auto px-6 flex flex-col items-start text-left mt-12 md:mt-24 mb-auto">
         
     
 
