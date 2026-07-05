@@ -27,7 +27,7 @@ export default function Blog() {
             Main site
           </Link>
           <a href="#" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
-            Apply
+            App
           </a>
         </div>
       </header>
