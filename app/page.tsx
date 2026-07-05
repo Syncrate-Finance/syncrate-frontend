@@ -1,5 +1,6 @@
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import Image from 'next/image'
 
 export default function LaunchingSoon() {
   return (
@@ -7,32 +8,46 @@ export default function LaunchingSoon() {
       
       {/* Top Navigation Bar */}
       <header className="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
-        <div className="flex items-center gap-2 tracking-tight font-medium text-lg text-white">
-          <div className="w-5 h-5 bg-white rounded-[4px] flex items-center justify-center">
-            <span className="text-[#030303] text-xs font-black select-none">S</span>
-          </div>
-          <span>Syncrate</span>
+        
+        {/* Custom Logo */}
+        <div className="flex items-center">
+          {/* Ensure the src matches your exact uploaded filename in the public folder */}
+          <Image 
+            src="/logo.png" 
+            alt="Syncrate Logo" 
+            width={32} 
+            height={32} 
+            className="object-contain"
+          />
         </div>
-        <div className="text-xs tracking-widest text-[#888888] font-mono uppercase">
-          [ Phase_01 ]
+
+        {/* Right Action Buttons */}
+        <div className="flex items-center gap-3 text-sm font-medium">
+          <a href="#" className="px-5 py-2.5 rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors">
+            Blog
+          </a>
+          <a href="#" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
+            Apply
+          </a>
         </div>
       </header>
 
-      {/* Hero / Main Content */}
-      <main className="w-full max-w-xl mx-auto px-6 py-12 flex flex-col items-center text-center my-auto">
+      {/* Hero / Main Content - Left Aligned */}
+      <main className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-start text-left justify-center my-auto">
+        
         {/* Subtle Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#222] bg-[#0A0A0A] text-xs text-[#888] font-mono mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#222] bg-[#0A0A0A] text-xs text-[#888] font-mono mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          Private Beta Coming Soon
+          Launching Soon
         </div>
 
-        {/* Header - Fixed sizes for both desktop & mobile */}
-        <h1 className="text-4xl font-semibold tracking-tight text-white mb-4 max-w-md leading-[1.15]">
-          DeFi yield, backed by the real world.
+        {/* Header - Normal weight, left aligned, with inline blue link */}
+        <h1 className="text-4xl md:text-5xl font-normal tracking-tight text-white mb-6 max-w-3xl leading-[1.15]">
+          DeFi yield, backed by the real world. <a href="#" className="text-blue-600 underline hover:text-blue-500 transition-colors">Apply Now →</a>
         </h1>
         
-        <p className="text-base text-[#888888] leading-relaxed mb-8 max-w-sm">
-          Syncrate is a DeFi yield protocol that channels onchain capital into productive real-world assets, delivering transparent, USD-denominated yield designed for the next generation of decentralized finance.
+        <p className="text-base text-[#888888] leading-relaxed mb-10 max-w-md">
+          Syncrate channels onchain capital into productive real-world assets, delivering transparent, USD-denominated yield designed for the next generation of decentralized finance.
         </p>
 
         {/* Email Waitlist Form */}
@@ -59,7 +74,7 @@ export default function LaunchingSoon() {
         </div>
         <div className="flex gap-6">
           <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">Twitter</a>
-          <a href="https://www.linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
+          <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
         </div>
       </footer>
       
