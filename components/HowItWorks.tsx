@@ -9,15 +9,17 @@ export default function HowItWorks() {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef(null);
 
-  useEffect(() => {
+    useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // When the user scrolls into this section, trigger visibility
         if (entry.isIntersecting) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 } // Triggers when 10% of the section is visible
+      // Change the rootMargin: 
+      // '0px 0px -40% 0px' means: don't trigger until the section 
+      // has scrolled 40% up from the bottom of the screen.
+      { rootMargin: '0px 0px -40% 0px', threshold: 0 } 
     );
 
     if (containerRef.current) {
