@@ -13,7 +13,7 @@ export default function LaunchingSoon() {
         <div className="flex items-center">
           {/* Ensure the src matches your exact uploaded filename in the public folder */}
           <Image 
-            src="/logo.PNG" 
+            src="/logo.jpg" 
             alt="Syncrate Logo" 
             width={32} 
             height={32} 
