@@ -27,7 +27,7 @@ export default function LaunchingSoon() {
             Blog
           </a>
           <a href="#" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
-            Apply
+            Join Waitlist
           </a>
         </div>
       </header>
@@ -35,11 +35,7 @@ export default function LaunchingSoon() {
       {/* Hero / Main Content - Left Aligned */}
       <main className="w-full max-w-6xl mx-auto px-6 py-12 flex flex-col items-start text-left justify-center my-auto">
         
-        {/* Subtle Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#222] bg-[#0A0A0A] text-xs text-[#888] font-mono mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          Launching Soon
-        </div>
+    
 
         {/* Header - Normal weight, left aligned, with inline blue link */}
         <h1 className="text-3xl md:text-4xl font-normal tracking-tighter text-white mb-6 max-w-3xl leading-[1.05]">
