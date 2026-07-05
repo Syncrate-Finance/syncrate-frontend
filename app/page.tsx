@@ -1,6 +1,7 @@
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function LaunchingSoon() {
   return (
@@ -21,13 +22,14 @@ export default function LaunchingSoon() {
           />
         </div>
 
-        {/* Right Action Buttons */}
+                {/* Right Action Buttons */}
         <div className="flex items-center gap-3 text-sm font-medium">
-          <a href="#" className="px-5 py-2.5 rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors">
+          {/* Replaced <a> with <Link> and changed href to "/blog" */}
+          <Link href="/blog" className="px-5 py-2.5 rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors">
             Blog
-          </a>
+          </Link>
           <a href="#" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
-            Join Waitlist
+            Apply
           </a>
         </div>
       </header>
