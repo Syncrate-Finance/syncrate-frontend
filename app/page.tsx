@@ -79,7 +79,11 @@ export default function LaunchingSoon() {
               <Image src="/bawa.png" alt="Bawa Rocks LTD" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/redstone.PNG" alt="Redstone" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/chainlink.png" alt="Chainlink" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/partner4.png" alt="Partner 4" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+               <Image src="/crown heritage.png" alt="Crown Heritage" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/uniswap.png" alt="Uniswap" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/euler.svg" alt="Euler" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
 
             {/* Logo Set 2 - Added 'shrink-0' here */}
@@ -87,7 +91,11 @@ export default function LaunchingSoon() {
               <Image src="/bawa.png" alt="Bawa Rocks LTD" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/redstone.PNG" alt="Redstone" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/chainlink.png" alt="Chainlink" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/partner4.png" alt="Partner 4" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+               <Image src="/crown heritage.png" alt="Crown Heritage" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/uniswap.png" alt="Uniswap" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/euler.svg" alt="Euler" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
 
           </div>
