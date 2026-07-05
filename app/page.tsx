@@ -49,6 +49,13 @@ export default function LaunchingSoon() {
         <p className="text-base text-[#888888] leading-relaxed mb-10 max-w-md">
           Syncrate channels onchain capital into productive real-world assets, delivering transparent, USD-denominated yield designed for the next generation of decentralized finance.
         </p>
+      {/* ... end of your top hero section (</main>) ... */}
+
+      {/* --- ADD THIS EXACTLY HERE --- */}
+      <HowItWorks />
+
+      {/* --- INSERT THIS NEW PARTNER MARQUEE SECTION --- */}
+      <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
 
         {/* Email Waitlist Form */}
         <form className="w-full flex flex-col sm:flex-row gap-2 max-w-md">
