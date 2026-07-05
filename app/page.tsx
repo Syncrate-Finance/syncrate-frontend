@@ -33,34 +33,35 @@ export default function LaunchingSoon() {
         </div>
       </header>
 
-      {/* Hero / Main Content */}
+            {/* Hero / Main Content */}
       <main className="w-full max-w-6xl mx-auto px-6 flex flex-col items-start text-left mt-12 md:mt-24">
         
-        {/* Header */}
+        {/* Main Heading */}
         <h1 className="text-3xl md:text-4xl font-normal tracking-tighter text-white mb-6 max-w-3xl leading-[1.05]">
           DeFi yield, backed by the real world. <a href="#" className="text-blue-600 underline hover:text-blue-500 transition-colors">Join waitlist→</a>
         </h1>
-        
+      </main>
+
+      {/* --- HOW IT WORKS (Between heading and subheading) --- */}
+      <HowItWorks />
+
+      {/* Subheading and Email Form container */}
+      <section className="w-full max-w-6xl mx-auto px-6 mt-12 pb-20">
         <p className="text-base text-[#888888] leading-relaxed mb-10 max-w-md">
           Syncrate channels onchain capital into productive real-world assets, delivering transparent, USD-denominated yield designed for the next generation of decentralized finance.
         </p>
-      </main>
 
-      {/* --- HOW IT WORKS SECTION --- */}
-      <HowItWorks />
-
-      {/* --- EMAIL WAITLIST FORM --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 pb-20">
+        {/* Email Waitlist Form */}
         <form className="w-full flex flex-col sm:flex-row gap-2 max-w-md">
           <input 
             type="email" 
             placeholder="Enter your work email" 
             required
-            className="flex-1 bg-[#0A0A0A] border border-[#222222] rounded-lg px-4 py-3 text-base text-white placeholder-[#555555] focus:outline-none focus:border-[#444444] focus:ring-1 focus:ring-[#444444] transition-all duration-200"
+            className="flex-1 bg-[#0A0A0A] border border-[#222222] rounded-lg px-4 py-3 text-white placeholder-[#555555] focus:outline-none focus:border-[#444444] focus:ring-1 focus:ring-[#444444] transition-all duration-200"
           />
           <button 
             type="submit"
-            className="bg-white text-[#030303] font-medium rounded-lg px-5 py-3 text-base hover:bg-[#E5E5E5] transition-colors duration-200"
+            className="bg-white text-[#030303] font-medium rounded-lg px-5 py-3 hover:bg-[#E5E5E5] transition-colors"
           >
             Request Access
           </button>
