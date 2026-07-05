@@ -1,55 +1,66 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState, useRef, TouchEvent } from 'react';
 import Image from 'next/image';
 
 const steps = ['/step1.PNG', '/step2.PNG', '/step3.PNG'];
 
 export default function HowItWorks() {
-  const [activeStep, setActiveStep] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+  const touchStart = useRef(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      
-      const { top, height } = containerRef.current.getBoundingClientRect();
-      
-      // Calculate progress: how far through the section are we?
-      // We divide by a smaller value (e.g., 500) so it switches faster.
-      const progress = -top / 500; 
-      const nextStep = Math.max(0, Math.min(steps.length - 1, Math.floor(progress)));
-      
-      setActiveStep(nextStep);
-    };
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStart.current = e.targetTouches[0].clientX;
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleTouchEnd = (e: TouchEvent) => {
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart.current - touchEnd;
+
+    // Swipe left (next)
+    if (diff > 50 && index < steps.length - 1) {
+      setIndex(index + 1);
+    }
+    // Swipe right (prev)
+    if (diff < -50 && index > 0) {
+      setIndex(index - 1);
+    }
+  };
 
   return (
-    // We give it a height, but since it's sticky, it won't push the footer away.
-    <section ref={containerRef} className="w-full relative h-[150vh]">
-      {/* 
-         'sticky top-20' keeps the card in one place while the page scrolls.
-         The card will stay visible under your header as shown in image_4.png and image_5.png.
-      */}
-      <div className="sticky top-20 w-[90%] max-w-lg mx-auto aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-2xl">
-        {steps.map((src, index) => (
+    <section className="w-full max-w-lg mx-auto px-6 py-6">
+      <div 
+        className="relative w-full aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-2xl touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {steps.map((src, i) => (
           <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-              activeStep === index ? 'opacity-100' : 'opacity-0'
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-300 ${
+              i === index ? 'opacity-100' : 'opacity-0'
             }`}
           >
             <Image
               src={src}
-              alt={`Step ${index + 1}`}
+              alt={`Step ${i + 1}`}
               fill
-              priority={index === 0}
+              priority={i === 0}
               className="object-cover"
             />
           </div>
+        ))}
+      </div>
+
+      {/* Indicator Dots */}
+      <div className="flex justify-center gap-2 mt-6">
+        {steps.map((_, i) => (
+          <div 
+            key={i} 
+            className={`h-2 w-2 rounded-full transition-colors ${
+              i === index ? 'bg-white' : 'bg-[#333333]'
+            }`} 
+          />
         ))}
       </div>
     </section>
