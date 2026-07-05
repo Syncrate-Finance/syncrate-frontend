@@ -15,7 +15,7 @@ export default function HowItWorks() {
       
       // Get the position of the container relative to the viewport
       const rect = (containerRef.current as HTMLElement).getBoundingClientRect();
-      const scrollProgress = -rect.top / (rect.height / steps.length);
+      const scrollProgress = -rect.top / 300;
       
       // Update the active step based on scroll depth
       const nextStep = Math.max(0, Math.min(steps.length - 1, Math.floor(scrollProgress)));
