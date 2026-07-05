@@ -56,7 +56,7 @@ export default function Blog() {
             </div>
             <div className="p-5 flex flex-col flex-grow">
               <h2 className="text-xl font-normal text-white tracking-tight leading-snug mb-12">
-                The technology behind Living Liquid
+                The Case for Onchain Gold Financing.
               </h2>
               <p className="text-sm text-[#888888] mt-auto">
                 02 Jul 2026
