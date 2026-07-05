@@ -74,7 +74,7 @@ export default function LaunchingSoon() {
           <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
             
             {/* Logo Set 1 - Added 'shrink-0' here */}
-            <div className="flex shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center">
+            <div className="flex shrink-0 gap-18 md:gap-26 pr-18 md:pr-26 items-center">
               {/* Added 'shrink-0 w-auto' to all images to force them to hold their shape */}
               <Image src="/bawa.png" alt="Bawa Rocks LTD" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/redstone.PNG" alt="Redstone" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
