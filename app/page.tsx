@@ -81,7 +81,7 @@ export default function LaunchingSoon() {
               <Image src="/chainlink.png" alt="Chainlink" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
                <Image src="/crown heritage.png" alt="Crown Heritage" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/uniswap.png" alt="Uniswap" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/uniswap.svg" alt="Uniswap" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/euler.svg" alt="Euler" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
@@ -93,7 +93,7 @@ export default function LaunchingSoon() {
               <Image src="/chainlink.png" alt="Chainlink" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
                <Image src="/crown heritage.png" alt="Crown Heritage" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
-              <Image src="/uniswap.png" alt="Uniswap" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/uniswap.svg" alt="Uniswap" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/euler.svg" alt="Euler" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
               <Image src="/morpho.png" alt="Morpho" width={120} height={40} className="object-contain shrink-0 w-auto opacity-50 grayscale hover:opacity-100 transition-opacity" />
             </div>
