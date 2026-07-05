@@ -13,7 +13,7 @@ export default function LaunchingSoon() {
         <div className="flex items-center">
           {/* Ensure the src matches your exact uploaded filename in the public folder */}
           <Image 
-            src="/logo.png" 
+            src="/logo.PNG" 
             alt="Syncrate Logo" 
             width={32} 
             height={32} 
@@ -42,8 +42,8 @@ export default function LaunchingSoon() {
         </div>
 
         {/* Header - Normal weight, left aligned, with inline blue link */}
-        <h1 className="text-4xl md:text-5xl font-normal tracking-tight text-white mb-6 max-w-3xl leading-[1.15]">
-          DeFi yield, backed by the real world. <a href="#" className="text-blue-600 underline hover:text-blue-500 transition-colors">Apply Now →</a>
+        <h1 className="text-3xl md:text-4xl font-normal tracking-tighter text-white mb-6 max-w-3xl leading-[1.05]">
+          DeFi yield, backed by the real world. <a href="#" className="text-blue-600 underline hover:text-blue-500 transition-colors">Join waitlist→</a>
         </h1>
         
         <p className="text-base text-[#888888] leading-relaxed mb-10 max-w-md">
