@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function Blog() {
   return (
-    <div className={`min-h-screen bg-[#0F0F0F] text-[#F5F5F5] antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
       {/* Top Navigation Bar */}
       <header className="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
