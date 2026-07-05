@@ -63,6 +63,39 @@ export default function LaunchingSoon() {
         </form>
       </main>
 
+      {/* --- INSERT THIS NEW PARTNER MARQUEE SECTION --- */}
+      <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
+        <p className="text-[#555555] text-xs font-mono uppercase tracking-widest mb-8">
+          Backed by industry leaders
+        </p>
+        
+        {/* Marquee Wrapper with edge fade-out effect */}
+        <div className="relative flex overflow-x-hidden w-full max-w-4xl [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+          
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+            
+            {/* Logo Set 1 */}
+            <div className="flex gap-16 md:gap-24 pr-16 md:pr-24 items-center">
+              <Image src="/partner1.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner2.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner3.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Logo Set 2 (Must be an exact duplicate of Set 1 for the seamless loop to work) */}
+            <div className="flex gap-16 md:gap-24 pr-16 md:pr-24 items-center">
+              <Image src="/partner1.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner2.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner3.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+              <Image src="/partner4.png" alt="Partner" width={100} height={40} className="object-contain opacity-50 grayscale hover:opacity-100 transition-opacity" />
+            </div>
+
+          </div>
+        </div>
+      </section>
+      {/* --- END MARQUEE SECTION --- */}
+
+
       {/* Footer Details */}
       <footer className="w-full max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-[#111111] text-xs text-[#555555] font-mono">
         <div>
