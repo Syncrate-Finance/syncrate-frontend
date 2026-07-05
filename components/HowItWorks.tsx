@@ -9,11 +9,7 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section className="w-full max-w-6xl mx-auto px-6 py-24 flex flex-col items-center">
-      
-      {/* Heading */}
-      <h2 className="text-3xl md:text-4xl font-normal tracking-tight text-white mb-20 text-center">
-        How it works
-      </h2>
+
 
       {/* Stacking Cards Container */}
       <div className="w-full relative flex flex-col items-center">
