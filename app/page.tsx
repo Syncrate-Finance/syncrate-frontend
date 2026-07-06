@@ -229,7 +229,7 @@ export default function LaunchingSoon() {
     {/* Tile 3: Custody */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-        <Image src="/custody-icon.png" alt="Custody" width={24} height={24} className="object-contain" />
+        <Image src="/custody-icon.PNG" alt="Custody" width={24} height={24} className="object-contain" />
       </div>
       <h4 className="text-lg font-medium text-white mb-3">Custody</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
