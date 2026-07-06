@@ -297,21 +297,22 @@ export default function LaunchingSoon() {
             
           </div>
 
-          {/* Middle: Huge Logo Watermark */}
-          <div className="w-full mt-24 mb-10">
-            <Image 
-              src="/syncrate-watermark.PNG" 
-              alt="Syncrate Logo Watermark" 
-              width={1376} 
-              height={270} 
-              className="w-full h-auto object-contain opacity-90"
-            />
-          </div>
-
-          {/* Bottom: Faint Legal Disclosure */}
-          <div className="w-full">
-            <p className="text-[10px] md:text-xs text-[#444444] leading-relaxed text-justify md:text-left">
-              Syncrate does not offer securities or investment products to the general public. Any securities-related activity is conducted pursuant to applicable exemptions under federal and state law and is available only to eligible persons. Lending and bridging products involve material risk, including the risk of loss of pledged collateral. Projected yields are not guaranteed. Company names and logos displayed on this site are used for illustrative purposes only and do not imply endorsement, partnership, or affiliation. Syncrate is not a bank, broker-dealer, or registered investment adviser. Products and services are not insured by the FDIC, SIPC, or any other government agency. Nothing on this site constitutes professional or financial advice.
+                    {/* Bottom: Faint Legal Disclosure */}
+          <div className="w-full flex flex-col gap-2 text-[10px] md:text-xs text-[#444444] leading-relaxed text-justify md:text-left">
+            <p>
+              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. sUSD is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
+            </p>
+            <p>
+              Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
+            </p>
+            <p>
+              Syncrate does not provide financial, legal, tax, or investment advice. Prospective users should conduct their own due diligence and consult independent professional advisors before participating.
+            </p>
+            <p>
+              References to third-party partners, custodians, or infrastructure providers on this site are for informational purposes only and do not constitute an endorsement, guarantee, or warranty of their services by Syncrate.
+            </p>
+            <p>
+              Syncrate may not be available to residents of certain jurisdictions, including where prohibited by local law or regulation. It is the responsibility of users to ensure their participation complies with applicable laws in their jurisdiction.
             </p>
           </div>
 
