@@ -112,6 +112,51 @@ export default function LaunchingSoon() {
   </div>
 </section>
 
+{/* --- DESIGN SECTION --- */}
+<section className="w-full max-w-6xl mx-auto px-6 py-24">
+  
+  {/* Thicker Divider Line (Height increased to 2px) */}
+  <div className="w-full h-[2px] bg-[#333333] mb-6" />
+  
+  {/* Label Row */}
+  <div className="flex justify-between items-center">
+    {/* "Design" - Bold, sentence case, matching hero color (white) */}
+    <span className="text-lg font-bold text-white">
+      Design
+    </span>
+    
+    {/* Indicator dots matching the Techdollar image */}
+    <div className="flex gap-1.5">
+      <div className="w-1.5 h-1.5 rounded-full bg-white" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
+    </div>
+  </div>
+
+  {/* Spacing before the large paragraph */}
+  <div className="mt-32 mb-16">
+    {/* 
+      Main Paragraph: 
+      Using the exact same sizing, tracking, and leading as your Hero heading 
+    */}
+    <p className="text-3xl md:text-4xl font-normal tracking-tighter text-white max-w-3xl leading-[1.1]">
+      The future of private-credit demands speed, access, and nuance. Months-long underwriting cycles miss the pace of innovation needed at the bleeding edge of deep tech.
+    </p>
+  </div>
+
+  {/* Little paragraph space, followed by bullet point structure */}
+  <div className="max-w-3xl mt-12 flex flex-col gap-2">
+    {/* Bullet Heading - Semi-bold */}
+    <h4 className="text-base md:text-lg font-semibold text-[#E5E5E5]">
+      Digitally Native, Traditional Structuring
+    </h4>
+    {/* Write-up underneath */}
+    <p className="text-base text-[#888888] leading-relaxed">
+      Every facility is originated as secured private credit against vested equity. Purpose-built infrastructure funds loan principal faster and cheaper than traditional lenders. Borrowers...
+    </p>
+  </div>
+  
+</section>
 
       {/* Partner Marquee Section */}
       <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
