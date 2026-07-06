@@ -188,11 +188,9 @@ export default function LaunchingSoon() {
   
   {/* Label Row */}
   <div className="flex justify-between items-center">
-    <span className="text-lg font-large text-white">
+    <span className="text-lg font-bold text-white">
       Stack
     </span>
-    
-    </div>
   </div>
 
   {/* Large Paragraph Header (Matches Hero & Design fonts/spacing exactly) */}
@@ -202,11 +200,7 @@ export default function LaunchingSoon() {
     </p>
   </div>
 
-  {/* 
-     Horizontal Sliding Row for Tiles 
-     - flex-nowrap and overflow-x-auto enables native touch swiping right-to-left
-     - snap-x ensures cards snap perfectly into place when swiped
-  */}
+  {/* Horizontal Sliding Row for Tiles */}
   <div className="flex flex-nowrap overflow-x-auto gap-4 pb-8 snap-x snap-mandatory scrollbar-none [mask-image:_linear-gradient(to_right,black_85%,transparent_100%)] md:[mask-image:none]">
     
     {/* Tile 1: Financing */}
@@ -223,7 +217,6 @@ export default function LaunchingSoon() {
 
     {/* Tile 2: Oracle */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
-      {/* Icon Wrapper */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
         <Image src="/oracle-icon.png" alt="Oracle" width={24} height={24} className="object-contain" />
       </div>
@@ -235,7 +228,6 @@ export default function LaunchingSoon() {
 
     {/* Tile 3: Custody */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
-      {/* Icon Wrapper */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
         <Image src="/custody-icon.png" alt="Custody" width={24} height={24} className="object-contain" />
       </div>
@@ -247,7 +239,6 @@ export default function LaunchingSoon() {
 
     {/* Tile 4: Chain */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
-      {/* Icon Wrapper */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
         <Image src="/agora-icon.png" alt="Liquidity" width={24} height={24} className="object-contain" />
       </div>
