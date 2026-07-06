@@ -272,14 +272,49 @@ export default function LaunchingSoon() {
         </div>
       </section>
 
-      {/* Footer Details */}
-      <footer className="w-full max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-[#111111] text-xs text-[#555555] font-mono">
-        <div>
-          &copy; {new Date().getFullYear()} Syncrate Technologies Inc. All rights reserved.
-        </div>
-        <div className="flex gap-6">
-          <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">Twitter</a>
-          <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
+            {/* --- NEW FOOTER SECTION (Inspired by image_12.png) --- */}
+      <footer className="w-full bg-[#030303] pt-16 pb-12 px-6 border-t border-[#111111]">
+        <div className="w-full max-w-6xl mx-auto flex flex-col">
+          
+          {/* Top Row: Links and Copyright */}
+          <div className="flex justify-between items-start text-sm text-[#F5F5F5] font-medium">
+            
+            {/* Left: Stacked Links */}
+            <div className="flex flex-col gap-5">
+              <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
+              <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
+              <a href="#" className="hover:text-[#888888] transition-colors">Brand Kit</a>
+              <a href="#" className="hover:text-[#888888] transition-colors">Terms & Disclosures</a>
+              <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
+              <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
+              <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
+            </div>
+
+            {/* Right: Copyright */}
+            <div className="text-right">
+              Syncrate &copy; {new Date().getFullYear()}
+            </div>
+            
+          </div>
+
+          {/* Middle: Huge Logo Watermark */}
+          <div className="w-full mt-24 mb-10">
+            <Image 
+              src="/syncrate-watermark.png" 
+              alt="Syncrate Logo Watermark" 
+              width={1200} 
+              height={200} 
+              className="w-full h-auto object-contain opacity-90"
+            />
+          </div>
+
+          {/* Bottom: Faint Legal Disclosure */}
+          <div className="w-full">
+            <p className="text-[10px] md:text-xs text-[#444444] leading-relaxed text-justify md:text-left">
+              Syncrate does not offer securities or investment products to the general public. Any securities-related activity is conducted pursuant to applicable exemptions under federal and state law and is available only to eligible persons. Lending and bridging products involve material risk, including the risk of loss of pledged collateral. Projected yields are not guaranteed. Company names and logos displayed on this site are used for illustrative purposes only and do not imply endorsement, partnership, or affiliation. Syncrate is not a bank, broker-dealer, or registered investment adviser. Products and services are not insured by the FDIC, SIPC, or any other government agency. Nothing on this site constitutes professional or financial advice.
+            </p>
+          </div>
+
         </div>
       </footer>
       
