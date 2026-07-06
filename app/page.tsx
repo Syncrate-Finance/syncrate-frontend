@@ -54,16 +54,9 @@ export default function LaunchingSoon() {
   
   {/* The Small Font Label Row */}
   <div className="flex justify-between items-center">
-    <span className="text-xs font-medium tracking-widest uppercase text-[#888888]">
+    <span className="text-xs font-medium tracking-widest lowercase text-[#888888]">
       Products
     </span>
-    
-    {/* Optional: Indicator dots if you still want to mirror the right side of image_9.png */}
-    <div className="flex gap-1.5">
-      <div className="w-1.5 h-1.5 rounded-full bg-white" />
-      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
-      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
-    </div>
   </div>
 </div>
       {/* --- NEW PRODUCTS HEADER & SECTION (Inspired by image_7.png) --- */}
