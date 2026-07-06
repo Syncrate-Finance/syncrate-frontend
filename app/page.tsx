@@ -38,7 +38,7 @@ export default function LaunchingSoon() {
         
         {/* Main Heading */}
         <h1 className="text-3xl md:text-4xl font-normal tracking-tighter text-white mb-6 max-w-3xl leading-[1.05]">
-          DeFi yield, backed by the real world. <a href="#" className="text-blue-600 underline hover:text-blue-500 transition-colors">Join waitlist→</a>
+          DeFi yield, backed by the real world.
         </h1>
       </main>
 
