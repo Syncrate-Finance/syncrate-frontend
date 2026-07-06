@@ -273,7 +273,7 @@ export default function LaunchingSoon() {
       </section>
 
                   {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
-      <footer className="w-full bg-[#030303] pt-16 pb-12 px-6 border-t border-[#111111]">
+      <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
           
           {/* Top Row: Links and Small Logo */}
