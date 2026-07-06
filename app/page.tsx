@@ -177,6 +177,7 @@ export default function LaunchingSoon() {
     {/* Write-up underneath */}
     <p className="text-base text-[#888888] leading-relaxed">
       Our team brings extensive expertise from top global banks and companies including Goldman Sachs and ChainLink. We are also backed by industry leading advisors with decades of experience in onchain finance, tokenization and DeFi.
+ </p>
   </div>
 </section>
 
