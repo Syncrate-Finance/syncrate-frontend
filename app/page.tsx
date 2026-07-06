@@ -207,7 +207,7 @@ export default function LaunchingSoon() {
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
       {/* Icon Wrapper (96x96px image placeholder) */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-        <Image src="/finance-icon.png" alt="Financing" width={24} height={24} className="object-contain" />
+        <Image src="/financing-icon.png" alt="Financing" width={24} height={24} className="object-contain" />
       </div>
       <h4 className="text-lg font-medium text-white mb-3">Gold Financing</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
@@ -240,11 +240,10 @@ export default function LaunchingSoon() {
     {/* Tile 4: Chain */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-        <Image src="/agora-icon.png" alt="Liquidity" width={24} height={24} className="object-contain" />
+        <Image src="/chain-icon.png" alt="Liquidity" width={24} height={24} className="object-contain" />
       </div>
       <h4 className="text-lg font-medium text-white mb-3">Liquidity</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
-        Powered by <span className="text-blue-500 font-medium">Agora</span> to distribute programmatic, fully backed asset liquidity across global decentralized networks.
       </p>
     </div>
 
