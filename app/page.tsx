@@ -188,15 +188,10 @@ export default function LaunchingSoon() {
   
   {/* Label Row */}
   <div className="flex justify-between items-center">
-    <span className="text-lg font-bold text-white">
-      Infrastructure
+    <span className="text-lg font-large text-white">
+      Stack
     </span>
     
-    {/* Indicator dots matching Techdollar design */}
-    <div className="flex gap-1.5">
-      <div className="w-1.5 h-1.5 rounded-full bg-white" />
-      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
-      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
     </div>
   </div>
 
@@ -214,43 +209,43 @@ export default function LaunchingSoon() {
   */}
   <div className="flex flex-nowrap overflow-x-auto gap-4 pb-8 snap-x snap-mandatory scrollbar-none [mask-image:_linear-gradient(to_right,black_85%,transparent_100%)] md:[mask-image:none]">
     
-    {/* Tile 1: RSM */}
+    {/* Tile 1: Financing */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
       {/* Icon Wrapper (96x96px image placeholder) */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-        <Image src="/bawa-icon.png" alt="Equity Review" width={24} height={24} className="object-contain" />
+        <Image src="/finance-icon.png" alt="Financing" width={24} height={24} className="object-contain" />
       </div>
-      <h4 className="text-lg font-medium text-white mb-3">Equity Review</h4>
+      <h4 className="text-lg font-medium text-white mb-3">Gold Financing</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
-        Reviewed by <span className="text-blue-500 font-medium">RSM</span>, a top-10 national CPA firm. Ownership, legal agreements, and share charges verified.
+      Partnered with <span className="text-blue-500 font-medium">Bawa Rocks LTD</span>, a Goldbog accredited aggregator, sourcing and financing physical gold inventory that backs the value flowing through Syncrate.
       </p>
     </div>
 
-    {/* Tile 2: Chainlink */}
+    {/* Tile 2: Oracle */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
       {/* Icon Wrapper */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-        <Image src="/chainlink-icon.png" alt="Capacity" width={24} height={24} className="object-contain" />
+        <Image src="/oracle-icon.png" alt="Oracle" width={24} height={24} className="object-contain" />
       </div>
-      <h4 className="text-lg font-medium text-white mb-3">Capacity</h4>
+      <h4 className="text-lg font-medium text-white mb-3">Oracle</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
-        Partnered with <span className="text-blue-500 font-medium">Curve</span> to expand deep onchain liquidity depth through scalable pools and automated capital deployment.
+        Real-time gold price feeds and reserve data, powered by <span className="text-blue-500 font-medium">Pyth Network</span> giving the vault accurate, tamper-resistant pricing to calculate NAV and yield.
       </p>
     </div>
 
-    {/* Tile 3: Caplight */}
+    {/* Tile 3: Custody */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
       {/* Icon Wrapper */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-        <Image src="/caplight-icon.png" alt="Market Access" width={24} height={24} className="object-contain" />
+        <Image src="/custody-icon.png" alt="Custody" width={24} height={24} className="object-contain" />
       </div>
-      <h4 className="text-lg font-medium text-white mb-3">Market Access</h4>
+      <h4 className="text-lg font-medium text-white mb-3">Custody</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
-        Integrated with <span className="text-blue-500 font-medium">Caplight</span> to gain direct market access, institutional hedging, and structured data pricing.
+      Secure custodial storage for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span> and <span className="text-blue-500 font-medium">Crown Heritage Vaults</span> ensuring the assets backing sUSD are held independently and always verfiable.
       </p>
     </div>
 
-    {/* Tile 4: Agora */}
+    {/* Tile 4: Chain */}
     <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
       {/* Icon Wrapper */}
       <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
