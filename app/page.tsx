@@ -47,7 +47,25 @@ export default function LaunchingSoon() {
 
       {/* --- SWIPEABLE CARDS SECTION --- */}
       <HowItWorks />
-
+{/* Divider and Products Label Section */}
+<div className="w-full max-w-6xl mx-auto px-6 pt-16 pb-8">
+  {/* The Divider Line */}
+  <div className="w-full h-[1px] bg-[#222222] mb-6" />
+  
+  {/* The Small Font Label Row */}
+  <div className="flex justify-between items-center">
+    <span className="text-xs font-medium tracking-widest uppercase text-[#888888]">
+      Products
+    </span>
+    
+    {/* Optional: Indicator dots if you still want to mirror the right side of image_9.png */}
+    <div className="flex gap-1.5">
+      <div className="w-1.5 h-1.5 rounded-full bg-white" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
+    </div>
+  </div>
+</div>
       {/* --- NEW PRODUCTS HEADER & SECTION (Inspired by image_7.png) --- */}
      <section className="w-full">
   {/* 
