@@ -304,7 +304,7 @@ export default function LaunchingSoon() {
           </div>
 
           {/* Bottom: Faint Legal Disclosure with mt-16 to fix spacing from image_13.png */}
-          <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#444444] leading-relaxed text-justify md:text-left">
+          <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
             <p>
               Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
             </p>
