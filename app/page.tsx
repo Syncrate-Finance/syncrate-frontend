@@ -140,7 +140,7 @@ export default function LaunchingSoon() {
       Using the exact same sizing, tracking, and leading as your Hero heading 
     */}
     <p className="text-3xl md:text-4xl font-normal tracking-tighter text-white max-w-3xl leading-[1.1]">
-      The future of private-credit demands speed, access, and nuance. Months-long underwriting cycles miss the pace of innovation needed at the bleeding edge of deep tech.
+      The gold economy holds real value, but most of it never reaches global capital. Slow, informal financing leaves licensed aggregators undercapitalized, while investors have no direct way to earn yield from real gold-backed activity.
     </p>
   </div>
 
@@ -148,14 +148,36 @@ export default function LaunchingSoon() {
   <div className="max-w-3xl mt-12 flex flex-col gap-2">
     {/* Bullet Heading - Semi-bold */}
     <h4 className="text-base md:text-lg font-semibold text-[#E5E5E5]">
-      Digitally Native, Traditional Structuring
+      Real Yield Source
     </h4>
     {/* Write-up underneath */}
     <p className="text-base text-[#888888] leading-relaxed">
-      Every facility is originated as secured private credit against vested equity. Purpose-built infrastructure funds loan principal faster and cheaper than traditional lenders. Borrowers...
+      Yield isn’t a promise or a token emission. It comes directly from the financing spread earned when our gold partner repurchases inventory under short-term agreements. As gold moves through a real financing cycle, that spread flows back to Syncrate holders through sUSD.
     </p>
   </div>
-  
+
+  {/* Little paragraph space, followed by bullet point structure */}
+  <div className="max-w-3xl mt-12 flex flex-col gap-2">
+    {/* Bullet Heading - Semi-bold */}
+    <h4 className="text-base md:text-lg font-semibold text-[#E5E5E5]">
+      Regulated Partners and Custodian
+    </h4>
+    {/* Write-up underneath */}
+    <p className="text-base text-[#888888] leading-relaxed">
+      Syncrate works exclusively with licensed gold aggregators and secure custodial partners, ensuring every ounce financed is sourced and held within a compliant, verifiable structure. 
+    </p>
+  </div>
+
+  {/* Little paragraph space, followed by bullet point structure */}
+  <div className="max-w-3xl mt-12 flex flex-col gap-2">
+    {/* Bullet Heading - Semi-bold */}
+    <h4 className="text-base md:text-lg font-semibold text-[#E5E5E5]">
+      Experienced
+    </h4>
+    {/* Write-up underneath */}
+    <p className="text-base text-[#888888] leading-relaxed">
+      Our team brings extensive expertise from top global banks and companies including Goldman Sachs and ChainLink. We are also backed by industry leading advisors with decades of experience in onchain finance, tokenization and DeFi.
+  </div>
 </section>
 
       {/* Partner Marquee Section */}
