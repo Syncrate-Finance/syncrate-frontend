@@ -302,8 +302,8 @@ export default function LaunchingSoon() {
             <Image 
               src="/syncrate-watermark.png" 
               alt="Syncrate Logo Watermark" 
-              width={1200} 
-              height={200} 
+              width={1376} 
+              height={270} 
               className="w-full h-auto object-contain opacity-90"
             />
           </div>
