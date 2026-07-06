@@ -251,7 +251,7 @@ export default function LaunchingSoon() {
 </section>
 
       {/* Partner Marquee Section */}
-<section className="w-full max-w-6xl mx-auto py-6 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
+<section className="w-full max-w-6xl mx-auto py-3 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
   <div className="relative flex overflow-x-hidden w-full max-w-4xl [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
     
     {/* 
@@ -259,10 +259,10 @@ export default function LaunchingSoon() {
       we use two identical tracks moving indefinitely. 
       Changed to 'animate-marquee-reverse' or custom inline styles for left-to-right direction.
     */}
-    <div className="flex w-max shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center animate-[marquee_30s_linear_infinite_reverse] hover:[animation-play-state:paused]">
+    <div className="flex w-max shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center animate-[marquee_10s_linear_infinite] hover:[animation-play-state:paused]">
       
       {/* Track 1 */}
-      <div className="flex shrink-0 gap-24 md:gap-32 items-center">
+      <div className="flex shrink-0 gap-12 md:gap-16 items-center">
         <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
         <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
         <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
@@ -271,7 +271,25 @@ export default function LaunchingSoon() {
       </div>
 
       {/* Track 2 (Perfect copy to catch the loop seamless point) */}
-      <div className="flex shrink-0 gap-24 md:gap-32 items-center">
+      <div className="flex shrink-0 gap-12 md:gap-16 items-center">
+        <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+      </div>
+
+       {/* Track 3 */}
+      <div className="flex shrink-0 gap-12 md:gap-16 items-center">
+        <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+        <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+      </div>
+
+      {/* Track 4 (Perfect copy to catch the loop seamless point) */}
+      <div className="flex shrink-0 gap-12 md:gap-16 items-center">
         <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
         <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
         <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
