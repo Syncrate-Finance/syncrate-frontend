@@ -1,19 +1,32 @@
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Link from 'next/link'
-import Image from 'next/image' // <-- Added missing Image import
+import Image from 'next/image'
 
 export default function AppPage() {
   return (
-    // Main Wrapper (Takes full screen height, arranges children in a column)
     <div 
       className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col antialiased ${GeistSans.variable} ${GeistMono.variable}`} 
       style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}
     >
       
-      {/* Main Content Area (flex-1 makes it fill the available space and center its contents) */}
-      <main className="flex-1 flex flex-col items-center justify-center p-6">
-        <h1 className="text-3xl md:text-4xl font-normal tracking-tighter text-white mb-8 leading-[1.05]">
+      {/* Top Header with Logo */}
+      <header className="w-full flex items-center justify-between px-6 py-6 max-w-6xl mx-auto">
+        <Link href="/" className="flex items-center gap-2">
+          <Image 
+            src="/logo.jpg" 
+            alt="Syncrate Logo" 
+            width={32} 
+            height={32} 
+            className="object-contain rounded-full" 
+          />
+          <span className="text-lg font-medium tracking-tight text-white">Syncrate</span>
+        </Link>
+      </header>
+      
+      {/* Main Content Area (flex-grow expands to fill all middle space, perfectly centering content) */}
+      <main className="flex-grow flex flex-col items-center justify-center p-6 min-h-[40vh]">
+        <h1 className="text-3xl md:text-4xl font-normal tracking-tighter text-white mb-8 leading-[1.05] text-center">
           Coming soon..
         </h1>
 
