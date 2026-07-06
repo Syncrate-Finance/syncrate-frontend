@@ -54,7 +54,7 @@ export default function LaunchingSoon() {
   
   {/* The Small Font Label Row */}
   <div className="flex justify-between items-center">
-    <span className="text-lg font-large text-white>
+    <span className="text-lg font-large text-white">
       Products
     </span>
   </div>
