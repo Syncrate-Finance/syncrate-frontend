@@ -180,6 +180,90 @@ export default function LaunchingSoon() {
  </p>
   </div>
 </section>
+{/* --- INFRASTRUCTURE (STACK) SECTION --- */}
+<section className="w-full max-w-6xl mx-auto px-6 py-24">
+  
+  {/* Thicker Divider Line (2px matching Design section) */}
+  <div className="w-full h-[2px] bg-[#333333] mb-6" />
+  
+  {/* Label Row */}
+  <div className="flex justify-between items-center">
+    <span className="text-lg font-bold text-white">
+      Infrastructure
+    </span>
+    
+    {/* Indicator dots matching Techdollar design */}
+    <div className="flex gap-1.5">
+      <div className="w-1.5 h-1.5 rounded-full bg-white" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
+    </div>
+  </div>
+
+  {/* Large Paragraph Header (Matches Hero & Design fonts/spacing exactly) */}
+  <div className="mt-32 mb-16">
+    <p className="text-3xl md:text-4xl font-normal tracking-tighter text-white max-w-3xl leading-[1.1]">
+      Syncrate is structured through a secure, institutional process designed for clear asset verification and continuous liquidity.
+    </p>
+  </div>
+
+  {/* 
+     Horizontal Sliding Row for Tiles 
+     - flex-nowrap and overflow-x-auto enables native touch swiping right-to-left
+     - snap-x ensures cards snap perfectly into place when swiped
+  */}
+  <div className="flex flex-nowrap overflow-x-auto gap-4 pb-8 snap-x snap-mandatory scrollbar-none [mask-image:_linear-gradient(to_right,black_85%,transparent_100%)] md:[mask-image:none]">
+    
+    {/* Tile 1: RSM */}
+    <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
+      {/* Icon Wrapper (96x96px image placeholder) */}
+      <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
+        <Image src="/bawa-icon.png" alt="Equity Review" width={24} height={24} className="object-contain" />
+      </div>
+      <h4 className="text-lg font-medium text-white mb-3">Equity Review</h4>
+      <p className="text-sm text-[#888888] leading-relaxed">
+        Reviewed by <span className="text-blue-500 font-medium">RSM</span>, a top-10 national CPA firm. Ownership, legal agreements, and share charges verified.
+      </p>
+    </div>
+
+    {/* Tile 2: Chainlink */}
+    <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
+      {/* Icon Wrapper */}
+      <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
+        <Image src="/chainlink-icon.png" alt="Capacity" width={24} height={24} className="object-contain" />
+      </div>
+      <h4 className="text-lg font-medium text-white mb-3">Capacity</h4>
+      <p className="text-sm text-[#888888] leading-relaxed">
+        Partnered with <span className="text-blue-500 font-medium">Curve</span> to expand deep onchain liquidity depth through scalable pools and automated capital deployment.
+      </p>
+    </div>
+
+    {/* Tile 3: Caplight */}
+    <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
+      {/* Icon Wrapper */}
+      <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
+        <Image src="/caplight-icon.png" alt="Market Access" width={24} height={24} className="object-contain" />
+      </div>
+      <h4 className="text-lg font-medium text-white mb-3">Market Access</h4>
+      <p className="text-sm text-[#888888] leading-relaxed">
+        Integrated with <span className="text-blue-500 font-medium">Caplight</span> to gain direct market access, institutional hedging, and structured data pricing.
+      </p>
+    </div>
+
+    {/* Tile 4: Agora */}
+    <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
+      {/* Icon Wrapper */}
+      <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
+        <Image src="/agora-icon.png" alt="Liquidity" width={24} height={24} className="object-contain" />
+      </div>
+      <h4 className="text-lg font-medium text-white mb-3">Liquidity</h4>
+      <p className="text-sm text-[#888888] leading-relaxed">
+        Powered by <span className="text-blue-500 font-medium">Agora</span> to distribute programmatic, fully backed asset liquidity across global decentralized networks.
+      </p>
+    </div>
+
+  </div>
+</section>
 
       {/* Partner Marquee Section */}
       <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
