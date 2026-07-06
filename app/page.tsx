@@ -72,7 +72,7 @@ export default function LaunchingSoon() {
     <div className="absolute inset-x-0 top-[20%] z-10 flex justify-center">
       <div className="relative w-56 h-56 md:w-72 md:h-72">
         <Image
-          src="/sUSD-asset.PNG" 
+          src="/sUSD-asset.png" 
           alt="sUSD Asset Visual"
           fill
           className="object-contain"
