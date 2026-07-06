@@ -49,56 +49,53 @@ export default function LaunchingSoon() {
       <HowItWorks />
 
       {/* --- NEW PRODUCTS HEADER & SECTION (Inspired by image_7.png) --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 pt-12 pb-20">
-        
-        {/* Header Block with Line */}
-        <div className="w-full mb-12">
-          <div className="w-full h-[1px] bg-[#222222] mb-6" /> {/* Section Divider Line */}
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-normal tracking-tight text-white">Products</h2>
-            {/* Simple design pagination circles matching image_7.png style */}
-            <div className="flex gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
-              <span className="w-2 h-2 rounded-full border border-[#444444]"></span>
-              <span className="w-2 h-2 rounded-full border border-[#444444]"></span>
-            </div>
-          </div>
-        </div>
+     <section className="w-full max-w-lg mx-auto px-6 py-6">
+  {/* The Product Card Wrapper - Relative so text overlays inside */}
+  <div className="relative w-full aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-2xl flex flex-col justify-end p-8">
+    
+    {/* 1. Background Cover Photo */}
+    <div className="absolute inset-0 z-0">
+      <Image
+        src="/susd-cover.png" // Replace with your cover background image file name
+        alt="sUSD Background"
+        fill
+        className="object-cover opacity-40" // Lower opacity ensures text stays highly readable
+      />
+    </div>
 
-        {/* --- USDS PRODUCT CARD (Inspired by image_6.png layout) --- */}
-        <div className="w-full max-w-xl mx-auto flex flex-col items-start bg-[#0A0A0A] border border-[#111111] rounded-[32px] overflow-hidden p-4 md:p-6 shadow-xl">
-          
-          {/* Cover Photo Area (4:3 Ratio) */}
-          <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden mb-6 bg-[#0E0E0E]">
-            <Image 
-              src="/usds-cover.png" 
-              alt="sUSDS Token Product Cover"
-              fill
-              className="object-cover opacity-90 transition-opacity hover:opacity-100 duration-300"
-            />
-          </div>
+    {/* 2. Floating Visual on Top (Like the coin asset shown in image_6.png) */}
+    <div className="absolute inset-0 z-10 flex items-center justify-center p-12 mb-20">
+      <div className="relative w-48 h-48 md:w-56 md:h-56">
+        <Image
+          src="/susd-token.PNG" // Your card graphic sitting on top of the background
+          alt="sUSD Asset Visual"
+          fill
+          className="object-contain"
+        />
+      </div>
+    </div>
 
-          {/* Product Title */}
-          <h3 className="text-3xl font-normal tracking-tight text-white mb-4 px-2">
-            sUSDS
-          </h3>
+    {/* 3. Text & Content Layer (Directly matching Matrixdock layout in image_6.png) */}
+    <div className="relative z-20 flex flex-col items-start text-left">
+      
+      {/* Title */}
+      <h3 className="text-3xl md:text-4xl font-normal text-white mb-3 tracking-tight">
+        sUSD
+      </h3>
+      
+      {/* Smaller Font Description */}
+      <p className="text-xs md:text-sm text-[#888888] leading-relaxed mb-6 max-w-sm">
+        Each Syncrate Gold (sUSD) token is securely backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in Ghana and the UAE.
+      </p>
 
-          {/* Product Short Description */}
-          <p className="text-base text-[#888888] leading-relaxed mb-8 px-2">
-            Syncrate USD (sUSDS) is a fully collateralized, yield-bearing stablecoin backed 1:1 by highly liquid, secure real-world institutional assets. Enjoy decentralized flexibility with institutional-grade security.
-          </p>
+      {/* View Product Button Style */}
+      <button className="flex items-center gap-2 border border-[#333333] bg-black/40 backdrop-blur-sm rounded-lg px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
+        View Product <span>→</span>
+      </button>
+    </div>
 
-          {/* View Product Call-To-Action Button */}
-          <Link 
-            href="/products/usds" 
-            className="group flex items-center justify-between border border-[#333333] rounded-xl px-5 py-3.5 text-sm font-medium text-white hover:bg-white hover:text-black transition-all duration-200"
-          >
-            <span>View Product</span>
-            <span className="ml-2 transform group-hover:translate-x-1 transition-transform duration-200">→</span>
-          </Link>
-
-        </div>
-      </section>
+  </div>
+</section>
 
       {/* Partner Marquee Section */}
       <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
