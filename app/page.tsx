@@ -121,7 +121,7 @@ export default function LaunchingSoon() {
   {/* Label Row */}
   <div className="flex justify-between items-center">
     {/* "Design" - Bold, sentence case, matching hero color (white) */}
-    <span className="text-lg font-bold text-white">
+    <span className="text-lg font-large text-white">
       Design
     </span>
     
