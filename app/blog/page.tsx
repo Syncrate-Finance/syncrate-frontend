@@ -37,7 +37,7 @@ export default function Blog() {
         
         {/* Page Title */}
         <h1 className="text-2xl md:text-3xl font-normal tracking-tight text-white mb-10">
-          Smart Tech - Smarter Credit
+          Our Recent Publications
         </h1>
 
         {/* Blog Grid Layout */}
@@ -60,48 +60,6 @@ export default function Blog() {
               </h2>
               <p className="text-sm text-[#888888] mt-auto">
                 02 Jul 2026
-              </p>
-            </div>
-          </Link>
-
-          {/* Post Block 2 */}
-          <Link href="/blog/post-2" className="flex flex-col bg-[#161616] rounded-[32px] p-2 hover:bg-[#1A1A1A] transition-colors group cursor-pointer">
-            <div className="overflow-hidden rounded-[24px] w-full aspect-[16/9]">
-              <Image 
-                src="/blog2.png" 
-                alt="Evaluating systemic risk" 
-                width={800} 
-                height={450} 
-                className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
-              />
-            </div>
-            <div className="p-5 flex flex-col flex-grow">
-              <h2 className="text-xl font-normal text-white tracking-tight leading-snug mb-12">
-                Evaluating systemic risk in private credit markets
-              </h2>
-              <p className="text-sm text-[#888888] mt-auto">
-                18 Jun 2026
-              </p>
-            </div>
-          </Link>
-
-          {/* Post Block 3 */}
-          <Link href="/blog/post-3" className="flex flex-col bg-[#161616] rounded-[32px] p-2 hover:bg-[#1A1A1A] transition-colors group cursor-pointer">
-            <div className="overflow-hidden rounded-[24px] w-full aspect-[16/9]">
-              <Image 
-                src="/blog3.png" 
-                alt="The future of onchain capital" 
-                width={800} 
-                height={450} 
-                className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
-              />
-            </div>
-            <div className="p-5 flex flex-col flex-grow">
-              <h2 className="text-xl font-normal text-white tracking-tight leading-snug mb-12">
-                The future of onchain capital verification
-              </h2>
-              <p className="text-sm text-[#888888] mt-auto">
-                04 May 2026
               </p>
             </div>
           </Link>
