@@ -49,25 +49,30 @@ export default function LaunchingSoon() {
       <HowItWorks />
 
       {/* --- NEW PRODUCTS HEADER & SECTION (Inspired by image_7.png) --- */}
-     <section className="w-full max-w-lg mx-auto px-6 py-6">
-  {/* The Product Card Wrapper - Relative so text overlays inside */}
-  <div className="relative w-full aspect-[1200/1081] rounded-[32px] overflow-hidden border border-[#222222] bg-[#030303] shadow-2xl flex flex-col justify-end p-8">
+     <section className="w-full">
+  {/* 
+     - 'w-full' and no 'px' parameters ensures it stretches completely right-to-left.
+     - 'aspect-[3/4]' makes the box longer so text stays clear of the icon.
+     - 'rounded-none' removes corner curves on mobile to seamlessly blend into the screen edge.
+  */}
+  <div className="relative w-full aspect-[3/4] sm:aspect-video overflow-hidden border-y border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-12">
     
-    {/* 1. Background Cover Photo */}
+    {/* 1. Full Bleed Background Cover Photo */}
     <div className="absolute inset-0 z-0">
       <Image
-        src="/susd-cover.png" // Replace with your cover background image file name
+        src="/susd-bg-cover.png" 
         alt="sUSD Background"
         fill
-        className="object-cover opacity-40" // Lower opacity ensures text stays highly readable
+        className="object-cover opacity-35"
+        priority
       />
     </div>
 
-    {/* 2. Floating Visual on Top (Like the coin asset shown in image_6.png) */}
-    <div className="absolute inset-0 z-10 flex items-center justify-center p-12 mb-20">
-      <div className="relative w-48 h-48 md:w-56 md:h-56">
+    {/* 2. Floating Asset Visual (Tucked safely in upper-middle block) */}
+    <div className="absolute inset-x-0 top-[20%] z-10 flex justify-center">
+      <div className="relative w-56 h-56 md:w-72 md:h-72">
         <Image
-          src="/susd-token.PNG" // Your card graphic sitting on top of the background
+          src="/sUSD-asset.PNG" 
           alt="sUSD Asset Visual"
           fill
           className="object-contain"
@@ -75,27 +80,27 @@ export default function LaunchingSoon() {
       </div>
     </div>
 
-    {/* 3. Text & Content Layer (Directly matching Matrixdock layout in image_6.png) */}
-    <div className="relative z-20 flex flex-col items-start text-left">
+    {/* 3. High Contrast Content Layer (Forced cleanly to the very bottom) */}
+    <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full max-w-xl mx-auto px-4 sm:px-0">
       
       {/* Title */}
-      <h3 className="text-3xl md:text-4xl font-normal text-white mb-3 tracking-tight">
+      <h3 className="text-3xl md:text-5xl font-normal text-white mb-4 tracking-tight">
         sUSD
       </h3>
       
-      {/* Smaller Font Description */}
-      <p className="text-xs md:text-sm text-[#888888] leading-relaxed mb-6 max-w-sm">
-        Each Syncrate Gold (sUSD) token is securely backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in Ghana and the UAE.
+      {/* Smaller, Clean Description Sitting Unimpeded */}
+      <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-8 max-w-md">
+        Each Syncrate Gold (sUSD) is backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in Ghana and the UAE.
       </p>
 
-      {/* View Product Button Style */}
-      <button className="flex items-center gap-2 border border-[#333333] bg-black/40 backdrop-blur-sm rounded-lg px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
+      {/* Styled View Product Button Link */}
+      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-6 py-3 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200 mb-2">
         View Product <span>→</span>
       </button>
     </div>
-
   </div>
 </section>
+
 
       {/* Partner Marquee Section */}
       <section className="w-full max-w-6xl mx-auto py-12 border-t border-[#111111] overflow-hidden flex flex-col items-center">
