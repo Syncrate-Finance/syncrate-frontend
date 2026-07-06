@@ -54,7 +54,7 @@ export default function LaunchingSoon() {
   
   {/* The Small Font Label Row */}
   <div className="flex justify-between items-center">
-    <span className="text-xs font-medium tracking-widest lowercase text-[#888888]">
+    <span className="text-xs font-medium tracking-widest-[#888888]">
       Products
     </span>
   </div>
