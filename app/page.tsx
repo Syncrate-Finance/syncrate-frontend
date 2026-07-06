@@ -113,7 +113,7 @@ export default function LaunchingSoon() {
 </section>
 
 {/* --- DESIGN SECTION --- */}
-<section className="w-full max-w-6xl mx-auto px-6 py-24">
+<section className="w-full max-w-6xl mx-auto px-6 pt-24 pb-8">
   
   {/* Thicker Divider Line (Height increased to 2px) */}
   <div className="w-full h-[2px] bg-[#333333] mb-6" />
@@ -181,7 +181,7 @@ export default function LaunchingSoon() {
   </div>
 </section>
 {/* --- INFRASTRUCTURE (STACK) SECTION --- */}
-<section className="w-full max-w-6xl mx-auto px-6 py-24">
+<section className="w-full max-w-6xl mx-auto px-6 pt-8 pb-24">
   
   {/* Thicker Divider Line (2px matching Design section) */}
   <div className="w-full h-[2px] bg-[#333333] mb-6" />
