@@ -300,7 +300,7 @@ export default function LaunchingSoon() {
           {/* Middle: Huge Logo Watermark */}
           <div className="w-full mt-24 mb-10">
             <Image 
-              src="/syncrate-watermark.png" 
+              src="/syncrate-watermark.PNG" 
               alt="Syncrate Logo Watermark" 
               width={1376} 
               height={270} 
