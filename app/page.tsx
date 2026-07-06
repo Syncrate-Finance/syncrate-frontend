@@ -272,11 +272,11 @@ export default function LaunchingSoon() {
         </div>
       </section>
 
-            {/* --- NEW FOOTER SECTION (Inspired by image_12.png) --- */}
-      <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
+                  {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
+      <footer className="w-full bg-[#030303] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
           
-          {/* Top Row: Links and Copyright */}
+          {/* Top Row: Links and Small Logo */}
           <div className="flex justify-between items-start text-sm text-[#F5F5F5] font-medium">
             
             {/* Left: Stacked Links */}
@@ -290,17 +290,23 @@ export default function LaunchingSoon() {
               <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
             </div>
 
-            {/* Right: Copyright */}
-            <div className="text-right">
-              Syncrate &copy; {new Date().getFullYear()}
+            {/* Right: Small Logo Visual replacing text copyright */}
+            <div className="flex items-center">
+              <Image 
+                src="/footer-icon.PNG" 
+                alt="Syncrate Logo" 
+                width={32} 
+                height={32} 
+                className="object-contain"
+              />
             </div>
             
           </div>
 
-                    {/* Bottom: Faint Legal Disclosure */}
-          <div className="w-full flex flex-col gap-2 text-[10px] md:text-xs text-[#444444] leading-relaxed text-justify md:text-left">
+          {/* Bottom: Faint Legal Disclosure with mt-16 to fix spacing from image_13.png */}
+          <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#444444] leading-relaxed text-justify md:text-left">
             <p>
-              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. sUSD is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
+              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
             </p>
             <p>
               Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
