@@ -60,7 +60,7 @@ export default function LaunchingSoon() {
     {/* 1. Full Bleed Background Cover Photo */}
     <div className="absolute inset-0 z-0">
       <Image
-        src="/susd-bg-cover.png" 
+        src="/susd-bg-cover.PNG" 
         alt="sUSD Background"
         fill
         className="object-cover opacity-35"
