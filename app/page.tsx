@@ -110,53 +110,53 @@ export default function LaunchingSoon() {
   </div> {/* <-- Added missing closing tag for Card 1 */}
 
   {/* PRODUCT CARD 2: SGLD */}
-  <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
-    
-    {/* 1. Full Bleed Background Cover Photo */}
-    <div className="absolute inset-0 z-0">
+<div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
+  
+  {/* 1. Full Bleed Background Cover Photo */}
+  <div className="absolute inset-0 z-0">
+    <Image
+      src="/SGLD-cover.PNG" 
+      alt="SGLD Background"
+      fill
+      className="object-cover opacity-35"
+      priority
+    />
+  </div>
+
+  {/* 2. Floating Asset Visual (Tucked safely in upper-middle block) */}
+  <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
+    <div className="relative w-48 h-48 md:w-56 md:h-56">
       <Image
-        src="/SGLD-cover.PNG" 
-        alt="SGLD Background"
+        src="/SGLD-icon.png" 
+        alt="SGLD Icon Visual"
         fill
-        className="object-cover opacity-35"
-        priority
+        className="object-contain"
       />
     </div>
+  </div>
 
-    {/* 2. Floating Asset Visual (Tucked safely in upper-middle block) */}
-    <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
-      <div className="relative w-48 h-48 md:w-56 md:h-56">
-        <Image
-          src="/SGLD-icon.png" 
-          alt="SGLD Icon Visual"
-          fill
-          className="object-contain"
-        />
-      </div>
-    </div>
+  {/* 3. High Contrast Content Layer (Forced cleanly to the very bottom) */}
+  <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
+    {/* Title */}
+    <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
+      SGLD
+    </h3>
+    
+    {/* Smaller, Clean Description Sitting Unimpeded */}
+    <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
+      The Syncrate Gold Yield (SGLD) token represents a share of the Syncrate GLD Vault, where deposited XAUs participate in institutional gold financing strategies. Yield accrues to the vault through an increasing SGLD share price over time.
+    </p>
 
-    {/* 3. High Contrast Content Layer (Forced cleanly to the very bottom) */}
-    <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
-      {/* Title */}
-      <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
-        SGLD
-      </h3>
-      
-      {/* Smaller, Clean Description Sitting Unimpeded */}
-      <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-        The Syncrate Gold Yield (SGLD) token represents a share of the Syncrate GLD Vault, where deposited XAUs participate in institutional gold financing strategies. Yield accrues to the vault through an increasing SGLD share price over time.
-      </p>
+    {/* THE LINK BUTTON */}
+    <Link 
+      href="/sgld" 
+      className="inline-block text-center px-5 py-2 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] text-xs font-medium transition-colors"
+    >
+      View Product
+    </Link>
+  </div> {/* FIXED: Closed the high contrast content div block correctly */}
 
-      {/* THE LINK BUTTON */}
-  <Link 
-    href="/sgld" 
-    className="inline-block text-center px-5 py-2 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] text-xs font-medium transition-colors"
-  >
-    View Product
-  </Link>
-</div>
-
-</section>
+</div> {/* FIXED: Swapped out mismatched </section> for a proper closing </div> tag */}
 
 {/* --- DESIGN SECTION --- */}
 <section className="w-full max-w-6xl mx-auto px-6 pt-24 pb-8">
