@@ -10,7 +10,6 @@ export default function XAUsProductPage() {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   
-  // Explicitly mapping your custom headings & write-ups to switch dynamically per card swipe
   const features = [
     {
       id: 1,
@@ -18,7 +17,7 @@ export default function XAUsProductPage() {
       sectionSubText: "Global liquidity infrastructure, fully divisible, and engineered seamlessly for instant capital deployment.",
       title: "Fractional Accessibility",
       description: "XAUs is divisible to 18 decimal places, enabling precise ownership, transfer, and deployment across DeFi and CeFi platforms without compromising asset integrity.",
-      bgImage: "/feature-1.PNG", 
+      bgImage: "/feature-1.PNG", // Check your local public folder to confirm if .PNG or .png
       logos: ["/eth3.png", "/3bnb.png", "/3sol.png", "/3polygon.png", "/4sui.png", "/5tron.png", "/6hedera.png", "/arbitrum.png"]
     },
     {
@@ -45,33 +44,44 @@ export default function XAUsProductPage() {
       sectionSubText: "Eliminating counterparty black-boxes via fully real-world verifiable physical delivery allocations.",
       title: "Physical Redemption",
       description: "Convert your digital XAUs back to physical LBMA-certified gold bars instantly through our regulated redemption portal.",
-      bgImage: "/feature-4.jpg",
+      bgImage: "/feature-4.jpg", // Confirm if this is .jpg or .PNG on your local filesystem
       logos: ["/audit-1.png", "/audit-2.png"]
     }
   ]
 
-  // Detect which layout card is centered in view to sync indicators and headers
+  // Balanced midpoint index calculation
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget
-    
-    // 1. Get the actual physical width of the first card in the DOM
     const firstCard = container.children[0] as HTMLElement
     if (!firstCard) return
     
-    // 2. Add the flex gap (gap-6 in Tailwind is 24px) to the card's width
+    // Width of card element + tailwind gap-6 spacing (24px)
     const itemWidth = firstCard.offsetWidth + 24
-    
-    // 3. Calculate the true index based on actual scroll distance
     const scrollLeft = container.scrollLeft
-    const newIndex = Math.round(scrollLeft / itemWidth)
     
-    // 4. Update state only if the index changes and is valid
+    // Using a half-width offset avoids index skipping bugs
+    const newIndex = Math.floor((scrollLeft + itemWidth / 2) / itemWidth)
+    
     if (newIndex >= 0 && newIndex < features.length && newIndex !== activeIndex) {
       setActiveIndex(newIndex)
     }
   }
 
-  // FIXED: Added the missing return statement here
+  // Fallback programmatic navigation clicking utility
+  const scrollToCard = (index: number) => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    const firstCard = container.children[0] as HTMLElement
+    if (!firstCard) return
+    
+    const itemWidth = firstCard.offsetWidth + 24
+    container.scrollTo({
+      left: index * itemWidth,
+      behavior: 'smooth'
+    })
+    setActiveIndex(index)
+  }
+
   return (
     <div 
       className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col antialiased ${GeistSans.variable} ${GeistMono.variable}`} 
@@ -165,12 +175,9 @@ export default function XAUsProductPage() {
 
       {/* --- XAUs FEATURES SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
-        
-        {/* Section Breaking Line & Static Anchor Label */}
         <hr className="border-[#222222] mb-12" />
         
-        {/* FIXED: Corrected the typo in Tailwind classes here */}
-        <span className="text-lg font-medium text-[#666666] tracking-widest block mb-4">
+        <span className="text-xs font-mono uppercase text-[#666666] tracking-widest block mb-4">
           XAUs Features
         </span>
 
@@ -200,6 +207,7 @@ export default function XAUsProductPage() {
                   src={feature.bgImage}
                   alt={feature.title}
                   fill
+                  sizes="(max-w-768px) 320px, 400px"
                   className="object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/90 to-transparent" />
@@ -240,8 +248,10 @@ export default function XAUsProductPage() {
         {/* Small Navigation Indicator Dots */}
         <div className="flex items-center justify-center gap-2 mt-4">
           {features.map((_, index) => (
-            <span 
-              key={index} 
+            <button 
+              key={index}
+              onClick={() => scrollToCard(index)}
+              aria-label={`Go to slide ${index + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-[#0037FF]' : 'w-1.5 bg-[#222222]'}`}
             />
           ))}
