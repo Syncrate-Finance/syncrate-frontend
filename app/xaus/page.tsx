@@ -19,10 +19,10 @@ export default function XAUsProductPage() {
             height={32} 
             className="object-contain rounded-full" 
           />
-          <span className="text-lg font-medium tracking-tight text-white">Syncrate</span>
+          <span className="text-lg font-medium tracking-tight text-white"></span>
         </Link>
-        <Link href="/app" className="px-5 py-2 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] text-xs font-medium transition-colors">
-          Launch App
+        <Link href="/" className="px-5 py-2 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] text-xs font-medium transition-colors">
+          Main Site
         </Link>
       </header>
 
@@ -32,9 +32,6 @@ export default function XAUsProductPage() {
           
           {/* Left Column: Product Details & Actions */}
           <div className="lg:col-span-7 flex flex-col text-left">
-            {/* Tag label */}
-            <div className="inline-flex items-center gap-2 border border-[#FFD700]/30 bg-[#FFD700]/10 rounded-md px-3 py-1 text-[11px] font-mono tracking-wider text-[#FFD700] uppercase w-fit mb-6">
-              Syncrate <span className="text-white">|</span> Gold
             </div>
 
             {/* Core Value Proposition */}
