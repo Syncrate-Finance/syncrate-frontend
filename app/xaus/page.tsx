@@ -166,7 +166,7 @@ export default function XAUsProductPage() {
           <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-3">
             Secure <span className="text-[#FFD700]">Gold.</span> Transparent Infrastructure.
           </h2>
-          <p className="text-base md:text-lg text-[#888888] leading-relaxed">
+          <p className="text-sm md:text-lg text-[#888888] leading-relaxed">
             From licensed gold sourcing to independent vault custody, Syncrate combines trusted real-world infrastructure with programmable onchain finance.
           </p>
         </div>
@@ -274,7 +274,6 @@ export default function XAUsProductPage() {
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
           {/* Section Indicator Label */}
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-3 h-3 bg-[#FFD700]" />
             <span className="text-xs font-mono -[#666666] tracking-widest block">
               Transparency
             </span>
@@ -286,7 +285,7 @@ export default function XAUsProductPage() {
               <h2 className="text-2xl md:text-4x1 font-normal text-white tracking-tight mb-6 leading-tight">
                 Transparent by Design
               </h2>
-              <p className="text-base md:text-lg text-[#888888] leading-relaxed">
+              <p className="text-sm md:text-lg text-[#888888] leading-relaxed">
                 Syncrate combines independent audits by Bureau Veritas with regular reserve statements from custodians, ensuring institutional-grade transparency across the protocol.
               </p>
             </div>
