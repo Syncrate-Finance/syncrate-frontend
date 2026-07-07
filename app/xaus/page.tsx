@@ -31,8 +31,6 @@ export default function XAUsProductPage() {
           
           {/* Left Column: Product Details & Actions */}
           <div className="lg:col-span-7 flex flex-col text-left">
-            </div>
-
             {/* Core Value Proposition */}
             <h1 className="text-4xl md:text-6xl font-normal tracking-tighter text-white mb-6 leading-[1.05]">
               Real <span className="text-[#FFD700]">Gold.</span> <br />
@@ -40,7 +38,7 @@ export default function XAUsProductPage() {
             </h1>
 
             <p className="text-sm md:text-base text-[#AAAAAA] leading-relaxed mb-8 max-w-xl">
-              Backed by 99.99% pure Goldbog-accredited gold, with each token representing 1 troy oz. Vaulted securely in with reputable custodians in the UAE.
+              Backed by 99.99% pure Goldbog-accredited gold, with each token representing 1 troy oz. Vaulted securely with reputable custodians in the UAE.
             </p>
 
             {/* Call To Action Buttons */}
@@ -69,7 +67,6 @@ export default function XAUsProductPage() {
                 <p className="text-xl md:text-2xl font-normal text-white tracking-tight">564 Bars</p>
               </div>
             </div>
-
           </div>
 
           {/* Right Column: Visual Showcase Block */}
@@ -92,7 +89,7 @@ export default function XAUsProductPage() {
         </div>
       </main>
 
-       {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
+       {/* --- NEW FOOTER SECTION --- */}
       <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
           
@@ -110,7 +107,7 @@ export default function XAUsProductPage() {
               <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
             </div>
 
-            {/* Right: Small Logo Visual replacing text copyright */}
+            {/* Right: Small Logo Visual */}
             <div className="flex items-center">
               <Image 
                 src="/footer-icon.PNG" 
@@ -123,7 +120,7 @@ export default function XAUsProductPage() {
             
           </div>
 
-          {/* Bottom: Faint Legal Disclosure with mt-16 to fix spacing from image_13.png */}
+          {/* Bottom: Faint Legal Disclosure */}
           <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
             <p>
               Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
