@@ -18,8 +18,8 @@ export default function XAUsProductPage() {
       sectionSubText: "Global liquidity infrastructure, fully divisible, and engineered seamlessly for instant capital deployment.",
       title: "Fractional Accessibility",
       description: "XAUs is divisible to 18 decimal places, enabling precise ownership, transfer, and deployment across DeFi and CeFi platforms without compromising asset integrity.",
-      bgImage: "/feature-1.jpg", 
-      logos: ["/eth.png", "/bnb.png", "/sol.png", "/polygon.png", "/sui.png", "/tron.png", "/hedera.png", "/arbitrum.png"]
+      bgImage: "/feature-1.PNG", 
+      logos: ["/eth3.png", "/3bnb.png", "/3sol.png", "/3polygon.png", "/4sui.png", "/5tron.png", "/6hedera.png", "/arbitrum.png"]
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ export default function XAUsProductPage() {
       sectionSubText: "Regulated sovereign vault ecosystems integrated directly with globally trusted bullion market clearing systems.",
       title: "Highest Standards of Storage",
       description: "Premier trusted gold infrastructure, seamlessly integrated with top-tier bullion markets and regulated banking custodians.",
-      bgImage: "/feature-2.jpg",
+      bgImage: "/feature-2.PNG",
       logos: ["/custodian-1.png", "/custodian-2.png"]
     },
     {
@@ -36,8 +36,8 @@ export default function XAUsProductPage() {
       sectionSubText: "Bridging structural tangible commodities with high-efficiency institutional lending protocol modules.",
       title: "Seamless On-Chain Yield",
       description: "Bridge physical stability with digital agility. Utilize XAUs in diverse liquidity pools to generate transparent, consistent yield.",
-      bgImage: "/feature-3.jpg",
-      logos: ["/pool-1.png", "/pool-2.png", "/pool-3.png"]
+      bgImage: "/feature-3.PNG",
+      logos: ["/eth.png", "/base.png"]
     },
     {
       id: 4,
