@@ -19,7 +19,6 @@ export default function XAUsProductPage() {
             height={32} 
             className="object-contain rounded-full" 
           />
-          <span className="text-lg font-medium tracking-tight text-white"></span>
         </Link>
         <Link href="/" className="px-5 py-2 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] text-xs font-medium transition-colors">
           Main Site
@@ -36,21 +35,18 @@ export default function XAUsProductPage() {
 
             {/* Core Value Proposition */}
             <h1 className="text-4xl md:text-6xl font-normal tracking-tighter text-white mb-6 leading-[1.05]">
-              Physical <span className="text-[#FFD700]">Gold.</span> <br />
-              Trusted. On-Chain.
+              Real <span className="text-[#FFD700]">Gold.</span> <br />
+              OnChain.
             </h1>
 
             <p className="text-sm md:text-base text-[#AAAAAA] leading-relaxed mb-8 max-w-xl">
-              Backed by 99.99% purity LBMA gold, each token represents 1 troy oz. stored securely in premier vaults within the UAE with physical redemption options. Bringing institutional gold on-chain to maximize liquidity and capital yield efficiency.
+              Backed by 99.99% pure Goldbog-accredited gold, with each token representing 1 troy oz. Vaulted securely in with reputable custodians in the UAE.
             </p>
 
             {/* Call To Action Buttons */}
             <div className="flex flex-wrap gap-4 mb-12">
               <Link href="/app" className="px-8 py-3.5 bg-white text-black font-medium text-sm rounded-md hover:bg-[#E5E5E5] transition-all">
-                Buy Now
-              </Link>
-              <Link href="/app" className="px-8 py-3.5 border border-[#333333] bg-[#090909] text-white font-medium text-sm rounded-md hover:bg-[#111111] transition-all">
-                Bridge Now
+                Buy XAUs
               </Link>
             </div>
 
