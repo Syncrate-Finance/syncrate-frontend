@@ -13,22 +13,22 @@ export default function XAUsProductPage() {
   const features = [
     {
       id: 1,
-      title: "Goldbod Accredited",
-      description: "All Syncrate Gold bars are sourced directly from Goldbod-accredited aggregators, ensuring each gold bar is bullion-market authentic and globally accepted.",
+      title: "Fractional Accessibility",
+      description: "XAUs is divisible to 18 decimal places, enabling precise ownership, transfer, and deployment across DeFi and CeFi platforms without compromising asset integrity.",
       bgImage: "/feature-1.PNG", 
       logos: ["/bawa.png"]
     },
     {
       id: 2,
-      title: "Securly Vaulted",
-      description: "Syncrate partners with Amanat Vaults - a UAE leading vaulting firm, to physical safeguard Syncrate's physical gold bars.",
+      title: "Highest Standards of Storage",
+      description: "Premier trusted gold infrastructure, seamlessly integrated with top-tier bullion markets and regulated banking custodians.",
       bgImage: "/feature-2.PNG",
       logos: ["/amanat-icon.png"]
     },
     {
       id: 3,
-      title: "Accessible Everywhere",
-      description: "XAUs is deployed across multiple chains, enabling robust liquidy and seamless ownership.",
+      title: "Seamless On-Chain Yield",
+      description: "Bridge physical stability with digital agility. Utilize XAUs in diverse liquidity pools to generate transparent, consistent yield.",
       bgImage: "/feature-3.PNG",
       logos: ["/eth.png", "/base.jpeg"]
     }
@@ -250,20 +250,94 @@ export default function XAUsProductPage() {
           ))}
         </div>
 
-        {/* Small Navigation Indicator Dots */}
-        <div className="flex items-center justify-center gap-2 mt-4">
-          {features.map((_, index) => (
-            <button 
-              key={index}
-              onClick={() => scrollToCard(index)}
-              aria-label={`Go to slide ${index + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-[#0037FF]' : 'w-1.5 bg-[#222222]'}`}
-            />
-          ))}
+      {/* --- TRANSPARENCY & VERIFICATION SECTION --- */}
+      <section className="relative w-full overflow-hidden border-t border-[#111111] py-16 md:py-24">
+        {/* Full-bleed background */}
+        <div className="absolute inset-0 z-0 w-full h-full">
+          <Image
+            src="/XAUs-bg-cover.PNG" 
+            alt="Transparency Background"
+            fill
+            className="object-cover opacity-15"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#030303] via-transparent to-[#030303]" />
+          <div className="absolute inset-0 bg-[#030303]/40 backdrop-blur-[2px]" />
+        </div>
+
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
+          {/* Section Indicator Label */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-3 h-3 bg-[#FFD700]" />
+            <span className="text-xs font-mono uppercase text-[#F5F5F5] tracking-widest block">
+              Asset Transparency & Verification
+            </span>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-start">
+            {/* Headers & Text */}
+            <div className="max-w-xl">
+              <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-6 leading-tight">
+                Dual-Layer <br className="hidden sm:block"/>
+                Transparency. <br className="hidden sm:block"/>
+                Fully Audited.
+              </h2>
+              {/* Using the exact text size from features: text-base md:text-lg text-[#888888] */}
+              <p className="text-base md:text-lg text-[#888888] leading-relaxed">
+                Independent physical audits by Bureau Veritas and regular asset statements from vaults, providing trusted transparency through third-party verification.
+              </p>
+            </div>
+
+            {/* Clickable Action Links */}
+            <div className="w-full md:w-[420px] flex flex-col mt-4 md:mt-0 border-t border-[#222222]">
+              {/* Link 1: Audit Reports */}
+              <Link 
+                href="#" 
+                className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  {/* Document SVG Icon */}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#AAAAAA] group-hover:text-white transition-colors">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span className="text-[#F5F5F5] font-normal text-base md:text-lg">Audit Reports</span>
+                </div>
+                {/* Diagonal Arrow Icon */}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#666666] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </Link>
+
+              {/* Link 2: Asset Statements */}
+              <Link 
+                href="#" 
+                className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#AAAAAA] group-hover:text-white transition-colors">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span className="text-[#F5F5F5] font-normal text-base md:text-lg">Asset Statements</span>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#666666] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-                        {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
+       {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
       <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
           
