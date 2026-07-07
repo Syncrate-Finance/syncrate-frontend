@@ -59,9 +59,11 @@ export default function LaunchingSoon() {
     </span>
   </div>
 </div>
-      {/* --- NEW PRODUCTS HEADER & SECTION (Inspired by image_7.png) --- */}
-     <section className="w-full" max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <div className="relative w-full aspect-[3/4] sm:aspect-video overflow-hidden border-y border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-12">
+  {/* --- NEW PRODUCTS HEADER & SECTION (Side-by-Side Standalone Cards) --- */}
+<section className="w-full max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+  
+  {/* PRODUCT CARD 1: XAUs */}
+  <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
     
     {/* 1. Full Bleed Background Cover Photo */}
     <div className="absolute inset-0 z-0">
@@ -75,8 +77,8 @@ export default function LaunchingSoon() {
     </div>
 
     {/* 2. Floating Asset Visual (Tucked safely in upper-middle block) */}
-    <div className="absolute inset-x-0 top-[20%] z-10 flex justify-center">
-      <div className="relative w-56 h-56 md:w-72 md:h-72">
+    <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
+      <div className="relative w-48 h-48 md:w-56 md:h-56">
         <Image
           src="/XAUs-asset.png" 
           alt="XAUs Asset Visual"
@@ -87,31 +89,32 @@ export default function LaunchingSoon() {
     </div>
 
     {/* 3. High Contrast Content Layer (Forced cleanly to the very bottom) */}
-    <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full max-w-xl mx-auto px-4 sm:px-0">
-      
+    <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
       {/* Title */}
-      <h3 className="text-3xl md:text-5xl font-normal text-white mb-4 tracking-tight">
+      <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
         XAUs
       </h3>
       
       {/* Smaller, Clean Description Sitting Unimpeded */}
-      <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-8 max-w-md">
+      <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
         Each Syncrate Gold (XAUs) is backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in the UAE.
       </p>
 
       {/* Styled View Product Button Link */}
-      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-6 py-3 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200 mb-2">
+      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
         View Product <span>→</span>
       </button>
     </div>
-  <section className="w-full" max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <div className="relative w-full aspect-[3/4] sm:aspect-video overflow-hidden border-y border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-12">
+  </div> {/* <-- Added missing closing tag for Card 1 */}
+
+  {/* PRODUCT CARD 2: sUSD */}
+  <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
     
     {/* 1. Full Bleed Background Cover Photo */}
     <div className="absolute inset-0 z-0">
       <Image
         src="/XAUs-bg-cover.PNG" 
-        alt="XAUs Background"
+        alt="sUSD Background"
         fill
         className="object-cover opacity-35"
         priority
@@ -119,11 +122,11 @@ export default function LaunchingSoon() {
     </div>
 
     {/* 2. Floating Asset Visual (Tucked safely in upper-middle block) */}
-    <div className="absolute inset-x-0 top-[20%] z-10 flex justify-center">
-      <div className="relative w-56 h-56 md:w-72 md:h-72">
+    <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
+      <div className="relative w-48 h-48 md:w-56 md:h-56">
         <Image
           src="/XAUs-asset.png" 
-          alt="XAUs Asset Visual"
+          alt="sUSD Asset Visual"
           fill
           className="object-contain"
         />
@@ -131,24 +134,24 @@ export default function LaunchingSoon() {
     </div>
 
     {/* 3. High Contrast Content Layer (Forced cleanly to the very bottom) */}
-    <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full max-w-xl mx-auto px-4 sm:px-0">
-      
+    <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
       {/* Title */}
-      <h3 className="text-3xl md:text-5xl font-normal text-white mb-4 tracking-tight">
+      <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
         sUSD
       </h3>
       
       {/* Smaller, Clean Description Sitting Unimpeded */}
-      <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-8 max-w-md">
-        Each Syncrate Gold (XAUs) is backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in the UAE.
+      <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
+        Each Syncrate USD (sUSD) provides an institutional-grade yield ecosystem derived from optimized, secure physical asset flow strategies.
       </p>
 
       {/* Styled View Product Button Link */}
-      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-6 py-3 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200 mb-2">
+      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
         View Product <span>→</span>
       </button>
     </div>
   </div>
+
 </section>
 
 {/* --- DESIGN SECTION --- */}
