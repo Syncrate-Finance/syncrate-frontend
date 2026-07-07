@@ -153,30 +153,31 @@ export default function XAUsProductPage() {
         </div>
       </main>
 
-      {/* --- XAUs FEATURES SECTION --- */}
+            {/* --- XAUs FEATURES SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
         
         {/* Section Breaking Line & Static Anchor Label */}
         <hr className="border-[#222222] mb-12" />
-        <span className="text-xs font-mono uppercase text-[#666666] tracking-widest block mb-4">
+        <span className="text-lg font-large -[#666666] tracking-widest block mb-4">
           XAUs Features
         </span>
 
-        {/* Dynamic Context Header (Changes dynamically layout states when cards swipe) */}
+        {/* Dynamic Context Header */}
         <div className="min-h-[110px] md:min-h-[130px] transition-all duration-300 ease-out mb-10 max-w-2xl">
           <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-3">
             {features[activeIndex].sectionHeader}
           </h2>
-          <p className="text-xs md:text-sm text-[#888888] leading-relaxed">
+          {/* INCREASED FONT SIZE HERE: Changed from text-xs md:text-sm to text-base md:text-lg */}
+          <p className="text-base md:text-lg text-[#888888] leading-relaxed">
             {features[activeIndex].sectionSubText}
           </p>
         </div>
 
-        {/* Sliding Cards Container */}
+        {/* Sliding Cards Container (Added scroll-smooth & fine-tuned alignment bounds) */}
         <div 
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {features.map((feature) => (
             <div 
@@ -225,12 +226,12 @@ export default function XAUsProductPage() {
           ))}
         </div>
 
-        {/* Small Navigation Indicator Dots linked directly to index state */}
+        {/* Small Navigation Indicator Dots */}
         <div className="flex items-center justify-center gap-2 mt-4">
           {features.map((_, index) => (
             <span 
               key={index} 
-              className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-[#FFD700]' : 'w-1.5 bg-[#222222]'}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-[#0037FF]' : 'w-1.5 bg-[#222222]'}`}
             />
           ))}
         </div>
