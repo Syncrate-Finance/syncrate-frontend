@@ -218,24 +218,26 @@ export default function XAUsProductPage() {
                   {feature.description}
                 </p>
 
-                <div className="pt-5 border-t border-[#222222]/60 w-full">
-                  <div className="flex flex-wrap items-center gap-3">
-                    {feature.logos.map((logoPath, idx) => (
-                      <div 
-                        key={idx} 
-                        className="relative w-7 h-7 bg-white/5 rounded-full flex items-center justify-center p-1 border border-white/5"
-                      >
-                        <Image 
-                          src={logoPath} 
-                          alt="Integrated Network Partner" 
-                          width={20} 
-                          height={20} 
-                          className="object-contain" 
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+               <div className="pt-5 border-t border-[#222222]/60 w-full">
+  <div className="flex flex-wrap items-center gap-3">
+    {feature.logos.map((logoPath, idx) => (
+      <div 
+        key={idx} 
+        /* INCREASED SIZE: Set to w-9 h-9 (36px) and added overflow-hidden to clip the image to the circle */
+        className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden border border-white/10"
+      >
+        <Image 
+          src={logoPath} 
+          alt="Integrated Network Partner" 
+          fill /* Uses parent container dimensions automatically */
+          sizes="36px"
+          /* REMOVED grayscale/opacity. Changed object-contain to object-cover to stretch edge-to-edge */
+          className="object-cover" 
+        />
+      </div>
+    ))}
+  </div>
+</div>
               </div>
             </div>
           ))}
