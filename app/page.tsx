@@ -80,8 +80,8 @@ export default function LaunchingSoon() {
     <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
       <div className="relative w-48 h-48 md:w-56 md:h-56">
         <Image
-          src="/XAUs-asset.png" 
-          alt="XAUs Asset Visual"
+          src="/XAUs-icon.png" 
+          alt="XAUs Icon Visual"
           fill
           className="object-contain"
         />
@@ -113,7 +113,7 @@ export default function LaunchingSoon() {
     {/* 1. Full Bleed Background Cover Photo */}
     <div className="absolute inset-0 z-0">
       <Image
-        src="/SGLD-bg-cover.PNG" 
+        src="/SGLD-cover.PNG" 
         alt="SGLD Background"
         fill
         className="object-cover opacity-35"
@@ -125,8 +125,8 @@ export default function LaunchingSoon() {
     <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
       <div className="relative w-48 h-48 md:w-56 md:h-56">
         <Image
-          src="/SGLD-asset.png" 
-          alt="SGLD Asset Visual"
+          src="/SGLD-icon.png" 
+          alt="SGLD Icon Visual"
           fill
           className="object-contain"
         />
