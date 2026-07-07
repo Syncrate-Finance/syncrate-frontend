@@ -16,7 +16,7 @@ export default function XAUsProductPage() {
       title: "Goldbod Accredited",
       description: "All Syncrate Gold bars are Goldbog-accredited and sourced directly from Goldbod miners, ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
-      logos: ["/eth3.png", "/3bnb.png", "/3sol.png", "/3polygon.png", "/4sui.png", "/5tron.png", "/6hedera.png", "/arbitrum.png"]
+      logos: ["/eth3.png"]
     },
     {
       id: 2,
