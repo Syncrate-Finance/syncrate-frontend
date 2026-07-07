@@ -275,7 +275,7 @@ export default function LaunchingSoon() {
       </div>
       <h4 className="text-lg font-medium text-white mb-3">Custody</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
-      Secure custodial storage for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span> and <span className="text-blue-500 font-medium">Crown Heritage Vaults</span> ensuring the assets backing sUSD are held independently and always verfiable.
+      Secure custodial storage for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing sUSD are held independently and always verfiable.
       </p>
     </div>
 
