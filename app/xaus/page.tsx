@@ -16,14 +16,14 @@ export default function XAUsProductPage() {
       title: "Goldbod Accredited",
       description: "All Syncrate Gold bars are sourced directly from Goldbod-accredited aggregators, ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
-      logos: ["/eth3.png"]
+      logos: ["/bawa.png"]
     },
     {
       id: 2,
       title: "Securly Vaulted",
       description: "Syncrate partners with Amanat Vaults - a UAE leading vaulting firm, to physical safeguard Syncrate's physical gold bars.",
       bgImage: "/feature-2.PNG",
-      logos: ["/custodian-1.png", "/custodian-2.png"]
+      logos: ["/amanat-icon.png"]
     },
     {
       id: 3,
