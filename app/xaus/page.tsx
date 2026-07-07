@@ -56,11 +56,44 @@ export default function XAUsProductPage() {
               Backed by 99.99% pure Goldbog-accredited gold, with each token representing 1 troy oz. Vaulted securely with reputable custodians in the UAE.
             </p>
 
-            {/* Call To Action Buttons */}
-            <div className="flex flex-wrap gap-4 mb-12">
-              <Link href="/app" className="px-8 py-3.5 bg-white text-black font-medium text-sm rounded-md hover:bg-[#E5E5E5] transition-all">
-                Buy XAUs
-              </Link>
+                                    {/* Call To Action Buttons & Live Price Quotes Row */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
+              
+              {/* 1. Action Button */}
+              <div className="flex-shrink-0">
+                <Link href="/app" className="inline-block px-8 py-3.5 bg-white text-black font-medium text-sm rounded-md hover:bg-[#E5E5E5] transition-all">
+                  Buy XAUs
+                </Link>
+              </div>
+
+              {/* 2. Price Quotes Segment with Subtitle */}
+              <div className="flex flex-col gap-2 border-l border-[#222222] pl-8">
+                <div className="flex items-center gap-8">
+                  <div>
+                    <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">
+                      Mint Price
+                    </p>
+                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
+                      $4,154.91
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">
+                      Redeem Price
+                    </p>
+                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
+                      $4,123.54
+                    </p>
+                  </div>
+                </div>
+
+                {/* Real-time notice label */}
+                <p className="text-[11px] text-[#555555] tracking-normal font-normal">
+                  Real-time price quote available in the mint/redeem web-app.
+                </p>
+              </div>
+
             </div>
 
             {/* Live Asset Metrics Grid */}
