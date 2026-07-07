@@ -13,39 +13,24 @@ export default function XAUsProductPage() {
   const features = [
     {
       id: 1,
-      sectionHeader: "Fractional Accessibility & Digital Precision",
-      sectionSubText: "Global liquidity infrastructure, fully divisible, and engineered seamlessly for instant capital deployment.",
-      title: "Fractional Accessibility",
-      description: "XAUs is divisible to 18 decimal places, enabling precise ownership, transfer, and deployment across DeFi and CeFi platforms without compromising asset integrity.",
+      title: "Goldbod Accredited",
+      description: "All Syncrate Gold bars are Goldbog-accredited and sourced directly from Goldbod miners, ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
       logos: ["/eth3.png", "/3bnb.png", "/3sol.png", "/3polygon.png", "/4sui.png", "/5tron.png", "/6hedera.png", "/arbitrum.png"]
     },
     {
       id: 2,
-      sectionHeader: "Highest Standards of Gold & Secure Storage",
-      sectionSubText: "Regulated sovereign vault ecosystems integrated directly with globally trusted bullion market clearing systems.",
-      title: "Highest Standards of Storage",
-      description: "Premier trusted gold infrastructure, seamlessly integrated with top-tier bullion markets and regulated banking custodians.",
+      title: "Securly Vaulted",
+      description: "Syncrate partners with Amanat Vaults - a UAE leading vaulting firm, to physical safeguard Syncrate's physical gold bars.",
       bgImage: "/feature-2.PNG",
       logos: ["/custodian-1.png", "/custodian-2.png"]
     },
     {
       id: 3,
-      sectionHeader: "Seamless On-Chain Productive Yield",
-      sectionSubText: "Bridging structural tangible commodities with high-efficiency institutional lending protocol modules.",
-      title: "Seamless On-Chain Yield",
-      description: "Bridge physical stability with digital agility. Utilize XAUs in diverse liquidity pools to generate transparent, consistent yield.",
+      title: "Accessible Everywhere",
+      description: "XAUs is deployed across multiple chains, enabling robust liquidy and seamless ownership.",
       bgImage: "/feature-3.PNG",
-      logos: ["/eth.png", "/base.jpeg"]
-    },
-    {
-      id: 4,
-      sectionHeader: "Direct 1:1 Physical Asset Redemption",
-      sectionSubText: "Eliminating counterparty black-boxes via fully real-world verifiable physical delivery allocations.",
-      title: "Physical Redemption",
-      description: "Convert your digital XAUs back to physical LBMA-certified gold bars instantly through our regulated redemption portal.",
-      bgImage: "/feature-4.jpg", 
-      logos: ["/audit-1.png", "/audit-2.png"]
+      logos: ["/eth.png", "/base.png"]
     }
   ]
 
@@ -173,17 +158,17 @@ export default function XAUsProductPage() {
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
         <hr className="border-[#222222] mb-12" />
         
-        <span className="text-lg font-medium text-[#666666] tracking-widest block mb-4">
-          XAUs Features
+        <span className="text-xs font-mono uppercase text-[#666666] tracking-widest block mb-4">
+          Key Features
         </span>
 
-        {/* Dynamic Context Header */}
-        <div className="min-h-[110px] md:min-h-[130px] transition-all duration-300 ease-out mb-10 max-w-2xl">
+        {/* FIXED: Turn layout header and subheading into cleanly formatted static texts */}
+        <div className="mb-10 max-w-2xl">
           <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-3">
-            {features[activeIndex].sectionHeader}
+            Highest Standards of <span className="text-[#FFD700]">Gold & Storage</span>
           </h2>
           <p className="text-base md:text-lg text-[#888888] leading-relaxed">
-            {features[activeIndex].sectionSubText}
+            Global gold infrastructure integrated seamlessly with secure bullion clearing markets, institutional custody modules, and multi-chain access tokens.
           </p>
         </div>
 
@@ -218,26 +203,25 @@ export default function XAUsProductPage() {
                   {feature.description}
                 </p>
 
-               <div className="pt-5 border-t border-[#222222]/60 w-full">
-  <div className="flex flex-wrap items-center gap-3">
-    {feature.logos.map((logoPath, idx) => (
-      <div 
-        key={idx} 
-        /* INCREASED SIZE: Set to w-9 h-9 (36px) and added overflow-hidden to clip the image to the circle */
-        className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden border border-white/10"
-      >
-        <Image 
-          src={logoPath} 
-          alt="Integrated Network Partner" 
-          fill /* Uses parent container dimensions automatically */
-          sizes="36px"
-          /* REMOVED grayscale/opacity. Changed object-contain to object-cover to stretch edge-to-edge */
-          className="object-cover" 
-        />
-      </div>
-    ))}
-  </div>
-</div>
+                <div className="pt-5 border-t border-[#222222]/60 w-full">
+                  <div className="flex flex-wrap items-center gap-3">
+                    {feature.logos.map((logoPath, idx) => (
+                      <div 
+                        key={idx} 
+                        /* FIXED Dimensions: w-9 h-9 (36px frame) with circular overflow clipping */
+                        className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden bg-white/5 border border-white/10"
+                      >
+                        <Image 
+                          src={logoPath} 
+                          alt="Integrated Network Partner" 
+                          fill
+                          sizes="36px"
+                          className="object-cover" 
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
