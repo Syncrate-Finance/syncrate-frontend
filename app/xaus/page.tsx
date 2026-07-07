@@ -165,10 +165,10 @@ export default function XAUsProductPage() {
         {/* FIXED: Turn layout header and subheading into cleanly formatted static texts */}
         <div className="mb-10 max-w-2xl">
           <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-3">
-            Highest Standards of <span className="text-[#FFD700]">Gold & Storage</span>
+            Secure <span className="text-[#FFD700]">Gold.</span> Transparent Infrastructure.
           </h2>
           <p className="text-base md:text-lg text-[#888888] leading-relaxed">
-            Global gold infrastructure integrated seamlessly with secure bullion clearing markets, institutional custody modules, and multi-chain access tokens.
+            From licensed gold sourcing to independent vault custody, Syncrate combines trusted real-world infrastructure with programmable onchain finance.
           </p>
         </div>
 
@@ -263,10 +263,14 @@ export default function XAUsProductPage() {
         </div>
       </section>
 
-       {/* --- FOOTER SECTION --- */}
-      <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111] mt-auto">
+                        {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
+      <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
+          
+          {/* Top Row: Links and Small Logo */}
           <div className="flex justify-between items-start text-sm text-[#F5F5F5] font-medium">
+            
+            {/* Left: Stacked Links */}
             <div className="flex flex-col gap-5">
               <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
               <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
@@ -276,6 +280,8 @@ export default function XAUsProductPage() {
               <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
               <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
             </div>
+
+            {/* Right: Small Logo Visual replacing text copyright */}
             <div className="flex items-center">
               <Image 
                 src="/footer-icon.PNG" 
@@ -285,12 +291,31 @@ export default function XAUsProductPage() {
                 className="object-contain"
               />
             </div>
+            
           </div>
+
+          {/* Bottom: Faint Legal Disclosure with mt-16 to fix spacing from image_13.png */}
           <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
-            <p>Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities...</p>
+            <p>
+              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
+            </p>
+            <p>
+              Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
+            </p>
+            <p>
+              Syncrate does not provide financial, legal, tax, or investment advice. Prospective users should conduct their own due diligence and consult independent professional advisors before participating.
+            </p>
+            <p>
+              References to third-party partners, custodians, or infrastructure providers on this site are for informational purposes only and do not constitute an endorsement, guarantee, or warranty of their services by Syncrate.
+            </p>
+            <p>
+              Syncrate may not be available to residents of certain jurisdictions, including where prohibited by local law or regulation. It is the responsibility of users to ensure their participation complies with applicable laws in their jurisdiction.
+            </p>
           </div>
+
         </div>
       </footer>
+      
     </div>
   )
 }
