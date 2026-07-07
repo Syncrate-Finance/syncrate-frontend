@@ -194,7 +194,7 @@ export default function LaunchingSoon() {
     </h4>
     {/* Write-up underneath */}
     <p className="text-base text-[#888888] leading-relaxed">
-      Yield isn’t a promise or a token emission. It comes directly from the financing spread earned when our gold partner repurchases inventory under short-term agreements. As gold moves through a real financing cycle, that spread flows back to Syncrate holders through sUSD.
+      SGLD's yield isn’t a promise or a token emission. It is generated through institutional gold financing. Gold underlying deposited XAUs is deployed into short-term financing arrangements with reputable and vetted counterparties, with financing income flowing back to the vault and reflected through an increasing SGLD share price.
     </p>
   </div>
 
