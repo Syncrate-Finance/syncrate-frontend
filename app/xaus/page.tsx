@@ -213,7 +213,7 @@ export default function XAUsProductPage() {
           <div 
             key={idx} 
             /* Height is constrained to 24px (h-6) while width scales out cleanly up to 96px */
-            className="relative h-6 w-24 flex items-center justify-start overflow-hidden"
+            className="relative h-12 w-36 flex items-center justify-start overflow-hidden"
           >
             <Image 
               src={logoPath} 
