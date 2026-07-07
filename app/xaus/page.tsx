@@ -56,7 +56,7 @@ export default function XAUsProductPage() {
               Backed by 99.99% pure Goldbog-accredited gold, with each token representing 1 troy oz. Vaulted securely with reputable custodians in the UAE.
             </p>
 
-                                    {/* Call To Action Buttons & Live Price Quotes Row */}
+            {/* Call To Action Buttons & Live Price Quotes Row */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
               
               {/* 1. Action Button */}
@@ -121,6 +121,16 @@ export default function XAUsProductPage() {
           <div className="lg:col-span-5 flex justify-center relative w-full aspect-square max-w-md mx-auto">
             {/* Background Atmosphere glow */}
             <div className="absolute inset-0 bg-[#FFD700]/5 rounded-full blur-3xl" />
+            
+            {/* Main Premium Floating Coin Graphic */}
+            <div className="relative w-full h-full min-h-[320px]">
+              <Image 
+                src="/XAUs-asset.png" 
+                alt="XAUs Premium Gold Coin Token" 
+                fill
+                className="object-contain drop-shadow-[0_0_50px_rgba(255,215,0,0.15)] animate-[float_6s_ease-in-out_infinite]"
+                priority
+              />
             </div>
           </div>
 
