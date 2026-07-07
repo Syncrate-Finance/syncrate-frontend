@@ -50,7 +50,7 @@ export default function XAUsProductPage() {
     }
   ]
 
-    // Detect which layout card is centered in view to sync indicators and headers
+  // Detect which layout card is centered in view to sync indicators and headers
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget
     
@@ -70,6 +70,13 @@ export default function XAUsProductPage() {
       setActiveIndex(newIndex)
     }
   }
+
+  // FIXED: Added the missing return statement here
+  return (
+    <div 
+      className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col antialiased ${GeistSans.variable} ${GeistMono.variable}`} 
+      style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}
+    >
       {/* --- TOP NAVIGATION --- */}
       <header className="w-full flex items-center justify-between px-6 py-5 max-w-6xl mx-auto border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2">
@@ -156,12 +163,14 @@ export default function XAUsProductPage() {
         </div>
       </main>
 
-            {/* --- XAUs FEATURES SECTION --- */}
+      {/* --- XAUs FEATURES SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
         
         {/* Section Breaking Line & Static Anchor Label */}
         <hr className="border-[#222222] mb-12" />
-        <span className="text-lg font-large -[#666666] tracking-widest block mb-4">
+        
+        {/* FIXED: Corrected the typo in Tailwind classes here */}
+        <span className="text-lg font-medium text-[#666666] tracking-widest block mb-4">
           XAUs Features
         </span>
 
@@ -170,13 +179,12 @@ export default function XAUsProductPage() {
           <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-3">
             {features[activeIndex].sectionHeader}
           </h2>
-          {/* INCREASED FONT SIZE HERE: Changed from text-xs md:text-sm to text-base md:text-lg */}
           <p className="text-base md:text-lg text-[#888888] leading-relaxed">
             {features[activeIndex].sectionSubText}
           </p>
         </div>
 
-        {/* Sliding Cards Container (Added scroll-smooth & fine-tuned alignment bounds) */}
+        {/* Sliding Cards Container */}
         <div 
           ref={scrollContainerRef}
           onScroll={handleScroll}
