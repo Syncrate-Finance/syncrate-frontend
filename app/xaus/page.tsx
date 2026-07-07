@@ -25,7 +25,7 @@ export default function XAUsProductPage() {
         </Link>
       </header>
 
-            {/* --- HERO DASHBOARD SECTION (With Full-Bleed Background Cover) --- */}
+      {/* --- HERO DASHBOARD SECTION (With Full-Bleed Background Cover) --- */}
       <main className="relative w-full overflow-hidden flex-grow">
         
         {/* 1. Full Bleed Background Image Layer */}
@@ -34,7 +34,7 @@ export default function XAUsProductPage() {
             src="/XAUs-bg-cover.PNG" 
             alt="XAUs Gold Background"
             fill
-            className="object-cover opacity-25" // Adjust opacity here to keep text highly legible
+            className="object-cover opacity-25"
             priority
           />
           {/* Subtle bottom gradient to blend cleanly into the next section */}
@@ -65,47 +65,6 @@ export default function XAUsProductPage() {
 
             {/* Live Asset Metrics Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">$42.18M</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">18,450 XAUs</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Bullion Weight</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">18,450 Oz</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault Gold Bars</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">564 Bars</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Visual Showcase Block */}
-          <div className="lg:col-span-5 flex justify-center relative w-full aspect-square max-w-md mx-auto">
-            {/* Background Atmosphere glow */}
-            <div className="absolute inset-0 bg-[#FFD700]/5 rounded-full blur-3xl" />
-            
-            {/* Main Premium Floating Coin Graphic */}
-            <div className="relative w-full h-full min-h-[320px]">
-              <Image 
-                src="/XAUs-bg-cover.PNG" 
-                alt="XAUs Premium Gold Coin Token" 
-                fill
-                className="object-contain drop-shadow-[0_0_50px_rgba(255,215,0,0.15)] animate-[float_6s_ease-in-out_infinite]"
-                priority
-              />
-            </div>
-          </div>
-
-        </div>
-      </main>
-
-            {/* Live Asset Metrics Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]">
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
                 <p className="text-xl md:text-2xl font-normal text-white tracking-tight">$42.18M</p>
