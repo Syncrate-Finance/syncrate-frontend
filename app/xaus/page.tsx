@@ -92,28 +92,59 @@ export default function XAUsProductPage() {
         </div>
       </main>
 
-      {/* --- REUSED FOOTER (Maintains context layout symmetry) --- */}
-      <footer className="w-full bg-[#030303] pt-16 pb-12 px-6 border-t border-[#111111]">
+       {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
+      <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
+          
+          {/* Top Row: Links and Small Logo */}
           <div className="flex justify-between items-start text-sm text-[#F5F5F5] font-medium">
+            
+            {/* Left: Stacked Links */}
             <div className="flex flex-col gap-5">
               <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
               <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
               <a href="#" className="hover:text-[#888888] transition-colors">Brand Kit</a>
               <a href="#" className="hover:text-[#888888] transition-colors">Terms & Disclosures</a>
               <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
+              <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
+              <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
             </div>
+
+            {/* Right: Small Logo Visual replacing text copyright */}
             <div className="flex items-center">
-              <Image src="/footer-icon.PNG" alt="Syncrate" width={32} height={32} className="object-contain" />
+              <Image 
+                src="/footer-icon.PNG" 
+                alt="Syncrate Logo" 
+                width={32} 
+                height={32} 
+                className="object-contain"
+              />
             </div>
+            
           </div>
 
-          <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#444444] leading-relaxed text-justify md:text-left">
-            <p>Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of securities, financial instruments, or investment products...</p>
-            <p>Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured.</p>
+          {/* Bottom: Faint Legal Disclosure with mt-16 to fix spacing from image_13.png */}
+          <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
+            <p>
+              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
+            </p>
+            <p>
+              Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
+            </p>
+            <p>
+              Syncrate does not provide financial, legal, tax, or investment advice. Prospective users should conduct their own due diligence and consult independent professional advisors before participating.
+            </p>
+            <p>
+              References to third-party partners, custodians, or infrastructure providers on this site are for informational purposes only and do not constitute an endorsement, guarantee, or warranty of their services by Syncrate.
+            </p>
+            <p>
+              Syncrate may not be available to residents of certain jurisdictions, including where prohibited by local law or regulation. It is the responsibility of users to ensure their participation complies with applicable laws in their jurisdiction.
+            </p>
           </div>
+
         </div>
       </footer>
+      
     </div>
   )
 }
