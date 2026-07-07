@@ -275,27 +275,46 @@ export default function XAUsProductPage() {
           {/* Section Indicator Label */}
           <div className="flex items-center gap-3 mb-8">
             <div className="w-3 h-3 bg-[#FFD700]" />
-            <span className="text-xs font-mono uppercase text-[#F5F5F5] tracking-widest block">
-              Asset Transparency & Verification
+            <span className="text-xs font-mono -[#666666] tracking-widest block">
+              Transparency
             </span>
           </div>
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-start">
             {/* Headers & Text */}
             <div className="max-w-xl">
-              <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-6 leading-tight">
-                Dual-Layer <br className="hidden sm:block"/>
-                Transparency. <br className="hidden sm:block"/>
-                Fully Audited.
+              <h2 className="text-2xl md:text-4x1 font-normal text-white tracking-tight mb-6 leading-tight">
+                Transparent by Design
               </h2>
               <p className="text-base md:text-lg text-[#888888] leading-relaxed">
-                Independent physical audits by Bureau Veritas and regular asset statements from vaults, providing trusted transparency through third-party verification.
+                Syncrate combines independent audits by Bureau Veritas with regular reserve statements from custodians, ensuring institutional-grade transparency across the protocol.
               </p>
             </div>
 
             {/* Clickable Action Links */}
             <div className="w-full md:w-[420px] flex flex-col mt-4 md:mt-0 border-t border-[#222222]">
-              {/* Link 1: Audit Reports */}
+              {/* Link 1: Asset Statements */}
+              <Link 
+                href="#" 
+                className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#AAAAAA] group-hover:text-white transition-colors">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span className="text-[#F5F5F5] font-normal text-base md:text-lg">Assets Statements</span>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#666666] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </Link>
+
+              {/* Link 2: Audit Reports */}
               <Link 
                 href="#" 
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
@@ -309,27 +328,6 @@ export default function XAUsProductPage() {
                     <polyline points="10 9 9 9 8 9"></polyline>
                   </svg>
                   <span className="text-[#F5F5F5] font-normal text-base md:text-lg">Audit Reports</span>
-                </div>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#666666] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </Link>
-
-              {/* Link 2: Asset Statements */}
-              <Link 
-                href="#" 
-                className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
-              >
-                <div className="flex items-center gap-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#AAAAAA] group-hover:text-white transition-colors">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                  </svg>
-                  <span className="text-[#F5F5F5] font-normal text-base md:text-lg">Asset Statements</span>
                 </div>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#666666] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
                   <line x1="7" y1="17" x2="17" y2="7"></line>
