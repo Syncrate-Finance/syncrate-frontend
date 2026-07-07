@@ -36,7 +36,7 @@ export default function XAUsProductPage() {
       title: "Seamless On-Chain Yield",
       description: "Bridge physical stability with digital agility. Utilize XAUs in diverse liquidity pools to generate transparent, consistent yield.",
       bgImage: "/feature-3.PNG",
-      logos: ["/eth.PNG", "/base.jpg"]
+      logos: ["/eth.png", "/base.jpeg"]
     },
     {
       id: 4,
