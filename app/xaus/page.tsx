@@ -122,14 +122,6 @@ export default function XAUsProductPage() {
             {/* Background Atmosphere glow */}
             <div className="absolute inset-0 bg-[#FFD700]/5 rounded-full blur-3xl" />
             
-            {/* Main Premium Floating Coin Graphic */}
-            <div className="relative w-full h-full min-h-[320px]">
-              <Image 
-                src="/XAUs-asset.png" 
-                alt="XAUs Premium Gold Coin Token" 
-                fill
-                className="object-contain drop-shadow-[0_0_50px_rgba(255,215,0,0.15)] animate-[float_6s_ease-in-out_infinite]"
-                priority
               />
             </div>
           </div>
