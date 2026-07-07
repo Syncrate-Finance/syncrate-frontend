@@ -203,25 +203,48 @@ export default function XAUsProductPage() {
                   {feature.description}
                 </p>
 
-                <div className="pt-5 border-t border-[#222222]/60 w-full">
-                  <div className="flex flex-wrap items-center gap-3">
-                    {feature.logos.map((logoPath, idx) => (
-                      <div 
-                        key={idx} 
-                        /* FIXED Dimensions: w-9 h-9 (36px frame) with circular overflow clipping */
-                        className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden bg-white/5 border border-white/10"
-                      >
-                        <Image 
-                          src={logoPath} 
-                          alt="Integrated Network Partner" 
-                          fill
-                          sizes="36px"
-                          className="object-cover" 
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+               <div className="pt-5 border-t border-[#222222]/60 w-full">
+  {/* Flex layout fixes alignment: row layout for chains, wide gap wrapping for rectangular corporate logos */}
+  <div className={`flex flex-wrap items-center ${feature.id <= 2 ? 'gap-x-6 gap-y-3' : 'gap-3'}`}>
+    {feature.logos.map((logoPath, idx) => {
+      // CARDS 1 & 2: Wide, pure-white rectangular corporate partner branding layouts
+      if (feature.id <= 2) {
+        return (
+          <div 
+            key={idx} 
+            /* Height is constrained to 24px (h-6) while width scales out cleanly up to 96px */
+            className="relative h-6 w-24 flex items-center justify-start overflow-hidden"
+          >
+            <Image 
+              src={logoPath} 
+              alt="Integrated Network Partner" 
+              fill
+              sizes="(max-w-768px) 96px, 96px"
+              /* object-contain stops clipping, brightness-0 invert creates the solid white look */
+              className="object-contain object-left brightness-0 invert" 
+            />
+          </div>
+        )
+      }
+
+      // CARDS 3 & 4: Standard edge-to-edge square/circular crypto asset wrappers
+      return (
+        <div 
+          key={idx} 
+          className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden bg-white/5 border border-white/10"
+        >
+          <Image 
+            src={logoPath} 
+            alt="Integrated Network Partner" 
+            fill
+            sizes="36px"
+            className="object-cover" 
+          />
+        </div>
+      )
+    })}
+  </div>
+</div>
               </div>
             </div>
           ))}
