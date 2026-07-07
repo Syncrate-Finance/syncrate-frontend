@@ -195,7 +195,7 @@ export default function LaunchingSoon() {
       Real Yield Source
     </h4>
     {/* Write-up underneath */}
-    <p className="text-base text-[#888888] leading-relaxed">
+    <p className="text-sm text-[#888888] leading-relaxed">
       SGLD's yield isn’t a promise or a token emission. It is generated through institutional gold financing. Gold underlying deposited XAUs is deployed into short-term financing arrangements with reputable and vetted counterparties, with financing income flowing back to the vault and reflected through an increasing SGLD share price.
     </p>
   </div>
@@ -207,7 +207,7 @@ export default function LaunchingSoon() {
       Regulated Partners and Custodian
     </h4>
     {/* Write-up underneath */}
-    <p className="text-base text-[#888888] leading-relaxed">
+    <p className="text-sm text-[#888888] leading-relaxed">
       Syncrate works exclusively with licensed gold aggregators and secure custodial partners, ensuring every ounce financed is sourced and held within a compliant, verifiable structure. 
     </p>
   </div>
@@ -219,7 +219,7 @@ export default function LaunchingSoon() {
       Experienced
     </h4>
     {/* Write-up underneath */}
-    <p className="text-base text-[#888888] leading-relaxed">
+    <p className="text-sm text-[#888888] leading-relaxed">
       Our team brings extensive expertise from top global banks and companies including Goldman Sachs and ChainLink. We are also backed by industry leading advisors with decades of experience in onchain finance, tokenization and DeFi.
  </p>
   </div>
