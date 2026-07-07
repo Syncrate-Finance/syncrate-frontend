@@ -147,12 +147,14 @@ export default function LaunchingSoon() {
         The Syncrate Gold Yield (SGLD) token represents a share of the Syncrate GLD Vault, where deposited XAUs participate in institutional gold financing strategies. Yield accrues to the vault through an increasing SGLD share price over time.
       </p>
 
-      {/* Styled View Product Button Link */}
-      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
-        View Product <span>→</span>
-      </button>
-    </div>
-  </div>
+      {/* THE LINK BUTTON */}
+  <Link 
+    href="/sgld" 
+    className="inline-block text-center px-5 py-2 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] text-xs font-medium transition-colors"
+  >
+    View Product
+  </Link>
+</div>
 
 </section>
 
