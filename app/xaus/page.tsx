@@ -30,7 +30,7 @@ export default function XAUsProductPage() {
       title: "Accessible Everywhere",
       description: "XAUs is deployed across multiple chains, enabling robust liquidy and seamless ownership.",
       bgImage: "/feature-3.PNG",
-      logos: ["/eth.png", "/base.png"]
+      logos: ["/eth.png", "/base.jpeg"]
     }
   ]
 
