@@ -121,8 +121,6 @@ export default function XAUsProductPage() {
           <div className="lg:col-span-5 flex justify-center relative w-full aspect-square max-w-md mx-auto">
             {/* Background Atmosphere glow */}
             <div className="absolute inset-0 bg-[#FFD700]/5 rounded-full blur-3xl" />
-            
-              />
             </div>
           </div>
 
