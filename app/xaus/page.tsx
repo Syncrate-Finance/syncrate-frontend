@@ -17,7 +17,7 @@ export default function XAUsProductPage() {
       sectionSubText: "Global liquidity infrastructure, fully divisible, and engineered seamlessly for instant capital deployment.",
       title: "Fractional Accessibility",
       description: "XAUs is divisible to 18 decimal places, enabling precise ownership, transfer, and deployment across DeFi and CeFi platforms without compromising asset integrity.",
-      bgImage: "/feature-1.PNG", // Check your local public folder to confirm if .PNG or .png
+      bgImage: "/feature-1.PNG", 
       logos: ["/eth3.png", "/3bnb.png", "/3sol.png", "/3polygon.png", "/4sui.png", "/5tron.png", "/6hedera.png", "/arbitrum.png"]
     },
     {
@@ -44,22 +44,19 @@ export default function XAUsProductPage() {
       sectionSubText: "Eliminating counterparty black-boxes via fully real-world verifiable physical delivery allocations.",
       title: "Physical Redemption",
       description: "Convert your digital XAUs back to physical LBMA-certified gold bars instantly through our regulated redemption portal.",
-      bgImage: "/feature-4.jpg", // Confirm if this is .jpg or .PNG on your local filesystem
+      bgImage: "/feature-4.jpg", 
       logos: ["/audit-1.png", "/audit-2.png"]
     }
   ]
 
-  // Balanced midpoint index calculation
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget
     const firstCard = container.children[0] as HTMLElement
     if (!firstCard) return
     
-    // Width of card element + tailwind gap-6 spacing (24px)
     const itemWidth = firstCard.offsetWidth + 24
     const scrollLeft = container.scrollLeft
     
-    // Using a half-width offset avoids index skipping bugs
     const newIndex = Math.floor((scrollLeft + itemWidth / 2) / itemWidth)
     
     if (newIndex >= 0 && newIndex < features.length && newIndex !== activeIndex) {
@@ -67,7 +64,6 @@ export default function XAUsProductPage() {
     }
   }
 
-  // Fallback programmatic navigation clicking utility
   const scrollToCard = (index: number) => {
     const container = scrollContainerRef.current
     if (!container) return
@@ -177,7 +173,7 @@ export default function XAUsProductPage() {
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
         <hr className="border-[#222222] mb-12" />
         
-        <span className="text-xs font-mono uppercase text-[#666666] tracking-widest block mb-4">
+        <span className="text-lg font-medium text-[#666666] tracking-widest block mb-4">
           XAUs Features
         </span>
 
@@ -234,7 +230,7 @@ export default function XAUsProductPage() {
                           alt="Integrated Network Partner" 
                           width={20} 
                           height={20} 
-                          className="object-contain grayscale opacity-80"
+                          className="object-contain" 
                         />
                       </div>
                     ))}
