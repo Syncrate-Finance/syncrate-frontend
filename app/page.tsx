@@ -60,19 +60,14 @@ export default function LaunchingSoon() {
   </div>
 </div>
       {/* --- NEW PRODUCTS HEADER & SECTION (Inspired by image_7.png) --- */}
-     <section className="w-full">
-  {/* 
-     - 'w-full' and no 'px' parameters ensures it stretches completely right-to-left.
-     - 'aspect-[3/4]' makes the box longer so text stays clear of the icon.
-     - 'rounded-none' removes corner curves on mobile to seamlessly blend into the screen edge.
-  */}
+     <section className="w-full" max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
   <div className="relative w-full aspect-[3/4] sm:aspect-video overflow-hidden border-y border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-12">
     
     {/* 1. Full Bleed Background Cover Photo */}
     <div className="absolute inset-0 z-0">
       <Image
-        src="/susd-bg-cover.PNG" 
-        alt="sUSD Background"
+        src="/XAUs-bg-cover.PNG" 
+        alt="XAUs Background"
         fill
         className="object-cover opacity-35"
         priority
@@ -83,8 +78,52 @@ export default function LaunchingSoon() {
     <div className="absolute inset-x-0 top-[20%] z-10 flex justify-center">
       <div className="relative w-56 h-56 md:w-72 md:h-72">
         <Image
-          src="/sUSD-asset.png" 
-          alt="sUSD Asset Visual"
+          src="/XAUs-asset.png" 
+          alt="XAUs Asset Visual"
+          fill
+          className="object-contain"
+        />
+      </div>
+    </div>
+
+    {/* 3. High Contrast Content Layer (Forced cleanly to the very bottom) */}
+    <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full max-w-xl mx-auto px-4 sm:px-0">
+      
+      {/* Title */}
+      <h3 className="text-3xl md:text-5xl font-normal text-white mb-4 tracking-tight">
+        XAUs
+      </h3>
+      
+      {/* Smaller, Clean Description Sitting Unimpeded */}
+      <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-8 max-w-md">
+        Each Syncrate Gold (XAUs) is backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in the UAE.
+      </p>
+
+      {/* Styled View Product Button Link */}
+      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-6 py-3 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200 mb-2">
+        View Product <span>→</span>
+      </button>
+    </div>
+  <section className="w-full" max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="relative w-full aspect-[3/4] sm:aspect-video overflow-hidden border-y border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-12">
+    
+    {/* 1. Full Bleed Background Cover Photo */}
+    <div className="absolute inset-0 z-0">
+      <Image
+        src="/XAUs-bg-cover.PNG" 
+        alt="XAUs Background"
+        fill
+        className="object-cover opacity-35"
+        priority
+      />
+    </div>
+
+    {/* 2. Floating Asset Visual (Tucked safely in upper-middle block) */}
+    <div className="absolute inset-x-0 top-[20%] z-10 flex justify-center">
+      <div className="relative w-56 h-56 md:w-72 md:h-72">
+        <Image
+          src="/XAUs-asset.png" 
+          alt="XAUs Asset Visual"
           fill
           className="object-contain"
         />
@@ -101,7 +140,7 @@ export default function LaunchingSoon() {
       
       {/* Smaller, Clean Description Sitting Unimpeded */}
       <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-8 max-w-md">
-        Each Syncrate Gold (sUSD) is backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in Ghana and the UAE.
+        Each Syncrate Gold (XAUs) is backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in the UAE.
       </p>
 
       {/* Styled View Product Button Link */}
