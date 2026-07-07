@@ -101,9 +101,11 @@ export default function LaunchingSoon() {
       </p>
 
       {/* Styled View Product Button Link */}
-      <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
-        View Product <span>→</span>
-      </button>
+      <Link href="/xaus">
+  <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
+    View Product <span>→</span>
+  </button>
+</Link>
     </div>
   </div> {/* <-- Added missing closing tag for Card 1 */}
 
