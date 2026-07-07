@@ -99,7 +99,7 @@ export default function XAUsProductPage() {
 
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-12 md:py-20">
           <div className="flex flex-col text-left max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-normal tracking-tighter text-white mb-6 leading-[1.05]">
+            <h1 className="text-4xl md:text-6xl font-normal tracking-tighter text-white mb-6 stroke-none leading-[1.05]">
               Real <span className="text-[#FFD700]">Gold.</span> <br />
               OnChain.
             </h1>
@@ -158,11 +158,10 @@ export default function XAUsProductPage() {
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
         <hr className="border-[#222222] mb-12" />
         
-        <span className="text-xs font-mono -[#666666] tracking-widest block mb-4">
+        <span className="text-xs font-mono text-[#666666] tracking-widest block mb-4">
           XAUs Features
         </span>
 
-        {/* FIXED: Turn layout header and subheading into cleanly formatted static texts */}
         <div className="mb-10 max-w-2xl">
           <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-3">
             Secure <span className="text-[#FFD700]">Gold.</span> Transparent Infrastructure.
@@ -203,52 +202,60 @@ export default function XAUsProductPage() {
                   {feature.description}
                 </p>
 
-               <div className="pt-5 border-t border-[#222222]/60 w-full">
-  {/* Flex layout fixes alignment: row layout for chains, wide gap wrapping for rectangular corporate logos */}
-  <div className={`flex flex-wrap items-center ${feature.id <= 2 ? 'gap-x-6 gap-y-3' : 'gap-3'}`}>
-    {feature.logos.map((logoPath, idx) => {
-      // CARDS 1 & 2: Wide, pure-white rectangular corporate partner branding layouts
-      if (feature.id <= 2) {
-        return (
-          <div 
-            key={idx} 
-            /* Height is constrained to 24px (h-6) while width scales out cleanly up to 96px */
-            className="relative h-12 w-36 flex items-center justify-start overflow-hidden"
-          >
-            <Image 
-              src={logoPath} 
-              alt="Integrated Network Partner" 
-              fill
-              sizes="(max-w-768px) 96px, 96px"
-              /* object-contain stops clipping, brightness-0 invert creates the solid white look */
-              className="object-contain object-left brightness-0 invert" 
-            />
-          </div>
-        )
-      }
+                <div className="pt-5 border-t border-[#222222]/60 w-full">
+                  <div className={`flex flex-wrap items-center ${feature.id <= 2 ? 'gap-x-6 gap-y-3' : 'gap-3'}`}>
+                    {feature.logos.map((logoPath, idx) => {
+                      if (feature.id <= 2) {
+                        return (
+                          <div 
+                            key={idx} 
+                            className="relative h-12 w-36 flex items-center justify-start overflow-hidden"
+                          >
+                            <Image 
+                              src={logoPath} 
+                              alt="Integrated Network Partner" 
+                              fill
+                              sizes="(max-w-768px) 96px, 96px"
+                              className="object-contain object-left brightness-0 invert" 
+                            />
+                          </div>
+                        )
+                      }
 
-      // CARDS 3 & 4: Standard edge-to-edge square/circular crypto asset wrappers
-      return (
-        <div 
-          key={idx} 
-          className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden bg-white/5 border border-white/10"
-        >
-          <Image 
-            src={logoPath} 
-            alt="Integrated Network Partner" 
-            fill
-            sizes="36px"
-            className="object-cover" 
-          />
-        </div>
-      )
-    })}
-  </div>
-</div>
+                      return (
+                        <div 
+                          key={idx} 
+                          className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden bg-white/5 border border-white/10"
+                        >
+                          <Image 
+                            src={logoPath} 
+                            alt="Integrated Network Partner" 
+                            fill
+                            sizes="36px"
+                            className="object-cover" 
+                          />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Navigation Indicator Dots */}
+        <div className="flex items-center justify-center gap-2 mt-4">
+          {features.map((_, index) => (
+            <button 
+              key={index}
+              onClick={() => scrollToCard(index)}
+              aria-label={`Go to slide ${index + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-[#0037FF]' : 'w-1.5 bg-[#222222]'}`}
+            />
+          ))}
+        </div>
+      </section>
 
       {/* --- TRANSPARENCY & VERIFICATION SECTION --- */}
       <section className="relative w-full overflow-hidden border-t border-[#111111] py-16 md:py-24">
@@ -281,7 +288,6 @@ export default function XAUsProductPage() {
                 Transparency. <br className="hidden sm:block"/>
                 Fully Audited.
               </h2>
-              {/* Using the exact text size from features: text-base md:text-lg text-[#888888] */}
               <p className="text-base md:text-lg text-[#888888] leading-relaxed">
                 Independent physical audits by Bureau Veritas and regular asset statements from vaults, providing trusted transparency through third-party verification.
               </p>
@@ -295,7 +301,6 @@ export default function XAUsProductPage() {
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
               >
                 <div className="flex items-center gap-4">
-                  {/* Document SVG Icon */}
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#AAAAAA] group-hover:text-white transition-colors">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
@@ -305,7 +310,6 @@ export default function XAUsProductPage() {
                   </svg>
                   <span className="text-[#F5F5F5] font-normal text-base md:text-lg">Audit Reports</span>
                 </div>
-                {/* Diagonal Arrow Icon */}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#666666] group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
                   <line x1="7" y1="17" x2="17" y2="7"></line>
                   <polyline points="7 7 17 7 17 17"></polyline>
@@ -337,7 +341,7 @@ export default function XAUsProductPage() {
         </div>
       </section>
 
-       {/* --- NEW FOOTER SECTION (Inspired by image_13.png) --- */}
+      {/* --- FOOTER SECTION --- */}
       <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
           
@@ -355,7 +359,7 @@ export default function XAUsProductPage() {
               <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
             </div>
 
-            {/* Right: Small Logo Visual replacing text copyright */}
+            {/* Right: Small Logo Visual */}
             <div className="flex items-center">
               <Image 
                 src="/footer-icon.PNG" 
@@ -368,7 +372,7 @@ export default function XAUsProductPage() {
             
           </div>
 
-          {/* Bottom: Faint Legal Disclosure with mt-16 to fix spacing from image_13.png */}
+          {/* Bottom: Faint Legal Disclosure */}
           <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
             <p>
               Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
