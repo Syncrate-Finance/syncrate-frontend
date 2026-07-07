@@ -13,22 +13,22 @@ export default function XAUsProductPage() {
   const features = [
     {
       id: 1,
-      title: "Fractional Accessibility",
-      description: "XAUs is divisible to 18 decimal places, enabling precise ownership, transfer, and deployment across DeFi and CeFi platforms without compromising asset integrity.",
+      title: "Goldbod Accredited",
+      description: "All Syncrate Gold bars are sourced directly from Goldbod-accredited aggregators, ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
       logos: ["/bawa.png"]
     },
     {
       id: 2,
-      title: "Highest Standards of Storage",
-      description: "Premier trusted gold infrastructure, seamlessly integrated with top-tier bullion markets and regulated banking custodians.",
+      title: "Securly Vaulted",
+      description: "Syncrate partners with Amanat Vaults - a UAE leading vaulting firm, to physical safeguard Syncrate's physical gold bars.",
       bgImage: "/feature-2.PNG",
       logos: ["/amanat-icon.png"]
     },
     {
       id: 3,
-      title: "Seamless On-Chain Yield",
-      description: "Bridge physical stability with digital agility. Utilize XAUs in diverse liquidity pools to generate transparent, consistent yield.",
+      title: "Accessible Everywhere",
+      description: "XAUs is deployed across multiple chains, enabling robust liquidy and seamless ownership.",
       bgImage: "/feature-3.PNG",
       logos: ["/eth.png", "/base.jpeg"]
     }
