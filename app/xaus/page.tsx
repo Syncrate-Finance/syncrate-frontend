@@ -337,7 +337,65 @@ export default function XAUsProductPage() {
           </div>
         </div>
       </section>
+{/* --- FAQs SECTION --- */}
+<section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
+  <div className="max-w-3xl">
+    <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-12">
+      FAQs
+    </h2>
 
+    <div className="flex flex-col border-t border-[#222222]">
+      {[
+        {
+          q: "What is XAUs?",
+          a: "Syncrate Gold (XAUs) is a digital asset where each token is fully backed by one troy ounce of 99.99% pure physical gold bullion secured in reputable UAE vaults."
+        },
+        {
+          q: "How can I verify the physical gold backing?",
+          a: "Transparency is maintained via independent third-party physical audits conducted by Bureau Veritas alongside bi-annual vault statement reconciliations available on our transparency dashboard."
+        },
+        {
+          q: "Is there a minimum requirement for minting and redemption?",
+          a: "Yes. The minimum minting amount is $10,000 worth of supported stablecoins. XAUs can be redeemed back into USDC/USDT with a minimum redemption amount of 32.148 XAUs (equivalent to 1kg gold bar)"
+        },
+        {
+          q: "What is the fee structure?",
+          a: "There is a 0.1% mint fee on every mint transaction, capped at $1,000. A 0.25% fee is charged on every redemption transaction."
+        }
+      ].map((faq, index) => {
+        // Local state management handles individual open/close toggles cleanly
+        const [isOpen, setIsOpen] = useState(false);
+
+        return (
+          <div key={index} className="border-b border-[#222222] w-full">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="w-full flex items-center justify-between py-6 text-left group hover:bg-white/[0.02] px-2 transition-colors duration-200"
+            >
+              <span className="text-base md:text-lg font-normal text-[#F5F5F5] pr-4">
+                {faq.q}
+              </span>
+              <span className="text-xl font-mono text-[#AAAAAA] group-hover:text-white transition-colors w-6 h-6 flex items-center justify-center select-none">
+                {isOpen ? '–' : '+'}
+              </span>
+            </button>
+            
+            <div 
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                isOpen ? 'max-h-40 opacity-100 mb-6' : 'max-h-0 opacity-0'
+              }`}
+            >
+              <p className="text-sm md:text-base text-[#888888] leading-relaxed px-2 max-w-2xl">
+                {faq.a}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+      
       {/* --- FOOTER SECTION --- */}
       <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
