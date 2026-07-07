@@ -50,23 +50,26 @@ export default function XAUsProductPage() {
     }
   ]
 
-  // Detect which layout card is centered in view to sync indicators and headers
+    // Detect which layout card is centered in view to sync indicators and headers
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget
-    const scrollLeft = container.scrollLeft
-    const cardWidth = container.clientWidth / 2 // Accounts for flex gap spacing bounds
-    const newIndex = Math.round(scrollLeft / cardWidth)
     
+    // 1. Get the actual physical width of the first card in the DOM
+    const firstCard = container.children[0] as HTMLElement
+    if (!firstCard) return
+    
+    // 2. Add the flex gap (gap-6 in Tailwind is 24px) to the card's width
+    const itemWidth = firstCard.offsetWidth + 24
+    
+    // 3. Calculate the true index based on actual scroll distance
+    const scrollLeft = container.scrollLeft
+    const newIndex = Math.round(scrollLeft / itemWidth)
+    
+    // 4. Update state only if the index changes and is valid
     if (newIndex >= 0 && newIndex < features.length && newIndex !== activeIndex) {
       setActiveIndex(newIndex)
     }
   }
-
-  return (
-    <div 
-      className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col antialiased ${GeistSans.variable} ${GeistMono.variable}`} 
-      style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}
-    >
       {/* --- TOP NAVIGATION --- */}
       <header className="w-full flex items-center justify-between px-6 py-5 max-w-6xl mx-auto border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2">
