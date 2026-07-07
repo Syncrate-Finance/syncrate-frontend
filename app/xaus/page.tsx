@@ -14,7 +14,7 @@ export default function XAUsProductPage() {
     {
       id: 1,
       title: "Goldbod Accredited",
-      description: "All Syncrate Gold bars are Goldbog-accredited and sourced directly from Goldbod miners, ensuring each gold bar is bullion-market authentic and globally accepted.",
+      description: "All Syncrate Gold bars are sourced directly from Goldbod-accredited aggregators, ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
       logos: ["/eth3.png"]
     },
@@ -158,8 +158,8 @@ export default function XAUsProductPage() {
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
         <hr className="border-[#222222] mb-12" />
         
-        <span className="text-xs font-mono uppercase text-[#666666] tracking-widest block mb-4">
-          Key Features
+        <span className="text-xs font-mono -[#666666] tracking-widest block mb-4">
+          XAUs Features
         </span>
 
         {/* FIXED: Turn layout header and subheading into cleanly formatted static texts */}
