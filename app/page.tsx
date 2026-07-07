@@ -113,8 +113,8 @@ export default function LaunchingSoon() {
     {/* 1. Full Bleed Background Cover Photo */}
     <div className="absolute inset-0 z-0">
       <Image
-        src="/XAUs-bg-cover.PNG" 
-        alt="sUSD Background"
+        src="/SGLD-bg-cover.PNG" 
+        alt="SGLD Background"
         fill
         className="object-cover opacity-35"
         priority
@@ -125,8 +125,8 @@ export default function LaunchingSoon() {
     <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
       <div className="relative w-48 h-48 md:w-56 md:h-56">
         <Image
-          src="/XAUs-asset.png" 
-          alt="sUSD Asset Visual"
+          src="/SGLD-asset.png" 
+          alt="SGLD Asset Visual"
           fill
           className="object-contain"
         />
@@ -142,7 +142,7 @@ export default function LaunchingSoon() {
       
       {/* Smaller, Clean Description Sitting Unimpeded */}
       <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-        Each Syncrate USD (sUSD) provides an institutional-grade yield ecosystem derived from optimized, secure physical asset flow strategies.
+        The Syncrate Gold Yield (SGLD) token represents a share of the Syncrate GLD Vault, where deposited XAUs participate in institutional gold financing strategies. Yield accrues to the vault through an increasing SGLD share price over time.
       </p>
 
       {/* Styled View Product Button Link */}
