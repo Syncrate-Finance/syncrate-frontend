@@ -107,7 +107,7 @@ export default function LaunchingSoon() {
     </div>
   </div> {/* <-- Added missing closing tag for Card 1 */}
 
-  {/* PRODUCT CARD 2: sUSD */}
+  {/* PRODUCT CARD 2: SGLD */}
   <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
     
     {/* 1. Full Bleed Background Cover Photo */}
@@ -137,7 +137,7 @@ export default function LaunchingSoon() {
     <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
       {/* Title */}
       <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
-        sUSD
+        SGLD
       </h3>
       
       {/* Smaller, Clean Description Sitting Unimpeded */}
@@ -275,7 +275,7 @@ export default function LaunchingSoon() {
       </div>
       <h4 className="text-lg font-medium text-white mb-3">Custody</h4>
       <p className="text-sm text-[#888888] leading-relaxed">
-      Secure custodial storage for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing sUSD are held independently and always verfiable.
+      Secure custodial storage for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing XAUs are held independently and always verfiable.
       </p>
     </div>
 
