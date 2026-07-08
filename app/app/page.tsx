@@ -242,7 +242,7 @@ export default function XAusMintingApp() {
                     /* REDEEM MODE: Fixed XAUs Badge */
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white select-none flex-shrink-0 whitespace-nowrap">
                       <Image 
-                        src="/xaus-icon.png" 
+                        src="/xaus-icon2.png" 
                         alt="XAUs logo" 
                         width={16} 
                         height={16} 
@@ -287,7 +287,7 @@ export default function XAusMintingApp() {
                     /* MINT MODE: Fixed XAUs Badge */
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
                       <Image 
-                        src="/xaus-icon.png" 
+                        src="/xaus-icon2.png" 
                         alt="XAUs logo" 
                         width={16} 
                         height={16} 
