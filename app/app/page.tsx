@@ -164,7 +164,13 @@ export default function XAusMintingApp() {
                       onClick={() => setIsAssetDropdownOpen(!isAssetDropdownOpen)}
                       className="bg-[#0A0A0A] border border-[#222222] hover:border-[#333333] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white transition-all disabled:opacity-50"
                     >
-                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${paymentAsset === 'USDC' ? 'bg-[#2775CA]' : 'bg-[#26A17B]'}`} />
+                      <Image 
+                        src={paymentAsset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                        alt={`${paymentAsset} logo`} 
+                        width={16} 
+                        height={16} 
+                        className="rounded-full flex-shrink-0"
+                      />
                       <span>{paymentAsset}</span>
                       <span className="text-[9px] text-[#666666]">▼</span>
                     </button>
@@ -181,7 +187,13 @@ export default function XAusMintingApp() {
                             }}
                             className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
                           >
-                            <div className={`w-2 h-2 rounded-full ${asset === 'USDC' ? 'bg-[#2775CA]' : 'bg-[#26A17B]'}`} />
+                            <Image 
+                              src={asset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                              alt={`${asset} logo`} 
+                              width={16} 
+                              height={16} 
+                              className="rounded-full"
+                            />
                             {asset}
                           </button>
                         ))}
@@ -202,7 +214,13 @@ export default function XAusMintingApp() {
                     className="bg-transparent text-xl md:text-2xl text-white/90 font-sans focus:outline-none w-full cursor-default"
                   />
                   <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none">
-                    <div className="w-2 h-2 rounded-full bg-[#FFD700]" />
+                    <Image 
+                      src="/XAUs-icon.png" 
+                      alt="XAUs logo" 
+                      width={16} 
+                      height={16} 
+                      className="rounded-full flex-shrink-0"
+                    />
                     <span>XAUs</span>
                   </div>
                 </div>
