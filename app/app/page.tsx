@@ -143,7 +143,7 @@ export default function XAusMintingApp() {
               onClick={() => setIsChainDropdownOpen(!isChainDropdownOpen)}
               className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 hover:border-[#333333] transition-colors"
             >
-              <Image src="/base.png" alt="Base Network" width={14} height={14} className="rounded-full" />
+              <Image src="/base.PNG" alt="Base Network" width={14} height={14} className="rounded-full" />
               {selectedChain} <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
             </button>
 
