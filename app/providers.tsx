@@ -1,7 +1,7 @@
 'use client';
 
-import '@rainbowkit-me/rainbowkit/styles.css';
-import { getDefaultConfig, RainbowKitProvider } from '@rainbowkit-me/rainbowkit';
+import '@rainbowkit/rainbowkit/styles.css';
+import { getDefaultConfig, RainbowKitProvider } from '@rainbowkit/rainbowkit';
 import { WagmiProvider } from 'wagmi';
 import { base, baseSepolia } from 'wagmi/chains';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
