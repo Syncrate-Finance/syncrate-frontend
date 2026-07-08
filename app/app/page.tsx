@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
@@ -13,15 +13,20 @@ export default function XAusMintingApp() {
   const [isChainDropdownOpen, setIsChainDropdownOpen] = useState(false)
 
   // Minting Flow Form States
-  const [mintAmount, setMintAmount] = useState('')
+  const [stablecoinAmount, setStablecoinAmount] = useState('')
   const [paymentAsset, setPaymentAsset] = useState<'USDC' | 'USDT'>('USDC')
+  const [isAssetDropdownOpen, setIsAssetDropdownOpen] = useState(false)
   
   // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'minting' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'minting' | 'success'>('idle')
 
   // Mock pricing calculation based on live gold feed (e.g., ~$2,415.50 per troy oz / XAUs)
   const goldPricePerOunce = 2415.50
-  const estimatedCost = mintAmount ? (parseFloat(mintAmount) * goldPricePerOunce).toFixed(2) : '0.00'
+  
+  // Calculate how many XAUs they receive for the typed stablecoin amount
+  const calculatedXAus = stablecoinAmount && parseFloat(stablecoinAmount) > 0
+    ? (parseFloat(stablecoinAmount) / goldPricePerOunce).toFixed(4)
+    : '0.0000'
 
   // Block handlers demonstrating layout flow updates
   const handleApprove = () => {
@@ -39,7 +44,7 @@ export default function XAusMintingApp() {
   }
 
   const resetFlow = () => {
-    setMintAmount('')
+    setStablecoinAmount('')
     setTxStatus('idle')
   }
 
@@ -136,64 +141,83 @@ export default function XAusMintingApp() {
             </div>
           ) : (
             /* INPUT SETUP SYSTEM */
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
               
-              {/* Input 1: Quantity Field */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-mono tracking-wider text-[#666666] uppercase">Quantity to Mint (XAUs)</label>
-                <div className="relative flex items-center">
+              {/* BLOCK 1: PAY INPUT (EDITABLE Stablecoin Amount) */}
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 focus-within:border-[#444444] transition-colors relative">
+                <span className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">You Pay</span>
+                <div className="flex items-center justify-between gap-4">
                   <input 
                     type="number" 
                     placeholder="0.0"
-                    value={mintAmount}
-                    onChange={(e) => setMintAmount(e.target.value)}
+                    value={stablecoinAmount}
+                    onChange={(e) => setStablecoinAmount(e.target.value)}
                     disabled={txStatus !== 'idle' && txStatus !== 'approved'}
-                    className="w-full bg-[#030303] border border-[#222222] rounded-lg px-4 py-3.5 text-base text-white placeholder-[#333333] focus:outline-none focus:border-[#444444] font-sans disabled:opacity-50 transition-colors"
+                    className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50"
                   />
-                  <span className="absolute right-4 text-xs font-mono text-[#666666]">Ounces</span>
-                </div>
-              </div>
-
-              {/* Input 2: Payment Asset Selector Split Grid */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-mono tracking-wider text-[#666666] uppercase">Pay With Asset</label>
-                <div className="grid grid-cols-2 gap-3">
-                  {(['USDC', 'USDT'] as const).map((asset) => (
+                  
+                  {/* Inline Token Selector Dropdown */}
+                  <div className="relative flex-shrink-0">
                     <button
-                      key={asset}
                       type="button"
                       disabled={txStatus !== 'idle' && txStatus !== 'approved'}
-                      onClick={() => setPaymentAsset(asset)}
-                      className={`py-3 px-4 border rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${
-                        paymentAsset === asset 
-                          ? 'border-[#444444] bg-white/[0.02] text-white' 
-                          : 'border-[#1a1a1a] bg-transparent text-[#555555] hover:border-[#222222]'
-                      } disabled:opacity-40`}
+                      onClick={() => setIsAssetDropdownOpen(!isAssetDropdownOpen)}
+                      className="bg-[#0A0A0A] border border-[#222222] hover:border-[#333333] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white transition-all disabled:opacity-50"
                     >
-                      <div className={`w-2 h-2 rounded-full ${asset === 'USDC' ? 'bg-[#2775CA]' : 'bg-[#26A17B]'}`} />
-                      {asset}
+                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${paymentAsset === 'USDC' ? 'bg-[#2775CA]' : 'bg-[#26A17B]'}`} />
+                      <span>{paymentAsset}</span>
+                      <span className="text-[9px] text-[#666666]">▼</span>
                     </button>
-                  ))}
+
+                    {isAssetDropdownOpen && (
+                      <div className="absolute right-0 mt-1.5 w-28 bg-[#0A0A0A] border border-[#222222] rounded-lg overflow-hidden z-40 shadow-xl">
+                        {(['USDC', 'USDT'] as const).map((asset) => (
+                          <button
+                            key={asset}
+                            type="button"
+                            onClick={() => {
+                              setPaymentAsset(asset)
+                              setIsAssetDropdownOpen(false)
+                            }}
+                            className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
+                          >
+                            <div className={`w-2 h-2 rounded-full ${asset === 'USDC' ? 'bg-[#2775CA]' : 'bg-[#26A17B]'}`} />
+                            {asset}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* Input 3: Pricing Estimates Breakdown Details */}
-              <div className="bg-[#030303] border border-[#111111] rounded-lg p-4 font-mono text-xs flex flex-col gap-2.5 mt-2">
-                <div className="flex justify-between items-center text-[#666666]">
-                  <span>Live Gold Feed</span>
-                  <span className="text-white">${goldPricePerOunce.toFixed(2)} / oz</span>
+              {/* BLOCK 2: RECEIVE DISPLAY (READ-ONLY Calculated XAUs Ounces) */}
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 relative">
+                <span className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">You Receive</span>
+                <div className="flex items-center justify-between gap-4">
+                  <input 
+                    type="text" 
+                    readOnly
+                    value={calculatedXAus}
+                    className="bg-transparent text-xl md:text-2xl text-white/90 font-sans focus:outline-none w-full cursor-default"
+                  />
+                  <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none">
+                    <div className="w-2 h-2 rounded-full bg-[#FFD700]" />
+                    <span>XAUs</span>
+                  </div>
                 </div>
-                <div className="w-full h-[1px] bg-[#111111]" />
-                <div className="flex justify-between items-center">
-                  <span className="text-[#666666]">Estimated Cost</span>
-                  <span className="text-sm font-sans font-medium text-white">
-                    {estimatedCost} <span className="text-xs text-[#666666] font-mono">{paymentAsset}</span>
-                  </span>
+              </div>
+
+              {/* LIVE GOLD FEED DETAILS PANEL */}
+              <div className="bg-[#030303] border border-[#111111] rounded-xl p-4 font-mono text-xs flex flex-col gap-1 mt-1">
+                <div className="flex justify-between items-center text-[#666666]">
+                  <span>Live Gold Price Feed</span>
+                  <span className="text-white font-sans">${goldPricePerOunce.toFixed(2)} <span className="text-[10px] font-mono text-[#666666]">/ oz</span></span>
                 </div>
               </div>
 
               {/* Smart Contract Interaction Process Buttons */}
-              <div className="mt-4">
+              <div className="mt-3">
                 {!isConnected ? (
                   <button 
                     onClick={() => setIsConnected(true)}
@@ -207,7 +231,7 @@ export default function XAusMintingApp() {
                     {(txStatus === 'idle' || txStatus === 'approving') && (
                       <button 
                         onClick={handleApprove}
-                        disabled={!mintAmount || parseFloat(mintAmount) <= 0 || txStatus === 'approving'}
+                        disabled={!stablecoinAmount || parseFloat(stablecoinAmount) <= 0 || txStatus === 'approving'}
                         className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2"
                       >
                         {txStatus === 'approving' ? (
