@@ -307,6 +307,7 @@ export default function LaunchingSoon() {
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/ziba.png" alt="Ziba" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
             </div>
 
@@ -316,6 +317,7 @@ export default function LaunchingSoon() {
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/ziba.png" alt="Ziba" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
             </div>
 
@@ -325,6 +327,7 @@ export default function LaunchingSoon() {
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/ziba.png" alt="Ziba" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
             </div>
 
@@ -334,6 +337,7 @@ export default function LaunchingSoon() {
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/ziba.png" alt="Ziba" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
             </div>
 
