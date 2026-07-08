@@ -204,30 +204,27 @@ export default function XAusMintingApp() {
               </div>
 
               {/* BLOCK 2: RECEIVE DISPLAY (READ-ONLY Calculated XAUs Ounces) */}
-<div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 relative">
-  <span className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">You Receive</span>
-  <div className="flex items-center justify-between gap-4">
-    <input 
-      type="text" 
-      readOnly
-      value={calculatedXAus}
-      className="bg-transparent text-xl md:text-2xl text-white/90 font-sans focus:outline-none w-full cursor-default min-w-0" {/* <--- ADDED min-w-0 to let input scale down instead of pushing the badge */}
-    />
-    
-    {/* ADJUST THIS DIV BELOW */}
-    <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap"> {/* <--- ADDED flex-shrink-0 and whitespace-nowrap */}
-      <Image 
-        src="/xaus-icon.png" 
-        alt="XAUs logo" 
-        width={16} 
-        height={16} 
-        className="rounded-full flex-shrink-0"
-      />
-      <span>XAUs</span>
-    </div>
-
-  </div>
-</div>
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 relative">
+                <span className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">You Receive</span>
+                <div className="flex items-center justify-between gap-4">
+                  <input 
+                    type="text" 
+                    readOnly
+                    value={calculatedXAus}
+                    className="bg-transparent text-xl md:text-2xl text-white/90 font-sans focus:outline-none w-full cursor-default min-w-0"
+                  />
+                  
+                  <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
+                    <Image 
+                      src="/xaus-icon.png" 
+                      alt="XAUs logo" 
+                      width={16} 
+                      height={16} 
+                      className="rounded-full flex-shrink-0"
+                    />
+                    <span>XAUs</span>
+                  </div>
+                </div>
               </div>
 
               {/* LIVE GOLD FEED DETAILS PANEL */}
