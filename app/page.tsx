@@ -255,7 +255,7 @@ export default function LaunchingSoon() {
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Gold Financing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              Partnered with <span className="text-blue-500 font-medium">Bawa Rocks LTD</span>, a Goldbog accredited aggregator, sourcing and financing physical gold inventory that backs the value flowing through Syncrate.
+              Partnered with <span className="text-blue-500 font-medium">Bawa Rocks LTD</span>, a Goldbog accredited aggregator, sourcing and exporting physical gold inventory that backs the value flowing through XAUs.
             </p>
           </div>
 
@@ -266,7 +266,7 @@ export default function LaunchingSoon() {
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Oracle</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              Real-time gold price feeds and reserve data, powered by <span className="text-blue-500 font-medium">Pyth Network</span> giving the vault accurate, tamper-resistant pricing to calculate NAV and yield.
+              Real-time gold price feeds and reserve data, powered by <span className="text-blue-500 font-medium">Pyth Network</span> giving the SGLD vault accurate, tamper-resistant pricing to calculate NAV and yield.
             </p>
           </div>
 
@@ -277,17 +277,18 @@ export default function LaunchingSoon() {
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Custody</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              Secure custodial storage for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing XAUs are held independently and always verfiable.
+              Secure custodial storage and financing for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing XAUs are held independently and always verfiable.
             </p>
           </div>
 
           {/* Tile 4: Chain */}
           <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/chain-icon.png" alt="Liquidity" width={24} height={24} className="object-contain" />
+              <Image src="/eth.png" alt="ETH" width={24} height={24} className="object-contain" />
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Liquidity</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
+              The XAUs token is deployed across various chains, CeFi and DeFi platforms, ensuring 24/7 liquidity.
             </p>
           </div>
 
