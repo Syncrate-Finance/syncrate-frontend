@@ -1,5 +1,3 @@
-
-
 'use client'
 
 import { useState, useRef, UIEvent } from 'react'
@@ -12,6 +10,15 @@ export default function SGLDProductPage() {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
+  // Layout Helpers (Added to satisfy slide indicator map logic safely)
+  const features = [0, 1, 2] 
+  const scrollToCard = (index: number) => {
+    setActiveIndex(index)
+  }
+
+  return (
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
+      
       {/* --- TOP NAVIGATION --- */}
       <header className="w-full flex items-center justify-between px-6 py-5 max-w-6xl mx-auto border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2">
@@ -58,9 +65,6 @@ export default function SGLDProductPage() {
                   Deposit XAUs
                 </Link>
               </div>
-
-              
-            
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
@@ -84,7 +88,9 @@ export default function SGLDProductPage() {
           </div>
         </div>
       </main>
-        {/* Navigation Indicator Dots */}
+
+      {/* --- FEATURE NAVIGATION INDICATORS --- */}
+      <section className="w-full max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-center gap-2 mt-4">
           {features.map((_, index) => (
             <button 
@@ -97,61 +103,36 @@ export default function SGLDProductPage() {
         </div>
       </section>
 
-      
-{/* --- FAQs SECTION --- */}
-<section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
-  <div className="max-w-3xl">
-    <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-12">
-      FAQs
-    </h2>
+      {/* --- FAQs SECTION --- */}
+      <section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
+        <div className="max-w-3xl">
+          <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-12">
+            FAQs
+          </h2>
 
-    <div className="flex flex-col border-t border-[#222222]">
-      {[
-        {
-          q: "What is SGLD?",
-          a: "SGLD is a vault share token representing a proportional claim on the Syncrate Gold Yield Vault. As the vault earns income from institutional gold financing, the value of each SGLD share increases over time and can be redeemed for XAUs."
-        },
-        {
-          q: "How is yield distributed?",
-          a: "Yield is not paid as separate rewards. Financing income generated from institutional gold lending accrues directly to the Syncrate Gold Yield Vault, increasing the value of each SGLD share over time. Holders realize this yield when redeeming SGLD for XAUs."
-        },
-        {
-          q: "What is the fee structure?",
-          a: "There is no deposit fee. A 0.15% fee is charged on every withdrawal transaction - paid in the native token of the blockchain XAUs is being redeemed from."
-        }
-      ].map((faq, index) => {
-        // Local state management handles individual open/close toggles cleanly
-        const [isOpen, setIsOpen] = useState(false);
-
-        return (
-          <div key={index} className="border-b border-[#222222] w-full">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="w-full flex items-center justify-between py-6 text-left group hover:bg-white/[0.02] px-2 transition-colors duration-200"
-            >
-              <span className="text-base md:text-lg font-normal text-[#F5F5F5] pr-4">
-                {faq.q}
-              </span>
-              <span className="text-xl font-mono text-[#AAAAAA] group-hover:text-white transition-colors w-6 h-6 flex items-center justify-center select-none">
-                {isOpen ? '–' : '+'}
-              </span>
-            </button>
-            
-            <div 
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isOpen ? 'max-h-40 opacity-100 mb-6' : 'max-h-0 opacity-0'
-              }`}
-            >
-              <p className="text-sm md:text-base text-[#888888] leading-relaxed px-2 max-w-2xl">
-                {faq.a}
-              </p>
-            </div>
+          <div className="flex flex-col border-t border-[#222222]">
+            {[
+              {
+                q: "What is SGLD?",
+                a: "SGLD is a vault share token representing a proportional claim on the Syncrate Gold Yield Vault. As the vault earns income from institutional gold financing, the value of each SGLD share increases over time and can be redeemed for XAUs."
+              },
+              {
+                q: "How is yield distributed?",
+                a: "Yield is not paid as separate rewards. Financing income generated from institutional gold lending accrues directly to the Syncrate Gold Yield Vault, increasing the value of each SGLD share over time. Holders realize this yield when redeeming SGLD for XAUs."
+              },
+              {
+                q: "What is the fee structure?",
+                a: "There is no deposit fee. A 0.15% fee is charged on every withdrawal transaction - paid in the native token of the blockchain XAUs is being redeemed from."
+              }
+            ].map((faq, index) => {
+              // Internalized wrapper block to legally handle hook logic per dynamic map object
+              return (
+                <FAQItem key={index} q={faq.q} a={faq.a} />
+              )
+            })}
           </div>
-        );
-      })}
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
       
       {/* --- FOOTER SECTION --- */}
       <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
@@ -206,6 +187,36 @@ export default function SGLDProductPage() {
         </div>
       </footer>
       
+    </div>
+  )
+}
+
+{/* Sub-component logic separating loops cleanly to avoid hook rule breaks */}
+function FAQItem({ q, a }: { q: string, a: string }) {
+  const [isOpen, setIsOpen] = useState(false)
+  return (
+    <div className="border-b border-[#222222] w-full">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between py-6 text-left group hover:bg-white/[0.02] px-2 transition-colors duration-200"
+      >
+        <span className="text-base md:text-lg font-normal text-[#F5F5F5] pr-4">
+          {q}
+        </span>
+        <span className="text-xl font-mono text-[#AAAAAA] group-hover:text-white transition-colors w-6 h-6 flex items-center justify-center select-none">
+          {isOpen ? '–' : '+'}
+        </span>
+      </button>
+      
+      <div 
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-40 opacity-100 mb-6' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <p className="text-sm md:text-base text-[#888888] leading-relaxed px-2 max-w-2xl">
+          {a}
+        </p>
+      </div>
     </div>
   )
 }
