@@ -13,10 +13,10 @@ export default function XAUsProductPage() {
   const features = [
     {
       id: 1,
-      title: "Goldbod Accredited",
-      description: "All Syncrate Gold bars are sourced directly from Goldbod-accredited aggregators, ensuring each gold bar is bullion-market authentic and globally accepted.",
+      title: "LBMA-Standard",
+      description: "All Syncrate Gold bars are LBMA-standard, sourced directly through Ziba Refinery by our trading partner (Alluca Gold), ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
-      logos: ["/bawa.png"]
+      logos: ["/alluca.png"]
     },
     {
       id: 2,
@@ -105,7 +105,7 @@ export default function XAUsProductPage() {
             </h1>
 
             <p className="text-sm md:text-base text-[#AAAAAA] leading-relaxed mb-8 max-w-xl">
-              Backed by 99.99% pure Goldbog-accredited gold, with each token representing 1 troy oz. Vaulted securely with reputable custodians in the UAE.
+              Backed by 99.99% pure LBMA-standard gold, with each token representing 1 troy oz. Vaulted securely with reputable custodians in the UAE.
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
