@@ -67,7 +67,7 @@ export default function LaunchingSoon() {
         <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
           <div className="absolute inset-0 z-0">
             <Image
-              src="/XAUs-bg-cover.png" 
+              src="/XAUs-bg-cover.PNG" 
               alt="XAUs Background"
               fill
               className="object-cover opacity-35"
@@ -105,7 +105,7 @@ export default function LaunchingSoon() {
         <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
           <div className="absolute inset-0 z-0">
             <Image
-              src="/SGLD-cover.png" 
+              src="/SGLD-cover.PNG" 
               alt="SGLD Background"
               fill
               className="object-cover opacity-35"
@@ -212,7 +212,7 @@ export default function LaunchingSoon() {
 
           <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/oracle-icon.png" alt="Oracle" width={24} height={24} className="object-contain" />
+              <Image src="/oracle-icon.PNG" alt="Oracle" width={24} height={24} className="object-contain" />
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Oracle</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
@@ -222,7 +222,7 @@ export default function LaunchingSoon() {
 
           <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/custody-icon.png" alt="Custody" width={24} height={24} className="object-contain" />
+              <Image src="/custody-icon.PNG" alt="Custody" width={24} height={24} className="object-contain" />
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Custody & Financing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
