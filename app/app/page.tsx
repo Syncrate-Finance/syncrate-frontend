@@ -153,7 +153,7 @@ export default function XAusMintingApp() {
                   onClick={() => { setSelectedChain('Base'); setIsChainDropdownOpen(false) }}
                   className="w-full text-left px-4 py-3 text-white hover:bg-white/[0.03] flex items-center gap-2"
                 >
-                  <Image src="/base.png" alt="Base Network" width={14} height={14} className="rounded-full" /> Base
+                  <Image src="/base.jpeg" alt="Base Network" width={14} height={14} className="rounded-full" /> Base
                 </button>
                 <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
                   <span>Ethereum</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
