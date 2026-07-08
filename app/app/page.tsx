@@ -1,141 +1,258 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 
-export default function AppPage() {
+export default function XAusMintingApp() {
+  // Wallet Connection States
+  const [isConnected, setIsConnected] = useState(false)
+  const [selectedChain, setSelectedChain] = useState('Base')
+  const [isChainDropdownOpen, setIsChainDropdownOpen] = useState(false)
+
+  // Minting Flow Form States
+  const [mintAmount, setMintAmount] = useState('')
+  const [paymentAsset, setPaymentAsset] = useState<'USDC' | 'USDT'>('USDC')
+  
+  // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'minting' | 'success'
+  const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'minting' | 'success'>('idle')
+
+  // Mock pricing calculation based on live gold feed (e.g., ~$2,400 per troy oz / XAUs)
+  const goldPricePerOunce = 2415.50
+  const estimatedCost = mintAmount ? (parseFloat(mintAmount) * goldPricePerOunce).toFixed(2) : '0.00'
+
+  // Mock Handlers to demonstrate UI flow shifts
+  const handleApprove = () => {
+    setTxStatus('approving')
+    setTimeout(() => {
+      setTxStatus('approved')
+    }, 2000) // Simulated blockchain approval delay
+  }
+
+  const handleMint = () => {
+    setTxStatus('minting')
+    setTimeout(() => {
+      setTxStatus('success')
+    }, 3500) // Simulated execution block delay
+  }
+
+  const resetFlow = () => {
+    setMintAmount('')
+    setTxStatus('idle')
+  }
+
   return (
-    <div 
-      className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col antialiased ${GeistSans.variable} ${GeistMono.variable}`} 
-      style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}
-    >
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
-      {/* Top Header with Logo */}
-      <header className="w-full flex items-center justify-between px-6 py-6 max-w-6xl mx-auto">
-        <Link href="/" className="flex items-center gap-2">
-          <Image 
-            src="/logo.jpg" 
-            alt="Syncrate Logo" 
-            width={32} 
-            height={32} 
-            className="object-contain rounded-full" 
-          />
-          <span className="text-lg font-medium tracking-tight text-white">Syncrate</span>
+      {/* --- APPLICATION HEADER --- */}
+      <header className="w-full max-w-6xl mx-auto px-6 py-5 flex justify-between items-center border-b border-[#111111]">
+        <Link href="/" className="flex items-center gap-2 group">
+          <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
+          <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors">XAUs MINT</span>
         </Link>
-      </header>
-      
-      {/* Main Content Area (flex-grow expands to fill all middle space, perfectly centering content) */}
-      <main className="flex-grow flex flex-col items-center justify-center p-6 min-h-[40vh]">
-        <h1 className="text-3xl md:text-4xl font-normal tracking-tighter text-white mb-8 leading-[1.05] text-center">
-          Coming soon..
-        </h1>
 
-        <Link 
-          href="/" 
-          className="px-6 py-3 rounded-full border border-[#333333] text-sm font-medium text-white hover:bg-[#111111] transition-colors"
-        >
-          ← Back to Home
-        </Link>
-      </main>
-      
-      {/* Partner Marquee Section */}
-      <section className="w-full max-w-6xl mx-auto py-3 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
-        <div className="relative flex overflow-x-hidden w-full max-w-4xl [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
-          <div className="flex w-max shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center animate-[marquee_10s_linear_infinite] hover:[animation-play-state:paused]">
-            
-            {/* Track 1 */}
-            <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-            </div>
-
-            {/* Track 2 */}
-            <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-            </div>
-
-            {/* Track 3 */}
-            <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-            </div>
-
-            {/* Track 4 */}
-            <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* --- FOOTER SECTION --- */}
-      <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
-        <div className="w-full max-w-6xl mx-auto flex flex-col">
+        {/* Chain Selector & Wallet Connection Cluster */}
+        <div className="flex items-center gap-3">
           
-          {/* Top Row: Links and Small Logo */}
-          <div className="flex justify-between items-start text-sm text-[#F5F5F5] font-medium">
-            
-            {/* Left: Stacked Links */}
-            <div className="flex flex-col gap-5">
-              <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
-              <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
-              <a href="#" className="hover:text-[#888888] transition-colors">Brand Kit</a>
-              <a href="#" className="hover:text-[#888888] transition-colors">Terms & Disclosures</a>
-              <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
-              <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
-              <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
-            </div>
+          {/* Custom Network Selector Dropdown Wrapper */}
+          <div className="relative">
+            <button 
+              onClick={() => setIsChainDropdownOpen(!isChainDropdownOpen)}
+              className="px-4 py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-xs font-mono text-white flex items-center gap-2 hover:border-[#333333] transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0037FF] animate-pulse" />
+              {selectedChain} <span className="text-[10px] text-[#666666]">▼</span>
+            </button>
 
-            {/* Right: Small Logo Visual replacing text copyright */}
-            <div className="flex items-center">
-              <Image 
-                src="/footer-icon.PNG" 
-                alt="Syncrate Logo" 
-                width={32} 
-                height={32} 
-                className="object-contain"
-              />
-            </div>
-            
+            {isChainDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-44 bg-[#0A0A0A] border border-[#222222] rounded-md overflow-hidden z-50 shadow-2xl font-mono text-xs">
+                {/* Available Network */}
+                <button 
+                  onClick={() => { setSelectedChain('Base'); setIsChainDropdownOpen(false) }}
+                  className="w-full text-left px-4 py-3 text-white hover:bg-white/[0.03] flex items-center gap-2"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0037FF]" /> Base
+                </button>
+                {/* Unavailable Networks - Styled in Gray Fonts */}
+                <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
+                  <span>Ethereum</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
+                </div>
+                <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
+                  <span>Avalanche</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
+                </div>
+                <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
+                  <span>Solana</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Bottom: Faint Legal Disclosure */}
-          <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
-            <p>
-              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
-            </p>
-            <p>
-              Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
-            </p>
-            <p>
-              Syncrate does not provide financial, legal, tax, or investment advice. Prospective users should conduct their own due diligence and consult independent professional advisors before participating.
-            </p>
-            <p>
-              References to third-party partners, custodians, or infrastructure providers on this site are for informational purposes only and do not constitute an endorsement, guarantee, or warranty of their services by Syncrate.
-            </p>
-            <p>
-              Syncrate may not be available to residents of certain jurisdictions, including where prohibited by local law or regulation. It is the responsibility of users to ensure their participation complies with applicable laws in their jurisdiction.
-            </p>
-          </div>
-
+          {/* Connect Wallet Button */}
+          <button 
+            onClick={() => setIsConnected(!isConnected)}
+            className={`px-5 py-2 rounded-full text-xs font-medium transition-all ${
+              isConnected 
+                ? 'border border-[#222222] bg-[#0A0A0A] text-[#888888]' 
+                : 'bg-white text-[#030303] hover:bg-[#E5E5E5]'
+            }`}
+          >
+            {isConnected ? '0x71C...3a9b' : 'Connect Wallet'}
+          </button>
         </div>
+      </header>
+
+      {/* --- MINTINTERFACE MAIN PORTAL --- */}
+      <main className="flex-1 flex items-center justify-center p-6 my-12">
+        <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl">
+          
+          {/* Header Section tabs toggle structure */}
+          <div className="flex gap-6 border-b border-[#111111] pb-4 mb-6">
+            <button className="text-sm font-medium text-white pb-4 border-b-2 border-white -mb-[18px]">
+              Mint XAUs
+            </button>
+            <button className="text-sm font-medium text-[#444444] cursor-not-allowed pb-4 -mb-[18px]">
+              Redeem
+            </button>
+          </div>
+
+          {txStatus === 'success' ? (
+            /* SUCCESS FEEDBACK DISPATCHED CARD */
+            <div className="text-center py-8 flex flex-col items-center">
+              <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4">
+                <span className="text-emerald-500 text-lg">✓</span>
+              </div>
+              <h3 className="text-lg font-medium text-white mb-2">Transaction Success</h3>
+              <p className="text-xs text-[#888888] max-w-xs mb-6 leading-relaxed">
+                Your payment was processed and your native XAUs have been minted successfully on Base.
+              </p>
+              <button 
+                onClick={resetFlow}
+                className="px-6 py-2.5 bg-[#111111] text-xs font-medium rounded-md hover:bg-[#222222] text-white transition-all"
+              >
+                Mint Again
+              </button>
+            </div>
+          ) : (
+            /* CONTEXT FORM INTERFACE */
+            <div className="flex flex-col gap-5">
+              
+              {/* Input 1: Mint Target Amount Field */}
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-mono tracking-wider text-[#666666] uppercase">Quantity to Mint (XAUs)</label>
+                <div className="relative flex items-center">
+                  <input 
+                    type="number" 
+                    placeholder="0.0"
+                    value={mintAmount}
+                    onChange={(e) => setMintAmount(e.target.value)}
+                    disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                    className="w-full bg-[#030303] border border-[#222222] rounded-lg px-4 py-3.5 text-base text-white placeholder-[#333333] focus:outline-none focus:border-[#444444] font-sans disabled:opacity-50 transition-colors"
+                  />
+                  <span className="absolute right-4 text-xs font-mono text-[#666666]">Ounces</span>
+                </div>
+              </div>
+
+              {/* Input 2: Dynamic Payment Method Row Split */}
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-mono tracking-wider text-[#666666] uppercase">Pay With Asset</label>
+                <div className="grid grid-cols-2 gap-3">
+                  {(['USDC', 'USDT'] as const).map((asset) => (
+                    <button
+                      key={asset}
+                      type="button"
+                      disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                      onClick={() => setPaymentAsset(asset)}
+                      className={`py-3 px-4 border rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${
+                        paymentAsset === asset 
+                          ? 'border-[#444444] bg-white/[0.02] text-white' 
+                          : 'border-[#1a1a1a] bg-transparent text-[#555555] hover:border-[#222222]'
+                      } disabled:opacity-40`}
+                    >
+                      <div className={`w-2 h-2 rounded-full ${asset === 'USDC' ? 'bg-[#2775CA]' : 'bg-[#26A17B]'}`} />
+                      {asset}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Input 3: Transparent Pricing Estimates Breakdown */}
+              <div className="bg-[#030303] border border-[#111111] rounded-lg p-4 font-mono text-xs flex flex-col gap-2.5 mt-2">
+                <div className="flex justify-between items-center text-[#666666]">
+                  <span>Live Gold Feed</span>
+                  <span className="text-white">${goldPricePerOunce.toFixed(2)} / oz</span>
+                </div>
+                <div className="w-full h-[1px] bg-[#111111]" />
+                <div className="flex justify-between items-center">
+                  <span className="text-[#666666]">Estimated Cost</span>
+                  <span className="text-sm font-sans font-medium text-white">
+                    {estimatedCost} <span className="text-xs text-[#666666] font-mono">{paymentAsset}</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Interactive State Conditional Action Buttons */}
+              <div className="mt-4">
+                {!isConnected ? (
+                  <button 
+                    onClick={() => setIsConnected(true)}
+                    className="w-full py-4 bg-white text-black font-medium text-sm rounded-lg hover:bg-[#E5E5E5] transition-all shadow-md"
+                  >
+                    Connect Wallet to Mint
+                  </button>
+                ) : (
+                  <>
+                    {/* STEP 1: APPROVAL BUTTON ACTIONS */}
+                    {(txStatus === 'idle' || txStatus === 'approving') && (
+                      <button 
+                        onClick={handleApprove}
+                        disabled={!mintAmount || parseFloat(mintAmount) <= 0 || txStatus === 'approving'}
+                        className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2"
+                      >
+                        {txStatus === 'approving' ? (
+                          <>
+                            <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
+                            Approving Allowances...
+                          </>
+                        ) : (
+                          `Approve ${paymentAsset}`
+                        )}
+                      </button>
+                    )}
+
+                    {/* STEP 2: MINT EXECUTION ACTIONS */}
+                    {(txStatus === 'approved' || txStatus === 'minting') && (
+                      <button 
+                        onClick={handleMint}
+                        disabled={txStatus === 'minting'}
+                        className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#0037FF]/10"
+                      >
+                        {txStatus === 'minting' ? (
+                          <>
+                            <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
+                            Minting XAUs...
+                          </>
+                        ) : (
+                          'Mint XAUs'
+                        )}
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
+
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* --- APP FOOTER DISCLOSURE STRIP --- */}
+      <footer className="w-full max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-[10px] font-mono text-[#444444] border-t border-[#111111] gap-2">
+        <span>SYNC RATE BASE PROTOCOL MINT ENGINE v1.0.4</span>
+        <span className="text-center md:text-right">Live index verification streams handled independently via distributed decentralized networks.</span>
       </footer>
-      
+
     </div>
   )
 }
