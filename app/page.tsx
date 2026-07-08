@@ -99,7 +99,7 @@ export default function LaunchingSoon() {
             
             {/* Smaller, Clean Description Sitting Unimpeded */}
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-              Each Syncrate Gold (XAUs) is backed 1:1 by GoldBog-accredited physical gold, held in secure vaults with reputable custodians in the UAE.
+              Each Syncrate Gold (XAUs) is backed 1:1 by LBMA-standard physical gold, held in secure vaults with reputable custodians in the UAE.
             </p>
 
             {/* Styled View Product Button Link */}
@@ -255,7 +255,7 @@ export default function LaunchingSoon() {
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Gold Sourcing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              Partnered with <span className="text-blue-500 font-medium">Bawa Rocks LTD</span>, a Goldbog accredited aggregator, sourcing and exporting physical gold inventory that backs the value flowing through XAUs.
+              Partnered with <span className="text-blue-500 font-medium">Alluca Gold</span>, a DMCC-licensed gold trading company, sourcing and financing LBMA-standard physical gold inventory that backs the value flowing through Syncrate.
             </p>
           </div>
 
@@ -303,7 +303,7 @@ export default function LaunchingSoon() {
             
             {/* Track 1 */}
             <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/alluca.png" alt="Alluca Gold" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
@@ -312,7 +312,7 @@ export default function LaunchingSoon() {
 
             {/* Track 2 */}
             <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/alluca.png" alt="Alluca Gold" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
@@ -321,7 +321,7 @@ export default function LaunchingSoon() {
 
             {/* Track 3 */}
             <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/alluca.png" alt="Alluca Gold" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
@@ -330,7 +330,7 @@ export default function LaunchingSoon() {
 
             {/* Track 4 */}
             <div className="flex shrink-0 gap-12 md:gap-16 items-center">
-              <Image src="/bawa.png" alt="Bawa Rocks LTD" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+              <Image src="/alluca.png" alt="Alluca Gold" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
