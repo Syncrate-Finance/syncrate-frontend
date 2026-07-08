@@ -472,11 +472,6 @@ export default function XAusMintingApp() {
 
       </main>
 
-      {/* --- APP FOOTER STRIP --- */}
-      <footer className="w-full max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-[10px] font-mono text-[#444444] border-t border-[#111111] gap-2">
-        <span>SYNC RATE BASE PROTOCOL MINT ENGINE v1.0.4</span>
-        <span className="text-center md:text-right">Live index verification streams handled independently via distributed decentralized networks.</span>
-      </footer>
 
     </div>
   )
