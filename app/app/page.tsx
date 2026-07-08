@@ -19,23 +19,23 @@ export default function XAusMintingApp() {
   // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'minting' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'minting' | 'success'>('idle')
 
-  // Mock pricing calculation based on live gold feed (e.g., ~$2,400 per troy oz / XAUs)
+  // Mock pricing calculation based on live gold feed (e.g., ~$2,415.50 per troy oz / XAUs)
   const goldPricePerOunce = 2415.50
   const estimatedCost = mintAmount ? (parseFloat(mintAmount) * goldPricePerOunce).toFixed(2) : '0.00'
 
-  // Mock Handlers to demonstrate UI flow shifts
+  // Block handlers demonstrating layout flow updates
   const handleApprove = () => {
     setTxStatus('approving')
     setTimeout(() => {
       setTxStatus('approved')
-    }, 2000) // Simulated blockchain approval delay
+    }, 2000)
   }
 
   const handleMint = () => {
     setTxStatus('minting')
     setTimeout(() => {
       setTxStatus('success')
-    }, 3500) // Simulated execution block delay
+    }, 3500)
   }
 
   const resetFlow = () => {
@@ -47,23 +47,23 @@ export default function XAusMintingApp() {
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
       {/* --- APPLICATION HEADER --- */}
-      <header className="w-full max-w-6xl mx-auto px-6 py-5 flex justify-between items-center border-b border-[#111111]">
+      <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2 group">
           <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
-          <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors">XAUs MINT</span>
+          <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">XAUs MINT</span>
         </Link>
 
         {/* Chain Selector & Wallet Connection Cluster */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3">
           
           {/* Custom Network Selector Dropdown Wrapper */}
           <div className="relative">
             <button 
               onClick={() => setIsChainDropdownOpen(!isChainDropdownOpen)}
-              className="px-4 py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-xs font-mono text-white flex items-center gap-2 hover:border-[#333333] transition-colors"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1 sm:gap-2 hover:border-[#333333] transition-colors"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0037FF] animate-pulse" />
-              {selectedChain} <span className="text-[10px] text-[#666666]">▼</span>
+              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#0037FF] animate-pulse" />
+              {selectedChain} <span className="text-[9px] sm:text-[10px] text-[#666666]">▼</span>
             </button>
 
             {isChainDropdownOpen && (
@@ -92,7 +92,7 @@ export default function XAusMintingApp() {
           {/* Connect Wallet Button */}
           <button 
             onClick={() => setIsConnected(!isConnected)}
-            className={`px-5 py-2 rounded-full text-xs font-medium transition-all ${
+            className={`px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all ${
               isConnected 
                 ? 'border border-[#222222] bg-[#0A0A0A] text-[#888888]' 
                 : 'bg-white text-[#030303] hover:bg-[#E5E5E5]'
@@ -103,11 +103,11 @@ export default function XAusMintingApp() {
         </div>
       </header>
 
-      {/* --- MINTINTERFACE MAIN PORTAL --- */}
-      <main className="flex-1 flex items-center justify-center p-6 my-12">
+      {/* --- MINT INTERFACE MAIN PORTAL --- */}
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 my-12">
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl">
           
-          {/* Header Section tabs toggle structure */}
+          {/* Header section tab structures */}
           <div className="flex gap-6 border-b border-[#111111] pb-4 mb-6">
             <button className="text-sm font-medium text-white pb-4 border-b-2 border-white -mb-[18px]">
               Mint XAUs
@@ -118,7 +118,7 @@ export default function XAusMintingApp() {
           </div>
 
           {txStatus === 'success' ? (
-            /* SUCCESS FEEDBACK DISPATCHED CARD */
+            /* SUCCESS FEEDBACK CARD */
             <div className="text-center py-8 flex flex-col items-center">
               <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4">
                 <span className="text-emerald-500 text-lg">✓</span>
@@ -135,10 +135,10 @@ export default function XAusMintingApp() {
               </button>
             </div>
           ) : (
-            /* CONTEXT FORM INTERFACE */
+            /* INPUT SETUP SYSTEM */
             <div className="flex flex-col gap-5">
               
-              {/* Input 1: Mint Target Amount Field */}
+              {/* Input 1: Quantity Field */}
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-mono tracking-wider text-[#666666] uppercase">Quantity to Mint (XAUs)</label>
                 <div className="relative flex items-center">
@@ -154,7 +154,7 @@ export default function XAusMintingApp() {
                 </div>
               </div>
 
-              {/* Input 2: Dynamic Payment Method Row Split */}
+              {/* Input 2: Payment Asset Selector Split Grid */}
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-mono tracking-wider text-[#666666] uppercase">Pay With Asset</label>
                 <div className="grid grid-cols-2 gap-3">
@@ -177,7 +177,7 @@ export default function XAusMintingApp() {
                 </div>
               </div>
 
-              {/* Input 3: Transparent Pricing Estimates Breakdown */}
+              {/* Input 3: Pricing Estimates Breakdown Details */}
               <div className="bg-[#030303] border border-[#111111] rounded-lg p-4 font-mono text-xs flex flex-col gap-2.5 mt-2">
                 <div className="flex justify-between items-center text-[#666666]">
                   <span>Live Gold Feed</span>
@@ -192,7 +192,7 @@ export default function XAusMintingApp() {
                 </div>
               </div>
 
-              {/* Interactive State Conditional Action Buttons */}
+              {/* Smart Contract Interaction Process Buttons */}
               <div className="mt-4">
                 {!isConnected ? (
                   <button 
@@ -203,7 +203,7 @@ export default function XAusMintingApp() {
                   </button>
                 ) : (
                   <>
-                    {/* STEP 1: APPROVAL BUTTON ACTIONS */}
+                    {/* PIPELINE STEP 1: APPROVE ACTION */}
                     {(txStatus === 'idle' || txStatus === 'approving') && (
                       <button 
                         onClick={handleApprove}
@@ -221,7 +221,7 @@ export default function XAusMintingApp() {
                       </button>
                     )}
 
-                    {/* STEP 2: MINT EXECUTION ACTIONS */}
+                    {/* PIPELINE STEP 2: REAL MINT ACTION EXECUTION */}
                     {(txStatus === 'approved' || txStatus === 'minting') && (
                       <button 
                         onClick={handleMint}
@@ -247,7 +247,7 @@ export default function XAusMintingApp() {
         </div>
       </main>
 
-      {/* --- APP FOOTER DISCLOSURE STRIP --- */}
+      {/* --- APP FOOTER STRIP --- */}
       <footer className="w-full max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-[10px] font-mono text-[#444444] border-t border-[#111111] gap-2">
         <span>SYNC RATE BASE PROTOCOL MINT ENGINE v1.0.4</span>
         <span className="text-center md:text-right">Live index verification streams handled independently via distributed decentralized networks.</span>
