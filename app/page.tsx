@@ -284,11 +284,11 @@ export default function LaunchingSoon() {
           {/* Tile 4: Chain */}
           <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/eth.png" alt="ETH" width={24} height={24} className="object-contain" />
+              <Image src="/eth-icon.png" alt="ETH" width={24} height={24} className="object-contain" />
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Liquidity</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              The XAUs token is deployed across various chains, CeFi and DeFi platforms, ensuring 24/7 liquidity.
+              The XAUs token is deployed across multiple blockchains, CeFi and DeFi platforms, ensuring 24/7 liquidity and seamless ownership.
             </p>
           </div>
 
