@@ -89,20 +89,6 @@ export default function SGLDProductPage() {
         </div>
       </main>
 
-      {/* --- FEATURE NAVIGATION INDICATORS --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-center gap-2 mt-4">
-          {features.map((_, index) => (
-            <button 
-              key={index}
-              onClick={() => scrollToCard(index)}
-              aria-label={`Go to slide ${index + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-[#0037FF]' : 'w-1.5 bg-[#222222]'}`}
-            />
-          ))}
-        </div>
-      </section>
-
       {/* --- FAQs SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
         <div className="max-w-3xl">
