@@ -16,7 +16,7 @@ export default function XAUsProductPage() {
       title: "LBMA-Standard",
       description: "All Syncrate Gold bars are LBMA-standard, sourced directly through Ziba Refinery by our trading partner (Alluca Gold), ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
-      logos: ["/alluca.png"]
+      logos: ["/alluca.png, "/ziba.png"]
     },
     {
       id: 2,
