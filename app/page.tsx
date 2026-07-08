@@ -266,7 +266,7 @@ export default function LaunchingSoon() {
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Oracle</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              Real-time gold price feeds and reserve data, powered by <span className="text-blue-500 font-medium">Pyth Network</span> giving the SGLD vault accurate, tamper-resistant pricing to calculate NAV and yield.
+              Real-time gold price feeds and reserve data, powered by <span className="text-blue-500 font-medium">Chainlink</span> giving the XAUs accurate, tamper-resistant pricing to calculate NAV and yield.
             </p>
           </div>
 
@@ -281,16 +281,6 @@ export default function LaunchingSoon() {
             </p>
           </div>
 
-          {/* Tile 4: Chain */}
-          <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
-            <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/eth-icon.png" alt="ETH" width={24} height={24} className="object-contain" />
-            </div>
-            <h4 className="text-lg font-medium text-white mb-3">Liquidity</h4>
-            <p className="text-sm text-[#888888] leading-relaxed">
-              The XAUs token is deployed across multiple blockchains, CeFi and DeFi platforms, ensuring 24/7 liquidity and seamless ownership.
-            </p>
-          </div>
 
         </div>
       </section>
