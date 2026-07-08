@@ -1,6 +1,9 @@
-'use client';
+''use client';
 
-import '@rainbowkit/rainbow-me/styles.css';
+// FIX: Use this exact path for the CSS
+import '@rainbow-me/rainbowkit/styles.css'; 
+
+// FIX: Ensure this is the correct package import
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
 import { base, baseSepolia } from 'wagmi/chains';
