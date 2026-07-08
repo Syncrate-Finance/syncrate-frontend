@@ -1,4 +1,4 @@
-''use client';
+'use client';
 
 // FIX: Use this exact path for the CSS
 import '@rainbow-me/rainbowkit/styles.css'; 
