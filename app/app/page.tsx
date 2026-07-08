@@ -20,13 +20,19 @@ export default function XAusMintingApp() {
   // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'minting' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'minting' | 'success'>('idle')
 
-  // Mock pricing calculation based on live gold feed (e.g., ~$2,415.50 per troy oz / XAUs)
+  // Mock pricing and balance states (Requires Web3 provider like wagmi/viem for live data)
   const goldPricePerOunce = 2415.50
+  const mockTokenBalance = 15420.50 
   
   // Calculate how many XAUs they receive for the typed stablecoin amount
   const calculatedXAus = stablecoinAmount && parseFloat(stablecoinAmount) > 0
     ? (parseFloat(stablecoinAmount) / goldPricePerOunce).toFixed(4)
     : '0.0000'
+
+  // Form Auto-fill Handler
+  const handleMaxBalance = () => {
+    setStablecoinAmount(mockTokenBalance.toString())
+  }
 
   // Block handlers demonstrating layout flow updates
   const handleApprove = () => {
@@ -146,6 +152,7 @@ export default function XAusMintingApp() {
               {/* BLOCK 1: PAY INPUT (EDITABLE Stablecoin Amount) */}
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 focus-within:border-[#444444] transition-colors relative">
                 <span className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">You Pay</span>
+                
                 <div className="flex items-center justify-between gap-4">
                   <input 
                     type="number" 
@@ -201,6 +208,22 @@ export default function XAusMintingApp() {
                     )}
                   </div>
                 </div>
+
+                {/* Inline Balance & Max Wrapper */}
+                <div className="flex justify-end items-center gap-2 mt-1">
+                  <span className="text-[10px] text-[#666666] font-mono">
+                    Balance: {isConnected ? mockTokenBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'} {paymentAsset}
+                  </span>
+                  {isConnected && (
+                    <button 
+                      onClick={handleMaxBalance}
+                      disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                      className="text-[9px] font-bold text-[#0037FF] hover:text-[#002CD6] transition-colors disabled:opacity-50 uppercase tracking-wider"
+                    >
+                      Max
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* BLOCK 2: RECEIVE DISPLAY (READ-ONLY Calculated XAUs Ounces) */}
@@ -216,7 +239,7 @@ export default function XAusMintingApp() {
                   
                   <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
                     <Image 
-                      src="/xaus-icon2.png" 
+                      src="/xaus-icon.png" 
                       alt="XAUs logo" 
                       width={16} 
                       height={16} 
@@ -230,7 +253,7 @@ export default function XAusMintingApp() {
               {/* LIVE GOLD FEED DETAILS PANEL */}
               <div className="bg-[#030303] border border-[#111111] rounded-xl p-4 font-mono text-xs flex flex-col gap-1 mt-1">
                 <div className="flex justify-between items-center text-[#666666]">
-                  <span>Live Gold Price</span>
+                  <span>Live Gold Price Feed</span>
                   <span className="text-white font-sans">${goldPricePerOunce.toFixed(2)} <span className="text-[10px] font-mono text-[#666666]">/ oz</span></span>
                 </div>
               </div>
