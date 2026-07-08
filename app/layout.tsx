@@ -1,4 +1,5 @@
 import './globals.css'
+import { Providers } from './providers' // Ensure this path matches your file location
 
 // Tweak 1: This tells Safari/Chrome to color the top status bar and bottom areas
 export const viewport = {
@@ -18,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* TWEAK 2: This forces the absolute bottom layer of the site to be dark */}
-      <body className="bg-[#030303]">{children}</body>
+      <body className="bg-[#030303]">
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }
