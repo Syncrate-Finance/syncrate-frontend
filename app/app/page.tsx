@@ -5,10 +5,14 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ConnectButton } from '@rainbowkit-me/rainbowkit'
+import { useAccount } from 'wagmi'
 
 export default function XAusMintingApp() {
-  // Wallet Connection States
-  const [isConnected, setIsConnected] = useState(false)
+  // RainbowKit / Wagmi Account Connection Status
+  const { isConnected } = useAccount()
+  
+  // Chain visibility state (Dropdown handled entirely by RainbowKit automatically)
   const [selectedChain, setSelectedChain] = useState('Base')
   const [isChainDropdownOpen, setIsChainDropdownOpen] = useState(false)
 
@@ -135,49 +139,13 @@ export default function XAusMintingApp() {
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">XAUs MINT</span>
         </Link>
 
-        {/* Chain Selector & Wallet Connection Cluster */}
+        {/* Unified Wallet Connect Button (Handles chains & connection simultaneously) */}
         <div className="flex items-center gap-1.5 sm:gap-3">
-          
-          <div className="relative">
-            <button 
-              onClick={() => setIsChainDropdownOpen(!isChainDropdownOpen)}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 hover:border-[#333333] transition-colors"
-            >
-              <Image src="/base.jpeg" alt="Base Network" width={14} height={14} className="rounded-full" />
-              {selectedChain} <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
-            </button>
-
-            {isChainDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-44 bg-[#0A0A0A] border border-[#222222] rounded-md overflow-hidden z-50 shadow-2xl font-mono text-xs">
-                <button 
-                  onClick={() => { setSelectedChain('Base'); setIsChainDropdownOpen(false) }}
-                  className="w-full text-left px-4 py-3 text-white hover:bg-white/[0.03] flex items-center gap-2"
-                >
-                  <Image src="/base.jpeg" alt="Base Network" width={14} height={14} className="rounded-full" /> Base
-                </button>
-                <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
-                  <span>Ethereum</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
-                </div>
-                <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
-                  <span>Avalanche</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
-                </div>
-                <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
-                  <span>Solana</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <button 
-            onClick={() => setIsConnected(!isConnected)}
-            className={`px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all ${
-              isConnected 
-                ? 'border border-[#222222] bg-[#0A0A0A] text-[#888888]' 
-                : 'bg-white text-[#030303] hover:bg-[#E5E5E5]'
-            }`}
-          >
-            {isConnected ? '0x71C...3a9b' : 'Connect Wallet'}
-          </button>
+          <ConnectButton 
+            chainStatus="icon" 
+            showBalance={false} 
+            accountStatus="address"
+          />
         </div>
       </header>
 
@@ -412,12 +380,18 @@ export default function XAusMintingApp() {
               {/* Smart Contract Interaction Process Buttons */}
               <div className="mt-3">
                 {!isConnected ? (
-                  <button 
-                    onClick={() => setIsConnected(true)}
-                    className="w-full py-4 bg-white text-black font-medium text-sm rounded-lg hover:bg-[#E5E5E5] transition-all shadow-md"
-                  >
-                    Connect Wallet to {activeTab === 'mint' ? 'Mint' : 'Redeem'}
-                  </button>
+                  <div className="w-full flex justify-center custom-rainbow-btn">
+                    <ConnectButton.Custom>
+                      {({ openConnectModal }) => (
+                        <button 
+                          onClick={openConnectModal}
+                          className="w-full py-4 bg-white text-black font-medium text-sm rounded-lg hover:bg-[#E5E5E5] transition-all shadow-md"
+                        >
+                          Connect Wallet to {activeTab === 'mint' ? 'Mint' : 'Redeem'}
+                        </button>
+                      )}
+                    </ConnectButton.Custom>
+                  </div>
                 ) : (
                   <>
                     {/* PIPELINE STEP 1: APPROVE ACTION */}
@@ -471,8 +445,6 @@ export default function XAusMintingApp() {
         {renderDashboard()}
 
       </main>
-
-
     </div>
   )
 }
