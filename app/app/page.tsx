@@ -12,26 +12,41 @@ export default function XAusMintingApp() {
   const [selectedChain, setSelectedChain] = useState('Base')
   const [isChainDropdownOpen, setIsChainDropdownOpen] = useState(false)
 
-  // Minting Flow Form States
-  const [stablecoinAmount, setStablecoinAmount] = useState('')
+  // Core Flow States
+  const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint')
+  const [inputAmount, setInputAmount] = useState('')
   const [paymentAsset, setPaymentAsset] = useState<'USDC' | 'USDT'>('USDC')
   const [isAssetDropdownOpen, setIsAssetDropdownOpen] = useState(false)
   
-  // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'minting' | 'success'
-  const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'minting' | 'success'>('idle')
+  // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'processing' | 'success'
+  const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
 
-  // Mock pricing and balance states (Requires Web3 provider like wagmi/viem for live data)
+  // Mock pricing and balance states
   const goldPricePerOunce = 2415.50
   const mockTokenBalance = 15420.50 
+  const mockXAusBalance = 4.2500
   
-  // Calculate how many XAUs they receive for the typed stablecoin amount
-  const calculatedXAus = stablecoinAmount && parseFloat(stablecoinAmount) > 0
-    ? (parseFloat(stablecoinAmount) / goldPricePerOunce).toFixed(4)
-    : '0.0000'
+  // Dynamic output calculation based on mode
+  const calculatedOutput = (() => {
+    if (!inputAmount || parseFloat(inputAmount) <= 0) return activeTab === 'mint' ? '0.0000' : '0.00'
+    
+    const amount = parseFloat(inputAmount)
+    if (activeTab === 'mint') {
+      // Mint: Stablecoin / Price = XAUs
+      return (amount / goldPricePerOunce).toFixed(4)
+    } else {
+      // Redeem: XAUs * Price * 0.9975 (0.25% Fee Deducted)
+      return (amount * goldPricePerOunce * 0.9975).toFixed(2)
+    }
+  })()
 
   // Form Auto-fill Handler
   const handleMaxBalance = () => {
-    setStablecoinAmount(mockTokenBalance.toString())
+    if (activeTab === 'mint') {
+      setInputAmount(mockTokenBalance.toString())
+    } else {
+      setInputAmount(mockXAusBalance.toString())
+    }
   }
 
   // Block handlers demonstrating layout flow updates
@@ -42,16 +57,23 @@ export default function XAusMintingApp() {
     }, 2000)
   }
 
-  const handleMint = () => {
-    setTxStatus('minting')
+  const handleProcess = () => {
+    setTxStatus('processing')
     setTimeout(() => {
       setTxStatus('success')
     }, 3500)
   }
 
   const resetFlow = () => {
-    setStablecoinAmount('')
+    setInputAmount('')
     setTxStatus('idle')
+  }
+
+  const handleTabSwitch = (tab: 'mint' | 'redeem') => {
+    if (txStatus === 'idle' || txStatus === 'success') {
+      setActiveTab(tab)
+      resetFlow()
+    }
   }
 
   return (
@@ -67,7 +89,6 @@ export default function XAusMintingApp() {
         {/* Chain Selector & Wallet Connection Cluster */}
         <div className="flex items-center gap-1.5 sm:gap-3">
           
-          {/* Custom Network Selector Dropdown Wrapper */}
           <div className="relative">
             <button 
               onClick={() => setIsChainDropdownOpen(!isChainDropdownOpen)}
@@ -79,14 +100,12 @@ export default function XAusMintingApp() {
 
             {isChainDropdownOpen && (
               <div className="absolute right-0 mt-2 w-44 bg-[#0A0A0A] border border-[#222222] rounded-md overflow-hidden z-50 shadow-2xl font-mono text-xs">
-                {/* Available Network */}
                 <button 
                   onClick={() => { setSelectedChain('Base'); setIsChainDropdownOpen(false) }}
                   className="w-full text-left px-4 py-3 text-white hover:bg-white/[0.03] flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0037FF]" /> Base
                 </button>
-                {/* Unavailable Networks - Styled in Gray Fonts */}
                 <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
                   <span>Ethereum</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
                 </div>
@@ -100,7 +119,6 @@ export default function XAusMintingApp() {
             )}
           </div>
 
-          {/* Connect Wallet Button */}
           <button 
             onClick={() => setIsConnected(!isConnected)}
             className={`px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all ${
@@ -120,10 +138,20 @@ export default function XAusMintingApp() {
           
           {/* Header section tab structures */}
           <div className="flex gap-6 border-b border-[#111111] pb-4 mb-6">
-            <button className="text-sm font-medium text-white pb-4 border-b-2 border-white -mb-[18px]">
+            <button 
+              onClick={() => handleTabSwitch('mint')}
+              className={`text-sm font-medium pb-4 -mb-[18px] transition-colors ${
+                activeTab === 'mint' ? 'text-white border-b-2 border-white' : 'text-[#666666] hover:text-[#AAAAAA]'
+              }`}
+            >
               Mint XAUs
             </button>
-            <button className="text-sm font-medium text-[#444444] cursor-not-allowed pb-4 -mb-[18px]">
+            <button 
+              onClick={() => handleTabSwitch('redeem')}
+              className={`text-sm font-medium pb-4 -mb-[18px] transition-colors ${
+                activeTab === 'redeem' ? 'text-white border-b-2 border-white' : 'text-[#666666] hover:text-[#AAAAAA]'
+              }`}
+            >
               Redeem
             </button>
           </div>
@@ -136,20 +164,22 @@ export default function XAusMintingApp() {
               </div>
               <h3 className="text-lg font-medium text-white mb-2">Transaction Success</h3>
               <p className="text-xs text-[#888888] max-w-xs mb-6 leading-relaxed">
-                Your payment was processed and your native XAUs have been minted successfully on Base.
+                {activeTab === 'mint' 
+                  ? 'Your payment was processed and your native XAUs have been minted successfully on Base.'
+                  : `Your XAUs have been successfully redeemed for ${paymentAsset} on Base.`}
               </p>
               <button 
                 onClick={resetFlow}
                 className="px-6 py-2.5 bg-[#111111] text-xs font-medium rounded-md hover:bg-[#222222] text-white transition-all"
               >
-                Mint Again
+                {activeTab === 'mint' ? 'Mint Again' : 'Redeem Again'}
               </button>
             </div>
           ) : (
             /* INPUT SETUP SYSTEM */
             <div className="flex flex-col gap-3">
               
-              {/* BLOCK 1: PAY INPUT (EDITABLE Stablecoin Amount) */}
+              {/* BLOCK 1: PAY INPUT (EDITABLE) */}
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 focus-within:border-[#444444] transition-colors relative">
                 <span className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">You Pay</span>
                 
@@ -157,62 +187,78 @@ export default function XAusMintingApp() {
                   <input 
                     type="number" 
                     placeholder="0.0"
-                    value={stablecoinAmount}
-                    onChange={(e) => setStablecoinAmount(e.target.value)}
+                    value={inputAmount}
+                    onChange={(e) => setInputAmount(e.target.value)}
                     disabled={txStatus !== 'idle' && txStatus !== 'approved'}
-                    className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50"
+                    className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50 min-w-0"
                   />
                   
-                  {/* Inline Token Selector Dropdown */}
-                  <div className="relative flex-shrink-0">
-                    <button
-                      type="button"
-                      disabled={txStatus !== 'idle' && txStatus !== 'approved'}
-                      onClick={() => setIsAssetDropdownOpen(!isAssetDropdownOpen)}
-                      className="bg-[#0A0A0A] border border-[#222222] hover:border-[#333333] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white transition-all disabled:opacity-50"
-                    >
+                  {activeTab === 'mint' ? (
+                    /* MINT MODE: Stablecoin Dropdown */
+                    <div className="relative flex-shrink-0">
+                      <button
+                        type="button"
+                        disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                        onClick={() => setIsAssetDropdownOpen(!isAssetDropdownOpen)}
+                        className="bg-[#0A0A0A] border border-[#222222] hover:border-[#333333] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white transition-all disabled:opacity-50"
+                      >
+                        <Image 
+                          src={paymentAsset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                          alt={`${paymentAsset} logo`} 
+                          width={16} 
+                          height={16} 
+                          className="rounded-full flex-shrink-0"
+                        />
+                        <span>{paymentAsset}</span>
+                        <span className="text-[9px] text-[#666666]">▼</span>
+                      </button>
+
+                      {isAssetDropdownOpen && (
+                        <div className="absolute right-0 mt-1.5 w-28 bg-[#0A0A0A] border border-[#222222] rounded-lg overflow-hidden z-40 shadow-xl">
+                          {(['USDC', 'USDT'] as const).map((asset) => (
+                            <button
+                              key={asset}
+                              type="button"
+                              onClick={() => {
+                                setPaymentAsset(asset)
+                                setIsAssetDropdownOpen(false)
+                              }}
+                              className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
+                            >
+                              <Image 
+                                src={asset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                                alt={`${asset} logo`} 
+                                width={16} 
+                                height={16} 
+                                className="rounded-full"
+                              />
+                              {asset}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    /* REDEEM MODE: Fixed XAUs Badge */
+                    <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white select-none flex-shrink-0 whitespace-nowrap">
                       <Image 
-                        src={paymentAsset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
-                        alt={`${paymentAsset} logo`} 
+                        src="/xaus-icon.png" 
+                        alt="XAUs logo" 
                         width={16} 
                         height={16} 
                         className="rounded-full flex-shrink-0"
                       />
-                      <span>{paymentAsset}</span>
-                      <span className="text-[9px] text-[#666666]">▼</span>
-                    </button>
-
-                    {isAssetDropdownOpen && (
-                      <div className="absolute right-0 mt-1.5 w-28 bg-[#0A0A0A] border border-[#222222] rounded-lg overflow-hidden z-40 shadow-xl">
-                        {(['USDC', 'USDT'] as const).map((asset) => (
-                          <button
-                            key={asset}
-                            type="button"
-                            onClick={() => {
-                              setPaymentAsset(asset)
-                              setIsAssetDropdownOpen(false)
-                            }}
-                            className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
-                          >
-                            <Image 
-                              src={asset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
-                              alt={`${asset} logo`} 
-                              width={16} 
-                              height={16} 
-                              className="rounded-full"
-                            />
-                            {asset}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                      <span>XAUs</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Inline Balance & Max Wrapper */}
                 <div className="flex justify-end items-center gap-2 mt-1">
                   <span className="text-[10px] text-[#666666] font-mono">
-                    Balance: {isConnected ? mockTokenBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'} {paymentAsset}
+                    Balance: {isConnected 
+                      ? (activeTab === 'mint' ? mockTokenBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : mockXAusBalance.toFixed(4))
+                      : (activeTab === 'mint' ? '0.00' : '0.0000')} {activeTab === 'mint' ? paymentAsset : 'XAUs'}
                   </span>
                   {isConnected && (
                     <button 
@@ -226,36 +272,90 @@ export default function XAusMintingApp() {
                 </div>
               </div>
 
-              {/* BLOCK 2: RECEIVE DISPLAY (READ-ONLY Calculated XAUs Ounces) */}
+              {/* BLOCK 2: RECEIVE DISPLAY (READ-ONLY) */}
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 relative">
                 <span className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">You Receive</span>
                 <div className="flex items-center justify-between gap-4">
                   <input 
                     type="text" 
                     readOnly
-                    value={calculatedXAus}
+                    value={calculatedOutput}
                     className="bg-transparent text-xl md:text-2xl text-white/90 font-sans focus:outline-none w-full cursor-default min-w-0"
                   />
                   
-                  <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
-                    <Image 
-                      src="/xaus-icon2.png" 
-                      alt="XAUs logo" 
-                      width={16} 
-                      height={16} 
-                      className="rounded-full flex-shrink-0"
-                    />
-                    <span>XAUs</span>
-                  </div>
+                  {activeTab === 'mint' ? (
+                    /* MINT MODE: Fixed XAUs Badge */
+                    <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
+                      <Image 
+                        src="/xaus-icon.png" 
+                        alt="XAUs logo" 
+                        width={16} 
+                        height={16} 
+                        className="rounded-full flex-shrink-0"
+                      />
+                      <span>XAUs</span>
+                    </div>
+                  ) : (
+                    /* REDEEM MODE: Stablecoin Dropdown */
+                    <div className="relative flex-shrink-0">
+                      <button
+                        type="button"
+                        disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                        onClick={() => setIsAssetDropdownOpen(!isAssetDropdownOpen)}
+                        className="bg-[#0A0A0A] border border-[#222222] hover:border-[#333333] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white transition-all disabled:opacity-50"
+                      >
+                        <Image 
+                          src={paymentAsset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                          alt={`${paymentAsset} logo`} 
+                          width={16} 
+                          height={16} 
+                          className="rounded-full flex-shrink-0"
+                        />
+                        <span>{paymentAsset}</span>
+                        <span className="text-[9px] text-[#666666]">▼</span>
+                      </button>
+
+                      {isAssetDropdownOpen && (
+                        <div className="absolute right-0 mt-1.5 w-28 bg-[#0A0A0A] border border-[#222222] rounded-lg overflow-hidden z-40 shadow-xl">
+                          {(['USDC', 'USDT'] as const).map((asset) => (
+                            <button
+                              key={asset}
+                              type="button"
+                              onClick={() => {
+                                setPaymentAsset(asset)
+                                setIsAssetDropdownOpen(false)
+                              }}
+                              className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
+                            >
+                              <Image 
+                                src={asset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                                alt={`${asset} logo`} 
+                                width={16} 
+                                height={16} 
+                                className="rounded-full"
+                              />
+                              {asset}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* LIVE GOLD FEED DETAILS PANEL */}
-              <div className="bg-[#030303] border border-[#111111] rounded-xl p-4 font-mono text-xs flex flex-col gap-1 mt-1">
+              {/* LIVE GOLD FEED DETAILS PANEL & FEES */}
+              <div className="bg-[#030303] border border-[#111111] rounded-xl p-4 font-mono text-xs flex flex-col gap-2 mt-1">
                 <div className="flex justify-between items-center text-[#666666]">
                   <span>Live Gold Price Feed</span>
                   <span className="text-white font-sans">${goldPricePerOunce.toFixed(2)} <span className="text-[10px] font-mono text-[#666666]">/ oz</span></span>
                 </div>
+                {activeTab === 'redeem' && (
+                  <div className="flex justify-between items-center text-[#666666] pt-2 border-t border-[#111111]">
+                    <span>Redemption Fee</span>
+                    <span className="text-white">0.25%</span>
+                  </div>
+                )}
               </div>
 
               {/* Smart Contract Interaction Process Buttons */}
@@ -265,7 +365,7 @@ export default function XAusMintingApp() {
                     onClick={() => setIsConnected(true)}
                     className="w-full py-4 bg-white text-black font-medium text-sm rounded-lg hover:bg-[#E5E5E5] transition-all shadow-md"
                   >
-                    Connect Wallet to Mint
+                    Connect Wallet to {activeTab === 'mint' ? 'Mint' : 'Redeem'}
                   </button>
                 ) : (
                   <>
@@ -273,7 +373,7 @@ export default function XAusMintingApp() {
                     {(txStatus === 'idle' || txStatus === 'approving') && (
                       <button 
                         onClick={handleApprove}
-                        disabled={!stablecoinAmount || parseFloat(stablecoinAmount) <= 0 || txStatus === 'approving'}
+                        disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving'}
                         className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2"
                       >
                         {txStatus === 'approving' ? (
@@ -282,25 +382,29 @@ export default function XAusMintingApp() {
                             Approving Allowances...
                           </>
                         ) : (
-                          `Approve ${paymentAsset}`
+                          `Approve ${activeTab === 'mint' ? paymentAsset : 'XAUs'}`
                         )}
                       </button>
                     )}
 
-                    {/* PIPELINE STEP 2: REAL MINT ACTION EXECUTION */}
-                    {(txStatus === 'approved' || txStatus === 'minting') && (
+                    {/* PIPELINE STEP 2: REAL PROCESSING ACTION EXECUTION */}
+                    {(txStatus === 'approved' || txStatus === 'processing') && (
                       <button 
-                        onClick={handleMint}
-                        disabled={txStatus === 'minting'}
-                        className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#0037FF]/10"
+                        onClick={handleProcess}
+                        disabled={txStatus === 'processing'}
+                        className={`w-full py-4 text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${
+                          activeTab === 'mint' 
+                            ? 'bg-[#0037FF] hover:bg-[#002CD6] shadow-[#0037FF]/10' 
+                            : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'
+                        }`}
                       >
-                        {txStatus === 'minting' ? (
+                        {txStatus === 'processing' ? (
                           <>
-                            <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
-                            Minting XAUs...
+                            <span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />
+                            {activeTab === 'mint' ? 'Minting XAUs...' : 'Redeeming XAUs...'}
                           </>
                         ) : (
-                          'Mint XAUs'
+                          activeTab === 'mint' ? 'Mint XAUs' : 'Redeem XAUs'
                         )}
                       </button>
                     )}
