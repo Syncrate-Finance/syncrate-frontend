@@ -56,7 +56,7 @@ export default function SGLDProductPage() {
             </h1>
 
             <p className="text-sm md:text-base text-[#AAAAAA] leading-relaxed mb-8 max-w-xl">
-              Earn yield on your XAUs & stablecoins while maintaining exposure to physical gold through Syncrate’s Gold Yield Vault.
+              Earn yield on your XAUs while maintaining exposure to physical gold through Syncrate’s Gold Yield Vault.
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
