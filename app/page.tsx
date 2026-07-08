@@ -253,7 +253,7 @@ export default function LaunchingSoon() {
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
               <Image src="/financing-icon.png" alt="Financing" width={24} height={24} className="object-contain" />
             </div>
-            <h4 className="text-lg font-medium text-white mb-3">Gold Financing</h4>
+            <h4 className="text-lg font-medium text-white mb-3">Gold Sourcing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
               Partnered with <span className="text-blue-500 font-medium">Bawa Rocks LTD</span>, a Goldbog accredited aggregator, sourcing and exporting physical gold inventory that backs the value flowing through XAUs.
             </p>
@@ -275,7 +275,7 @@ export default function LaunchingSoon() {
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
               <Image src="/custody-icon.PNG" alt="Custody" width={24} height={24} className="object-contain" />
             </div>
-            <h4 className="text-lg font-medium text-white mb-3">Custody</h4>
+            <h4 className="text-lg font-medium text-white mb-3">Custody & Financing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
               Secure custodial storage and financing for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing XAUs are held independently and always verfiable.
             </p>
