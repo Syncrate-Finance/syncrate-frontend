@@ -12,7 +12,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 // 1. Configure Wagmi and RainbowKit
 const config = getDefaultConfig({
   appName: 'Syncrate',
-  projectId: 'YOUR_PROJECT_ID', // We will replace this later
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
   chains: [base, baseSepolia],
   ssr: true, // Required for Next.js
 });
