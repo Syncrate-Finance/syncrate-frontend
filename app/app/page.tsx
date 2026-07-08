@@ -1,7 +1,3 @@
-
-
-
-
 'use client'
 
 import { useState } from 'react'
@@ -30,11 +26,8 @@ export default function XAusMintingApp() {
   const mockTokenBalance = 15420.50 
   const mockXAusBalance = 4.2500
 
-  // Mock Queue States (For Asynchronous Redemption Dashboard)
-  const [hasQueuedRedemption, setHasQueuedRedemption] = useState(true) // Set true to show dashboard
-  const [queuedAmount, setQueuedAmount] = useState(1.5000)
-  const [isAdmin, setIsAdmin] = useState(true) // Mock admin check to show Keeper button
-  const [isProcessingQueue, setIsProcessingQueue] = useState(false)
+  // FIFO Queue States (For Asynchronous Redemption Dashboard)
+  const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
   
   // Dynamic output calculation based on mode
   const calculatedOutput = (() => {
@@ -70,7 +63,14 @@ export default function XAusMintingApp() {
   const handleProcess = () => {
     setTxStatus('processing')
     setTimeout(() => {
-      setTxStatus('success')
+      if (activeTab === 'redeem') {
+        // Mocking the event trigger: 'XAUsRedemptionQueued'
+        setQueuedRequest({ amount: parseFloat(inputAmount), position: 1, status: 'pending' })
+        setTxStatus('idle') // Return to idle so they can see the dashboard
+        setInputAmount('')
+      } else {
+        setTxStatus('success')
+      }
     }, 3500)
   }
 
@@ -86,14 +86,44 @@ export default function XAusMintingApp() {
     }
   }
 
-  const handleProcessQueue = () => {
-    setIsProcessingQueue(true)
-    setTimeout(() => {
-      setIsProcessingQueue(false)
-      setHasQueuedRedemption(false)
-      setQueuedAmount(0)
-    }, 3000)
-  }
+  // Dashboard component helper
+  const renderDashboard = () => {
+    // Only show if the user is in Redeem mode and connected
+    if (activeTab !== 'redeem' || !isConnected) return null;
+
+    // DEFAULT STATE: No pending requests
+    if (!queuedRequest) {
+      return (
+        <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 text-center transition-all">
+          <h3 className="text-xs font-mono tracking-widest text-[#666666] uppercase mb-1">Redemption Queue</h3>
+          <p className="text-[10px] text-[#444444] font-mono">No pending requests</p>
+        </div>
+      );
+    }
+
+    // ACTIVE STATE: User has a pending redemption in the FIFO queue
+    return (
+      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div className="flex items-center justify-between border-b border-[#111111] pb-3">
+          <h3 className="text-xs font-mono tracking-widest text-[#888888] uppercase">Your Queue Position</h3>
+          <span className="text-xs font-mono text-white">#{queuedRequest.position}</span>
+        </div>
+        
+        <div className="flex justify-between items-center py-1">
+          <span className="text-xs text-[#666666]">Amount Owed</span>
+          <span className="text-sm font-medium text-white">{queuedRequest.amount.toFixed(4)} XAUs</span>
+        </div>
+        
+        <div className="flex justify-between items-center py-1">
+          <span className="text-xs text-[#666666]">Status</span>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+            <span className="text-xs text-amber-500 font-mono capitalize">Pending Liquidity</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
@@ -438,51 +468,7 @@ export default function XAusMintingApp() {
         </div>
 
         {/* --- ASYNCHRONOUS REDEMPTION QUEUE DASHBOARD --- */}
-        {isConnected && hasQueuedRedemption && (
-          <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 shadow-xl flex flex-col gap-3 transition-opacity">
-            <div className="flex items-center justify-between border-b border-[#111111] pb-3">
-              <h3 className="text-xs font-mono tracking-widest text-[#888888] uppercase">Redemption Queue</h3>
-              <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                <span className="text-[9px] font-mono text-amber-500 uppercase tracking-wider">Pending FIFO</span>
-              </div>
-            </div>
-            
-            <div className="flex justify-between items-center py-1 mt-1">
-              <span className="text-xs text-[#666666]">Queued Amount</span>
-              <span className="text-sm font-medium text-white">{queuedAmount.toFixed(4)} XAUs</span>
-            </div>
-            
-            <div className="flex justify-between items-center py-1">
-              <span className="text-xs text-[#666666]">Estimated Output</span>
-              <span className="text-sm font-medium text-white">~{(queuedAmount * goldPricePerOunce * 0.9975).toLocaleString(undefined, { minimumFractionDigits: 2 })} USDC</span>
-            </div>
-
-            <div className="text-[10px] text-[#555555] leading-relaxed mt-1 p-3 bg-[#030303] rounded-lg border border-[#111111]">
-              Redemptions currently utilize an asynchronous FIFO queue while the treasury buffer is replenished. Your request will be processed automatically once liquidity is provisioned.
-            </div>
-
-            {/* Admin / Keeper Controls */}
-            {isAdmin && (
-              <div className="mt-2 pt-4 border-t border-[#111111]">
-                <button 
-                  onClick={handleProcessQueue}
-                  disabled={isProcessingQueue}
-                  className="w-full py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-mono text-[10px] tracking-wider uppercase rounded-lg disabled:opacity-50 transition-all flex justify-center items-center gap-2"
-                >
-                  {isProcessingQueue ? (
-                    <>
-                      <span className="w-3 h-3 border border-t-transparent border-white rounded-full animate-spin" />
-                      Executing Batch...
-                    </>
-                  ) : (
-                    'Process Queue (Admin/Keeper)'
-                  )}
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+        {renderDashboard()}
 
       </main>
 
