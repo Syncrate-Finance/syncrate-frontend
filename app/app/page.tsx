@@ -25,6 +25,12 @@ export default function XAusMintingApp() {
   const goldPricePerOunce = 2415.50
   const mockTokenBalance = 15420.50 
   const mockXAusBalance = 4.2500
+
+  // Mock Queue States (For Asynchronous Redemption Dashboard)
+  const [hasQueuedRedemption, setHasQueuedRedemption] = useState(true) // Set true to show dashboard
+  const [queuedAmount, setQueuedAmount] = useState(1.5000)
+  const [isAdmin, setIsAdmin] = useState(true) // Mock admin check to show Keeper button
+  const [isProcessingQueue, setIsProcessingQueue] = useState(false)
   
   // Dynamic output calculation based on mode
   const calculatedOutput = (() => {
@@ -76,6 +82,15 @@ export default function XAusMintingApp() {
     }
   }
 
+  const handleProcessQueue = () => {
+    setIsProcessingQueue(true)
+    setTimeout(() => {
+      setIsProcessingQueue(false)
+      setHasQueuedRedemption(false)
+      setQueuedAmount(0)
+    }, 3000)
+  }
+
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
@@ -92,10 +107,10 @@ export default function XAusMintingApp() {
           <div className="relative">
             <button 
               onClick={() => setIsChainDropdownOpen(!isChainDropdownOpen)}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1 sm:gap-2 hover:border-[#333333] transition-colors"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 hover:border-[#333333] transition-colors"
             >
-              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#0037FF] animate-pulse" />
-              {selectedChain} <span className="text-[9px] sm:text-[10px] text-[#666666]">▼</span>
+              <Image src="/base.png" alt="Base Network" width={14} height={14} className="rounded-full" />
+              {selectedChain} <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
             </button>
 
             {isChainDropdownOpen && (
@@ -104,7 +119,7 @@ export default function XAusMintingApp() {
                   onClick={() => { setSelectedChain('Base'); setIsChainDropdownOpen(false) }}
                   className="w-full text-left px-4 py-3 text-white hover:bg-white/[0.03] flex items-center gap-2"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0037FF]" /> Base
+                  <Image src="/base.png" alt="Base Network" width={14} height={14} className="rounded-full" /> Base
                 </button>
                 <div className="w-full text-left px-4 py-3 text-[#444444] cursor-not-allowed border-t border-[#111111] flex items-center justify-between">
                   <span>Ethereum</span> <span className="text-[9px] uppercase tracking-tighter text-[#333333]">Soon</span>
@@ -133,7 +148,9 @@ export default function XAusMintingApp() {
       </header>
 
       {/* --- MINT INTERFACE MAIN PORTAL --- */}
-      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 my-12">
+      <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 my-12 gap-6">
+        
+        {/* PRIMARY MINT/REDEEM CARD */}
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl">
           
           {/* Header section tab structures */}
@@ -242,7 +259,7 @@ export default function XAusMintingApp() {
                     /* REDEEM MODE: Fixed XAUs Badge */
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white select-none flex-shrink-0 whitespace-nowrap">
                       <Image 
-                        src="/xaus-icon2.png" 
+                        src="/xaus-icon.png" 
                         alt="XAUs logo" 
                         width={16} 
                         height={16} 
@@ -287,7 +304,7 @@ export default function XAusMintingApp() {
                     /* MINT MODE: Fixed XAUs Badge */
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
                       <Image 
-                        src="/xaus-icon2.png" 
+                        src="/xaus-icon.png" 
                         alt="XAUs logo" 
                         width={16} 
                         height={16} 
@@ -415,6 +432,54 @@ export default function XAusMintingApp() {
             </div>
           )}
         </div>
+
+        {/* --- ASYNCHRONOUS REDEMPTION QUEUE DASHBOARD --- */}
+        {isConnected && hasQueuedRedemption && (
+          <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 shadow-xl flex flex-col gap-3 transition-opacity">
+            <div className="flex items-center justify-between border-b border-[#111111] pb-3">
+              <h3 className="text-xs font-mono tracking-widest text-[#888888] uppercase">Redemption Queue</h3>
+              <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                <span className="text-[9px] font-mono text-amber-500 uppercase tracking-wider">Pending FIFO</span>
+              </div>
+            </div>
+            
+            <div className="flex justify-between items-center py-1 mt-1">
+              <span className="text-xs text-[#666666]">Queued Amount</span>
+              <span className="text-sm font-medium text-white">{queuedAmount.toFixed(4)} XAUs</span>
+            </div>
+            
+            <div className="flex justify-between items-center py-1">
+              <span className="text-xs text-[#666666]">Estimated Output</span>
+              <span className="text-sm font-medium text-white">~{(queuedAmount * goldPricePerOunce * 0.9975).toLocaleString(undefined, { minimumFractionDigits: 2 })} USDC</span>
+            </div>
+
+            <div className="text-[10px] text-[#555555] leading-relaxed mt-1 p-3 bg-[#030303] rounded-lg border border-[#111111]">
+              Redemptions currently utilize an asynchronous FIFO queue while the treasury buffer is replenished. Your request will be processed automatically once liquidity is provisioned.
+            </div>
+
+            {/* Admin / Keeper Controls */}
+            {isAdmin && (
+              <div className="mt-2 pt-4 border-t border-[#111111]">
+                <button 
+                  onClick={handleProcessQueue}
+                  disabled={isProcessingQueue}
+                  className="w-full py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-mono text-[10px] tracking-wider uppercase rounded-lg disabled:opacity-50 transition-all flex justify-center items-center gap-2"
+                >
+                  {isProcessingQueue ? (
+                    <>
+                      <span className="w-3 h-3 border border-t-transparent border-white rounded-full animate-spin" />
+                      Executing Batch...
+                    </>
+                  ) : (
+                    'Process Queue (Admin/Keeper)'
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
       </main>
 
       {/* --- APP FOOTER STRIP --- */}
