@@ -230,7 +230,7 @@ export default function XAusMintingApp() {
               {/* LIVE GOLD FEED DETAILS PANEL */}
               <div className="bg-[#030303] border border-[#111111] rounded-xl p-4 font-mono text-xs flex flex-col gap-1 mt-1">
                 <div className="flex justify-between items-center text-[#666666]">
-                  <span>Live Gold Price Feed</span>
+                  <span>Live Gold Price</span>
                   <span className="text-white font-sans">${goldPricePerOunce.toFixed(2)} <span className="text-[10px] font-mono text-[#666666]">/ oz</span></span>
                 </div>
               </div>
