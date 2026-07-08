@@ -11,65 +11,7 @@ import Image from 'next/image'
 export default function SGLDProductPage() {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  
-  const features = [
-    {
-      id: 1,
-      title: "Goldbod Accredited",
-      description: "All Syncrate Gold bars are sourced directly from Goldbod-accredited aggregators, ensuring each gold bar is bullion-market authentic and globally accepted.",
-      bgImage: "/feature-1.PNG", 
-      logos: ["/bawa.png"]
-    },
-    {
-      id: 2,
-      title: "Securly Vaulted",
-      description: "Syncrate partners with Amanat Vaults - a UAE leading vaulting firm, to physical safeguard Syncrate's physical gold bars.",
-      bgImage: "/feature-2.PNG",
-      logos: ["/amanat-icon.png"]
-    },
-    {
-      id: 3,
-      title: "Accessible Everywhere",
-      description: "XAUs is deployed across multiple chains, enabling robust liquidy and seamless ownership.",
-      bgImage: "/feature-3.PNG",
-      logos: ["/eth.png", "/base.jpeg"]
-    }
-  ]
 
-  const handleScroll = (e: UIEvent<HTMLDivElement>) => {
-    const container = e.currentTarget
-    const firstCard = container.children[0] as HTMLElement
-    if (!firstCard) return
-    
-    const itemWidth = firstCard.offsetWidth + 24
-    const scrollLeft = container.scrollLeft
-    
-    const newIndex = Math.floor((scrollLeft + itemWidth / 2) / itemWidth)
-    
-    if (newIndex >= 0 && newIndex < features.length && newIndex !== activeIndex) {
-      setActiveIndex(newIndex)
-    }
-  }
-
-  const scrollToCard = (index: number) => {
-    const container = scrollContainerRef.current
-    if (!container) return
-    const firstCard = container.children[0] as HTMLElement
-    if (!firstCard) return
-    
-    const itemWidth = firstCard.offsetWidth + 24
-    container.scrollTo({
-      left: index * itemWidth,
-      behavior: 'smooth'
-    })
-    setActiveIndex(index)
-  }
-
-  return (
-    <div 
-      className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col antialiased ${GeistSans.variable} ${GeistMono.variable}`} 
-      style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}
-    >
       {/* --- TOP NAVIGATION --- */}
       <header className="w-full flex items-center justify-between px-6 py-5 max-w-6xl mx-auto border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2">
@@ -90,8 +32,8 @@ export default function SGLDProductPage() {
       <main className="relative w-full overflow-hidden">
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/XAUs-bg-cover.PNG" 
-            alt="XAUs Gold Background"
+            src="/SGLD-cover.PNG" 
+            alt="SGLD Background"
             fill
             className="object-cover opacity-25"
             priority
@@ -107,7 +49,7 @@ export default function SGLDProductPage() {
             </h1>
 
             <p className="text-sm md:text-base text-[#AAAAAA] leading-relaxed mb-8 max-w-xl">
-              Earn yield on your XAUs while maintaining exposure to physical gold through Syncrate’s Gold Yield Vault.
+              Earn yield on your XAUs & stablecoins while maintaining exposure to physical gold through Syncrate’s Gold Yield Vault.
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
@@ -142,97 +84,6 @@ export default function SGLDProductPage() {
           </div>
         </div>
       </main>
-
-      {/* --- XAUs FEATURES SECTION --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
-        <hr className="border-[#222222] mb-12" />
-        
-        <span className="text-xs font-mono text-[#666666] tracking-widest block mb-4">
-          XAUs Features
-        </span>
-
-        <div className="mb-10 max-w-2xl">
-          <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-3">
-            Secure <span className="text-[#FFD700]">Gold.</span> Transparent Infrastructure.
-          </h2>
-          <p className="text-sm md:text-lg text-[#888888] leading-relaxed">
-            From licensed gold sourcing to independent vault custody, Syncrate combines trusted real-world infrastructure with programmable onchain finance.
-          </p>
-        </div>
-
-        {/* Sliding Cards Container */}
-        <div 
-          ref={scrollContainerRef}
-          onScroll={handleScroll}
-          className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-        >
-          {features.map((feature) => (
-            <div 
-              key={feature.id}
-              className="relative flex-none w-[320px] md:w-[400px] aspect-[4/5] rounded-xl overflow-hidden snap-center group border border-[#1a1a1a] flex flex-col justify-end"
-            >
-              <div className="absolute inset-0 z-0 bg-[#0d0d0d]">
-                <Image
-                  src={feature.bgImage}
-                  alt={feature.title}
-                  fill
-                  sizes="(max-w-768px) 320px, 400px"
-                  className="object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/90 to-transparent" />
-              </div>
-
-              <div className="relative z-10 p-6 md:p-8 flex flex-col w-full">
-                <h3 className="text-xl md:text-2xl font-medium text-white tracking-tight mb-3">
-                  {feature.title}
-                </h3>
-                
-                <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6">
-                  {feature.description}
-                </p>
-
-                <div className="pt-5 border-t border-[#222222]/60 w-full">
-                  <div className={`flex flex-wrap items-center ${feature.id <= 2 ? 'gap-x-6 gap-y-3' : 'gap-3'}`}>
-                    {feature.logos.map((logoPath, idx) => {
-                      if (feature.id <= 2) {
-                        return (
-                          <div 
-                            key={idx} 
-                            className="relative h-12 w-36 flex items-center justify-start overflow-hidden"
-                          >
-                            <Image 
-                              src={logoPath} 
-                              alt="Integrated Network Partner" 
-                              fill
-                              sizes="(max-w-768px) 96px, 96px"
-                              className="object-contain object-left brightness-0 invert" 
-                            />
-                          </div>
-                        )
-                      }
-
-                      return (
-                        <div 
-                          key={idx} 
-                          className="relative w-9 h-9 rounded-full flex items-center justify-center overflow-hidden bg-white/5 border border-white/10"
-                        >
-                          <Image 
-                            src={logoPath} 
-                            alt="Integrated Network Partner" 
-                            fill
-                            sizes="36px"
-                            className="object-cover" 
-                          />
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* Navigation Indicator Dots */}
         <div className="flex items-center justify-center gap-2 mt-4">
           {features.map((_, index) => (
