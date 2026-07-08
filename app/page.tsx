@@ -41,7 +41,7 @@ export default function LaunchingSoon() {
 
         {/* Subheading - Kept intact and clean */}
         <p className="text-base text-[#888888] leading-relaxed mb-6 max-w-md">
-          Syncrate channels onchain capital into productive real-world assets, delivering transparent, USD-denominated yield designed for the next generation of decentralized finance.
+          Syncrate channels onchain capital into productive real-world assets, delivering transparent, gold-backed yield designed for the next generation of decentralized finance.
         </p>
       </main>
 
@@ -173,12 +173,7 @@ export default function LaunchingSoon() {
             Design
           </span>
           
-          {/* Indicator dots matching the Techdollar image */}
-          <div className="flex gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-white" />
-            <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
-            <div className="w-1.5 h-1.5 rounded-full bg-[#333333]" />
-          </div>
+          
         </div>
 
         {/* Spacing before the large paragraph */}
@@ -237,7 +232,7 @@ export default function LaunchingSoon() {
         
         {/* Label Row */}
         <div className="flex justify-between items-center">
-          <span className="text-lg font-bold text-white">
+          <span className="text-lg font- text-white">
             Stack
           </span>
         </div>
