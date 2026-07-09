@@ -32,7 +32,7 @@ const ERC20_ABI = [
   }
 ] as const
 
-// Minimal ABI for the Core Mint/Redeem Contract (Adjust inputs to match your actual deployed contract)
+// Minimal ABI for the Core Mint/Redeem Contract
 const MINT_CONTROLLER_ABI = [
   {
     inputs: [
@@ -75,23 +75,32 @@ const MINT_CONTROLLER_ABI = [
 ] as const
 
 export default function XAusMintingApp() {
-  // RainbowKit / Wagmi Account Connection Status
+  // ==========================================
+  // 1. REACT STATE (Must be at the top)
+  // ==========================================
+  const [selectedChain, setSelectedChain] = useState('Base')
+  const [isChainDropdownOpen, setIsChainDropdownOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint')
+  const [inputAmount, setInputAmount] = useState('')
+  const [paymentAsset, setPaymentAsset] = useState<'USDC' | 'USDT'>('USDC')
+  const [isAssetDropdownOpen, setIsAssetDropdownOpen] = useState(false)
+  const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
+  const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
+
+  // ==========================================
+  // 2. WAGMI HOOKS & READS
+  // ==========================================
   const { isConnected, address } = useAccount()
 
-  // --- CHAINLINK ORACLE FETCHING ---
   const { data: priceData } = useReadContract({
     address: XAU_USD_FEED,
     abi: [{ inputs: [], name: 'latestAnswer', outputs: [{ internalType: 'int256', name: '', type: 'int256' }], stateMutability: 'view', type: 'function' }],
     functionName: 'latestAnswer',
-    query: {
-      refetchInterval: 10000,
-    },
+    query: { refetchInterval: 10000 },
   })
 
-  // Chainlink prices have 8 decimals
   const goldPricePerOunce = priceData ? Number(priceData) / 1e8 : 2415.50
-  // --- LIVE FIFO QUEUE FETCHING ---
-  // Read the current front index of the queue
+
   const { data: currentFrontIndex } = useReadContract({
     address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
     abi: MINT_CONTROLLER_ABI,
@@ -99,9 +108,6 @@ export default function XAusMintingApp() {
     query: { refetchInterval: 10000 }
   })
 
-  // Continuously attempt to pull the user's request if it exists
-  // For production, you will pass the user's actual queue index. 
-  // For now, we dynamically check the current active position or fallback to the tracked state.
   const targetIndex = queuedRequest ? BigInt(queuedRequest.position + (currentFrontIndex ? Number(currentFrontIndex) : 0) - 1) : BigInt(0)
 
   const { data: queueItemData } = useReadContract({
@@ -115,49 +121,23 @@ export default function XAusMintingApp() {
     }
   })
 
-  // --- WAGMI BALANCE FETCHING ---
-  const { data: usdcData } = useBalance({
-    address,
-    token: USDC_ADDRESS,
-  })
-  
-  const { data: usdtData } = useBalance({
-    address,
-    token: USDT_ADDRESS,
-  })
+  const { data: usdcData } = useBalance({ address, token: USDC_ADDRESS })
+  const { data: usdtData } = useBalance({ address, token: USDT_ADDRESS })
+  const { data: xausData } = useBalance({ address, token: XAUS_ADDRESS as `0x${string}` })
 
-  const { data: xausData } = useBalance({
-    address,
-    token: XAUS_ADDRESS as `0x${string}`,
-  })
-
-  // Parse formatted balances (returns 0 if undefined/loading)
   const usdcBalance = usdcData ? parseFloat(usdcData.formatted) : 0
   const usdtBalance = usdtData ? parseFloat(usdtData.formatted) : 0
   const xausBalance = xausData ? parseFloat(xausData.formatted) : 0
-  
-  // Chain visibility state (Dropdown handled entirely by RainbowKit automatically)
-  const [selectedChain, setSelectedChain] = useState('Base')
-  const [isChainDropdownOpen, setIsChainDropdownOpen] = useState(false)
 
-  // Core Flow States
-  const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint')
-  const [inputAmount, setInputAmount] = useState('')
-  const [paymentAsset, setPaymentAsset] = useState<'USDC' | 'USDT'>('USDC')
-  const [isAssetDropdownOpen, setIsAssetDropdownOpen] = useState(false)
-  
-  // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'processing' | 'success'
-  const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
-
-  // --- CONTRACT WRITE HOOKS (APPROVAL) ---
+  // ==========================================
+  // 3. WAGMI WRITES & EFFECTS
+  // ==========================================
   const { writeContract: writeApprove, data: approveTxHash, error: approveError, reset: resetApprove } = useWriteContract()
   const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({ hash: approveTxHash })
 
-  // --- CONTRACT WRITE HOOKS (CORE MINT/REDEEM ACTION) ---
   const { writeContract: writeAction, data: actionTxHash, error: actionError, reset: resetAction } = useWriteContract()
   const { isLoading: isActionMining, isSuccess: isActionConfirmed } = useWaitForTransactionReceipt({ hash: actionTxHash })
 
-  // Synchronize approval mining state with UI pipeline state
   useEffect(() => {
     if (isApprovalMining) {
       setTxStatus('approving')
@@ -169,19 +149,15 @@ export default function XAusMintingApp() {
     }
   }, [isApprovalMining, isApprovalConfirmed, approveError, resetApprove, txStatus])
 
-    // Synchronize core action mining state with UI pipeline state
   useEffect(() => {
     if (isActionMining) {
       setTxStatus('processing')
     } else if (isActionConfirmed && txStatus === 'processing') {
       if (activeTab === 'redeem') {
-        // Pull live context data: if we don't have front index yet, assume we're next in line (#1)
         const currentFront = currentFrontIndex ? Number(currentFrontIndex) : 0
-        
-        // Lock in tracking for the dashboard display
         setQueuedRequest({ 
           amount: parseFloat(inputAmount), 
-          position: 1, // User is at relative position 1 from the current front
+          position: 1, 
           status: 'pending' 
         })
         setTxStatus('idle') 
@@ -195,27 +171,21 @@ export default function XAusMintingApp() {
     }
   }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus, currentFrontIndex])
 
-  // Dynamically set the stablecoin balance based on user selection
+  // ==========================================
+  // 4. DERIVED STATE & HANDLERS
+  // ==========================================
   const activeStablecoinBalance = paymentAsset === 'USDC' ? usdcBalance : usdtBalance
 
-  // FIFO Queue States (For Asynchronous Redemption Dashboard)
-  const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
-  
-  // Dynamic output calculation based on mode
   const calculatedOutput = (() => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return activeTab === 'mint' ? '0.0000' : '0.00'
-    
     const amount = parseFloat(inputAmount)
     if (activeTab === 'mint') {
-      // Mint: Stablecoin / Price = XAUs
       return (amount / goldPricePerOunce).toFixed(4)
     } else {
-      // Redeem: XAUs * Price * 0.9975 (0.25% Fee Deducted)
       return (amount * goldPricePerOunce * 0.9975).toFixed(2)
     }
   })()
 
-  // Form Auto-fill Handler using real balances
   const handleMaxBalance = () => {
     if (activeTab === 'mint') {
       setInputAmount(activeStablecoinBalance.toString())
@@ -224,24 +194,21 @@ export default function XAusMintingApp() {
     }
   }
 
-  // Real ERC-20 Allowance Setup Trigger
   const handleApprove = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
-
-    // Determine target token address and token decimals
     let targetTokenAddress: `0x${string}` = USDC_ADDRESS
-    let decimals = 6 // USDC and USDT on Base use 6 decimals
+    let decimals = 6 
 
     if (activeTab === 'mint') {
       targetTokenAddress = paymentAsset === 'USDC' ? USDC_ADDRESS : USDT_ADDRESS
     } else {
       targetTokenAddress = XAUS_ADDRESS as `0x${string}`
-      decimals = 18 // Assuming standard XAUs asset uses 18 decimals
+      decimals = 18 
     }
 
     const parsedAmount = parseUnits(inputAmount, decimals)
 
-    // @ts-ignore: Bypassing Wagmi v2 strict ABI typing compilation error for Next.js build
+    // @ts-ignore
     writeApprove({
       address: targetTokenAddress,
       abi: ERC20_ABI,
@@ -250,7 +217,6 @@ export default function XAusMintingApp() {
     })
   }
 
-      // Real Smart Contract Execution Trigger
   const handleProcess = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
 
@@ -265,7 +231,6 @@ export default function XAusMintingApp() {
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
-        // ABI: [{name: 'xauAmount', type: 'uint256'}, {name: 'tokenAddress', type: 'address'}]
         args: [parsedAmount, targetTokenAddress], 
       })
     } else {
@@ -274,7 +239,6 @@ export default function XAusMintingApp() {
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',
-        // ABI: [{name: 'xauAmount', type: 'uint256'}, {name: 'stablecoinAddress', type: 'address'}]
         args: [parsedAmount, targetTokenAddress],
       })
     }
@@ -294,7 +258,6 @@ export default function XAusMintingApp() {
     }
   }
 
-    // Dashboard component helper
   const renderDashboard = () => {
     if (activeTab !== 'redeem' || !isConnected) return null;
 
@@ -307,7 +270,6 @@ export default function XAusMintingApp() {
       );
     }
 
-    // Parse live state from the contract if loaded, otherwise fallback to the transaction input
     const liveAmountOwed = queueItemData && queueItemData[2] 
       ? Number(queueItemData[2]) / 1e18 
       : queuedRequest.amount
@@ -335,30 +297,9 @@ export default function XAusMintingApp() {
     );
   };
 
-    // ACTIVE STATE: User has a pending redemption in the FIFO queue
-    return (
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
-        <div className="flex items-center justify-between border-b border-[#111111] pb-3">
-          <h3 className="text-xs font-mono tracking-widest text-[#888888] uppercase">Your Queue Position</h3>
-          <span className="text-xs font-mono text-white">#{queuedRequest.position}</span>
-        </div>
-        
-        <div className="flex justify-between items-center py-1">
-          <span className="text-xs text-[#666666]">Amount Owed</span>
-          <span className="text-sm font-medium text-white">{queuedRequest.amount.toFixed(4)} XAUs</span>
-        </div>
-        
-        <div className="flex justify-between items-center py-1">
-          <span className="text-xs text-[#666666]">Status</span>
-          <div className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-            <span className="text-xs text-amber-500 font-mono capitalize">Pending Liquidity</span>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
+  // ==========================================
+  // 5. RENDER UI
+  // ==========================================
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
