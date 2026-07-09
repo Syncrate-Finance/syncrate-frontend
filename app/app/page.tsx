@@ -32,6 +32,30 @@ const ERC20_ABI = [
   }
 ] as const
 
+// Minimal ABI for the Core Mint/Redeem Contract (Adjust inputs to match your actual deployed contract)
+const MINT_CONTROLLER_ABI = [
+  {
+    inputs: [
+      { internalType: 'address', name: 'paymentAsset', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' }
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'address', name: 'targetAsset', type: 'address' }
+    ],
+    name: 'redeem',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
+] as const
+
 export default function XAusMintingApp() {
   // RainbowKit / Wagmi Account Connection Status
   const { isConnected, address } = useAccount()
@@ -83,24 +107,44 @@ export default function XAusMintingApp() {
   // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'processing' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
 
-  // --- CONTRACT WRITE CONTRACT HOOKS ---
-  const { writeContract, data: approveTxHash, error: approveError, reset: resetWrite } = useWriteContract()
-  
-  const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({
-    hash: approveTxHash,
-  })
+  // --- CONTRACT WRITE HOOKS (APPROVAL) ---
+  const { writeContract: writeApprove, data: approveTxHash, error: approveError, reset: resetApprove } = useWriteContract()
+  const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({ hash: approveTxHash })
+
+  // --- CONTRACT WRITE HOOKS (CORE MINT/REDEEM ACTION) ---
+  const { writeContract: writeAction, data: actionTxHash, error: actionError, reset: resetAction } = useWriteContract()
+  const { isLoading: isActionMining, isSuccess: isActionConfirmed } = useWaitForTransactionReceipt({ hash: actionTxHash })
 
   // Synchronize approval mining state with UI pipeline state
   useEffect(() => {
     if (isApprovalMining) {
       setTxStatus('approving')
-    } else if (isApprovalConfirmed) {
+    } else if (isApprovalConfirmed && txStatus === 'approving') {
       setTxStatus('approved')
     } else if (approveError) {
       setTxStatus('idle')
-      resetWrite()
+      resetApprove()
     }
-  }, [isApprovalMining, isApprovalConfirmed, approveError, resetWrite])
+  }, [isApprovalMining, isApprovalConfirmed, approveError, resetApprove, txStatus])
+
+  // Synchronize core action mining state with UI pipeline state
+  useEffect(() => {
+    if (isActionMining) {
+      setTxStatus('processing')
+    } else if (isActionConfirmed && txStatus === 'processing') {
+      if (activeTab === 'redeem') {
+        // Mocking the queue dashboard update on successful transaction confirmation
+        setQueuedRequest({ amount: parseFloat(inputAmount), position: 1, status: 'pending' })
+        setTxStatus('idle') // Return to idle so they can see the dashboard
+        setInputAmount('')
+      } else {
+        setTxStatus('success')
+      }
+    } else if (actionError) {
+      setTxStatus('approved') // Revert to approved so they can retry without re-approving
+      resetAction()
+    }
+  }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus])
 
   // Dynamically set the stablecoin balance based on user selection
   const activeStablecoinBalance = paymentAsset === 'USDC' ? usdcBalance : usdtBalance
@@ -131,7 +175,7 @@ export default function XAusMintingApp() {
     }
   }
 
-    // Real ERC-20 Allowance Setup Trigger
+  // Real ERC-20 Allowance Setup Trigger
   const handleApprove = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
 
@@ -149,7 +193,7 @@ export default function XAusMintingApp() {
     const parsedAmount = parseUnits(inputAmount, decimals)
 
     // @ts-ignore: Bypassing Wagmi v2 strict ABI typing compilation error for Next.js build
-    writeContract({
+    writeApprove({
       address: targetTokenAddress,
       abi: ERC20_ABI,
       functionName: 'approve',
@@ -157,24 +201,39 @@ export default function XAusMintingApp() {
     })
   }
 
+  // Real Smart Contract Execution Trigger
   const handleProcess = () => {
-    setTxStatus('processing')
-    setTimeout(() => {
-      if (activeTab === 'redeem') {
-        // Mocking the event trigger: 'XAUsRedemptionQueued'
-        setQueuedRequest({ amount: parseFloat(inputAmount), position: 1, status: 'pending' })
-        setTxStatus('idle') // Return to idle so they can see the dashboard
-        setInputAmount('')
-      } else {
-        setTxStatus('success')
-      }
-    }, 3500)
+    if (!inputAmount || parseFloat(inputAmount) <= 0) return
+
+    const isMint = activeTab === 'mint'
+    const decimals = isMint ? 6 : 18
+    const parsedAmount = parseUnits(inputAmount, decimals)
+    const targetTokenAddress = paymentAsset === 'USDC' ? USDC_ADDRESS : USDT_ADDRESS
+
+    if (isMint) {
+      // @ts-ignore
+      writeAction({
+        address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+        abi: MINT_CONTROLLER_ABI,
+        functionName: 'mint',
+        args: [targetTokenAddress, parsedAmount],
+      })
+    } else {
+      // @ts-ignore
+      writeAction({
+        address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+        abi: MINT_CONTROLLER_ABI,
+        functionName: 'redeem',
+        args: [parsedAmount, targetTokenAddress],
+      })
+    }
   }
 
   const resetFlow = () => {
     setInputAmount('')
     setTxStatus('idle')
-    resetWrite()
+    resetApprove()
+    resetAction()
   }
 
   const handleTabSwitch = (tab: 'mint' | 'redeem') => {
