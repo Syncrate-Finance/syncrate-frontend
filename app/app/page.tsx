@@ -36,8 +36,8 @@ const ERC20_ABI = [
 const MINT_CONTROLLER_ABI = [
   {
     inputs: [
-      { internalType: 'address', name: 'paymentAsset', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' }
+      { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
+      { internalType: 'address', name: 'tokenAddress', type: 'address' }
     ],
     name: 'mint',
     outputs: [],
@@ -46,8 +46,8 @@ const MINT_CONTROLLER_ABI = [
   },
   {
     inputs: [
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-      { internalType: 'address', name: 'targetAsset', type: 'address' }
+      { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
+      { internalType: 'address', name: 'stablecoinAddress', type: 'address' }
     ],
     name: 'redeem',
     outputs: [],
