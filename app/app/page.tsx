@@ -201,8 +201,8 @@ export default function XAusMintingApp() {
     })
   }
 
-    // Real Smart Contract Execution Trigger
-    const handleProcess = () => {
+      // Real Smart Contract Execution Trigger
+  const handleProcess = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
 
     const isMint = activeTab === 'mint'
@@ -212,6 +212,7 @@ export default function XAusMintingApp() {
 
     if (isMint) {
       // @ts-ignore
+      writeAction({
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
@@ -220,6 +221,7 @@ export default function XAusMintingApp() {
       })
     } else {
       // @ts-ignore
+      writeAction({
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',
