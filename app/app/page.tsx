@@ -6,16 +6,28 @@ import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useReadContract } from 'wagmi'
 
 // Base Mainnet Contract Addresses
 const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
 const USDT_ADDRESS = '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2'
 const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder until deployment
+const XAU_USD_FEED = '0x76BAb56c71026046e8853a479424F60a48C17F72' // Chainlink XAU/USD Base Proxy
 
 export default function XAusMintingApp() {
   // RainbowKit / Wagmi Account Connection Status
   const { isConnected, address } = useAccount()
+
+  // --- CHAINLINK ORACLE FETCHING ---
+  const { data: priceData } = useReadContract({
+    address: XAU_USD_FEED,
+    abi: [{ inputs: [], name: 'latestAnswer', outputs: [{ internalType: 'int256', name: '', type: 'int256' }], stateMutability: 'view', type: 'function' }],
+    functionName: 'latestAnswer',
+    watch: true, // Auto-refreshes data
+  })
+
+  // Chainlink prices have 8 decimals
+  const goldPricePerOunce = priceData ? Number(priceData) / 1e8 : 2415.50
 
   // --- WAGMI BALANCE FETCHING ---
   const { data: usdcData } = useBalance({
@@ -50,9 +62,6 @@ export default function XAusMintingApp() {
   
   // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'processing' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
-
-  // Mock pricing state (will replace with Oracle later)
-  const goldPricePerOunce = 2415.50
 
   // Dynamically set the stablecoin balance based on user selection
   const activeStablecoinBalance = paymentAsset === 'USDC' ? usdcBalance : usdtBalance
