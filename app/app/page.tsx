@@ -12,7 +12,7 @@ import { useAccount, useBalance, useReadContract } from 'wagmi'
 const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
 const USDT_ADDRESS = '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2'
 const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder until deployment
-const XAU_USD_FEED = '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31' // Chainlink XAU/USD Base Proxy
+const XAU_USD_FEED = '0x76BAb56c71026046e8853a479424F60a48C17F72' // Chainlink XAU/USD Base Proxy
 
 export default function XAusMintingApp() {
   // RainbowKit / Wagmi Account Connection Status
@@ -23,7 +23,9 @@ export default function XAusMintingApp() {
     address: XAU_USD_FEED,
     abi: [{ inputs: [], name: 'latestAnswer', outputs: [{ internalType: 'int256', name: '', type: 'int256' }], stateMutability: 'view', type: 'function' }],
     functionName: 'latestAnswer',
-    watch: true, // Auto-refreshes data
+    query: {
+      refetchInterval: 10000, // Auto-refreshes data every 10 seconds in Wagmi v2
+    },
   })
 
   // Chainlink prices have 8 decimals
