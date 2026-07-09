@@ -1,18 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount, useBalance, useReadContract } from 'wagmi'
+import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { parseUnits } from 'viem'
 
 // Base Mainnet Contract Addresses
 const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
 const USDT_ADDRESS = '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2'
 const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder until deployment
-const XAU_USD_FEED = '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31' // Chainlink XAU/USD Base Proxy
+const XAU_USD_FEED = '0x76BAb56c71026046e8853a479424F60a48C17F72' // Chainlink XAU/USD Base Proxy
+
+// Core System Spender Address
+const MINT_CONTROLLER_ADDRESS = '0x0000000000000000000000000000000000000000' // Replace with your deployed Mint/Redeem contract
+
+// Minimal ERC20 ABI for Approval
+const ERC20_ABI = [
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'value', type: 'uint256' }
+    ],
+    name: 'approve',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
+] as const
 
 export default function XAusMintingApp() {
   // RainbowKit / Wagmi Account Connection Status
@@ -24,7 +42,7 @@ export default function XAusMintingApp() {
     abi: [{ inputs: [], name: 'latestAnswer', outputs: [{ internalType: 'int256', name: '', type: 'int256' }], stateMutability: 'view', type: 'function' }],
     functionName: 'latestAnswer',
     query: {
-      refetchInterval: 10000, // Auto-refreshes data every 10 seconds in Wagmi v2
+      refetchInterval: 10000,
     },
   })
 
@@ -65,6 +83,25 @@ export default function XAusMintingApp() {
   // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'processing' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
 
+  // --- CONTRACT WRITE CONTRACT HOOKS ---
+  const { writeContract, data: approveTxHash, error: approveError, reset: resetWrite } = useWriteContract()
+  
+  const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({
+    hash: approveTxHash,
+  })
+
+  // Synchronize approval mining state with UI pipeline state
+  useEffect(() => {
+    if (isApprovalMining) {
+      setTxStatus('approving')
+    } else if (isApprovalConfirmed) {
+      setTxStatus('approved')
+    } else if (approveError) {
+      setTxStatus('idle')
+      resetWrite()
+    }
+  }, [isApprovalMining, isApprovalConfirmed, approveError, resetWrite])
+
   // Dynamically set the stablecoin balance based on user selection
   const activeStablecoinBalance = paymentAsset === 'USDC' ? usdcBalance : usdtBalance
 
@@ -94,12 +131,29 @@ export default function XAusMintingApp() {
     }
   }
 
-  // Block handlers demonstrating layout flow updates
+  // Real ERC-20 Allowance Setup Trigger
   const handleApprove = () => {
-    setTxStatus('approving')
-    setTimeout(() => {
-      setTxStatus('approved')
-    }, 2000)
+    if (!inputAmount || parseFloat(inputAmount) <= 0) return
+
+    // Determine target token address and token decimals
+    let targetTokenAddress: `0x${string}` = USDC_ADDRESS
+    let decimals = 6 // USDC and USDT on Base use 6 decimals
+
+    if (activeTab === 'mint') {
+      targetTokenAddress = paymentAsset === 'USDC' ? USDC_ADDRESS : USDT_ADDRESS
+    } else {
+      targetTokenAddress = XAUS_ADDRESS as `0x${string}`
+      decimals = 18 // Assuming standard XAUs asset uses 18 decimals
+    }
+
+    const parsedAmount = parseUnits(inputAmount, decimals)
+
+    writeContract({
+      address: targetTokenAddress,
+      abi: ERC20_ABI,
+      functionName: 'approve',
+      args: [MINT_CONTROLLER_ADDRESS as `0x${string}`, parsedAmount],
+    })
   }
 
   const handleProcess = () => {
@@ -119,6 +173,7 @@ export default function XAusMintingApp() {
   const resetFlow = () => {
     setInputAmount('')
     setTxStatus('idle')
+    resetWrite()
   }
 
   const handleTabSwitch = (tab: 'mint' | 'redeem') => {
