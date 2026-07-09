@@ -10,7 +10,7 @@ import { useAccount, useBalance } from 'wagmi'
 
 // Base Mainnet Contract Addresses
 const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
-const USDT_ADDRESS = '0x50c5725949A6F0174600473a42d6c58E9d311E6c'
+const USDT_ADDRESS = '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2'
 const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder until deployment
 
 export default function XAusMintingApp() {
