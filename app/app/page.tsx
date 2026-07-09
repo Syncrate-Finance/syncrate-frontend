@@ -131,7 +131,7 @@ export default function XAusMintingApp() {
     }
   }
 
-  // Real ERC-20 Allowance Setup Trigger
+    // Real ERC-20 Allowance Setup Trigger
   const handleApprove = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
 
@@ -148,14 +148,13 @@ export default function XAusMintingApp() {
 
     const parsedAmount = parseUnits(inputAmount, decimals)
 
-    // Using 'as any' prevents Wagmi's strict type compilation error 
-    // when global declaration merging is missing from the project config
+    // @ts-ignore: Bypassing Wagmi v2 strict ABI typing compilation error for Next.js build
     writeContract({
       address: targetTokenAddress,
       abi: ERC20_ABI,
       functionName: 'approve',
       args: [MINT_CONTROLLER_ADDRESS as `0x${string}`, parsedAmount],
-    } as any)
+    })
   }
 
   const handleProcess = () => {
