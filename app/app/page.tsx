@@ -404,19 +404,6 @@ export default function XAusMintingApp() {
 
         {/* PRIMARY MINT/REDEEM CARD */}
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl">
-          
-          {/* PROMOTIONAL VAULT LINK BANNER */}
-<Link 
-  href="/app/sgld" 
-  className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
->
-  <span className="text-xs font-mono tracking-wide text-[#666666] group-hover:text-[#E5E5E5] transition-colors">
-    Earn yield on your XAUs
-  </span>
-  <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">
-    Open SGLD Page ➔
-  </span>
-</Link>
 
           {/* Header section tab structures */}
           <div className="flex gap-6 border-b border-[#111111] pb-4 mb-6">
@@ -657,6 +644,19 @@ export default function XAusMintingApp() {
                   </div>
                 ) : (
                   <>
+
+{/* PROMOTIONAL VAULT LINK BANNER */}
+<Link 
+  href="/app/sgld" 
+  className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
+>
+  <span className="text-xs font-mono tracking-wide text-[#666666] group-hover:text-[#E5E5E5] transition-colors">
+    Earn yield on your XAUs
+  </span>
+  <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">
+    Open SGLD Page ➔
+  </span>
+</Link>
                     {/* PIPELINE STEP 1: APPROVE ACTION */}
                     {(txStatus === 'idle' || txStatus === 'approving') && (
                       <button 
