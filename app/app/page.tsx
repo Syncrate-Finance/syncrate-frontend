@@ -90,6 +90,30 @@ export default function XAusMintingApp() {
 
   // Chainlink prices have 8 decimals
   const goldPricePerOunce = priceData ? Number(priceData) / 1e8 : 2415.50
+  // --- LIVE FIFO QUEUE FETCHING ---
+  // Read the current front index of the queue
+  const { data: currentFrontIndex } = useReadContract({
+    address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+    abi: MINT_CONTROLLER_ABI,
+    functionName: 'nextQueueIndex',
+    query: { refetchInterval: 10000 }
+  })
+
+  // Continuously attempt to pull the user's request if it exists
+  // For production, you will pass the user's actual queue index. 
+  // For now, we dynamically check the current active position or fallback to the tracked state.
+  const targetIndex = queuedRequest ? BigInt(queuedRequest.position + (currentFrontIndex ? Number(currentFrontIndex) : 0) - 1) : BigInt(0)
+
+  const { data: queueItemData } = useReadContract({
+    address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+    abi: MINT_CONTROLLER_ABI,
+    functionName: 'redemptionQueue',
+    args: [targetIndex],
+    query: {
+      enabled: !!queuedRequest,
+      refetchInterval: 10000
+    }
+  })
 
   // --- WAGMI BALANCE FETCHING ---
   const { data: usdcData } = useBalance({
