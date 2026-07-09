@@ -6,11 +6,37 @@ import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
+
+// Base Mainnet Contract Addresses
+const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+const USDT_ADDRESS = '0x50c5725949A6F0174600473a42d6c58E9d311E6c'
+const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder until deployment
 
 export default function XAusMintingApp() {
   // RainbowKit / Wagmi Account Connection Status
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
+
+  // --- WAGMI BALANCE FETCHING ---
+  const { data: usdcData } = useBalance({
+    address,
+    token: USDC_ADDRESS,
+  })
+  
+  const { data: usdtData } = useBalance({
+    address,
+    token: USDT_ADDRESS,
+  })
+
+  const { data: xausData } = useBalance({
+    address,
+    token: XAUS_ADDRESS as `0x${string}`,
+  })
+
+  // Parse formatted balances (returns 0 if undefined/loading)
+  const usdcBalance = usdcData ? parseFloat(usdcData.formatted) : 0
+  const usdtBalance = usdtData ? parseFloat(usdtData.formatted) : 0
+  const xausBalance = xausData ? parseFloat(xausData.formatted) : 0
   
   // Chain visibility state (Dropdown handled entirely by RainbowKit automatically)
   const [selectedChain, setSelectedChain] = useState('Base')
@@ -25,10 +51,11 @@ export default function XAusMintingApp() {
   // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'processing' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
 
-  // Mock pricing and balance states
+  // Mock pricing state (will replace with Oracle later)
   const goldPricePerOunce = 2415.50
-  const mockTokenBalance = 15420.50 
-  const mockXAusBalance = 4.2500
+
+  // Dynamically set the stablecoin balance based on user selection
+  const activeStablecoinBalance = paymentAsset === 'USDC' ? usdcBalance : usdtBalance
 
   // FIFO Queue States (For Asynchronous Redemption Dashboard)
   const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
@@ -47,12 +74,12 @@ export default function XAusMintingApp() {
     }
   })()
 
-  // Form Auto-fill Handler
+  // Form Auto-fill Handler using real balances
   const handleMaxBalance = () => {
     if (activeTab === 'mint') {
-      setInputAmount(mockTokenBalance.toString())
+      setInputAmount(activeStablecoinBalance.toString())
     } else {
-      setInputAmount(mockXAusBalance.toString())
+      setInputAmount(xausBalance.toString())
     }
   }
 
@@ -355,7 +382,7 @@ export default function XAusMintingApp() {
                 <div className="flex justify-end items-center gap-2 mt-1">
                   <span className="text-[10px] text-[#666666] font-mono">
                     Balance: {isConnected 
-                      ? (activeTab === 'mint' ? mockTokenBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : mockXAusBalance.toFixed(4))
+                      ? (activeTab === 'mint' ? activeStablecoinBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : xausBalance.toFixed(4))
                       : (activeTab === 'mint' ? '0.00' : '0.0000')} {activeTab === 'mint' ? paymentAsset : 'XAUs'}
                   </span>
                   {isConnected && (
