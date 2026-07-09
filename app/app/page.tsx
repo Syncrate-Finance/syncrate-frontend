@@ -53,6 +53,24 @@ const MINT_CONTROLLER_ABI = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'nextQueueIndex',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'redemptionQueue',
+    outputs: [
+      { internalType: 'address', name: 'account', type: 'address' },
+      { internalType: 'address', name: 'stablecoin', type: 'address' },
+      { internalType: 'uint256', name: 'amountOwed', type: 'uint256' }
+    ],
+    stateMutability: 'view',
+    type: 'function'
   }
 ] as const
 
