@@ -148,12 +148,14 @@ export default function XAusMintingApp() {
 
     const parsedAmount = parseUnits(inputAmount, decimals)
 
+    // Using 'as any' prevents Wagmi's strict type compilation error 
+    // when global declaration merging is missing from the project config
     writeContract({
       address: targetTokenAddress,
       abi: ERC20_ABI,
       functionName: 'approve',
       args: [MINT_CONTROLLER_ADDRESS as `0x${string}`, parsedAmount],
-    })
+    } as any)
   }
 
   const handleProcess = () => {
