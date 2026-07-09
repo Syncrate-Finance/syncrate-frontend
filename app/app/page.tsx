@@ -201,7 +201,7 @@ export default function XAusMintingApp() {
     })
   }
 
-  // Real Smart Contract Execution Trigger
+    // Real Smart Contract Execution Trigger
   const handleProcess = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
 
@@ -216,7 +216,7 @@ export default function XAusMintingApp() {
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
-        args: [targetTokenAddress, parsedAmount],
+        args: [parsedAmount, targetTokenAddress], // Updated: Amount first, Address second
       })
     } else {
       // @ts-ignore
@@ -224,7 +224,7 @@ export default function XAusMintingApp() {
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',
-        args: [parsedAmount, targetTokenAddress],
+        args: [parsedAmount, targetTokenAddress], // Already correct
       })
     }
   }
