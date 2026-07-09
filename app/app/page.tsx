@@ -139,13 +139,92 @@ export default function XAusMintingApp() {
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">XAUs MINT</span>
         </Link>
 
-        {/* Unified Wallet Connect Button (Handles chains & connection simultaneously) */}
+        {/* Custom Unified Wallet Connect Button Restoring Original UI */}
         <div className="flex items-center gap-1.5 sm:gap-3">
-          <ConnectButton 
-            chainStatus="icon" 
-            showBalance={false} 
-            accountStatus="address"
-          />
+          <ConnectButton.Custom>
+            {({
+              account,
+              chain,
+              openAccountModal,
+              openChainModal,
+              openConnectModal,
+              mounted,
+            }) => {
+              const ready = mounted && account && chain;
+
+              return (
+                <div
+                  {...(!mounted && {
+                    'aria-hidden': true,
+                    style: {
+                      opacity: 0,
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                    },
+                  })}
+                  className="flex items-center gap-1.5 sm:gap-3"
+                >
+                  {(() => {
+                    if (!mounted || !account || !chain) {
+                      return (
+                        <button
+                          onClick={openConnectModal}
+                          type="button"
+                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-white text-[#030303] hover:bg-[#E5E5E5]"
+                        >
+                          Connect Wallet
+                        </button>
+                      );
+                    }
+
+                    if (chain.unsupported) {
+                      return (
+                        <button
+                          onClick={openChainModal}
+                          type="button"
+                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-red-600 text-white shadow-md hover:bg-red-700"
+                        >
+                          Wrong network
+                        </button>
+                      );
+                    }
+
+                    return (
+                      <div className="flex items-center gap-1.5 sm:gap-3">
+                        <button
+                          onClick={openChainModal}
+                          type="button"
+                          className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 hover:border-[#333333] transition-colors"
+                        >
+                          {chain.hasIcon && (
+                            <div className="w-3.5 h-3.5 overflow-hidden rounded-full flex-shrink-0">
+                              {chain.iconUrl && (
+                                <img
+                                  alt={chain.name ?? 'Chain icon'}
+                                  src={chain.iconUrl}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                            </div>
+                          )}
+                          {chain.name}
+                          <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
+                        </button>
+
+                        <button
+                          onClick={openAccountModal}
+                          type="button"
+                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all border border-[#222222] bg-[#0A0A0A] text-[#888888] hover:text-[#E5E5E5] hover:border-[#444444]"
+                        >
+                          {account.displayName}
+                        </button>
+                      </div>
+                    );
+                  })()}
+                </div>
+              );
+            }}
+          </ConnectButton.Custom>
         </div>
       </header>
 
