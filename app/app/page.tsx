@@ -202,7 +202,7 @@ export default function XAusMintingApp() {
   }
 
     // Real Smart Contract Execution Trigger
-  const handleProcess = () => {
+    const handleProcess = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
 
     const isMint = activeTab === 'mint'
@@ -211,20 +211,20 @@ export default function XAusMintingApp() {
     const targetTokenAddress = paymentAsset === 'USDC' ? USDC_ADDRESS : USDT_ADDRESS
 
     if (isMint) {
-      // @ts-ignore
       writeAction({
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
-        args: [parsedAmount, targetTokenAddress], // Updated: Amount first, Address second
+        // ABI: [{name: 'xauAmount', type: 'uint256'}, {name: 'tokenAddress', type: 'address'}]
+        args: [parsedAmount, targetTokenAddress], 
       })
     } else {
-      // @ts-ignore
       writeAction({
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',
-        args: [parsedAmount, targetTokenAddress], // Already correct
+        // ABI: [{name: 'xauAmount', type: 'uint256'}, {name: 'stablecoinAddress', type: 'address'}]
+        args: [parsedAmount, targetTokenAddress],
       })
     }
   }
