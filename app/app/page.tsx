@@ -169,24 +169,31 @@ export default function XAusMintingApp() {
     }
   }, [isApprovalMining, isApprovalConfirmed, approveError, resetApprove, txStatus])
 
-  // Synchronize core action mining state with UI pipeline state
+    // Synchronize core action mining state with UI pipeline state
   useEffect(() => {
     if (isActionMining) {
       setTxStatus('processing')
     } else if (isActionConfirmed && txStatus === 'processing') {
       if (activeTab === 'redeem') {
-        // Mocking the queue dashboard update on successful transaction confirmation
-        setQueuedRequest({ amount: parseFloat(inputAmount), position: 1, status: 'pending' })
-        setTxStatus('idle') // Return to idle so they can see the dashboard
+        // Pull live context data: if we don't have front index yet, assume we're next in line (#1)
+        const currentFront = currentFrontIndex ? Number(currentFrontIndex) : 0
+        
+        // Lock in tracking for the dashboard display
+        setQueuedRequest({ 
+          amount: parseFloat(inputAmount), 
+          position: 1, // User is at relative position 1 from the current front
+          status: 'pending' 
+        })
+        setTxStatus('idle') 
         setInputAmount('')
       } else {
         setTxStatus('success')
       }
     } else if (actionError) {
-      setTxStatus('approved') // Revert to approved so they can retry without re-approving
+      setTxStatus('approved') 
       resetAction()
     }
-  }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus])
+  }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus, currentFrontIndex])
 
   // Dynamically set the stablecoin balance based on user selection
   const activeStablecoinBalance = paymentAsset === 'USDC' ? usdcBalance : usdtBalance
