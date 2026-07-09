@@ -135,19 +135,19 @@ export default function XAUsProductPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">$11.51M</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">$3.24M</p>
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Bullion Weight</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">2,765 Troy Oz</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">868 Troy Oz</p>
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">2,765 XAUs</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">780 XAUs</p>
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault Gold Bars</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">86 Bars</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">27 Bars</p>
               </div>
             </div>
           </div>
