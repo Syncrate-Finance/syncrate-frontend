@@ -401,26 +401,23 @@ export default function XAusMintingApp() {
 
       {/* --- MINT INTERFACE MAIN PORTAL --- */}
       <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 my-12 gap-6">
-        
-        {/* PROMOTIONAL VAULT LINK BANNER */}
-<Link 
-  href="/app/sgld" 
-  className="w-full max-w-md bg-gradient-to-r from-[#0A0A0A] to-[#111111] hover:to-[#161616] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
->
-  <div className="flex items-center gap-2.5">
-    <div className="w-2 h-2 rounded-full bg-[#0037FF] animate-pulse" />
-    <span className="text-xs font-mono tracking-wide text-[#888888] group-hover:text-[#E5E5E5] transition-colors">
-      Earn yield on your XAUs
-    </span>
-  </div>
-  <span className="text-xs text-[#666666] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">
-    Open Vault ➔
-  </span>
-</Link>
 
         {/* PRIMARY MINT/REDEEM CARD */}
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl">
           
+          {/* PROMOTIONAL VAULT LINK BANNER */}
+<Link 
+  href="/app/sgld" 
+  className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
+>
+  <span className="text-xs font-mono tracking-wide text-[#666666] group-hover:text-[#E5E5E5] transition-colors">
+    Earn yield on your XAUs
+  </span>
+  <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">
+    Open SGLD Page ➔
+  </span>
+</Link>
+
           {/* Header section tab structures */}
           <div className="flex gap-6 border-b border-[#111111] pb-4 mb-6">
             <button 
