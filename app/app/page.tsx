@@ -294,12 +294,10 @@ export default function XAusMintingApp() {
     }
   }
 
-  // Dashboard component helper
+    // Dashboard component helper
   const renderDashboard = () => {
-    // Only show if the user is in Redeem mode and connected
     if (activeTab !== 'redeem' || !isConnected) return null;
 
-    // DEFAULT STATE: No pending requests
     if (!queuedRequest) {
       return (
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 text-center transition-all">
@@ -308,6 +306,34 @@ export default function XAusMintingApp() {
         </div>
       );
     }
+
+    // Parse live state from the contract if loaded, otherwise fallback to the transaction input
+    const liveAmountOwed = queueItemData && queueItemData[2] 
+      ? Number(queueItemData[2]) / 1e18 
+      : queuedRequest.amount
+
+    return (
+      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div className="flex items-center justify-between border-b border-[#111111] pb-3">
+          <h3 className="text-xs font-mono tracking-widest text-[#888888] uppercase">Your Queue Position</h3>
+          <span className="text-xs font-mono text-white">#{queuedRequest.position}</span>
+        </div>
+        
+        <div className="flex justify-between items-center py-1">
+          <span className="text-xs text-[#666666]">Amount Owed</span>
+          <span className="text-sm font-medium text-white">{liveAmountOwed.toFixed(4)} {paymentAsset} Value</span>
+        </div>
+        
+        <div className="flex justify-between items-center py-1">
+          <span className="text-xs text-[#666666]">Status</span>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+            <span className="text-xs text-amber-500 font-mono capitalize">Pending Treasury Buffer</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
     // ACTIVE STATE: User has a pending redemption in the FIFO queue
     return (
