@@ -211,7 +211,7 @@ export default function XAusMintingApp() {
     const targetTokenAddress = paymentAsset === 'USDC' ? USDC_ADDRESS : USDT_ADDRESS
 
     if (isMint) {
-      writeAction({
+      // @ts-ignore
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
@@ -219,7 +219,7 @@ export default function XAusMintingApp() {
         args: [parsedAmount, targetTokenAddress], 
       })
     } else {
-      writeAction({
+      // @ts-ignore
         address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',
