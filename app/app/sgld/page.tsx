@@ -102,7 +102,7 @@ export default function SgldVaultApp() {
     }
   }, [inputAmount, activeTab, xausAllowance, xausData, txStatus])
 
-  // --- INTERACTION HANDLERS ---
+    // --- INTERACTION HANDLERS ---
   const handleMaxBalance = () => {
     if (activeTab === 'deposit') {
       setInputAmount(xausBalance.toString())
@@ -119,7 +119,7 @@ export default function SgldVaultApp() {
       abi: erc20Abi,
       functionName: 'approve',
       args: [SGLD_VAULT_ADDRESS as `0x${string}`, amountToApprove],
-    })
+    } as any) // 👈 Added "as any" here
   }
 
   const handleProcess = () => {
@@ -133,7 +133,7 @@ export default function SgldVaultApp() {
         abi: vaultAbi,
         functionName: 'depositXAUs',
         args: [amountToDeposit],
-      })
+      } as any) // 👈 Added "as any" here
     } else {
       if (!sgldData) return
       const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
@@ -142,7 +142,7 @@ export default function SgldVaultApp() {
         abi: vaultAbi,
         functionName: 'redeem',
         args: [sharesToRedeem, address, address],
-      })
+      } as any) // 👈 Added "as any" here
     }
   }
 
