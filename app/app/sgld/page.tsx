@@ -92,7 +92,7 @@ export default function SgldVaultApp() {
     if (!inputAmount || isNaN(Number(inputAmount)) || !xausData) return
 
     const inputUnits = parseUnits(inputAmount, xausData.decimals)
-    const currentAllowance = xausAllowance ? (xausAllowance as bigint) : 0n
+    const currentAllowance = xausAllowance ? (xausAllowance as bigint) : BigInt(0)
 
     if (activeTab === 'withdraw' || currentAllowance >= inputUnits) {
       // If withdrawing (no approval needed) OR already approved enough
