@@ -1,47 +1,108 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { parseUnits } from 'viem'
 
 // Base Mainnet Contract Addresses
-const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder until deployment
-const SGLD_VAULT_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder for Vault Shares Token
+const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder
+const SGLD_VAULT_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder
+
+// Minimal ABIs for interacting with the contracts
+const erc20Abi = [
+  { type: 'function', name: 'approve', inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }], outputs: [{ type: 'bool' }] },
+  { type: 'function', name: 'allowance', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ type: 'uint256' }] }
+] as const
+
+const vaultAbi = [
+  { type: 'function', name: 'depositXAUs', inputs: [{ name: 'xausAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'redeem', inputs: [{ name: 'shares', type: 'uint256' }, { name: 'receiver', type: 'address' }, { name: 'owner', type: 'address' }], outputs: [{ type: 'uint256' }] }
+] as const
 
 export default function SgldVaultApp() {
   const { isConnected, address } = useAccount()
 
-  // --- WAGMI BALANCE FETCHING ---
-  const { data: xausData } = useBalance({
+  // --- WAGMI READ: Balances ---
+  const { data: xausData, refetch: refetchXaus } = useBalance({
     address,
     token: XAUS_ADDRESS as `0x${string}`,
   })
 
-  const { data: sgldData } = useBalance({
+  const { data: sgldData, refetch: refetchSgld } = useBalance({
     address,
     token: SGLD_VAULT_ADDRESS as `0x${string}`,
   })
 
-  const xausBalance = xausData ? parseFloat(xausData.formatted) : 100.00 // Defaulting to 100.00 mock if empty to match your visual specs
+  // Replaced the 100 mock with actual 0.00 fallback
+  const xausBalance = xausData ? parseFloat(xausData.formatted) : 0.00
   const sgldBalance = sgldData ? parseFloat(sgldData.formatted) : 0.00
+
+  // --- WAGMI READ: Allowance ---
+  const { data: xausAllowance, refetch: refetchAllowance } = useReadContract({
+    address: XAUS_ADDRESS as `0x${string}`,
+    abi: erc20Abi,
+    functionName: 'allowance',
+    args: address ? [address, SGLD_VAULT_ADDRESS as `0x${string}`] : undefined,
+    query: { enabled: !!address },
+  })
+
+  // --- WAGMI WRITE: Transactions ---
+  const { data: approveTxHash, writeContract: writeApprove, isPending: isApprovePending } = useWriteContract()
+  const { data: processTxHash, writeContract: writeProcess, isPending: isProcessPending } = useWriteContract()
+
+  // --- WAGMI RECEIPTS: Wait for blockchain confirmations ---
+  const { isLoading: isApproveConfirming, isSuccess: isApproveSuccess } = useWaitForTransactionReceipt({ hash: approveTxHash })
+  const { isLoading: isProcessConfirming, isSuccess: isProcessSuccess } = useWaitForTransactionReceipt({ hash: processTxHash })
 
   // Core Flow States
   const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit')
   const [inputAmount, setInputAmount] = useState('')
-  
-  // Transaction Progression States: 'idle' | 'approving' | 'approved' | 'processing' | 'success'
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
 
-  // Global Vault Data (from your layout mockup specifications)
-  const vaultTVL = 1200000 // $1.2M
-  const vaultSupply = 2180000 // 2.18M SGLD
-  const sharePrice = 1.10 // $1.10
+  // Global Vault Data (Mocked until indexer/subgraph is built)
+  const vaultTVL = 1200000 
+  const vaultSupply = 2180000 
+  const sharePrice = 1.10 
 
-  // Form Auto-fill Handler
+  // --- EFFECT ROUTERS: Manage UI State based on Tx Receipts ---
+  useEffect(() => {
+    if (isApprovePending || isApproveConfirming) setTxStatus('approving')
+    if (isApproveSuccess) {
+      setTxStatus('approved')
+      refetchAllowance()
+    }
+  }, [isApprovePending, isApproveConfirming, isApproveSuccess, refetchAllowance])
+
+  useEffect(() => {
+    if (isProcessPending || isProcessConfirming) setTxStatus('processing')
+    if (isProcessSuccess) {
+      setTxStatus('success')
+      refetchXaus()
+      refetchSgld()
+    }
+  }, [isProcessPending, isProcessConfirming, isProcessSuccess, refetchXaus, refetchSgld])
+
+  // Smart checking to skip approval if user already approved enough or is withdrawing
+  useEffect(() => {
+    if (!inputAmount || isNaN(Number(inputAmount)) || !xausData) return
+
+    const inputUnits = parseUnits(inputAmount, xausData.decimals)
+    const currentAllowance = xausAllowance ? (xausAllowance as bigint) : 0n
+
+    if (activeTab === 'withdraw' || currentAllowance >= inputUnits) {
+      // If withdrawing (no approval needed) OR already approved enough
+      if (txStatus === 'idle') setTxStatus('approved')
+    } else {
+      if (txStatus === 'approved') setTxStatus('idle')
+    }
+  }, [inputAmount, activeTab, xausAllowance, xausData, txStatus])
+
+  // --- INTERACTION HANDLERS ---
   const handleMaxBalance = () => {
     if (activeTab === 'deposit') {
       setInputAmount(xausBalance.toString())
@@ -50,19 +111,39 @@ export default function SgldVaultApp() {
     }
   }
 
-  // Contract Flow Mock Handlers
   const handleApprove = () => {
-    setTxStatus('approving')
-    setTimeout(() => {
-      setTxStatus('approved')
-    }, 2000)
+    if (!xausData) return
+    const amountToApprove = parseUnits(inputAmount, xausData.decimals)
+    writeApprove({
+      address: XAUS_ADDRESS as `0x${string}`,
+      abi: erc20Abi,
+      functionName: 'approve',
+      args: [SGLD_VAULT_ADDRESS as `0x${string}`, amountToApprove],
+    })
   }
 
   const handleProcess = () => {
-    setTxStatus('processing')
-    setTimeout(() => {
-      setTxStatus('success')
-    }, 3500)
+    if (!address) return
+
+    if (activeTab === 'deposit') {
+      if (!xausData) return
+      const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
+      writeProcess({
+        address: SGLD_VAULT_ADDRESS as `0x${string}`,
+        abi: vaultAbi,
+        functionName: 'depositXAUs',
+        args: [amountToDeposit],
+      })
+    } else {
+      if (!sgldData) return
+      const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
+      writeProcess({
+        address: SGLD_VAULT_ADDRESS as `0x${string}`,
+        abi: vaultAbi,
+        functionName: 'redeem',
+        args: [sharesToRedeem, address, address],
+      })
+    }
   }
 
   const resetFlow = () => {
@@ -71,7 +152,7 @@ export default function SgldVaultApp() {
   }
 
   const handleTabSwitch = (tab: 'deposit' | 'withdraw') => {
-    if (txStatus === 'idle' || txStatus === 'success') {
+    if (txStatus === 'idle' || txStatus === 'success' || txStatus === 'approved') {
       setActiveTab(tab)
       resetFlow()
     }
@@ -90,6 +171,7 @@ export default function SgldVaultApp() {
         {/* Unified Wallet Connect Button */}
         <div className="flex items-center gap-1.5 sm:gap-3">
           <ConnectButton.Custom>
+             {/* ... (Keep your existing RainbowKit ConnectButton implementation intact here) ... */}
             {({
               account,
               chain,
@@ -118,7 +200,6 @@ export default function SgldVaultApp() {
                         </button>
                       );
                     }
-
                     if (chain.unsupported) {
                       return (
                         <button
@@ -130,7 +211,6 @@ export default function SgldVaultApp() {
                         </button>
                       );
                     }
-
                     return (
                       <div className="flex items-center gap-1.5 sm:gap-3">
                         <button
@@ -152,7 +232,6 @@ export default function SgldVaultApp() {
                           {chain.name}
                           <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
                         </button>
-
                         <button
                           onClick={openAccountModal}
                           type="button"
@@ -183,7 +262,6 @@ export default function SgldVaultApp() {
             </div>
           </div>
 
-          {/* Core Data Metrics Display Grid */}
           <div className="grid grid-cols-3 gap-2 border-y border-[#111111] py-4 my-1">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-mono uppercase text-[#666666]">Vault TVL</span>
@@ -228,7 +306,6 @@ export default function SgldVaultApp() {
             /* CORE DEPOSIT/WITHDRAW MANAGEMENT CONTROLS */
             <div className="flex flex-col gap-4">
               
-              {/* Layout Switch Tab Controls */}
               <div className="grid grid-cols-2 bg-[#030303] border border-[#111111] rounded-xl p-1">
                 <button
                   type="button"
@@ -250,7 +327,6 @@ export default function SgldVaultApp() {
                 </button>
               </div>
 
-              {/* INPUT BOX WRAPPER GRID */}
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors relative">
                 <div className="flex items-center justify-between text-[10px] font-mono tracking-wider text-[#666666] uppercase">
                   <span>Amount ({activeTab === 'deposit' ? 'XAUs' : 'SGLD'})</span>
@@ -284,7 +360,6 @@ export default function SgldVaultApp() {
                 </div>
               </div>
 
-              {/* ACTION EXECUTION INTERFACE BUTTON pipeline */}
               <div className="mt-2">
                 {!isConnected ? (
                   <ConnectButton.Custom>
@@ -300,8 +375,7 @@ export default function SgldVaultApp() {
                   </ConnectButton.Custom>
                 ) : (
                   <>
-                    {/* APPROVAL STEP */}
-                    {(txStatus === 'idle' || txStatus === 'approving') && (
+                    {(txStatus === 'idle' || txStatus === 'approving') && activeTab === 'deposit' && (
                       <button 
                         onClick={handleApprove}
                         disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving'}
@@ -313,16 +387,15 @@ export default function SgldVaultApp() {
                             Approving Vault Allowances...
                           </>
                         ) : (
-                          `Approve ${activeTab === 'deposit' ? 'XAUs' : 'SGLD'}`
+                          'Approve XAUs'
                         )}
                       </button>
                     )}
 
-                    {/* CONFIRM/EXECUTE CONTEXT TRANSACTION STEP */}
                     {(txStatus === 'approved' || txStatus === 'processing') && (
                       <button 
                         onClick={handleProcess}
-                        disabled={txStatus === 'processing'}
+                        disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'processing'}
                         className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#0037FF]/10"
                       >
                         {txStatus === 'processing' ? (
@@ -342,10 +415,7 @@ export default function SgldVaultApp() {
             </div>
           )}
         </div>
-
       </main>
-      
-      {/* Footer explicitly removed per structural requested specification parameters */}
       <div className="h-4" />
     </div>
   )
