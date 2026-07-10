@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { parseUnits } from 'viem'
+import { parseUnits, formatUnits } from 'viem'
 
 // Base Mainnet Contract Addresses
 const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder
@@ -21,7 +21,9 @@ const erc20Abi = [
 
 const vaultAbi = [
   { type: 'function', name: 'depositXAUs', inputs: [{ name: 'xausAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
-  { type: 'function', name: 'redeem', inputs: [{ name: 'shares', type: 'uint256' }, { name: 'receiver', type: 'address' }, { name: 'owner', type: 'address' }], outputs: [{ type: 'uint256' }] }
+  { type: 'function', name: 'redeem', inputs: [{ name: 'shares', type: 'uint256' }, { name: 'receiver', type: 'address' }, { name: 'owner', type: 'address' }], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'totalAssets', inputs: [], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'totalSupply', inputs: [], outputs: [{ type: 'uint256' }] }
 ] as const
 
 export default function SgldVaultApp() {
@@ -38,7 +40,6 @@ export default function SgldVaultApp() {
     token: SGLD_VAULT_ADDRESS as `0x${string}`,
   })
 
-  // Replaced the 100 mock with actual 0.00 fallback
   const xausBalance = xausData ? parseFloat(xausData.formatted) : 0.00
   const sgldBalance = sgldData ? parseFloat(sgldData.formatted) : 0.00
 
@@ -50,6 +51,31 @@ export default function SgldVaultApp() {
     args: address ? [address, SGLD_VAULT_ADDRESS as `0x${string}`] : undefined,
     query: { enabled: !!address },
   })
+
+  // --- WAGMI READ: Vault Global Metrics ---
+  const { data: totalAssetsData } = useReadContract({
+    address: SGLD_VAULT_ADDRESS as `0x${string}`,
+    abi: vaultAbi,
+    functionName: 'totalAssets',
+  })
+
+  const { data: totalSupplyData } = useReadContract({
+    address: SGLD_VAULT_ADDRESS as `0x${string}`,
+    abi: vaultAbi,
+    functionName: 'totalSupply',
+  })
+
+  // Parse Live Vault Data (assuming 18 decimals)
+  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 18)) : 0
+  const vaultSupply = totalSupplyData ? parseFloat(formatUnits(totalSupplyData as bigint, 18)) : 0
+  const sharePrice = vaultSupply > 0 ? (vaultTVL / vaultSupply) : 1.00
+
+  // Dynamic formatting helper for the UI metrics
+  const formatMetric = (value: number) => {
+    if (value >= 1e6) return (value / 1e6).toFixed(2) + 'M'
+    if (value >= 1e3) return (value / 1e3).toFixed(2) + 'k'
+    return value.toFixed(2)
+  }
 
   // --- WAGMI WRITE: Transactions ---
   const { data: approveTxHash, writeContract: writeApprove, isPending: isApprovePending } = useWriteContract()
@@ -63,11 +89,6 @@ export default function SgldVaultApp() {
   const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit')
   const [inputAmount, setInputAmount] = useState('')
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
-
-  // Global Vault Data (Mocked until indexer/subgraph is built)
-  const vaultTVL = 1200000 
-  const vaultSupply = 2180000 
-  const sharePrice = 1.10 
 
   // --- EFFECT ROUTERS: Manage UI State based on Tx Receipts ---
   useEffect(() => {
@@ -95,14 +116,13 @@ export default function SgldVaultApp() {
     const currentAllowance = xausAllowance ? (xausAllowance as bigint) : BigInt(0)
 
     if (activeTab === 'withdraw' || currentAllowance >= inputUnits) {
-      // If withdrawing (no approval needed) OR already approved enough
       if (txStatus === 'idle') setTxStatus('approved')
     } else {
       if (txStatus === 'approved') setTxStatus('idle')
     }
   }, [inputAmount, activeTab, xausAllowance, xausData, txStatus])
 
-    // --- INTERACTION HANDLERS ---
+  // --- INTERACTION HANDLERS ---
   const handleMaxBalance = () => {
     if (activeTab === 'deposit') {
       setInputAmount(xausBalance.toString())
@@ -119,7 +139,7 @@ export default function SgldVaultApp() {
       abi: erc20Abi,
       functionName: 'approve',
       args: [SGLD_VAULT_ADDRESS as `0x${string}`, amountToApprove],
-    } as any) // 👈 Added "as any" here
+    } as any)
   }
 
   const handleProcess = () => {
@@ -133,7 +153,7 @@ export default function SgldVaultApp() {
         abi: vaultAbi,
         functionName: 'depositXAUs',
         args: [amountToDeposit],
-      } as any) // 👈 Added "as any" here
+      } as any)
     } else {
       if (!sgldData) return
       const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
@@ -142,7 +162,7 @@ export default function SgldVaultApp() {
         abi: vaultAbi,
         functionName: 'redeem',
         args: [sharesToRedeem, address, address],
-      } as any) // 👈 Added "as any" here
+      } as any)
     }
   }
 
@@ -171,7 +191,6 @@ export default function SgldVaultApp() {
         {/* Unified Wallet Connect Button */}
         <div className="flex items-center gap-1.5 sm:gap-3">
           <ConnectButton.Custom>
-             {/* ... (Keep your existing RainbowKit ConnectButton implementation intact here) ... */}
             {({
               account,
               chain,
@@ -265,11 +284,11 @@ export default function SgldVaultApp() {
           <div className="grid grid-cols-3 gap-2 border-y border-[#111111] py-4 my-1">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-mono uppercase text-[#666666]">Vault TVL</span>
-              <span className="text-sm font-medium text-white">${(vaultTVL / 1e6).toFixed(1)}M</span>
+              <span className="text-sm font-medium text-white">${formatMetric(vaultTVL)}</span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-mono uppercase text-[#666666]">Vault Supply</span>
-              <span className="text-sm font-medium text-white">{(vaultSupply / 1e6).toFixed(2)}M SGLD</span>
+              <span className="text-sm font-medium text-white">{formatMetric(vaultSupply)} SGLD</span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-mono uppercase text-[#666666]">Share Price</span>
