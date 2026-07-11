@@ -249,7 +249,7 @@ export default function LaunchingSoon() {
       <section className="w-full max-w-6xl mx-auto px-6 pb-24">
         {/* Header */}
         <div className="flex justify-between items-center mb-8 border-t border-[#222222] pt-8">
-          <h2 className="text-3xl font-medium text-white tracking-tight">
+          <h2 className="text-lg font-medium text-white tracking-tight">
             News & Insights
           </h2>
           <Link href="/blog" className="text-sm font-medium text-[#AAAAAA] hover:text-white transition-colors flex items-center gap-1.5">
@@ -275,9 +275,9 @@ export default function LaunchingSoon() {
           {/* Card Bottom: Content */}
           <div className="p-6 md:p-8 flex flex-col gap-4">
             <h3 className="text-lg md:text-xl font-normal text-[#E5E5E5] leading-snug group-hover:text-white transition-colors">
-              Syncrate Protocol Announces Integration with Chainlink to Power Real-World Gold Yield
+              Introducing Syncrate: The Yield Layer for Tokenized Gold
             </h3>
-            <span className="text-xs text-[#888888]">July 11, 2026</span>
+            <span className="text-xs text-[#888888]">02 Jul, 2026</span>
           </div>
         </Link>
       </section>
