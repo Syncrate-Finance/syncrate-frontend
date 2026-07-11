@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
@@ -29,15 +29,19 @@ export default function AdminDashboard() {
   // Format the BigInt contract value back to readable numbers (assuming 18 decimals)
   const currentCap = currentCapData ? parseFloat(formatUnits(currentCapData as bigint, 18)) : 0
 
-  // --- WRITE: Update Cap ---
+    // --- WRITE: Update Cap ---
   const { data: txHash, writeContract, isPending } = useWriteContract()
-  const { isLoading: isConfirming } = useWaitForTransactionReceipt({
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash: txHash,
-    onSuccess: () => {
+  })
+
+  // Handle the success state with a side-effect
+  useEffect(() => {
+    if (isConfirmed) {
       setNewCap('')
       refetchCap() // Instantly refresh the UI metric on success
     }
-  })
+  }, [isConfirmed, refetchCap])
 
   const handleUpdateCap = () => {
     if (!newCap || isNaN(Number(newCap))) return
