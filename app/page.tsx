@@ -25,9 +25,22 @@ export default function LaunchingSoon() {
 
         {/* Right Action Buttons */}
         <div className="flex items-center gap-3 text-sm font-medium">
-          <Link href="/blog" className="px-5 py-2.5 rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors">
-            Blog
-          </Link>
+          {/* Whitepaper Button (Replaced Blog) */}
+          <a 
+            href="https://syncrate.org/whitepaper.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-10 h-10 flex items-center justify-center rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors"
+            aria-label="Read Whitepaper"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </a>
           <Link href="/app" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
             App
           </Link>
@@ -185,7 +198,7 @@ export default function LaunchingSoon() {
       </section>
 
       {/* --- INFRASTRUCTURE (STACK) SECTION --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 pt-8 pb-24">
+      <section className="w-full max-w-6xl mx-auto px-6 pt-8 pb-16">
         <div className="w-full h-[2px] bg-[#333333] mb-6" />
         <div className="flex justify-between items-center">
           <span className="text-lg font-medium text-white">
@@ -230,6 +243,43 @@ export default function LaunchingSoon() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* --- NEWS & INSIGHTS SECTION --- */}
+      <section className="w-full max-w-6xl mx-auto px-6 pb-24">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8 border-t border-[#222222] pt-8">
+          <h2 className="text-3xl font-medium text-white tracking-tight">
+            News & Insights
+          </h2>
+          <Link href="/blog" className="text-sm font-medium text-[#AAAAAA] hover:text-white transition-colors flex items-center gap-1.5">
+            View All <span className="text-[12px]">➔</span>
+          </Link>
+        </div>
+
+        {/* Featured Card */}
+        <Link 
+          href="/blog" 
+          className="group block w-full max-w-2xl border border-[#222222] rounded-xl overflow-hidden bg-[#0A0A0A] hover:border-[#444444] transition-colors duration-300"
+        >
+          {/* Card Top: Image */}
+          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#111111] overflow-hidden border-b border-[#222222]">
+            <Image 
+              src="/blog-cover.PNG" // Upload a thumbnail image of your choice to public/
+              alt="Syncrate News Feature"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          
+          {/* Card Bottom: Content */}
+          <div className="p-6 md:p-8 flex flex-col gap-4">
+            <h3 className="text-lg md:text-xl font-normal text-[#E5E5E5] leading-snug group-hover:text-white transition-colors">
+              Syncrate Protocol Announces Integration with Chainlink to Power Real-World Gold Yield
+            </h3>
+            <span className="text-xs text-[#888888]">July 11, 2026</span>
+          </div>
+        </Link>
       </section>
 
       {/* Partner Marquee Section */}
