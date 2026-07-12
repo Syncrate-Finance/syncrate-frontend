@@ -165,7 +165,7 @@ export default function LaunchingSoon() {
 
         <div className="mt-32 mb-16">
           <p className="text-3xl md:text-4xl font-normal tracking-tighter text-white max-w-3xl leading-[1.1]">
-            The gold economy holds real value, but most of it never reaches global capital. Slow, informal financing leaves traders undercapitalized, while investors have no direct way to earn yield from real gold-backed activity.
+            Physical gold holds generational value, but it remains static onchain. Investors are forced to choose between the safety of gold backing or the growth of decentralized finance. Syncrate removes this friction, turning static asset preservation into active thematic market exposure.
           </p>
         </div>
 
@@ -174,22 +174,22 @@ export default function LaunchingSoon() {
             Real Yield Source
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            SGLD's yield isn’t a promise or a token emission. It is generated through . Gold underlying deposited XAUs is deployed into a curated blue-chip crypto asset vault.
+            SGLD’s growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly by the performance of an underlying crypto asset basket. Deposited XAUs are routed into equal, thematic index positions across blue-chip network assets.
           </p>
         </div>
 
         <div className="max-w-3xl mt-12 flex flex-col gap-2">
           <h4 className="text-base md:text-lg font-semibold text-[#E5E5E5]">
-            Regulated Partners and Custodian
+            Institutional-Grade Custody
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            Syncrate works exclusively with licensed gold aggregators and secure custodial partners, ensuring every ounce financed is sourced and held within a compliant, verifiable structure. 
+            While SGLD captures crypto index upside, the base layer remains anchored. Each XAUs token are securely backed 1:1 by physical gold held in independent UAE vaults, tracked and priced continuously by Chainlink's decentralized oracle infrastructure.
           </p>
         </div>
 
         <div className="max-w-3xl mt-12 flex flex-col gap-2">
           <h4 className="text-base md:text-lg font-semibold text-[#E5E5E5]">
-            Experienced
+            Experienced Team
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
             Our team brings extensive expertise from top global banks and companies including Goldman Sachs and ChainLink. We are also backed by industry leading advisors with decades of experience in onchain finance, tokenization and DeFi.
@@ -316,7 +316,7 @@ export default function LaunchingSoon() {
 
             <div className="flex items-center">
               <Image 
-                src="/footer-icon.png" 
+                src="/logo.jpg" 
                 alt="Syncrate Logo" 
                 width={32} 
                 height={32} 
