@@ -142,7 +142,7 @@ export default function LaunchingSoon() {
               SGLD
             </h3>
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-              The Syncrate Gold Yield (SGLD) token represents a share of the Syncrate GLD Vault, where deposited XAUs participate in institutional gold financing strategies.
+              The Syncrate Gold Yield (SGLD) token represents a share of the Syncrate GLD Vault, where deposited XAUs earn yield through a curated onchain index fund.
             </p>
             <Link href="/sgld">
               <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
@@ -165,7 +165,7 @@ export default function LaunchingSoon() {
 
         <div className="mt-32 mb-16">
           <p className="text-3xl md:text-4xl font-normal tracking-tighter text-white max-w-3xl leading-[1.1]">
-            The gold economy holds real value, but most of it never reaches global capital. Slow, informal financing leaves licensed aggregators undercapitalized, while investors have no direct way to earn yield from real gold-backed activity.
+            The gold economy holds real value, but most of it never reaches global capital. Slow, informal financing leaves traders undercapitalized, while investors have no direct way to earn yield from real gold-backed activity.
           </p>
         </div>
 
@@ -174,7 +174,7 @@ export default function LaunchingSoon() {
             Real Yield Source
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            SGLD's yield isn’t a promise or a token emission. It is generated through institutional gold financing. Gold underlying deposited XAUs is deployed into short-term financing arrangements with reputable and vetted counterparties.
+            SGLD's yield isn’t a promise or a token emission. It is generated through . Gold underlying deposited XAUs is deployed into a curated blue-chip crypto asset vault.
           </p>
         </div>
 
