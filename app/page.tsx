@@ -316,7 +316,7 @@ export default function LaunchingSoon() {
 
             <div className="flex items-center">
               <Image 
-                src="/logo.jpg" 
+                src="/footer-icon.PNG" 
                 alt="Syncrate Logo" 
                 width={32} 
                 height={32} 
