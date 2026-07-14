@@ -6,7 +6,7 @@ import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
 import { parseUnits, formatUnits } from 'viem'
 
 // Define stablecoin structure with its respective address and decimals
@@ -57,10 +57,11 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
   },
 }
 
-// Fallback configuration (using Base as default when disconnected)
 const DEFAULT_CONFIG = CHAIN_CONFIGS[8453]
 
-// Minimal ERC20 ABI for Approval
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const
+
+// Standard Minimal ERC20 ABI
 const ERC20_ABI = [
   {
     inputs: [
@@ -70,6 +71,13 @@ const ERC20_ABI = [
     name: 'approve',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
     type: 'function'
   }
 ] as const
@@ -117,6 +125,12 @@ const MINT_CONTROLLER_ABI = [
 ] as const
 
 export default function XAusMintingApp() {
+  // SSR Hydration Guard
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // ==========================================
   // 1. REACT STATE & DYNAMIC NETWORKS
   // ==========================================
@@ -155,48 +169,73 @@ export default function XAusMintingApp() {
   // ==========================================
   const { isConnected, address } = useAccount()
 
+  const isMintControllerValid = activeConfig.mintController !== ZERO_ADDRESS
+
   const { data: priceData } = useReadContract({
-    address: activeConfig.goldPriceFeed,
+    address: activeConfig.goldPriceFeed !== ZERO_ADDRESS ? activeConfig.goldPriceFeed : undefined,
     abi: [{ inputs: [], name: 'latestAnswer', outputs: [{ internalType: 'int256', name: '', type: 'int256' }], stateMutability: 'view', type: 'function' }],
     functionName: 'latestAnswer',
-    query: { refetchInterval: 10000 },
+    query: { 
+      enabled: activeConfig.goldPriceFeed !== ZERO_ADDRESS,
+      refetchInterval: 10000 
+    },
   })
 
   const goldPricePerOunce = priceData ? Number(priceData) / 1e8 : 2415.50
 
   const { data: currentFrontIndex } = useReadContract({
-    address: activeConfig.mintController,
+    address: isMintControllerValid ? activeConfig.mintController : undefined,
     abi: MINT_CONTROLLER_ABI,
     functionName: 'nextQueueIndex',
-    query: { refetchInterval: 10000 }
+    query: { 
+      enabled: isMintControllerValid,
+      refetchInterval: 10000 
+    }
   })
 
   const targetIndex = queuedRequest ? BigInt(queuedRequest.position + (currentFrontIndex ? Number(currentFrontIndex) : 0) - 1) : BigInt(0)
 
   const { data: queueItemData } = useReadContract({
-    address: activeConfig.mintController,
+    address: isMintControllerValid ? activeConfig.mintController : undefined,
     abi: MINT_CONTROLLER_ABI,
     functionName: 'redemptionQueue',
     args: [targetIndex],
     query: {
-      enabled: !!queuedRequest,
+      enabled: !!queuedRequest && isMintControllerValid,
       refetchInterval: 10000
     }
   })
 
-  // Fetch balances dynamically
-  const { data: stablecoinData } = useBalance({ 
-    address, 
-    token: activeStablecoinConfig?.address 
-  })
-  
-  const { data: xausData } = useBalance({ 
-    address, 
-    token: activeConfig.xaus 
+  // --- SAFE BALANCE FETCHING VIA ERC-20 balanceOf ---
+  const { data: stablecoinBalanceRaw } = useReadContract({
+    address: activeStablecoinConfig?.address !== ZERO_ADDRESS ? activeStablecoinConfig?.address : undefined,
+    abi: ERC20_ABI,
+    functionName: 'balanceOf',
+    args: address ? [address] : undefined,
+    query: {
+      enabled: !!address && !!activeStablecoinConfig?.address && activeStablecoinConfig.address !== ZERO_ADDRESS,
+      refetchInterval: 10000,
+    }
   })
 
-  const stablecoinBalance = stablecoinData ? parseFloat(stablecoinData.formatted) : 0
-  const xausBalance = xausData ? parseFloat(xausData.formatted) : 0
+  const { data: xausBalanceRaw } = useReadContract({
+    address: activeConfig.xaus !== ZERO_ADDRESS ? activeConfig.xaus : undefined,
+    abi: ERC20_ABI,
+    functionName: 'balanceOf',
+    args: address ? [address] : undefined,
+    query: {
+      enabled: !!address && !!activeConfig.xaus && activeConfig.xaus !== ZERO_ADDRESS,
+      refetchInterval: 10000,
+    }
+  })
+
+  const stablecoinBalance = stablecoinBalanceRaw && activeStablecoinConfig
+    ? parseFloat(formatUnits(stablecoinBalanceRaw, activeStablecoinConfig.decimals))
+    : 0
+
+  const xausBalance = xausBalanceRaw
+    ? parseFloat(formatUnits(xausBalanceRaw, 18))
+    : 0
 
   // ==========================================
   // 3. WAGMI WRITES & EFFECTS
@@ -223,7 +262,6 @@ export default function XAusMintingApp() {
       setTxStatus('processing')
     } else if (isActionConfirmed && txStatus === 'processing') {
       if (activeTab === 'redeem') {
-        const currentFront = currentFrontIndex ? Number(currentFrontIndex) : 0
         setQueuedRequest({ 
           amount: parseFloat(inputAmount), 
           position: 1, 
@@ -238,7 +276,7 @@ export default function XAusMintingApp() {
       setTxStatus('approved') 
       resetAction()
     }
-  }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus, currentFrontIndex])
+  }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus])
 
   // ==========================================
   // 4. DERIVED STATE & HANDLERS
@@ -262,7 +300,7 @@ export default function XAusMintingApp() {
   }
 
   const handleApprove = () => {
-    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig) return
+    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
     
     let targetTokenAddress: `0x${string}`
     let decimals: number
@@ -272,7 +310,12 @@ export default function XAusMintingApp() {
       decimals = activeStablecoinConfig.decimals
     } else {
       targetTokenAddress = activeConfig.xaus
-      decimals = 18 // XAUs ERC-20 has 18 decimals
+      decimals = 18 
+    }
+
+    if (targetTokenAddress === ZERO_ADDRESS) {
+      alert('Contract addresses not yet configured for this network.')
+      return
     }
 
     const parsedAmount = parseUnits(inputAmount, decimals)
@@ -286,14 +329,17 @@ export default function XAusMintingApp() {
   }
 
   const handleProcess = () => {
-    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig) return
+    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
 
     const isMint = activeTab === 'mint'
-    
-    // Decimals are 18 for XAUs (when redeeming) and dynamically fetched for stablecoins (when minting)
     const decimals = isMint ? activeStablecoinConfig.decimals : 18
     const parsedAmount = parseUnits(inputAmount, decimals)
     const targetTokenAddress = activeStablecoinConfig.address
+
+    if (activeConfig.mintController === ZERO_ADDRESS) {
+      alert('Mint Controller address not configured for this network.')
+      return
+    }
 
     if (isMint) {
       writeAction({
@@ -364,6 +410,15 @@ export default function XAusMintingApp() {
       </div>
     );
   };
+
+  // Prevent SSR Hydration Mismatch Output
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-[#030303] flex items-center justify-center">
+        <span className="w-8 h-8 border-2 border-t-transparent border-white rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   // ==========================================
   // 5. RENDER UI
@@ -716,7 +771,7 @@ export default function XAusMintingApp() {
                     {(txStatus === 'idle' || txStatus === 'approving') && (
                       <button 
                         onClick={handleApprove}
-                        disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving'}
+                        disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid}
                         className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2"
                       >
                         {txStatus === 'approving' ? (
@@ -724,6 +779,8 @@ export default function XAusMintingApp() {
                             <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
                             Approving Allowances...
                           </>
+                        ) : !isMintControllerValid ? (
+                          'Addresses Not Active on This Network'
                         ) : (
                           `Approve ${activeTab === 'mint' ? paymentAsset : 'XAUs'}`
                         )}
@@ -734,7 +791,7 @@ export default function XAusMintingApp() {
                     {(txStatus === 'approved' || txStatus === 'processing') && (
                       <button 
                         onClick={handleProcess}
-                        disabled={txStatus === 'processing'}
+                        disabled={txStatus === 'processing' || !isMintControllerValid}
                         className={`w-full py-4 text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${
                           activeTab === 'mint' 
                             ? 'bg-[#0037FF] hover:bg-[#002CD6] shadow-[#0037FF]/10' 
