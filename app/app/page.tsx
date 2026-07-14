@@ -47,7 +47,7 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
     stablecoins: {
       USDG: {
         address: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', // Active Paxos USDG Contract Address
-        decimals: 18, // USDG uses standard 18 decimal places
+        decimals: 18,
       },
     },
     xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
@@ -56,7 +56,6 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
     defaultAsset: 'USDG',
   },
 }
-
 const DEFAULT_CONFIG = CHAIN_CONFIGS[8453]
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const
