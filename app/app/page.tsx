@@ -131,14 +131,14 @@ export default function XAusMintingApp() {
     setIsMounted(true)
   }, [])
 
-  // ==========================================
+    // ==========================================
   // 1. REACT STATE & DYNAMIC NETWORKS
   // ==========================================
   const activeChainId = useChainId()
   
-  // Resolve correct addresses dynamically based on chain ID
+  // Resolve correct addresses dynamically based on chain ID with an explicit fallback
   const activeConfig = useMemo(() => {
-    return CHAIN_CONFIGS[activeChainId] || DEFAULT_CONFIG
+    return CHAIN_CONFIGS[activeChainId] || CHAIN_CONFIGS[8453]
   }, [activeChainId])
 
   const availableStablecoins = useMemo(() => {
@@ -147,21 +147,29 @@ export default function XAusMintingApp() {
 
   const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint')
   const [inputAmount, setInputAmount] = useState('')
-  const [paymentAsset, setPaymentAsset] = useState<string>(activeConfig.defaultAsset)
+  
+  // Dynamically derive paymentAsset so it cannot fall out of sync with active config
+  const [selectedAsset, setSelectedAsset] = useState<string | null>(null)
+
+  const paymentAsset = useMemo(() => {
+    if (selectedAsset && activeConfig.stablecoins[selectedAsset]) {
+      return selectedAsset
+    }
+    return activeConfig.defaultAsset
+  }, [selectedAsset, activeConfig])
+
   const [isAssetDropdownOpen, setIsAssetDropdownOpen] = useState(false)
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
   const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
 
-  // Enforce correct stablecoin option if chain changes
+  // Clear user chosen asset selection when switching chains to prevent conflicts
   useEffect(() => {
-    if (!availableStablecoins.includes(paymentAsset)) {
-      setPaymentAsset(activeConfig.defaultAsset)
-    }
-  }, [activeConfig, availableStablecoins, paymentAsset])
+    setSelectedAsset(null)
+  }, [activeChainId])
 
   // Get active stablecoin configuration
   const activeStablecoinConfig = useMemo(() => {
-    return activeConfig.stablecoins[paymentAsset] || activeConfig.stablecoins[activeConfig.defaultAsset]
+    return activeConfig.stablecoins[paymentAsset]
   }, [activeConfig, paymentAsset])
 
   // ==========================================
