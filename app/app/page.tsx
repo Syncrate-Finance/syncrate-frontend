@@ -16,7 +16,8 @@ interface StablecoinConfig {
 }
 
 interface ChainConfig {
-  stablecoins: Record<string, StablecoinConfig>;
+  usdc: `0x${string}`;
+  usdt: `0x${string}`;
   xaus: `0x${string}`;
   goldPriceFeed: `0x${string}`;
   mintController: `0x${string}`;
@@ -42,20 +43,15 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
     mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Base
     defaultAsset: 'USDC',
   },
-  // --- ROBINHOOD CHAIN MAINNET ---
+    // --- ROBINHOOD CHAIN MAINNET ---
   4663: {
-    stablecoins: {
-      USDG: {
-        address: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', // Active Paxos USDG Contract Address
-        decimals: 18,
-      },
-    },
-    xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
-    goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', // Update once Chainlink deploys XAU/USD feed
-    mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
-    defaultAsset: 'USDG',
+    usdc: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', // Mapping USDG to the primary slot
+    usdt: '0x0000000000000000000000000000000000000000', // Safe dummy placeholder to satisfy strict types
+    xaus: '0x0000000000000000000000000000000000000000',
+    goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c',
+    mintController: '0x0000000000000000000000000000000000000000',
   },
-}
+
 const DEFAULT_CONFIG = CHAIN_CONFIGS[8453]
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const
