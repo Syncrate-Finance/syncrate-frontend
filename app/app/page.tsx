@@ -6,17 +6,39 @@ import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
 import { parseUnits } from 'viem'
 
-// Base Mainnet Contract Addresses
-const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
-const USDT_ADDRESS = '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2'
-const XAUS_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder until deployment
-const XAU_USD_FEED = '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31' // Chainlink XAU/USD Base Proxy
+// Define the shape of our address configurations
+interface ChainConfig {
+  usdc: `0x${string}`;
+  usdt: `0x${string}`;
+  xaus: `0x${string}`;
+  goldPriceFeed: `0x${string}`;
+  mintController: `0x${string}`;
+}
 
-// Core System Spender Address
-const MINT_CONTROLLER_ADDRESS = '0x0000000000000000000000000000000000000000' // Replace with your deployed Mint/Redeem contract
+// Multi-chain Configuration Map
+const CHAIN_CONFIGS: Record<number, ChainConfig> = {
+  // --- BASE MAINNET ---
+  8453: {
+    usdc: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    usdt: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
+    xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Base
+    goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', // Chainlink XAU/USD Base
+    mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Base
+  },
+  // --- ROBINHOOD CHAIN MAINNET ---
+  4663: {
+    usdg: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
+    xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
+    goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', // Update once Chainlink deploys XAU/USD feed
+    mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
+  },
+}
+
+// Fallback configuration (using Base as default when disconnected)
+const DEFAULT_CONFIG = CHAIN_CONFIGS[8453]
 
 // Minimal ERC20 ABI for Approval
 const ERC20_ABI = [
@@ -76,10 +98,13 @@ const MINT_CONTROLLER_ABI = [
 
 export default function XAusMintingApp() {
   // ==========================================
-  // 1. REACT STATE (Must be at the top)
+  // 1. REACT STATE & DYNAMIC NETWORKS
   // ==========================================
-  const [selectedChain, setSelectedChain] = useState('Base')
-  const [isChainDropdownOpen, setIsChainDropdownOpen] = useState(false)
+  const activeChainId = useChainId()
+  
+  // Resolve correct addresses dynamically
+  const activeConfig = CHAIN_CONFIGS[activeChainId] || DEFAULT_CONFIG
+
   const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint')
   const [inputAmount, setInputAmount] = useState('')
   const [paymentAsset, setPaymentAsset] = useState<'USDC' | 'USDT'>('USDC')
@@ -93,7 +118,7 @@ export default function XAusMintingApp() {
   const { isConnected, address } = useAccount()
 
   const { data: priceData } = useReadContract({
-    address: XAU_USD_FEED,
+    address: activeConfig.goldPriceFeed,
     abi: [{ inputs: [], name: 'latestAnswer', outputs: [{ internalType: 'int256', name: '', type: 'int256' }], stateMutability: 'view', type: 'function' }],
     functionName: 'latestAnswer',
     query: { refetchInterval: 10000 },
@@ -102,7 +127,7 @@ export default function XAusMintingApp() {
   const goldPricePerOunce = priceData ? Number(priceData) / 1e8 : 2415.50
 
   const { data: currentFrontIndex } = useReadContract({
-    address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+    address: activeConfig.mintController,
     abi: MINT_CONTROLLER_ABI,
     functionName: 'nextQueueIndex',
     query: { refetchInterval: 10000 }
@@ -111,7 +136,7 @@ export default function XAusMintingApp() {
   const targetIndex = queuedRequest ? BigInt(queuedRequest.position + (currentFrontIndex ? Number(currentFrontIndex) : 0) - 1) : BigInt(0)
 
   const { data: queueItemData } = useReadContract({
-    address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+    address: activeConfig.mintController,
     abi: MINT_CONTROLLER_ABI,
     functionName: 'redemptionQueue',
     args: [targetIndex],
@@ -121,9 +146,9 @@ export default function XAusMintingApp() {
     }
   })
 
-  const { data: usdcData } = useBalance({ address, token: USDC_ADDRESS })
-  const { data: usdtData } = useBalance({ address, token: USDT_ADDRESS })
-  const { data: xausData } = useBalance({ address, token: XAUS_ADDRESS as `0x${string}` })
+  const { data: usdcData } = useBalance({ address, token: activeConfig.usdc })
+  const { data: usdtData } = useBalance({ address, token: activeConfig.usdt })
+  const { data: xausData } = useBalance({ address, token: activeConfig.xaus })
 
   const usdcBalance = usdcData ? parseFloat(usdcData.formatted) : 0
   const usdtBalance = usdtData ? parseFloat(usdtData.formatted) : 0
@@ -196,24 +221,23 @@ export default function XAusMintingApp() {
 
   const handleApprove = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return
-    let targetTokenAddress: `0x${string}` = USDC_ADDRESS
+    let targetTokenAddress: `0x${string}` = activeConfig.usdc
     let decimals = 6 
 
     if (activeTab === 'mint') {
-      targetTokenAddress = paymentAsset === 'USDC' ? USDC_ADDRESS : USDT_ADDRESS
+      targetTokenAddress = paymentAsset === 'USDC' ? activeConfig.usdc : activeConfig.usdt
     } else {
-      targetTokenAddress = XAUS_ADDRESS as `0x${string}`
+      targetTokenAddress = activeConfig.xaus
       decimals = 18 
     }
 
     const parsedAmount = parseUnits(inputAmount, decimals)
 
-    // @ts-ignore
     writeApprove({
       address: targetTokenAddress,
       abi: ERC20_ABI,
       functionName: 'approve',
-      args: [MINT_CONTROLLER_ADDRESS as `0x${string}`, parsedAmount],
+      args: [activeConfig.mintController, parsedAmount],
     })
   }
 
@@ -223,20 +247,18 @@ export default function XAusMintingApp() {
     const isMint = activeTab === 'mint'
     const decimals = isMint ? 6 : 18
     const parsedAmount = parseUnits(inputAmount, decimals)
-    const targetTokenAddress = paymentAsset === 'USDC' ? USDC_ADDRESS : USDT_ADDRESS
+    const targetTokenAddress = paymentAsset === 'USDC' ? activeConfig.usdc : activeConfig.usdt
 
     if (isMint) {
-      // @ts-ignore
       writeAction({
-        address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+        address: activeConfig.mintController,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
         args: [parsedAmount, targetTokenAddress], 
       })
     } else {
-      // @ts-ignore
       writeAction({
-        address: MINT_CONTROLLER_ADDRESS as `0x${string}`,
+        address: activeConfig.mintController,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',
         args: [parsedAmount, targetTokenAddress],
@@ -434,8 +456,8 @@ export default function XAusMintingApp() {
               <h3 className="text-lg font-medium text-white mb-2">Transaction Success</h3>
               <p className="text-xs text-[#888888] max-w-xs mb-6 leading-relaxed">
                 {activeTab === 'mint' 
-                  ? 'Your payment was processed and your native XAUs have been minted successfully on Base.'
-                  : `Your XAUs have been successfully redeemed for ${paymentAsset} on Base.`}
+                  ? 'Your payment was processed and your native XAUs have been minted successfully.'
+                  : `Your XAUs have been successfully redeemed for ${paymentAsset}.`}
               </p>
               <button 
                 onClick={resetFlow}
@@ -691,18 +713,18 @@ export default function XAusMintingApp() {
           )}
         </div>
 
-{/* PROMOTIONAL VAULT LINK BANNER */}
-<Link 
-  href="/app/sgld" 
-  className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
->
-  <span className="text-xs font-mono tracking-wide text-[#666666] group-hover:text-[#E5E5E5] transition-colors">
-    Earn yield on your XAUs
-  </span>
-  <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">
-    Open SGLD Page ➔
-  </span>
-</Link>
+        {/* PROMOTIONAL VAULT LINK BANNER */}
+        <Link 
+          href="/app/sgld" 
+          className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
+        >
+          <span className="text-xs font-mono tracking-wide text-[#666666] group-hover:text-[#E5E5E5] transition-colors">
+            Earn yield on your XAUs
+          </span>
+          <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">
+            Open SGLD Page ➔
+          </span>
+        </Link>
         {/* --- ASYNCHRONOUS REDEMPTION QUEUE DASHBOARD --- */}
         {renderDashboard()}
 
