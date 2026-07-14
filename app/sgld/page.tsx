@@ -1,208 +1,408 @@
 'use client'
 
-import { useState, useRef, UIEvent } from 'react'
+import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { parseUnits, formatUnits } from 'viem'
 
-export default function SGLDProductPage() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+// Base Mainnet Contract Addresses
+const XAUS_ADDRESS = '0x0000000000000000000000000000000000000001' 
+const SGLD_VAULT_ADDRESS = '0x0000000000000000000000000000000000000000' 
+const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' 
 
-  // Layout Helpers (Added to satisfy slide indicator map logic safely)
-  const features = [0, 1, 2] 
-  const scrollToCard = (index: number) => {
-    setActiveIndex(index)
+// Minimal ABIs
+const erc20Abi = [
+  { type: 'function', name: 'approve', inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }], outputs: [{ type: 'bool' }] },
+  { type: 'function', name: 'allowance', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ type: 'uint256' }] }
+] as const
+
+const vaultAbi = [
+  { type: 'function', name: 'deposit', inputs: [{ name: 'assets', type: 'uint256' }, { name: 'receiver', type: 'address' }], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'redeem', inputs: [{ name: 'shares', type: 'uint256' }, { name: 'receiver', type: 'address' }, { name: 'owner', type: 'address' }], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'depositXAUs', inputs: [{ name: 'xausAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'withdrawToXAUs', inputs: [{ name: 'sharesAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'totalAssets', inputs: [], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'totalSupply', inputs: [], outputs: [{ type: 'uint256' }] }
+] as const
+
+export default function SgldVaultApp() {
+  const { isConnected, address } = useAccount()
+
+  // Core Flow States
+  const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit')
+  const [selectedAsset, setSelectedAsset] = useState<'XAU' | 'USDC'>('XAU')
+  const [inputAmount, setInputAmount] = useState('')
+  const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
+
+  // --- WAGMI READ: Balances ---
+  const { data: xausData, refetch: refetchXaus } = useBalance({ address, token: XAUS_ADDRESS as `0x${string}` })
+  const { data: usdcData, refetch: refetchUsdc } = useBalance({ address, token: USDC_ADDRESS as `0x${string}` })
+  const { data: sgldData, refetch: refetchSgld } = useBalance({ address, token: SGLD_VAULT_ADDRESS as `0x${string}` })
+
+  const xausBalance = xausData ? parseFloat(xausData.formatted) : 0.00
+  const usdcBalance = usdcData ? parseFloat(usdcData.formatted) : 0.00
+  const sgldBalance = sgldData ? parseFloat(sgldData.formatted) : 0.00
+
+  // Dynamic asset mapping
+  const activeTokenAddress = selectedAsset === 'XAU' ? XAUS_ADDRESS : USDC_ADDRESS
+  const activeTokenData = selectedAsset === 'XAU' ? xausData : usdcData
+  const activeDepositBalance = selectedAsset === 'XAU' ? xausBalance : usdcBalance
+
+  // --- WAGMI READ: Allowance ---
+  const { data: currentAllowance, refetch: refetchAllowance } = useReadContract({
+    address: activeTokenAddress as `0x${string}`,
+    abi: erc20Abi,
+    functionName: 'allowance',
+    args: address ? [address, SGLD_VAULT_ADDRESS as `0x${string}`] : undefined,
+    query: { enabled: !!address },
+  })
+
+  // --- WAGMI READ: Metrics ---
+  const { data: totalAssetsData } = useReadContract({ address: SGLD_VAULT_ADDRESS as `0x${string}`, abi: vaultAbi, functionName: 'totalAssets' })
+  const { data: totalSupplyData } = useReadContract({ address: SGLD_VAULT_ADDRESS as `0x${string}`, abi: vaultAbi, functionName: 'totalSupply' })
+
+  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 6)) : 0 
+  const vaultSupply = totalSupplyData ? parseFloat(formatUnits(totalSupplyData as bigint, 18)) : 0
+  const sharePrice = vaultSupply > 0 ? (vaultTVL / vaultSupply) : 1.00
+
+  const formatMetric = (value: number) => {
+    if (value >= 1e6) return (value / 1e6).toFixed(2) + 'M'
+    if (value >= 1e3) return (value / 1e3).toFixed(2) + 'k'
+    return value.toFixed(2)
+  }
+
+  // --- WAGMI WRITE ---
+  const { data: approveTxHash, writeContract: writeApprove, isPending: isApprovePending } = useWriteContract()
+  const { data: processTxHash, writeContract: writeProcess, isPending: isProcessPending } = useWriteContract()
+
+  // --- WAGMI RECEIPTS ---
+  const { isLoading: isApproveConfirming, isSuccess: isApproveSuccess } = useWaitForTransactionReceipt({ hash: approveTxHash })
+  const { isLoading: isProcessConfirming, isSuccess: isProcessSuccess } = useWaitForTransactionReceipt({ hash: processTxHash })
+
+  // --- EFFECTS ---
+  useEffect(() => {
+    if (isApprovePending || isApproveConfirming) setTxStatus('approving')
+    if (isApproveSuccess) {
+      setTxStatus('approved')
+      refetchAllowance()
+    }
+  }, [isApprovePending, isApproveConfirming, isApproveSuccess, refetchAllowance])
+
+  useEffect(() => {
+    if (isProcessPending || isProcessConfirming) setTxStatus('processing')
+    if (isProcessSuccess) {
+      setTxStatus('success')
+      refetchXaus()
+      refetchUsdc()
+      refetchSgld()
+    }
+  }, [isProcessPending, isProcessConfirming, isProcessSuccess, refetchXaus, refetchUsdc, refetchSgld])
+
+  useEffect(() => {
+    if (!inputAmount || isNaN(Number(inputAmount)) || !activeTokenData) return
+
+    if (activeTab === 'withdraw') {
+      if (txStatus === 'idle') setTxStatus('approved')
+      return
+    }
+
+    const inputUnits = parseUnits(inputAmount, activeTokenData.decimals)
+    const allowed = currentAllowance ? (currentAllowance as bigint) : BigInt(0)
+
+    if (allowed >= inputUnits) {
+      if (txStatus === 'idle') setTxStatus('approved')
+    } else {
+      if (txStatus === 'approved') setTxStatus('idle')
+    }
+  }, [inputAmount, activeTab, currentAllowance, activeTokenData, txStatus])
+
+  // --- HANDLERS ---
+  const handleMaxBalance = () => {
+    if (activeTab === 'deposit') {
+      setInputAmount(activeDepositBalance.toString())
+    } else {
+      setInputAmount(sgldBalance.toString())
+    }
+  }
+
+  const handleApprove = () => {
+    if (!activeTokenData) return
+    const amountToApprove = parseUnits(inputAmount, activeTokenData.decimals)
+    writeApprove({
+      address: activeTokenAddress as `0x${string}`,
+      abi: erc20Abi,
+      functionName: 'approve',
+      args: [SGLD_VAULT_ADDRESS as `0x${string}`, amountToApprove],
+    } as any)
+  }
+
+  const handleProcess = () => {
+    if (!address) return
+
+    if (activeTab === 'deposit') {
+      if (!activeTokenData) return
+      const amountToDeposit = parseUnits(inputAmount, activeTokenData.decimals)
+      
+      if (selectedAsset === 'XAU') {
+        writeProcess({
+          address: SGLD_VAULT_ADDRESS as `0x${string}`,
+          abi: vaultAbi,
+          functionName: 'depositXAUs',
+          args: [amountToDeposit],
+        } as any)
+      } else {
+        writeProcess({
+          address: SGLD_VAULT_ADDRESS as `0x${string}`,
+          abi: vaultAbi,
+          functionName: 'deposit',
+          args: [amountToDeposit, address],
+        } as any)
+      }
+    } else {
+      if (!sgldData) return
+      const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
+
+      if (selectedAsset === 'XAU') {
+        writeProcess({
+          address: SGLD_VAULT_ADDRESS as `0x${string}`,
+          abi: vaultAbi,
+          functionName: 'withdrawToXAUs',
+          args: [sharesToRedeem],
+        } as any)
+      } else {
+        writeProcess({
+          address: SGLD_VAULT_ADDRESS as `0x${string}`,
+          abi: vaultAbi,
+          functionName: 'redeem',
+          args: [sharesToRedeem, address, address],
+        } as any)
+      }
+    }
+  }
+
+  const resetFlow = () => {
+    setInputAmount('')
+    setTxStatus('idle')
+  }
+
+  const handleTabSwitch = (tab: 'deposit' | 'withdraw') => {
+    if (txStatus === 'idle' || txStatus === 'success' || txStatus === 'approved') {
+      setActiveTab(tab)
+      resetFlow()
+    }
+  }
+
+  const handleAssetSwitch = (asset: 'XAU' | 'USDC') => {
+    if (txStatus === 'idle' || txStatus === 'success' || txStatus === 'approved') {
+      setSelectedAsset(asset)
+      resetFlow()
+    }
   }
 
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
-      {/* --- TOP NAVIGATION --- */}
-      <header className="w-full flex items-center justify-between px-6 py-5 max-w-6xl mx-auto border-b border-[#111111]">
-        <Link href="/" className="flex items-center gap-2">
-          <Image 
-            src="/logo.jpg" 
-            alt="Syncrate Logo" 
-            width={32} 
-            height={32} 
-            className="object-contain rounded-full" 
-          />
+      {/* --- HEADER --- */}
+      <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
+        <Link href="/" className="flex items-center gap-2 group">
+          <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
+          <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD VAULT</span>
         </Link>
-        <Link href="/" className="px-5 py-2 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] text-xs font-medium transition-colors">
-          Main Site
-        </Link>
+        
+        {/* CUSTOM RAINBOWKIT BUTTON RESTORED */}
+        <div className="flex items-center gap-1.5 sm:gap-3">
+          <ConnectButton.Custom>
+            {({
+              account,
+              chain,
+              openAccountModal,
+              openChainModal,
+              openConnectModal,
+              mounted,
+            }) => {
+              return (
+                <div
+                  {...(!mounted && {
+                    'aria-hidden': true,
+                    style: { opacity: 0, pointerEvents: 'none', userSelect: 'none' },
+                  })}
+                  className="flex items-center gap-1.5 sm:gap-3"
+                >
+                  {(() => {
+                    if (!mounted || !account || !chain) {
+                      return (
+                        <button
+                          onClick={openConnectModal}
+                          type="button"
+                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-white text-[#030303] hover:bg-[#E5E5E5]"
+                        >
+                          Connect Wallet
+                        </button>
+                      );
+                    }
+                    if (chain.unsupported) {
+                      return (
+                        <button
+                          onClick={openChainModal}
+                          type="button"
+                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-red-600 text-white shadow-md hover:bg-red-700"
+                        >
+                          Wrong network
+                        </button>
+                      );
+                    }
+                    return (
+                      <div className="flex items-center gap-1.5 sm:gap-3">
+                        <button
+                          onClick={openChainModal}
+                          type="button"
+                          className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 hover:border-[#333333] transition-colors"
+                        >
+                          {chain.hasIcon && (
+                            <div className="w-3.5 h-3.5 overflow-hidden rounded-full flex-shrink-0">
+                              {chain.iconUrl && (
+                                <img
+                                  alt={chain.name ?? 'Chain icon'}
+                                  src={chain.iconUrl}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                            </div>
+                          )}
+                          {chain.name}
+                          <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
+                        </button>
+                        <button
+                          onClick={openAccountModal}
+                          type="button"
+                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all border border-[#222222] bg-[#0A0A0A] text-[#888888] hover:text-[#E5E5E5] hover:border-[#444444]"
+                        >
+                          {account.displayName}
+                        </button>
+                      </div>
+                    );
+                  })()}
+                </div>
+              );
+            }}
+          </ConnectButton.Custom>
+        </div>
       </header>
 
-      {/* --- HERO DASHBOARD SECTION --- */}
-      <main className="relative w-full overflow-hidden">
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/SGLD-cover.PNG" 
-            alt="SGLD Background"
-            fill
-            className="object-cover opacity-25"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030303]/50 to-[#030303]" />
-        </div>
-
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-12 md:py-20">
-          <div className="flex flex-col text-left max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-normal tracking-tighter text-white mb-6 stroke-none leading-[1.05]">
-              Put Your <span className="text-[#FFD700]">Gold.</span> <br />
-              To Work.
-            </h1>
-
-            <p className="text-sm md:text-base text-[#AAAAAA] leading-relaxed mb-8 max-w-xl">
-              Earn yield on your XAUs while maintaining exposure to physical gold through Syncrate’s Gold Yield Vault.
-            </p>
-
-            <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
-              <div className="flex-shrink-0">
-                <Link href="/app/sgld" className="inline-block px-8 py-3.5 bg-white text-black font-medium text-sm rounded-md hover:bg-[#E5E5E5] transition-all">
-                  Deposit XAUs
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault TVL</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">–</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">–</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Current Share Price</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">–</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">XAUs Deployed</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">–</p>
-              </div>
+      {/* --- MAIN APP INTERFACE --- */}
+      <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 my-12 gap-6">
+        
+        <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl flex flex-col gap-6">
+          
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-3">
+              <Image src="/logo.jpg" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
+              <h1 className="text-lg font-medium text-white tracking-tight">Syncrate GLD Vault</h1>
             </div>
           </div>
+
+          <div className="grid grid-cols-3 gap-2 border-y border-[#111111] py-4 my-1">
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-mono uppercase text-[#666666]">Vault TVL</span>
+              <span className="text-sm font-medium text-white">${formatMetric(vaultTVL)}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-mono uppercase text-[#666666]">Vault Supply</span>
+              <span className="text-sm font-medium text-white">{formatMetric(vaultSupply)} SGLD</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-mono uppercase text-[#666666]">Share Price</span>
+              <span className="text-sm font-medium text-white">${sharePrice.toFixed(2)}</span>
+            </div>
+          </div>
+
+          {txStatus === 'success' ? (
+            <div className="text-center py-6 flex flex-col items-center">
+              <div className="w-11 h-11 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4">
+                <span className="text-emerald-500 text-lg">✓</span>
+              </div>
+              <h3 className="text-base font-medium text-white mb-2">Transaction Success</h3>
+              <button onClick={resetFlow} className="w-full mt-4 py-3 bg-[#111111] text-xs font-medium rounded-lg hover:bg-[#222222] text-white transition-all border border-[#222222]">
+                Dismiss
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              
+              <div className="grid grid-cols-2 bg-[#030303] border border-[#111111] rounded-xl p-1">
+                <button type="button" onClick={() => handleTabSwitch('deposit')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'deposit' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Deposit</button>
+                <button type="button" onClick={() => handleTabSwitch('withdraw')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'withdraw' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Withdraw</button>
+              </div>
+
+              <div className="flex items-center gap-2 mt-1">
+                <button type="button" onClick={() => handleAssetSwitch('XAU')} className={`px-4 py-1.5 text-xs font-mono rounded-md transition-all border ${selectedAsset === 'XAU' ? 'bg-[#D69E2E]/10 border-[#D69E2E]/50 text-[#D69E2E]' : 'bg-[#030303] border-[#222222] text-[#666666] hover:text-[#999999]'}`}>XAU</button>
+                <button type="button" onClick={() => handleAssetSwitch('USDC')} className={`px-4 py-1.5 text-xs font-mono rounded-md transition-all border ${selectedAsset === 'USDC' ? 'bg-[#2775CA]/10 border-[#2775CA]/50 text-[#2775CA]' : 'bg-[#030303] border-[#222222] text-[#666666] hover:text-[#999999]'}`}>USDC</button>
+                <span className="text-[10px] text-[#555] ml-auto">
+                  Fee: {activeTab === 'deposit' ? '0%' : (selectedAsset === 'XAU' ? '0.05%' : '0.25%')}
+                </span>
+              </div>
+
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors relative mt-1">
+                <div className="flex items-center justify-between text-[10px] font-mono tracking-wider text-[#666666] uppercase">
+                  <span>Amount ({activeTab === 'deposit' ? selectedAsset : 'SGLD'})</span>
+                  <div className="flex items-center gap-1.5">
+                    <span>
+                      Balance: {isConnected ? (activeTab === 'deposit' ? activeDepositBalance.toFixed(2) : sgldBalance.toFixed(2)) : '0.00'}
+                    </span>
+                    {isConnected && (
+                      <button onClick={handleMaxBalance} type="button" className="text-[9px] font-bold text-[#0037FF] hover:text-[#002CD6] transition-colors uppercase">Max</button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-4">
+                  <input 
+                    type="number" 
+                    placeholder="0.00"
+                    value={inputAmount}
+                    onChange={(e) => setInputAmount(e.target.value)}
+                    disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                    className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50 min-w-0"
+                  />
+                  <span className="text-sm font-medium text-[#888]">
+                    {activeTab === 'deposit' ? selectedAsset : 'SGLD'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-2">
+                {!isConnected ? (
+                  <ConnectButton.Custom>
+                    {({ openConnectModal }) => (
+                      <button onClick={openConnectModal} type="button" className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-md shadow-[#0037FF]/10">Connect Wallet</button>
+                    )}
+                  </ConnectButton.Custom>
+                ) : (
+                  <>
+                    {(txStatus === 'idle' || txStatus === 'approving') && activeTab === 'deposit' && (
+                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving'} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 transition-all flex items-center justify-center gap-2">
+                        {txStatus === 'approving' ? 'Approving...' : `Approve ${selectedAsset}`}
+                      </button>
+                    )}
+
+                    {(txStatus === 'approved' || txStatus === 'processing') && (
+                      <button onClick={handleProcess} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'processing'} className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#0037FF]/10">
+                        {txStatus === 'processing' ? 'Processing...' : (activeTab === 'deposit' ? 'Confirm Deposit' : `Withdraw to ${selectedAsset}`)}
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
+
+            </div>
+          )}
         </div>
       </main>
-
-      {/* --- FAQs SECTION --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
-        <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-12">
-            FAQs
-          </h2>
-
-          <div className="flex flex-col border-t border-[#222222]">
-            {[
-              {
-                q: "What is SGLD?",
-                a: "SGLD is a vault share token representing a proportional claim on the Syncrate Gold Yield Vault. As the vault earns income from institutional gold financing, the value of each SGLD share increases over time and can be redeemed for XAUs."
-              },
-              {
-                q: "How is yield distributed?",
-                a: "Yield is not paid as separate rewards. Financing income generated from institutional gold lending accrues directly to the Syncrate Gold Yield Vault, increasing the value of each SGLD share over time. Holders realize this yield when redeeming SGLD for XAUs."
-              },
-              {
-                q: "What is the fee structure?",
-                a: "There is no deposit fee. A 0.15% fee is charged on every withdrawal transaction - paid in the native token of the blockchain XAUs is being redeemed from."
-              }
-            ].map((faq, index) => {
-              // Internalized wrapper block to legally handle hook logic per dynamic map object
-              return (
-                <FAQItem key={index} q={faq.q} a={faq.a} />
-              )
-            })}
-          </div>
-        </div>
-      </section>
-      
-      {/* --- FOOTER SECTION --- */}
-      <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
-        <div className="w-full max-w-6xl mx-auto flex flex-col">
-          
-          {/* Top Row: Links and Small Logo */}
-          <div className="flex justify-between items-start text-sm text-[#F5F5F5] font-medium">
-            
-            {/* Left: Stacked Links */}
-            <div className="flex flex-col gap-5">
-              <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
-              <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
-              <a href="#" className="hover:text-[#888888] transition-colors">Brand Kit</a>
-              <a href="#" className="hover:text-[#888888] transition-colors">Terms & Disclosures</a>
-              <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
-              <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
-              <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
-            </div>
-
-            {/* Right: Small Logo Visual */}
-            <div className="flex items-center">
-              <Image 
-                src="/footer-icon.PNG" 
-                alt="Syncrate Logo" 
-                width={32} 
-                height={32} 
-                className="object-contain"
-              />
-            </div>
-            
-          </div>
-
-          {/* Bottom: Faint Legal Disclosure */}
-          <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
-            <p>
-              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
-            </p>
-            <p>
-              Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
-            </p>
-            <p>
-              Syncrate does not provide financial, legal, tax, or investment advice. Prospective users should conduct their own due diligence and consult independent professional advisors before participating.
-            </p>
-            <p>
-              References to third-party partners, custodians, or infrastructure providers on this site are for informational purposes only and do not constitute an endorsement, guarantee, or warranty of their services by Syncrate.
-            </p>
-            <p>
-              Syncrate may not be available to residents of certain jurisdictions, including where prohibited by local law or regulation. It is the responsibility of users to ensure their participation complies with applicable laws in their jurisdiction.
-            </p>
-          </div>
-
-        </div>
-      </footer>
-      
-    </div>
-  )
-}
-
-{/* Sub-component logic separating loops cleanly to avoid hook rule breaks */}
-function FAQItem({ q, a }: { q: string, a: string }) {
-  const [isOpen, setIsOpen] = useState(false)
-  return (
-    <div className="border-b border-[#222222] w-full">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-6 text-left group hover:bg-white/[0.02] px-2 transition-colors duration-200"
-      >
-        <span className="text-base md:text-lg font-normal text-[#F5F5F5] pr-4">
-          {q}
-        </span>
-        <span className="text-xl font-mono text-[#AAAAAA] group-hover:text-white transition-colors w-6 h-6 flex items-center justify-center select-none">
-          {isOpen ? '–' : '+'}
-        </span>
-      </button>
-      
-      <div 
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-40 opacity-100 mb-6' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <p className="text-sm md:text-base text-[#888888] leading-relaxed px-2 max-w-2xl">
-          {a}
-        </p>
-      </div>
+      <div className="h-4" />
     </div>
   )
 }
