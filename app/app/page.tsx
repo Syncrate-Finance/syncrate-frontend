@@ -1,40 +1,59 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
-import { parseUnits } from 'viem'
+import { parseUnits, formatUnits } from 'viem'
 
-// Define the shape of our address configurations
+// Define stablecoin structure with its respective address and decimals
+interface StablecoinConfig {
+  address: `0x${string}`;
+  decimals: number;
+}
+
 interface ChainConfig {
-  usdc: `0x${string}`;
-  usdt: `0x${string}`;
+  stablecoins: Record<string, StablecoinConfig>;
   xaus: `0x${string}`;
   goldPriceFeed: `0x${string}`;
   mintController: `0x${string}`;
+  defaultAsset: string;
 }
 
 // Multi-chain Configuration Map
 const CHAIN_CONFIGS: Record<number, ChainConfig> = {
   // --- BASE MAINNET ---
   8453: {
-    usdc: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-    usdt: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
+    stablecoins: {
+      USDC: {
+        address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+        decimals: 6,
+      },
+      USDT: {
+        address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
+        decimals: 6,
+      },
+    },
     xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Base
     goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', // Chainlink XAU/USD Base
     mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Base
+    defaultAsset: 'USDC',
   },
   // --- ROBINHOOD CHAIN MAINNET ---
   4663: {
-    usdc: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
-    usdt: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
+    stablecoins: {
+      USDG: {
+        address: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', // Active Paxos USDG Contract Address
+        decimals: 18, // USDG uses standard 18 decimal places
+      },
+    },
     xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
     goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', // Update once Chainlink deploys XAU/USD feed
     mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
+    defaultAsset: 'USDG',
   },
 }
 
@@ -103,15 +122,33 @@ export default function XAusMintingApp() {
   // ==========================================
   const activeChainId = useChainId()
   
-  // Resolve correct addresses dynamically
-  const activeConfig = CHAIN_CONFIGS[activeChainId] || DEFAULT_CONFIG
+  // Resolve correct addresses dynamically based on chain ID
+  const activeConfig = useMemo(() => {
+    return CHAIN_CONFIGS[activeChainId] || DEFAULT_CONFIG
+  }, [activeChainId])
+
+  const availableStablecoins = useMemo(() => {
+    return Object.keys(activeConfig.stablecoins)
+  }, [activeConfig])
 
   const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint')
   const [inputAmount, setInputAmount] = useState('')
-  const [paymentAsset, setPaymentAsset] = useState<'USDC' | 'USDT'>('USDC')
+  const [paymentAsset, setPaymentAsset] = useState<string>(activeConfig.defaultAsset)
   const [isAssetDropdownOpen, setIsAssetDropdownOpen] = useState(false)
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
   const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
+
+  // Enforce correct stablecoin option if chain changes
+  useEffect(() => {
+    if (!availableStablecoins.includes(paymentAsset)) {
+      setPaymentAsset(activeConfig.defaultAsset)
+    }
+  }, [activeConfig, availableStablecoins, paymentAsset])
+
+  // Get active stablecoin configuration
+  const activeStablecoinConfig = useMemo(() => {
+    return activeConfig.stablecoins[paymentAsset] || activeConfig.stablecoins[activeConfig.defaultAsset]
+  }, [activeConfig, paymentAsset])
 
   // ==========================================
   // 2. WAGMI HOOKS & READS
@@ -147,12 +184,18 @@ export default function XAusMintingApp() {
     }
   })
 
-  const { data: usdcData } = useBalance({ address, token: activeConfig.usdc })
-  const { data: usdtData } = useBalance({ address, token: activeConfig.usdt })
-  const { data: xausData } = useBalance({ address, token: activeConfig.xaus })
+  // Fetch balances dynamically
+  const { data: stablecoinData } = useBalance({ 
+    address, 
+    token: activeStablecoinConfig?.address 
+  })
+  
+  const { data: xausData } = useBalance({ 
+    address, 
+    token: activeConfig.xaus 
+  })
 
-  const usdcBalance = usdcData ? parseFloat(usdcData.formatted) : 0
-  const usdtBalance = usdtData ? parseFloat(usdtData.formatted) : 0
+  const stablecoinBalance = stablecoinData ? parseFloat(stablecoinData.formatted) : 0
   const xausBalance = xausData ? parseFloat(xausData.formatted) : 0
 
   // ==========================================
@@ -200,8 +243,6 @@ export default function XAusMintingApp() {
   // ==========================================
   // 4. DERIVED STATE & HANDLERS
   // ==========================================
-  const activeStablecoinBalance = paymentAsset === 'USDC' ? usdcBalance : usdtBalance
-
   const calculatedOutput = (() => {
     if (!inputAmount || parseFloat(inputAmount) <= 0) return activeTab === 'mint' ? '0.0000' : '0.00'
     const amount = parseFloat(inputAmount)
@@ -214,22 +255,24 @@ export default function XAusMintingApp() {
 
   const handleMaxBalance = () => {
     if (activeTab === 'mint') {
-      setInputAmount(activeStablecoinBalance.toString())
+      setInputAmount(stablecoinBalance.toString())
     } else {
       setInputAmount(xausBalance.toString())
     }
   }
 
   const handleApprove = () => {
-    if (!inputAmount || parseFloat(inputAmount) <= 0) return
-    let targetTokenAddress: `0x${string}` = activeConfig.usdc
-    let decimals = 6 
+    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig) return
+    
+    let targetTokenAddress: `0x${string}`
+    let decimals: number
 
     if (activeTab === 'mint') {
-      targetTokenAddress = paymentAsset === 'USDC' ? activeConfig.usdc : activeConfig.usdt
+      targetTokenAddress = activeStablecoinConfig.address
+      decimals = activeStablecoinConfig.decimals
     } else {
       targetTokenAddress = activeConfig.xaus
-      decimals = 18 
+      decimals = 18 // XAUs ERC-20 has 18 decimals
     }
 
     const parsedAmount = parseUnits(inputAmount, decimals)
@@ -243,12 +286,14 @@ export default function XAusMintingApp() {
   }
 
   const handleProcess = () => {
-    if (!inputAmount || parseFloat(inputAmount) <= 0) return
+    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig) return
 
     const isMint = activeTab === 'mint'
-    const decimals = isMint ? 6 : 18
+    
+    // Decimals are 18 for XAUs (when redeeming) and dynamically fetched for stablecoins (when minting)
+    const decimals = isMint ? activeStablecoinConfig.decimals : 18
     const parsedAmount = parseUnits(inputAmount, decimals)
-    const targetTokenAddress = paymentAsset === 'USDC' ? activeConfig.usdc : activeConfig.usdt
+    const targetTokenAddress = activeStablecoinConfig.address
 
     if (isMint) {
       writeAction({
@@ -294,7 +339,7 @@ export default function XAusMintingApp() {
     }
 
     const liveAmountOwed = queueItemData && queueItemData[2] 
-      ? Number(queueItemData[2]) / 1e18 
+      ? Number(formatUnits(queueItemData[2], activeStablecoinConfig?.decimals || 18))
       : queuedRequest.amount
 
     return (
@@ -490,24 +535,24 @@ export default function XAusMintingApp() {
                     <div className="relative flex-shrink-0">
                       <button
                         type="button"
-                        disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                        disabled={(txStatus !== 'idle' && txStatus !== 'approved') || availableStablecoins.length <= 1}
                         onClick={() => setIsAssetDropdownOpen(!isAssetDropdownOpen)}
                         className="bg-[#0A0A0A] border border-[#222222] hover:border-[#333333] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white transition-all disabled:opacity-50"
                       >
                         <Image 
-                          src={paymentAsset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                          src={`/${paymentAsset.toLowerCase()}-icon.png`} 
                           alt={`${paymentAsset} logo`} 
                           width={16} 
                           height={16} 
                           className="rounded-full flex-shrink-0"
                         />
                         <span>{paymentAsset}</span>
-                        <span className="text-[9px] text-[#666666]">▼</span>
+                        {availableStablecoins.length > 1 && <span className="text-[9px] text-[#666666]">▼</span>}
                       </button>
 
-                      {isAssetDropdownOpen && (
+                      {isAssetDropdownOpen && availableStablecoins.length > 1 && (
                         <div className="absolute right-0 mt-1.5 w-28 bg-[#0A0A0A] border border-[#222222] rounded-lg overflow-hidden z-40 shadow-xl">
-                          {(['USDC', 'USDT'] as const).map((asset) => (
+                          {availableStablecoins.map((asset) => (
                             <button
                               key={asset}
                               type="button"
@@ -518,7 +563,7 @@ export default function XAusMintingApp() {
                               className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
                             >
                               <Image 
-                                src={asset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                                src={`/${asset.toLowerCase()}-icon.png`} 
                                 alt={`${asset} logo`} 
                                 width={16} 
                                 height={16} 
@@ -549,7 +594,7 @@ export default function XAusMintingApp() {
                 <div className="flex justify-end items-center gap-2 mt-1">
                   <span className="text-[10px] text-[#666666] font-mono">
                     Balance: {isConnected 
-                      ? (activeTab === 'mint' ? activeStablecoinBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : xausBalance.toFixed(4))
+                      ? (activeTab === 'mint' ? stablecoinBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : xausBalance.toFixed(4))
                       : (activeTab === 'mint' ? '0.00' : '0.0000')} {activeTab === 'mint' ? paymentAsset : 'XAUs'}
                   </span>
                   {isConnected && (
@@ -592,24 +637,24 @@ export default function XAusMintingApp() {
                     <div className="relative flex-shrink-0">
                       <button
                         type="button"
-                        disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                        disabled={(txStatus !== 'idle' && txStatus !== 'approved') || availableStablecoins.length <= 1}
                         onClick={() => setIsAssetDropdownOpen(!isAssetDropdownOpen)}
                         className="bg-[#0A0A0A] border border-[#222222] hover:border-[#333333] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white transition-all disabled:opacity-50"
                       >
                         <Image 
-                          src={paymentAsset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                          src={`/${paymentAsset.toLowerCase()}-icon.png`} 
                           alt={`${paymentAsset} logo`} 
                           width={16} 
                           height={16} 
                           className="rounded-full flex-shrink-0"
                         />
                         <span>{paymentAsset}</span>
-                        <span className="text-[9px] text-[#666666]">▼</span>
+                        {availableStablecoins.length > 1 && <span className="text-[9px] text-[#666666]">▼</span>}
                       </button>
 
-                      {isAssetDropdownOpen && (
+                      {isAssetDropdownOpen && availableStablecoins.length > 1 && (
                         <div className="absolute right-0 mt-1.5 w-28 bg-[#0A0A0A] border border-[#222222] rounded-lg overflow-hidden z-40 shadow-xl">
-                          {(['USDC', 'USDT'] as const).map((asset) => (
+                          {availableStablecoins.map((asset) => (
                             <button
                               key={asset}
                               type="button"
@@ -620,7 +665,7 @@ export default function XAusMintingApp() {
                               className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
                             >
                               <Image 
-                                src={asset === 'USDC' ? '/usdc-icon.png' : '/usdt-icon.png'} 
+                                src={`/${asset.toLowerCase()}-icon.png`} 
                                 alt={`${asset} logo`} 
                                 width={16} 
                                 height={16} 
