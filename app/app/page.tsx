@@ -30,7 +30,7 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
   },
   // --- ROBINHOOD CHAIN MAINNET ---
   4663: {
-    usdg: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
+    usdc: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
     xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
     goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', // Update once Chainlink deploys XAU/USD feed
     mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
