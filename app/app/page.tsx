@@ -64,23 +64,23 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const
 // Standard Minimal ERC20 ABI
 const ERC20_ABI = [
   {
-    inputs: [
-      { internalType: 'address', name: 'spender', type: 'address' },
-      { internalType: 'uint256', name: 'value', type: 'uint256' }
-    ],
     name: 'approve',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    type: 'function',
     stateMutability: 'nonpayable',
-    type: 'function'
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'value', type: 'uint256' }
+    ],
+    outputs: [{ name: '', type: 'bool' }]
   },
   {
-    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'balanceOf',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    type: 'function',
     stateMutability: 'view',
-    type: 'function'
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }]
   }
-] as const
+] as const;
 
 // Minimal ABI for the Core Mint/Redeem Contract
 const MINT_CONTROLLER_ABI = [
@@ -333,7 +333,7 @@ export default function XAusMintingApp() {
       abi: ERC20_ABI,
       functionName: 'approve',
       args: [activeConfig.mintController, parsedAmount],
-    })
+    } as any)
   }
 
   const handleProcess = () => {
@@ -349,20 +349,20 @@ export default function XAusMintingApp() {
       return
     }
 
-    if (isMint) {
+        if (isMint) {
       writeAction({
         address: activeConfig.mintController,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
         args: [parsedAmount, targetTokenAddress], 
-      })
+      } as any)
     } else {
       writeAction({
         address: activeConfig.mintController,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',
         args: [parsedAmount, targetTokenAddress],
-      })
+      } as any)
     }
   }
 
