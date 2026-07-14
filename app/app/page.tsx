@@ -16,32 +16,46 @@ interface StablecoinConfig {
 }
 
 interface ChainConfig {
-  usdc: `0x${string}`;
-  usdt?: `0x${string}`; // This is required by your type definition
+  stablecoins: Record<string, StablecoinConfig>;
   xaus: `0x${string}`;
   goldPriceFeed: `0x${string}`;
   mintController: `0x${string}`;
+  defaultAsset: string;
 }
 
 // Multi-chain Configuration Map
 const CHAIN_CONFIGS: Record<number, ChainConfig> = {
   // --- BASE MAINNET ---
   8453: {
-    usdc: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-    usdt: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
+    stablecoins: {
+      USDC: {
+        address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+        decimals: 6,
+      },
+      USDT: {
+        address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
+        decimals: 6,
+      },
+    },
     xaus: '0x0000000000000000000000000000000000000000', 
     goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', 
     mintController: '0x0000000000000000000000000000000000000000', 
+    defaultAsset: 'USDC',
   },
   // --- ROBINHOOD CHAIN MAINNET ---
   4663: {
-    usdc: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
-    // You can safely omit usdt entirely here now
+    stablecoins: {
+      USDG: {
+        address: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
+        decimals: 18, 
+      },
+    },
     xaus: '0x0000000000000000000000000000000000000000', 
     goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', 
     mintController: '0x0000000000000000000000000000000000000000', 
+    defaultAsset: 'USDG',
   },
-}
+};
 
 const DEFAULT_CONFIG = CHAIN_CONFIGS[8453]
 
