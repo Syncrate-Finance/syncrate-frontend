@@ -17,7 +17,7 @@ interface StablecoinConfig {
 
 interface ChainConfig {
   usdc: `0x${string}`;
-  usdt: `0x${string}`; // This is required by your type definition
+  usdt?: `0x${string}`; // This is required by your type definition
   xaus: `0x${string}`;
   goldPriceFeed: `0x${string}`;
   mintController: `0x${string}`;
@@ -29,17 +29,17 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
   8453: {
     usdc: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     usdt: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
-    xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Base
-    goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', // Chainlink XAU/USD Base
-    mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Base
+    xaus: '0x0000000000000000000000000000000000000000', 
+    goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', 
+    mintController: '0x0000000000000000000000000000000000000000', 
   },
   // --- ROBINHOOD CHAIN MAINNET ---
   4663: {
-    usdc: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', // Mapping USDG to your primary usdc slot
-    usdt: '0x0000000000000000000000000000000000000000', // Safe fallback zero-address to satisfy type requirement
-    xaus: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
-    goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', // Update once Chainlink deploys XAU/USD feed
-    mintController: '0x0000000000000000000000000000000000000000', // Update once deployed to Robinhood
+    usdc: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', 
+    // You can safely omit usdt entirely here now
+    xaus: '0x0000000000000000000000000000000000000000', 
+    goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', 
+    mintController: '0x0000000000000000000000000000000000000000', 
   },
 }
 
