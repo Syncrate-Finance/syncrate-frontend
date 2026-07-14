@@ -620,9 +620,9 @@ export default function XAusMintingApp() {
                               key={asset}
                               type="button"
                               onClick={() => {
-                                setPaymentAsset(asset)
-                                setIsAssetDropdownOpen(false)
-                              }}
+  setSelectedAsset(asset) // Use the new state setter
+  setIsAssetDropdownOpen(false)
+}}
                               className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
                             >
                               <Image 
@@ -722,9 +722,9 @@ export default function XAusMintingApp() {
                               key={asset}
                               type="button"
                               onClick={() => {
-                                setPaymentAsset(asset)
-                                setIsAssetDropdownOpen(false)
-                              }}
+  setSelectedAsset(asset) // Use the new state setter
+  setIsAssetDropdownOpen(false)
+}}
                               className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
                             >
                               <Image 
