@@ -189,10 +189,89 @@ export default function SgldVaultApp() {
       {/* --- HEADER --- */}
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2 group">
-          <Image src="/logo.png" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
+          <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD VAULT</span>
         </Link>
-        <ConnectButton showBalance={false} chainStatus="icon" />
+        
+        {/* Custom Clean Header Connect Button */}
+        <ConnectButton.Custom>
+          {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
+            const ready = mounted;
+            const connected = ready && account && chain;
+
+            return (
+              <div
+                {...(!ready && {
+                  'aria-hidden': true,
+                  'style': {
+                    opacity: 0,
+                    pointerEvents: 'none',
+                    userSelect: 'none',
+                  },
+                })}
+              >
+                {(() => {
+                  if (!connected) {
+                    return (
+                      <button 
+                        onClick={openConnectModal} 
+                        type="button" 
+                        className="px-5 py-2.5 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all"
+                      >
+                        Connect Wallet
+                      </button>
+                    );
+                  }
+
+                  if (chain.unsupported) {
+                    return (
+                      <button 
+                        onClick={openChainModal} 
+                        type="button" 
+                        className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium text-sm rounded-lg transition-all"
+                      >
+                        Wrong network
+                      </button>
+                    );
+                  }
+
+                  return (
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={openChainModal}
+                        type="button"
+                        className="flex items-center gap-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] px-3 py-2 rounded-lg text-xs font-mono text-[#888888] transition-all"
+                      >
+                        {chain.hasIcon && (
+                          <div className="w-4 h-4 rounded-full overflow-hidden">
+                            {chain.iconUrl && (
+                              <Image
+                                alt={chain.name ?? 'Chain icon'}
+                                src={chain.iconUrl}
+                                width={16}
+                                height={16}
+                              />
+                            )}
+                          </div>
+                        )}
+                        {chain.name}
+                      </button>
+
+                      <button 
+                        onClick={openAccountModal} 
+                        type="button" 
+                        className="px-4 py-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] text-white font-mono text-xs rounded-lg transition-all"
+                      >
+                        {account.displayName}
+                        {account.displayBalance ? ` (${account.displayBalance})` : ''}
+                      </button>
+                    </div>
+                  );
+                })()}
+              </div>
+            );
+          }}
+        </ConnectButton.Custom>
       </header>
 
       {/* --- MAIN APP INTERFACE --- */}
@@ -203,7 +282,7 @@ export default function SgldVaultApp() {
           {/* HEADER METRICS */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <Image src="/logo.png" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
+              <Image src="/logo.jog" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
               <h1 className="text-lg font-medium text-white tracking-tight">Syncrate Prime Vault</h1>
             </div>
           </div>
@@ -248,10 +327,9 @@ export default function SgldVaultApp() {
                 <button type="button" onClick={() => handleTabSwitch('withdraw')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'withdraw' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Withdraw</button>
               </div>
 
-              {/* ASSET SELECTOR (Hardcoded to XAU layout style) */}
-              <div className="flex items-center gap-2 mt-1">
-                <div className="px-4 py-1.5 text-xs font-mono rounded-md border bg-[#D69E2E]/10 border-[#D69E2E]/50 text-[#D69E2E]">XAU</div>
-                <span className="text-[10px] text-[#555] ml-auto">
+              {/* FEE ROW (Cleanly displayed without the XAU box) */}
+              <div className="flex justify-end items-center mt-1 h-6">
+                <span className="text-[10px] text-[#555]">
                   Fee: {activeTab === 'deposit' ? '0%' : '0.10%'}
                 </span>
               </div>
@@ -290,7 +368,13 @@ export default function SgldVaultApp() {
                 {!isConnected ? (
                   <ConnectButton.Custom>
                     {({ openConnectModal }) => (
-                      <button onClick={openConnectModal} type="button" className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-md shadow-[#0037FF]/10">Connect Wallet</button>
+                      <button 
+                        onClick={openConnectModal} 
+                        type="button" 
+                        className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-md shadow-[#0037FF]/10"
+                      >
+                        Connect Wallet
+                      </button>
                     )}
                   </ConnectButton.Custom>
                 ) : (
@@ -318,4 +402,3 @@ export default function SgldVaultApp() {
     </div>
   )
 }
-
