@@ -204,7 +204,7 @@ export default function SgldVaultApp() {
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
               <Image src="/logo.jpg" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
-              <h1 className="text-lg font-medium text-white tracking-tight">Syncrate GLD Vault</h1>
+              <h1 className="text-lg font-medium text-white tracking-tight">Syncrate Prime Vault</h1>
             </div>
           </div>
 
