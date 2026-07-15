@@ -142,7 +142,7 @@ export default function LaunchingSoon() {
               SGLD
             </h3>
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-              The Syncrate Gold Yield (SGLD) token represents a share of the Syncrate GLD Vault, where deposited XAUs earn yield through a curated onchain index fund.
+              The Syncrate Prime (SGLD) token represents a share of the Syncrate Prime Vault, where deposited XAUs earn yield through short-term gold financing.
             </p>
             <Link href="/sgld">
               <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
@@ -174,8 +174,7 @@ export default function LaunchingSoon() {
             Real Yield Source
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            SGLD’s growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly by the performance of an underlying crypto asset basket. Deposited XAUs are routed into equal, thematic index positions across blue-chip network assets.
-          </p>
+            SGLD’s growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly by the financing spread paid by
         </div>
 
         <div className="max-w-3xl mt-12 flex flex-col gap-2">
