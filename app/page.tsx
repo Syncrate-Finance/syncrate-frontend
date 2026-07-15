@@ -139,7 +139,7 @@ export default function LaunchingSoon() {
 
           <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
             <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
-              SGLD
+              Syncrate Prime
             </h3>
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
               The Syncrate Prime (SGLD) token represents a share of the Syncrate Prime Vault, where deposited XAUs earn yield through short-term gold financing.
