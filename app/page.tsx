@@ -174,7 +174,7 @@ export default function LaunchingSoon() {
             Real Yield Source
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            SGLD’s growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly by the financing spread paid by
+            SGLD’s growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly from short-term gold leasing to bullion banks and refiners who pay a lease rate that flows back to SGLD.
         </div>
 
         <div className="max-w-3xl mt-12 flex flex-col gap-2">
@@ -182,7 +182,7 @@ export default function LaunchingSoon() {
             Institutional-Grade Custody
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            While SGLD captures crypto index upside, the base layer remains anchored. Each XAUs token are securely backed 1:1 by physical gold held in independent UAE vaults, tracked and priced continuously by Chainlink's decentralized oracle infrastructure.
+            While SGLD earns additional upside, the base layer remains anchored. Each XAUs token are securely backed 1:1 by physical gold held in independent UAE vaults, tracked and priced continuously by Chainlink's decentralized oracle infrastructure.
           </p>
         </div>
 
