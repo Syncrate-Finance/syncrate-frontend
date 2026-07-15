@@ -14,13 +14,7 @@ export default function LaunchingSoon() {
       <header className="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
         {/* Custom Logo */}
         <div className="flex items-center">
-          <Image 
-            src="/logo.jpg" 
-            alt="Syncrate Logo" 
-            width={32} 
-            height={32} 
-            className="object-contain"
-          />
+          <Image alt="Syncrate Logo" className="object-contain" height="{32}" src="/logo.jpg" width="{32}"/>
         </div>
 
         {/* Right Action Buttons */}
@@ -41,7 +35,7 @@ export default function LaunchingSoon() {
               <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
           </a>
-          <Link href="/app" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
+          <Link className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors" href="/app">
             App
           </Link>
         </div>
@@ -61,7 +55,7 @@ export default function LaunchingSoon() {
       </main>
 
       {/* --- SWIPEABLE CARDS SECTION --- */}
-      <HowItWorks />
+      <HowItWorks/>
       
       {/* Divider and Products Label Section */}
       <div className="w-full max-w-6xl mx-auto px-6 pt-16 pb-8">
@@ -79,23 +73,12 @@ export default function LaunchingSoon() {
         {/* PRODUCT CARD 1: XAUs */}
         <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
           <div className="absolute inset-0 z-0">
-            <Image
-              src="/XAUs-bg-cover.PNG" 
-              alt="XAUs Background"
-              fill
-              className="object-cover opacity-35"
-              priority
-            />
+            <Image alt="XAUs Background" className="object-cover opacity-35" fill priority src="/XAUs-bg-cover.PNG"/>
           </div>
 
           <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
             <div className="relative w-48 h-48 md:w-56 md:h-56">
-              <Image
-                src="/XAUs-icon.png" 
-                alt="XAUs Icon Visual"
-                fill
-                className="object-contain"
-              />
+              <Image alt="XAUs Icon Visual" className="object-contain" fill src="/XAUs-icon.png"/>
             </div>
           </div>
 
@@ -117,23 +100,12 @@ export default function LaunchingSoon() {
         {/* PRODUCT CARD 2: SGLD */}
         <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
           <div className="absolute inset-0 z-0">
-            <Image
-              src="/SGLD-cover.PNG" 
-              alt="SGLD Background"
-              fill
-              className="object-cover opacity-35"
-              priority
-            />
+            <Image alt="SGLD Background" className="object-cover opacity-35" fill priority src="/SGLD-cover.PNG"/>
           </div>
 
           <div className="absolute inset-x-0 top-[15%] z-10 flex justify-center">
             <div className="relative w-48 h-48 md:w-56 md:h-56">
-              <Image
-                src="/SGLD-icon.png" 
-                alt="SGLD Icon Visual"
-                fill
-                className="object-contain"
-              />
+              <Image alt="SGLD Icon Visual" className="object-contain" fill src="/SGLD-icon.png"/>
             </div>
           </div>
 
@@ -175,6 +147,7 @@ export default function LaunchingSoon() {
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
             SGLD’s growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly from short-term gold leasing to bullion banks and refiners who pay a lease rate that flows back to SGLD.
+          </p>
         </div>
 
         <div className="max-w-3xl mt-12 flex flex-col gap-2">
@@ -214,7 +187,7 @@ export default function LaunchingSoon() {
         <div className="flex flex-nowrap overflow-x-auto gap-4 pb-8 snap-x snap-mandatory scrollbar-none [mask-image:_linear-gradient(to_right,black_85%,transparent_100%)] md:[mask-image:none]">
           <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/financing-icon.png" alt="Financing" width={24} height={24} className="object-contain" />
+              <Image alt="Financing" className="object-contain" height="{24}" src="/financing-icon.png" width="{24}"/>
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Gold Sourcing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
@@ -224,7 +197,7 @@ export default function LaunchingSoon() {
 
           <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/oracle-icon.PNG" alt="Oracle" width={24} height={24} className="object-contain" />
+              <Image alt="Oracle" className="object-contain" height="{24}" src="/oracle-icon.PNG" width="{24}"/>
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Oracle</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
@@ -234,7 +207,7 @@ export default function LaunchingSoon() {
 
           <div className="w-[85%] md:w-1/4 shrink-0 bg-[#111111]/60 border border-[#222222] rounded-[24px] p-6 flex flex-col items-start text-left snap-start">
             <div className="w-12 h-12 bg-[#222222] rounded-xl flex items-center justify-center mb-12 overflow-hidden">
-              <Image src="/custody-icon.PNG" alt="Custody" width={24} height={24} className="object-contain" />
+              <Image alt="Custody" className="object-contain" height="{24}" src="/custody-icon.PNG" width="{24}"/>
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Custody & Financing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
@@ -251,24 +224,16 @@ export default function LaunchingSoon() {
           <h2 className="text-lg font-medium text-white tracking-tight">
             News & Insights
           </h2>
-          <Link href="/blog" className="text-sm font-medium text-[#AAAAAA] hover:text-white transition-colors flex items-center gap-1.5">
+          <Link className="text-sm font-medium text-[#AAAAAA] hover:text-white transition-colors flex items-center gap-1.5" href="/blog">
             View All <span className="text-[12px]">➔</span>
           </Link>
         </div>
 
         {/* Featured Card */}
-        <Link 
-          href="/blog" 
-          className="group block w-full max-w-2xl border border-[#222222] rounded-xl overflow-hidden bg-[#0A0A0A] hover:border-[#444444] transition-colors duration-300"
-        >
+        <Link className="group block w-full max-w-2xl border border-[#222222] rounded-xl overflow-hidden bg-[#0A0A0A] hover:border-[#444444] transition-colors duration-300" href="/blog">
           {/* Card Top: Image */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#111111] overflow-hidden border-b border-[#222222]">
-            <Image 
-              src="/blog1.PNG" // Upload a thumbnail image of your choice to public/
-              alt="Syncrate News Feature"
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
-            />
+            <Image alt="Syncrate News Feature" className="object-cover group-hover:scale-105 transition-transform duration-500" fill src="/blog1.PNG"/>
           </div>
           
           {/* Card Bottom: Content */}
@@ -287,12 +252,12 @@ export default function LaunchingSoon() {
           <div className="flex w-max shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center animate-[marquee_10s_linear_infinite] hover:[animation-play-state:paused]">
             {[1, 2, 3, 4].map((trackIndex) => (
               <div key={trackIndex} className="flex shrink-0 gap-12 md:gap-16 items-center">
-                <Image src="/alluca.png" alt="Alluca Gold" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/ziba.png" alt="Ziba" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+                <Image alt="Alluca Gold" className="object-contain shrink-0 w-auto opacity-50 grayscale" height="{30}" src="/alluca.png" width="{100}"/>
+                <Image alt="Pyth" className="object-contain shrink-0 w-auto opacity-50 grayscale" height="{30}" src="/pyth-icon.png" width="{100}"/>
+                <Image alt="Chainlink" className="object-contain shrink-0 w-auto opacity-50 grayscale" height="{30}" src="/chainlink.png" width="{100}"/>
+                <Image alt="Morpho" className="object-contain shrink-0 w-auto opacity-50 grayscale" height="{30}" src="/morpho-icon.png" width="{100}"/>
+                <Image alt="Ziba" className="object-contain shrink-0 w-auto opacity-50 grayscale" height="{30}" src="/ziba.png" width="{100}"/>
+                <Image alt="Amanat Vaults" className="object-contain shrink-0 w-auto opacity-50 grayscale" height="{30}" src="/amanat-icon.png" width="{100}"/>
               </div>
             ))}
           </div>
@@ -308,25 +273,19 @@ export default function LaunchingSoon() {
               <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
               <a href="#" className="hover:text-[#888888] transition-colors">Brand Kit</a>
               <a href="#" className="hover:text-[#888888] transition-colors">Terms & Disclosures</a>
-              <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
-              <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
-              <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
+              <Link className="hover:text-[#888888] transition-colors" href="/blog">Blog</Link>
+              <a href="https://x.com/syncratefi" target="_blank" rel="noopener noreferrer" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
+              <a href="https://linkedin.com/company/syncrateprotocol" target="_blank" rel="noopener noreferrer" className="hover:text-[#888888] transition-colors">LinkedIn</a>
             </div>
 
             <div className="flex items-center">
-              <Image 
-                src="/footer-icon.PNG" 
-                alt="Syncrate Logo" 
-                width={32} 
-                height={32} 
-                className="object-contain"
-              />
+              <Image alt="Syncrate Logo" className="object-contain" height="{32}" src="/footer-icon.PNG" width="{32}"/>
             </div>
           </div>
 
           <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
             <p>
-              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
+              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. XAUs is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
             </p>
             <p>
               Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
