@@ -10,21 +10,23 @@ import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTr
 import { parseUnits, formatUnits } from 'viem'
 
 // Base Mainnet Contract Addresses
-const XAUS_ADDRESS = '0x0000000000000000000000000000000000000001' 
-const SGLD_VAULT_ADDRESS = '0x0000000000000000000000000000000000000000' 
-const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' 
+const XAUS_ADDRESS = '0x0000000000000000000000000000000000000001' // Placeholder
+const SGLD_VAULT_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder
 
-// Minimal ABIs
+// Launch date for APY calculation (Update this to your actual deployment date)
+const VAULT_INCEPTION = new Date('2026-06-01T00:00:00Z').getTime()
+
+// Minimal ABIs for interacting with the contracts
 const erc20Abi = [
   { type: 'function', name: 'approve', inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }], outputs: [{ type: 'bool' }] },
   { type: 'function', name: 'allowance', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ type: 'uint256' }] }
 ] as const
 
 const vaultAbi = [
-  { type: 'function', name: 'deposit', inputs: [{ name: 'assets', type: 'uint256' }, { name: 'receiver', type: 'address' }], outputs: [{ type: 'uint256' }] },
-  { type: 'function', name: 'redeem', inputs: [{ name: 'shares', type: 'uint256' }, { name: 'receiver', type: 'address' }, { name: 'owner', type: 'address' }], outputs: [{ type: 'uint256' }] },
+  // Custom XAU Path
   { type: 'function', name: 'depositXAUs', inputs: [{ name: 'xausAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
   { type: 'function', name: 'withdrawToXAUs', inputs: [{ name: 'sharesAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
+  // Metrics
   { type: 'function', name: 'totalAssets', inputs: [], outputs: [{ type: 'uint256' }] },
   { type: 'function', name: 'totalSupply', inputs: [], outputs: [{ type: 'uint256' }] }
 ] as const
@@ -34,40 +36,41 @@ export default function SgldVaultApp() {
 
   // Core Flow States
   const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit')
-  const [selectedAsset, setSelectedAsset] = useState<'XAU' | 'USDC'>('XAU')
   const [inputAmount, setInputAmount] = useState('')
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
 
   // --- WAGMI READ: Balances ---
   const { data: xausData, refetch: refetchXaus } = useBalance({ address, token: XAUS_ADDRESS as `0x${string}` })
-  const { data: usdcData, refetch: refetchUsdc } = useBalance({ address, token: USDC_ADDRESS as `0x${string}` })
   const { data: sgldData, refetch: refetchSgld } = useBalance({ address, token: SGLD_VAULT_ADDRESS as `0x${string}` })
 
   const xausBalance = xausData ? parseFloat(xausData.formatted) : 0.00
-  const usdcBalance = usdcData ? parseFloat(usdcData.formatted) : 0.00
   const sgldBalance = sgldData ? parseFloat(sgldData.formatted) : 0.00
-
-  // Dynamic asset mapping
-  const activeTokenAddress = selectedAsset === 'XAU' ? XAUS_ADDRESS : USDC_ADDRESS
-  const activeTokenData = selectedAsset === 'XAU' ? xausData : usdcData
-  const activeDepositBalance = selectedAsset === 'XAU' ? xausBalance : usdcBalance
 
   // --- WAGMI READ: Allowance ---
   const { data: currentAllowance, refetch: refetchAllowance } = useReadContract({
-    address: activeTokenAddress as `0x${string}`,
+    address: XAUS_ADDRESS as `0x${string}`,
     abi: erc20Abi,
     functionName: 'allowance',
     args: address ? [address, SGLD_VAULT_ADDRESS as `0x${string}`] : undefined,
     query: { enabled: !!address },
   })
 
-  // --- WAGMI READ: Metrics ---
+  // --- WAGMI READ: Vault Global Metrics ---
   const { data: totalAssetsData } = useReadContract({ address: SGLD_VAULT_ADDRESS as `0x${string}`, abi: vaultAbi, functionName: 'totalAssets' })
   const { data: totalSupplyData } = useReadContract({ address: SGLD_VAULT_ADDRESS as `0x${string}`, abi: vaultAbi, functionName: 'totalSupply' })
 
-  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 6)) : 0 
-  const vaultSupply = totalSupplyData ? parseFloat(formatUnits(totalSupplyData as bigint, 18)) : 0
+  // Parse Live Vault Data
+  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 6)) : 0 // TVL is based in USDC (6 decimals)
+  
+  // Note: ERC4626 inherits underlying asset decimals. If USDC is 6, SGLD is also 6. 
+  // Adjusted from 18 to 6 assuming standard ERC4626 behavior based on your USDC asset.
+  const vaultSupply = totalSupplyData ? parseFloat(formatUnits(totalSupplyData as bigint, 6)) : 0 
+  
   const sharePrice = vaultSupply > 0 ? (vaultTVL / vaultSupply) : 1.00
+
+  // --- Calculate Actual APY ---
+  const daysElapsed = Math.max((Date.now() - VAULT_INCEPTION) / (1000 * 60 * 60 * 24), 1)
+  const vaultApy = vaultSupply > 0 ? ((sharePrice - 1.00) / 1.00) * (365 / daysElapsed) * 100 : 0.00
 
   const formatMetric = (value: number) => {
     if (value >= 1e6) return (value / 1e6).toFixed(2) + 'M'
@@ -75,7 +78,7 @@ export default function SgldVaultApp() {
     return value.toFixed(2)
   }
 
-  // --- WAGMI WRITE ---
+  // --- WAGMI WRITE: Transactions ---
   const { data: approveTxHash, writeContract: writeApprove, isPending: isApprovePending } = useWriteContract()
   const { data: processTxHash, writeContract: writeProcess, isPending: isProcessPending } = useWriteContract()
 
@@ -83,7 +86,7 @@ export default function SgldVaultApp() {
   const { isLoading: isApproveConfirming, isSuccess: isApproveSuccess } = useWaitForTransactionReceipt({ hash: approveTxHash })
   const { isLoading: isProcessConfirming, isSuccess: isProcessSuccess } = useWaitForTransactionReceipt({ hash: processTxHash })
 
-  // --- EFFECTS ---
+  // --- EFFECT ROUTERS ---
   useEffect(() => {
     if (isApprovePending || isApproveConfirming) setTxStatus('approving')
     if (isApproveSuccess) {
@@ -97,20 +100,21 @@ export default function SgldVaultApp() {
     if (isProcessSuccess) {
       setTxStatus('success')
       refetchXaus()
-      refetchUsdc()
       refetchSgld()
     }
-  }, [isProcessPending, isProcessConfirming, isProcessSuccess, refetchXaus, refetchUsdc, refetchSgld])
+  }, [isProcessPending, isProcessConfirming, isProcessSuccess, refetchXaus, refetchSgld])
 
+  // Smart checking to skip approval if user already approved enough or is withdrawing
   useEffect(() => {
-    if (!inputAmount || isNaN(Number(inputAmount)) || !activeTokenData) return
+    if (!inputAmount || isNaN(Number(inputAmount)) || !xausData) return
 
+    // Allowances only matter for Deposits. Withdrawals burn user's own shares natively.
     if (activeTab === 'withdraw') {
       if (txStatus === 'idle') setTxStatus('approved')
       return
     }
 
-    const inputUnits = parseUnits(inputAmount, activeTokenData.decimals)
+    const inputUnits = parseUnits(inputAmount, xausData.decimals)
     const allowed = currentAllowance ? (currentAllowance as bigint) : BigInt(0)
 
     if (allowed >= inputUnits) {
@@ -118,22 +122,22 @@ export default function SgldVaultApp() {
     } else {
       if (txStatus === 'approved') setTxStatus('idle')
     }
-  }, [inputAmount, activeTab, currentAllowance, activeTokenData, txStatus])
+  }, [inputAmount, activeTab, currentAllowance, xausData, txStatus])
 
-  // --- HANDLERS ---
+  // --- INTERACTION HANDLERS ---
   const handleMaxBalance = () => {
     if (activeTab === 'deposit') {
-      setInputAmount(activeDepositBalance.toString())
+      setInputAmount(xausBalance.toString())
     } else {
       setInputAmount(sgldBalance.toString())
     }
   }
 
   const handleApprove = () => {
-    if (!activeTokenData) return
-    const amountToApprove = parseUnits(inputAmount, activeTokenData.decimals)
+    if (!xausData) return
+    const amountToApprove = parseUnits(inputAmount, xausData.decimals)
     writeApprove({
-      address: activeTokenAddress as `0x${string}`,
+      address: XAUS_ADDRESS as `0x${string}`,
       abi: erc20Abi,
       functionName: 'approve',
       args: [SGLD_VAULT_ADDRESS as `0x${string}`, amountToApprove],
@@ -144,43 +148,26 @@ export default function SgldVaultApp() {
     if (!address) return
 
     if (activeTab === 'deposit') {
-      if (!activeTokenData) return
-      const amountToDeposit = parseUnits(inputAmount, activeTokenData.decimals)
+      if (!xausData) return
+      const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
       
-      if (selectedAsset === 'XAU') {
-        writeProcess({
-          address: SGLD_VAULT_ADDRESS as `0x${string}`,
-          abi: vaultAbi,
-          functionName: 'depositXAUs',
-          args: [amountToDeposit],
-        } as any)
-      } else {
-        writeProcess({
-          address: SGLD_VAULT_ADDRESS as `0x${string}`,
-          abi: vaultAbi,
-          functionName: 'deposit',
-          args: [amountToDeposit, address],
-        } as any)
-      }
+      writeProcess({
+        address: SGLD_VAULT_ADDRESS as `0x${string}`,
+        abi: vaultAbi,
+        functionName: 'depositXAUs',
+        args: [amountToDeposit],
+      } as any)
+
     } else {
       if (!sgldData) return
       const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
 
-      if (selectedAsset === 'XAU') {
-        writeProcess({
-          address: SGLD_VAULT_ADDRESS as `0x${string}`,
-          abi: vaultAbi,
-          functionName: 'withdrawToXAUs',
-          args: [sharesToRedeem],
-        } as any)
-      } else {
-        writeProcess({
-          address: SGLD_VAULT_ADDRESS as `0x${string}`,
-          abi: vaultAbi,
-          functionName: 'redeem',
-          args: [sharesToRedeem, address, address],
-        } as any)
-      }
+      writeProcess({
+        address: SGLD_VAULT_ADDRESS as `0x${string}`,
+        abi: vaultAbi,
+        functionName: 'withdrawToXAUs',
+        args: [sharesToRedeem],
+      } as any)
     }
   }
 
@@ -196,101 +183,16 @@ export default function SgldVaultApp() {
     }
   }
 
-  const handleAssetSwitch = (asset: 'XAU' | 'USDC') => {
-    if (txStatus === 'idle' || txStatus === 'success' || txStatus === 'approved') {
-      setSelectedAsset(asset)
-      resetFlow()
-    }
-  }
-
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
       {/* --- HEADER --- */}
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2 group">
-          <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
+          <Image src="/logo.png" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD VAULT</span>
         </Link>
-        
-        {/* CUSTOM RAINBOWKIT BUTTON RESTORED */}
-        <div className="flex items-center gap-1.5 sm:gap-3">
-          <ConnectButton.Custom>
-            {({
-              account,
-              chain,
-              openAccountModal,
-              openChainModal,
-              openConnectModal,
-              mounted,
-            }) => {
-              return (
-                <div
-                  {...(!mounted && {
-                    'aria-hidden': true,
-                    style: { opacity: 0, pointerEvents: 'none', userSelect: 'none' },
-                  })}
-                  className="flex items-center gap-1.5 sm:gap-3"
-                >
-                  {(() => {
-                    if (!mounted || !account || !chain) {
-                      return (
-                        <button
-                          onClick={openConnectModal}
-                          type="button"
-                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-white text-[#030303] hover:bg-[#E5E5E5]"
-                        >
-                          Connect Wallet
-                        </button>
-                      );
-                    }
-                    if (chain.unsupported) {
-                      return (
-                        <button
-                          onClick={openChainModal}
-                          type="button"
-                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-red-600 text-white shadow-md hover:bg-red-700"
-                        >
-                          Wrong network
-                        </button>
-                      );
-                    }
-                    return (
-                      <div className="flex items-center gap-1.5 sm:gap-3">
-                        <button
-                          onClick={openChainModal}
-                          type="button"
-                          className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 hover:border-[#333333] transition-colors"
-                        >
-                          {chain.hasIcon && (
-                            <div className="w-3.5 h-3.5 overflow-hidden rounded-full flex-shrink-0">
-                              {chain.iconUrl && (
-                                <img
-                                  alt={chain.name ?? 'Chain icon'}
-                                  src={chain.iconUrl}
-                                  className="w-full h-full object-cover"
-                                />
-                              )}
-                            </div>
-                          )}
-                          {chain.name}
-                          <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
-                        </button>
-                        <button
-                          onClick={openAccountModal}
-                          type="button"
-                          className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all border border-[#222222] bg-[#0A0A0A] text-[#888888] hover:text-[#E5E5E5] hover:border-[#444444]"
-                        >
-                          {account.displayName}
-                        </button>
-                      </div>
-                    );
-                  })()}
-                </div>
-              );
-            }}
-          </ConnectButton.Custom>
-        </div>
+        <ConnectButton showBalance={false} chainStatus="icon" />
       </header>
 
       {/* --- MAIN APP INTERFACE --- */}
@@ -298,29 +200,35 @@ export default function SgldVaultApp() {
         
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl flex flex-col gap-6">
           
+          {/* HEADER METRICS */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <Image src="/logo.jpg" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
-              <h1 className="text-lg font-medium text-white tracking-tight">Syncrate GLD Vault</h1>
+              <Image src="/logo.png" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
+              <h1 className="text-lg font-medium text-white tracking-tight">Syncrate Prime Vault</h1>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 border-y border-[#111111] py-4 my-1">
+          <div className="grid grid-cols-4 gap-2 border-y border-[#111111] py-4 my-1">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-mono uppercase text-[#666666]">Vault TVL</span>
               <span className="text-sm font-medium text-white">${formatMetric(vaultTVL)}</span>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-mono uppercase text-[#666666]">Vault Supply</span>
-              <span className="text-sm font-medium text-white">{formatMetric(vaultSupply)} SGLD</span>
+              <span className="text-[10px] font-mono uppercase text-[#666666]">Supply</span>
+              <span className="text-sm font-medium text-white">{formatMetric(vaultSupply)}</span>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-mono uppercase text-[#666666]">Share Price</span>
+              <span className="text-[10px] font-mono uppercase text-[#666666]">Price</span>
               <span className="text-sm font-medium text-white">${sharePrice.toFixed(2)}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-mono uppercase text-[#0037FF]">Est. APY</span>
+              <span className="text-sm font-medium text-[#0037FF]">{vaultApy.toFixed(2)}%</span>
             </div>
           </div>
 
           {txStatus === 'success' ? (
+            /* SUCCESS MESSAGE */
             <div className="text-center py-6 flex flex-col items-center">
               <div className="w-11 h-11 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4">
                 <span className="text-emerald-500 text-lg">✓</span>
@@ -331,27 +239,30 @@ export default function SgldVaultApp() {
               </button>
             </div>
           ) : (
+            /* CONTROLS */
             <div className="flex flex-col gap-4">
               
+              {/* DEPOSIT / WITHDRAW TABS */}
               <div className="grid grid-cols-2 bg-[#030303] border border-[#111111] rounded-xl p-1">
                 <button type="button" onClick={() => handleTabSwitch('deposit')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'deposit' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Deposit</button>
                 <button type="button" onClick={() => handleTabSwitch('withdraw')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'withdraw' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Withdraw</button>
               </div>
 
+              {/* ASSET SELECTOR (Hardcoded to XAU layout style) */}
               <div className="flex items-center gap-2 mt-1">
-                <button type="button" onClick={() => handleAssetSwitch('XAU')} className={`px-4 py-1.5 text-xs font-mono rounded-md transition-all border ${selectedAsset === 'XAU' ? 'bg-[#D69E2E]/10 border-[#D69E2E]/50 text-[#D69E2E]' : 'bg-[#030303] border-[#222222] text-[#666666] hover:text-[#999999]'}`}>XAU</button>
-                <button type="button" onClick={() => handleAssetSwitch('USDC')} className={`px-4 py-1.5 text-xs font-mono rounded-md transition-all border ${selectedAsset === 'USDC' ? 'bg-[#2775CA]/10 border-[#2775CA]/50 text-[#2775CA]' : 'bg-[#030303] border-[#222222] text-[#666666] hover:text-[#999999]'}`}>USDC</button>
+                <div className="px-4 py-1.5 text-xs font-mono rounded-md border bg-[#D69E2E]/10 border-[#D69E2E]/50 text-[#D69E2E]">XAU</div>
                 <span className="text-[10px] text-[#555] ml-auto">
-                  Fee: {activeTab === 'deposit' ? '0%' : (selectedAsset === 'XAU' ? '0.05%' : '0.25%')}
+                  Fee: {activeTab === 'deposit' ? '0%' : '0.10%'}
                 </span>
               </div>
 
+              {/* INPUT FIELD */}
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors relative mt-1">
                 <div className="flex items-center justify-between text-[10px] font-mono tracking-wider text-[#666666] uppercase">
-                  <span>Amount ({activeTab === 'deposit' ? selectedAsset : 'SGLD'})</span>
+                  <span>Amount ({activeTab === 'deposit' ? 'XAU' : 'SGLD'})</span>
                   <div className="flex items-center gap-1.5">
                     <span>
-                      Balance: {isConnected ? (activeTab === 'deposit' ? activeDepositBalance.toFixed(2) : sgldBalance.toFixed(2)) : '0.00'}
+                      Balance: {isConnected ? (activeTab === 'deposit' ? xausBalance.toFixed(2) : sgldBalance.toFixed(2)) : '0.00'}
                     </span>
                     {isConnected && (
                       <button onClick={handleMaxBalance} type="button" className="text-[9px] font-bold text-[#0037FF] hover:text-[#002CD6] transition-colors uppercase">Max</button>
@@ -369,11 +280,12 @@ export default function SgldVaultApp() {
                     className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50 min-w-0"
                   />
                   <span className="text-sm font-medium text-[#888]">
-                    {activeTab === 'deposit' ? selectedAsset : 'SGLD'}
+                    {activeTab === 'deposit' ? 'XAU' : 'SGLD'}
                   </span>
                 </div>
               </div>
 
+              {/* ACTION BUTTONS */}
               <div className="mt-2">
                 {!isConnected ? (
                   <ConnectButton.Custom>
@@ -385,13 +297,13 @@ export default function SgldVaultApp() {
                   <>
                     {(txStatus === 'idle' || txStatus === 'approving') && activeTab === 'deposit' && (
                       <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving'} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 transition-all flex items-center justify-center gap-2">
-                        {txStatus === 'approving' ? 'Approving...' : `Approve ${selectedAsset}`}
+                        {txStatus === 'approving' ? 'Approving...' : `Approve XAU`}
                       </button>
                     )}
 
                     {(txStatus === 'approved' || txStatus === 'processing') && (
                       <button onClick={handleProcess} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'processing'} className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#0037FF]/10">
-                        {txStatus === 'processing' ? 'Processing...' : (activeTab === 'deposit' ? 'Confirm Deposit' : `Withdraw to ${selectedAsset}`)}
+                        {txStatus === 'processing' ? 'Processing...' : (activeTab === 'deposit' ? 'Confirm Deposit' : `Withdraw to XAU`)}
                       </button>
                     )}
                   </>
@@ -406,3 +318,4 @@ export default function SgldVaultApp() {
     </div>
   )
 }
+
