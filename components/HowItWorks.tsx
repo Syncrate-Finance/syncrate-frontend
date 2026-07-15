@@ -9,7 +9,7 @@ export default function HowItWorks() {
         {/* Set aspect ratio to perfectly fit the image dimension */}
         <div className="relative w-full aspect-[1179/1479]">
           <Image
-            src="/ui.jpg" 
+            src="/ui-mock.jpg" 
             alt="Syncrate Vault Interface Mockup"
             fill
             className="object-cover" 
