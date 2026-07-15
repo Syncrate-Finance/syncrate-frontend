@@ -94,8 +94,8 @@ const MINT_CONTROLLER_ABI = [
     stateMutability: 'nonpayable',
     type: 'function'
   },
-
-  inputs: [
+  {
+    inputs: [
       { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
       { internalType: 'address', name: 'stablecoinAddress', type: 'address' }
     ],
@@ -103,16 +103,16 @@ const MINT_CONTROLLER_ABI = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function'
-},
-{
-        inputs: [],
+  },
+  {
+    inputs: [],
     name: 'nextQueueIndex',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function'
-},
-{
-inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     name: 'redemptionQueue',
     outputs: [
       { internalType: 'address', name: 'account', type: 'address' },
@@ -131,7 +131,7 @@ export default function XAusMintingApp() {
     setIsMounted(true)
   }, [])
 
-    // ==========================================
+  // ==========================================
   // 1. REACT STATE & DYNAMIC NETWORKS
   // ==========================================
   const activeChainId = useChainId()
@@ -305,9 +305,9 @@ export default function XAusMintingApp() {
     } else {
       setInputAmount(xausBalance.toString())
     }
-}
+  }
 
-const handleApprove = () => {
+  const handleApprove = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
     
     let targetTokenAddress: `0x${string}`
@@ -349,7 +349,7 @@ const handleApprove = () => {
       return
     }
 
-        if (isMint) {
+    if (isMint) {
       writeAction({
         address: activeConfig.mintController,
         abi: MINT_CONTROLLER_ABI,
@@ -438,8 +438,8 @@ const handleApprove = () => {
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2 group">
           <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
- <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">XAUs MINT</span>
-</Link>
+          <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">XAUs MINT</span>
+        </Link>
 
         {/* Custom Unified Wallet Connect Button Restoring Original UI */}
         <div className="flex items-center gap-1.5 sm:gap-3">
@@ -528,7 +528,7 @@ const handleApprove = () => {
             }}
           </ConnectButton.Custom>
         </div>
-<header>
+      </header>
 
       {/* --- MINT INTERFACE MAIN PORTAL --- */}
       <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 my-12 gap-6">
@@ -550,11 +550,11 @@ const handleApprove = () => {
               onClick={() => handleTabSwitch('redeem')}
               className={`text-sm font-medium pb-4 -mb-[18px] transition-colors ${
                 activeTab === 'redeem' ? 'text-white border-b-2 border-white' : 'text-[#666666] hover:text-[#AAAAAA]'
-}`}
->
-Redeem
-</button>
-</div>
+              }`}
+            >
+              Redeem
+            </button>
+          </div>
 
           {txStatus === 'success' ? (
             /* SUCCESS FEEDBACK CARD */
@@ -620,9 +620,9 @@ Redeem
                               key={asset}
                               type="button"
                               onClick={() => {
-  setSelectedAsset(asset) // Use the new state setter
-  setIsAssetDropdownOpen(false)
-}}
+                                setSelectedAsset(asset)
+                                setIsAssetDropdownOpen(false)
+                              }}
                               className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
                             >
                               <Image 
@@ -651,9 +651,9 @@ Redeem
                       <span>XAUs</span>
                     </div>
                   )}
-</div>
+                </div>
                
- {/* Inline Balance & Max Wrapper */}
+                {/* Inline Balance & Max Wrapper */}
                 <div className="flex justify-end items-center gap-2 mt-1">
                   <span className="text-[10px] text-[#666666] font-mono">
                     Balance: {isConnected 
@@ -669,8 +669,8 @@ Redeem
                       Max
                     </button>
                   )}
-</div>
-</div>
+                </div>
+              </div>
 
               {/* BLOCK 2: RECEIVE DISPLAY (READ-ONLY) */}
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-1.5 relative">
@@ -721,9 +721,9 @@ Redeem
                               key={asset}
                               type="button"
                               onClick={() => {
-  setSelectedAsset(asset) // Use the new state setter
-  setIsAssetDropdownOpen(false)
-}}
+                                setSelectedAsset(asset)
+                                setIsAssetDropdownOpen(false)
+                              }}
                               className="w-full text-left px-3 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] flex items-center gap-2 transition-colors"
                             >
                               <Image 
@@ -740,7 +740,7 @@ Redeem
                       )}
                     </div>
                   )}
-</div>
+                </div>
               </div>
 
               {/* LIVE GOLD FEED DETAILS PANEL & FEES */}
@@ -748,8 +748,8 @@ Redeem
                 <div className="flex justify-between items-center text-[#666666]">
                   <span>Live Gold Price Feed</span>
                   <span className="text-white font-sans">${goldPricePerOunce.toFixed(2)} <span className="text-[10px] font-mono text-[#666666]">/ oz</span></span>
-</div>
- {activeTab === 'redeem' && (
+                </div>
+                {activeTab === 'redeem' && (
                   <div className="flex justify-between items-center text-[#666666] pt-2 border-t border-[#111111]">
                     <span>Redemption Fee</span>
                     <span className="text-white">0.25%</span>
@@ -766,7 +766,7 @@ Redeem
                         <button 
                           onClick={openConnectModal}
                           className="w-full py-4 bg-white text-black font-medium text-sm rounded-lg hover:bg-[#E5E5E5] transition-all shadow-md"
->
+                        >
                           Connect Wallet to {activeTab === 'mint' ? 'Mint' : 'Redeem'}
                         </button>
                       )}
@@ -814,14 +814,13 @@ Redeem
                           activeTab === 'mint' ? 'Mint XAUs' : 'Redeem XAUs'
                         )}
                       </button>
-)}
-</>
-)}
-</div>
-
-</div>
-)}
-</div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* PROMOTIONAL VAULT LINK BANNER */}
         <Link 
@@ -841,3 +840,4 @@ Redeem
       </main>
     </div>
   )
+}
