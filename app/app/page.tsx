@@ -95,13 +95,100 @@ export default function VaultsPage() {
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
       {/* --- HEADER --- */}
-      <header className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
-        <Link href="/" className="flex items-center gap-2 group">
-          <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
-        </Link>
-        <ConnectButton />
-      </header>
+<header className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
+  <Link href="/" className="flex items-center gap-2 group">
+    <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
+    <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors">SYNCRATE</span>
+  </Link>
 
+  {/* Sleek Custom Connect Button */}
+  <div className="flex items-center gap-1.5 sm:gap-3">
+    <ConnectButton.Custom>
+      {({
+        account,
+        chain,
+        openAccountModal,
+        openChainModal,
+        openConnectModal,
+        mounted,
+      }) => {
+        const ready = mounted;
+
+        return (
+          <div
+            {...(!mounted && {
+              'aria-hidden': true,
+              style: {
+                opacity: 0,
+                pointerEvents: 'none',
+                userSelect: 'none',
+              },
+            })}
+            className="flex items-center gap-1.5 sm:gap-3"
+          >
+            {(() => {
+              if (!mounted || !account || !chain) {
+                return (
+                  <button
+                    onClick={openConnectModal}
+                    type="button"
+                    className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-white text-[#030303] hover:bg-[#E5E5E5]"
+                  >
+                    Connect Wallet
+                  </button>
+                );
+              }
+
+              if (chain.unsupported) {
+                return (
+                  <button
+                    onClick={openChainModal}
+                    type="button"
+                    className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all bg-red-600 text-white shadow-md hover:bg-red-700"
+                  >
+                    Wrong network
+                  </button>
+                );
+              }
+
+              return (
+                <div className="flex items-center gap-1.5 sm:gap-3">
+                  <button
+                    onClick={openChainModal}
+                    type="button"
+                    className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md border border-[#222222] bg-[#0A0A0A] text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 hover:border-[#333333] transition-colors"
+                  >
+                    {chain.hasIcon && (
+                      <div className="w-3.5 h-3.5 overflow-hidden rounded-full flex-shrink-0">
+                        {chain.iconUrl && (
+                          <img
+                            alt={chain.name ?? 'Chain icon'}
+                            src={chain.iconUrl}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </div>
+                    )}
+                    {chain.name}
+                    <span className="text-[9px] sm:text-[10px] text-[#666666] ml-1">▼</span>
+                  </button>
+
+                  <button
+                    onClick={openAccountModal}
+                    type="button"
+                    className="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all border border-[#222222] bg-[#0A0A0A] text-[#888888] hover:text-[#E5E5E5] hover:border-[#444444]"
+                  >
+                    {account.displayName}
+                  </button>
+                </div>
+              );
+            })()}
+          </div>
+        );
+      }}
+    </ConnectButton.Custom>
+  </div>
+</header>
       {/* --- MAIN PORTAL --- */}
       <main className="flex-1 w-full max-w-xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-6">
         
@@ -214,15 +301,25 @@ export default function VaultsPage() {
               </div>
 
               {/* Action Button */}
-              <button 
-                className="w-full py-3 bg-[#111111] hover:bg-white hover:text-black border border-[#222222] text-white font-medium text-xs rounded-xl transition-all font-sans"
-              >
-                {isConnected ? 'Deposit Funds' : 'Connect Wallet to Deposit'}
-              </button>
-            </div>
-          ))}
+{!isConnected ? (
+  <ConnectButton.Custom>
+    {({ openConnectModal }) => (
+      <button 
+        onClick={openConnectModal}
+        className="w-full py-3 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-xs rounded-xl transition-all font-sans shadow-lg shadow-[#0037FF]/10"
+      >
+        Connect Wallet to Deposit
+      </button>
+    )}
+  </ConnectButton.Custom>
+) : (
+  <button 
+    className="w-full py-3 bg-[#111111] hover:bg-[#161616] border border-[#222222] text-white font-medium text-xs rounded-xl transition-all font-sans"
+  >
+    Deposit Funds
+  </button>
+))}
         </div>
-
       </main>
     </div>
   )
