@@ -189,7 +189,7 @@ export default function SgldVaultApp() {
       {/* --- HEADER --- */}
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2 group">
-          <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
+          <Image src="/logo.png" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD VAULT</span>
         </Link>
         
@@ -282,7 +282,7 @@ export default function SgldVaultApp() {
           {/* HEADER METRICS */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <Image src="/logo.jpg" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
+              <Image src="/logo.png" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
               <h1 className="text-lg font-medium text-white tracking-tight">Syncrate Prime Vault</h1>
             </div>
           </div>
