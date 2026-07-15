@@ -149,8 +149,7 @@ export default function VaultsPage() {
                   <span className="text-xs text-[#666666] font-mono">Curated by {vault.curator}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-lg font-semibold text-emerald-400 font-mono">{vault.apy}</span>
-                  <span className="block text-[10px] text-[#666666] uppercase font-mono tracking-wider">Net APY</span>
+                  <span className="text-xs font-semibold text-[#FFFFFF] font-mono">{vault.apy}</span>
                 </div>
               </div>
 
