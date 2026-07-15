@@ -824,7 +824,7 @@ export default function XAusMintingApp() {
 
         {/* PROMOTIONAL VAULT LINK BANNER */}
         <Link 
-          href="/app/sgld" 
+          href="/sgld" 
           className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
         >
           <span className="text-xs font-mono tracking-wide text-[#666666] group-hover:text-[#E5E5E5] transition-colors">
