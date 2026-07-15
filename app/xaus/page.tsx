@@ -16,7 +16,7 @@ export default function XAUsProductPage() {
       title: "LBMA-Standard",
       description: "All Syncrate Gold bars are LBMA-standard, sourced directly through Ziba Refinery by our trading partner (Alluca Gold), ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
-      logos: ["/alluca.png", "/ziba.png"]
+      logos: ["/alluca.png"]
     },
     {
       id: 2,
@@ -139,7 +139,7 @@ export default function XAUsProductPage() {
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Bullion Weight</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">16 Troy Oz</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">193 Troy Oz</p>
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
@@ -147,7 +147,7 @@ export default function XAUsProductPage() {
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault Gold Bars</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">2 Bars</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">6 Bars</p>
               </div>
             </div>
           </div>
