@@ -7,7 +7,7 @@ export default function HowItWorks() {
       {/* Full Bleed Card Container (Padding removed: p-0) */}
       <div className="w-full max-w-2xl bg-[#111111] rounded-3xl border border-[#222222] p-0 flex items-center justify-center overflow-hidden shadow-4xl">
         {/* Set aspect ratio to perfectly fit the image dimension */}
-        <div className="relative w-full aspect-[1179/1518]
+        <div className="relative w-full aspect-[1179/1518]">
           <Image
             src="/ui-mockup.jpg" 
             alt="Syncrate Vault Interface Mockup"
