@@ -437,7 +437,7 @@ export default function XAusMintingApp() {
       {/* --- APPLICATION HEADER --- */}
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2 group">
-          <Image src="/logo.png" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
+          <Image src="/logo.jpg" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">XAUs MINT</span>
         </Link>
 
@@ -824,14 +824,14 @@ export default function XAusMintingApp() {
 
         {/* PROMOTIONAL VAULT LINK BANNER */}
         <Link 
-          href="/sgld" 
+          href="/app/sgld" 
           className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300"
         >
           <span className="text-xs font-mono tracking-wide text-[#666666] group-hover:text-[#E5E5E5] transition-colors">
             Earn yield on your XAUs
           </span>
           <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">
-            Open SGLD Page ➔
+            Launch Syncrate Prime ➔
           </span>
         </Link>
         {/* --- ASYNCHRONOUS REDEMPTION QUEUE DASHBOARD --- */}
