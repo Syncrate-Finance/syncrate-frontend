@@ -15,7 +15,7 @@ export default function LaunchingSoon() {
         {/* Custom Logo */}
         <div className="flex items-center">
           <Image 
-            src="/logo.jpg" 
+            src="/logo.png" 
             alt="Syncrate Logo" 
             width={32} 
             height={32} 
