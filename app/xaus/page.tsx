@@ -72,7 +72,7 @@ export default function XAUsProductPage() {
       <header className="w-full flex items-center justify-between px-6 py-5 max-w-6xl mx-auto border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2">
           <Image 
-            src="/logo.jpg" 
+            src="/logo.png" 
             alt="Syncrate Logo" 
             width={32} 
             height={32} 
