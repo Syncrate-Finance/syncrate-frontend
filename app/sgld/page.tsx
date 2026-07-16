@@ -68,17 +68,17 @@ function LaunchingSoonUI() {
         <div className="flex flex-col gap-2 relative z-10">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full bg-[#0037FF]/10 border border-[#0037FF]/20 text-[10px] font-mono uppercase tracking-wider text-[#0037FF] font-semibold">
-              Coming Soon
+              Syncrate Prime
             </span>
             <span className="text-[10px] font-mono text-[#666666] uppercase">
               Base Mainnet
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
-            Syncrate Prime Vault
+            Launching Soon
           </h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            Unlock institutional-grade yield on your gold. Deposit XAUs and earn securely on Base.
+            The Syncrate Prime vault is coming soon. Join the waitlist to be the first to get notified when we go live.
           </p>
         </div>
 
