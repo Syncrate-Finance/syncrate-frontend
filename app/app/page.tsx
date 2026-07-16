@@ -95,17 +95,17 @@ function LaunchingSoonUI() {
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono uppercase tracking-wider text-amber-500 font-semibold">
-              Coming Soon
+              XAUs
             </span>
             <span className="text-[10px] font-mono text-[#666666] uppercase">
               Base Mainnet
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
-            Syncrate Finance
+            Launching Soon
           </h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            Unlocking institutional-grade, gold-backed yield indices. Mint, redeem, and manage risk securely directly on Base.
+            The XAUs minting & redemption dApp is coming soon. Join the waitlist and be the first to get notified when we go live.
           </p>
         </div>
 
