@@ -1,5 +1,49 @@
 'use client'
 
+import { useState } from 'react'
+import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
+import { useAccount } from 'wagmi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+
+// ==========================================
+// 🚀 THE MASTER TOGGLE
+// Set to 'false' to show the "Launching Soon" waitlist.
+// Set to 'true' to instantly bring back the full dApp.
+// ==========================================
+const IS_LIVE = false; 
+
+export default function AppPortal() {
+  const { isConnected, address } = useAccount()
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+
+    setLoading(true)
+    
+    // TODO: Replace this with your actual database/newsletter API call 
+    // (e.g., Loops, Buttondown, Mailchimp, or Supabase)
+    await new Promise((resolve) => setTimeout(resolve, 1000)) 
+
+    setLoading(false)
+    setSubmitted(true)
+  }
+
+  // --------------------------------------------------------
+  // PATH A: THE REAL DAPP (Rendered when IS_LIVE is true)
+  // --------------------------------------------------------
+  if (IS_LIVE) {
+    return (
+      <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
+        {/* Put your active Minting / Vault interface code right here! */}
+
+
+'use client'
+
 import { useState, useEffect, useMemo } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
@@ -838,6 +882,104 @@ export default function XAusMintingApp() {
         {renderDashboard()}
 
       </main>
+    </div>
+  )
+}
+        <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 shadow-xl text-center">
+          <h1 className="text-white text-lg font-medium">Syncrate Active Portal</h1>
+          <p className="text-[#666666] text-xs font-mono mt-2">Connected: {address}</p>
+          <div className="mt-6 flex justify-center">
+            <ConnectButton />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // --------------------------------------------------------
+  // PATH B: LAUNCHING SOON (Rendered when IS_LIVE is false)
+  // --------------------------------------------------------
+  return (
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
+      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-8 relative overflow-hidden">
+        
+        {/* Subtle decorative glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono uppercase tracking-wider text-amber-500 font-semibold">
+              Coming Soon
+            </span>
+            <span className="text-[10px] font-mono text-[#666666] uppercase">
+              Base Mainnet
+            </span>
+          </div>
+          <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
+            Syncrate Finance
+          </h1>
+          <p className="text-sm text-[#888888] leading-relaxed">
+            Unlocking institutional-grade, gold-backed yield indices. Mint, redeem, and manage risk securely directly on Base.
+          </p>
+        </div>
+
+        <div className="border-t border-[#111111] pt-6">
+          {submitted ? (
+            <div className="bg-[#050505] border border-emerald-950/40 rounded-xl p-5 text-center flex flex-col gap-1.5 animate-in fade-in zoom-in-95 duration-300">
+              <span className="text-sm font-medium text-emerald-400">You're on the list!</span>
+              <span className="text-xs text-[#666666]">
+                We will contact you the second the mint contracts go live.
+              </span>
+            </div>
+          ) : (
+            <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4">
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors">
+                <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
+                  Email Address
+                </label>
+                <input 
+                  type="email" 
+                  required
+                  placeholder="name@domain.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  className="bg-transparent text-white placeholder-[#333333] focus:outline-none font-mono w-full text-sm"
+                />
+              </div>
+
+              <button 
+                type="submit"
+                disabled={!email || loading}
+                className="w-full py-4 bg-white text-[#030303] hover:bg-[#E5E5E5] font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-30"
+              >
+                {loading ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-t-transparent border-[#030303] rounded-full animate-spin" />
+                    Adding you...
+                  </>
+                ) : (
+                  'Secure Early Access'
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+
+        <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6">
+          <span className="text-[10px] font-mono text-[#444444] uppercase">
+            Developed Assets
+          </span>
+          <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
+            <span>XAUs</span>
+            <span className="text-[#222222]">•</span>
+            <span>SGLD Vault</span>
+            <span className="text-[#222222]">•</span>
+            <span>USDC</span>
+          </div>
+        </div>
+
+      </div>
     </div>
   )
 }
