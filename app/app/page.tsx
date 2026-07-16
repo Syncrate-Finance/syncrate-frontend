@@ -152,16 +152,37 @@ function LaunchingSoonUI() {
           )}
         </div>
 
-        <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6">
-          <span className="text-[10px] font-mono text-[#444444] uppercase">
-            Developed Assets
+         <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6 relative z-10">
+          <span className="text-[10px] font-mono text-[#444444] uppercase tracking-wider">
+            Follow our updates
           </span>
           <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
-            <span>XAUs</span>
+            <a 
+              href="https://x.com/syncratenetwork" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-white transition-colors"
+            >
+              X (Twitter)
+            </a>
             <span className="text-[#222222]">•</span>
-            <span>SGLD Vault</span>
+            <a 
+              href="https://linkedin.com/company/syncrateprotocol" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-white transition-colors"
+            >
+              LinkedIn
+            </a>
             <span className="text-[#222222]">•</span>
-            <span>USDC</span>
+            <a 
+              href="https://syncrate.org/blog" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-white transition-colors"
+            >
+              Blog
+            </a>
           </div>
         </div>
       </div>
