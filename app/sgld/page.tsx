@@ -9,6 +9,16 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseUnits, formatUnits } from 'viem'
 
+// ==========================================
+// 🚀 THE MASTER TOGGLE
+// Set to 'false' to show the "Launching Soon" waitlist.
+// Set to 'true' to instantly bring back the full Vault dApp.
+// ==========================================
+const IS_LIVE = false;
+
+// ==========================================
+// CONFIGURATIONS & ABIS
+// ==========================================
 // Base Mainnet Contract Addresses
 const XAUS_ADDRESS = '0x0000000000000000000000000000000000000001' // Placeholder
 const SGLD_VAULT_ADDRESS = '0x0000000000000000000000000000000000000000' // Placeholder
@@ -31,7 +41,115 @@ const vaultAbi = [
   { type: 'function', name: 'totalSupply', inputs: [], outputs: [{ type: 'uint256' }] }
 ] as const
 
-export default function SgldVaultApp() {
+
+// ==========================================
+// COMPONENT A: THE WAITLIST (LAUNCHING SOON)
+// ==========================================
+function LaunchingSoonUI() {
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+    setLoading(true)
+    // TODO: Replace with your actual email API integration
+    await new Promise((resolve) => setTimeout(resolve, 1000)) 
+    setLoading(false)
+    setSubmitted(true)
+  }
+
+  return (
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
+      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-8 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-[#0037FF]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col gap-2 relative z-10">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#0037FF]/10 border border-[#0037FF]/20 text-[10px] font-mono uppercase tracking-wider text-[#0037FF] font-semibold">
+              Coming Soon
+            </span>
+            <span className="text-[10px] font-mono text-[#666666] uppercase">
+              Base Mainnet
+            </span>
+          </div>
+          <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
+            Syncrate Prime Vault
+          </h1>
+          <p className="text-sm text-[#888888] leading-relaxed">
+            Unlock institutional-grade yield on your gold. Deposit XAUs and earn securely on Base.
+          </p>
+        </div>
+
+        <div className="border-t border-[#111111] pt-6 relative z-10">
+          {submitted ? (
+            <div className="bg-[#050505] border border-emerald-950/40 rounded-xl p-5 text-center flex flex-col gap-1.5 animate-in fade-in zoom-in-95 duration-300">
+              <span className="text-sm font-medium text-emerald-400">You're on the list!</span>
+              <span className="text-xs text-[#666666]">
+                We will contact you the second the vault contracts go live.
+              </span>
+            </div>
+          ) : (
+            <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4">
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors">
+                <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
+                  Email Address
+                </label>
+                <input 
+                  type="email" 
+                  required
+                  placeholder="name@domain.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  className="bg-transparent text-white placeholder-[#333333] focus:outline-none font-mono w-full text-sm"
+                />
+              </div>
+
+              <button 
+                type="submit"
+                disabled={!email || loading}
+                className="w-full py-4 bg-[#0037FF] text-white hover:bg-[#002CD6] font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-30 shadow-lg shadow-[#0037FF]/10"
+              >
+                {loading ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
+                    Adding you...
+                  </>
+                ) : (
+                  'Secure Early Access'
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+
+        <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6 relative z-10">
+          <span className="text-[10px] font-mono text-[#444444] uppercase">
+            Developed Assets
+          </span>
+          <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
+            <span>XAUs</span>
+            <span className="text-[#222222]">•</span>
+            <span className="text-white">SGLD Vault</span>
+            <span className="text-[#222222]">•</span>
+            <span>USDC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+// ==========================================
+// COMPONENT B: THE ACTIVE DAPP (VAULT)
+// ==========================================
+function SgldVaultAppUI() {
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => setIsMounted(true), [])
+
   const { isConnected, address } = useAccount()
 
   // Core Flow States
@@ -60,12 +178,8 @@ export default function SgldVaultApp() {
   const { data: totalSupplyData } = useReadContract({ address: SGLD_VAULT_ADDRESS as `0x${string}`, abi: vaultAbi, functionName: 'totalSupply' })
 
   // Parse Live Vault Data
-  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 6)) : 0 // TVL is based in USDC (6 decimals)
-  
-  // Note: ERC4626 inherits underlying asset decimals. If USDC is 6, SGLD is also 6. 
-  // Adjusted from 18 to 6 assuming standard ERC4626 behavior based on your USDC asset.
+  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 6)) : 0 
   const vaultSupply = totalSupplyData ? parseFloat(formatUnits(totalSupplyData as bigint, 6)) : 0 
-  
   const sharePrice = vaultSupply > 0 ? (vaultTVL / vaultSupply) : 1.00
 
   // --- Calculate Actual APY ---
@@ -108,7 +222,6 @@ export default function SgldVaultApp() {
   useEffect(() => {
     if (!inputAmount || isNaN(Number(inputAmount)) || !xausData) return
 
-    // Allowances only matter for Deposits. Withdrawals burn user's own shares natively.
     if (activeTab === 'withdraw') {
       if (txStatus === 'idle') setTxStatus('approved')
       return
@@ -126,11 +239,8 @@ export default function SgldVaultApp() {
 
   // --- INTERACTION HANDLERS ---
   const handleMaxBalance = () => {
-    if (activeTab === 'deposit') {
-      setInputAmount(xausBalance.toString())
-    } else {
-      setInputAmount(sgldBalance.toString())
-    }
+    if (activeTab === 'deposit') setInputAmount(xausBalance.toString())
+    else setInputAmount(sgldBalance.toString())
   }
 
   const handleApprove = () => {
@@ -146,22 +256,18 @@ export default function SgldVaultApp() {
 
   const handleProcess = () => {
     if (!address) return
-
     if (activeTab === 'deposit') {
       if (!xausData) return
       const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
-      
       writeProcess({
         address: SGLD_VAULT_ADDRESS as `0x${string}`,
         abi: vaultAbi,
         functionName: 'depositXAUs',
         args: [amountToDeposit],
       } as any)
-
     } else {
       if (!sgldData) return
       const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
-
       writeProcess({
         address: SGLD_VAULT_ADDRESS as `0x${string}`,
         abi: vaultAbi,
@@ -171,17 +277,15 @@ export default function SgldVaultApp() {
     }
   }
 
-  const resetFlow = () => {
-    setInputAmount('')
-    setTxStatus('idle')
-  }
-
+  const resetFlow = () => { setInputAmount(''); setTxStatus('idle') }
   const handleTabSwitch = (tab: 'deposit' | 'withdraw') => {
     if (txStatus === 'idle' || txStatus === 'success' || txStatus === 'approved') {
-      setActiveTab(tab)
-      resetFlow()
+      setActiveTab(tab); resetFlow()
     }
   }
+
+  // Hydration fallback
+  if (!isMounted) return <div className="min-h-screen bg-[#030303] flex items-center justify-center"><span className="w-8 h-8 border-2 border-t-transparent border-white rounded-full animate-spin" /></div>
 
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
@@ -193,75 +297,22 @@ export default function SgldVaultApp() {
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD VAULT</span>
         </Link>
         
-        {/* Custom Clean Header Connect Button */}
         <ConnectButton.Custom>
           {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
             const ready = mounted;
             const connected = ready && account && chain;
-
             return (
-              <div
-                {...(!ready && {
-                  'aria-hidden': true,
-                  'style': {
-                    opacity: 0,
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                  },
-                })}
-              >
+              <div {...(!ready && { 'aria-hidden': true, 'style': { opacity: 0, pointerEvents: 'none', userSelect: 'none' } })}>
                 {(() => {
-                  if (!connected) {
-                    return (
-                      <button 
-                        onClick={openConnectModal} 
-                        type="button" 
-                        className="px-5 py-2.5 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all"
-                      >
-                        Connect Wallet
-                      </button>
-                    );
-                  }
-
-                  if (chain.unsupported) {
-                    return (
-                      <button 
-                        onClick={openChainModal} 
-                        type="button" 
-                        className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium text-sm rounded-lg transition-all"
-                      >
-                        Wrong network
-                      </button>
-                    );
-                  }
-
+                  if (!connected) return <button onClick={openConnectModal} type="button" className="px-5 py-2.5 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all">Connect Wallet</button>;
+                  if (chain.unsupported) return <button onClick={openChainModal} type="button" className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium text-sm rounded-lg transition-all">Wrong network</button>;
                   return (
                     <div className="flex items-center gap-3">
-                      <button
-                        onClick={openChainModal}
-                        type="button"
-                        className="flex items-center gap-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] px-3 py-2 rounded-lg text-xs font-mono text-[#888888] transition-all"
-                      >
-                        {chain.hasIcon && (
-                          <div className="w-4 h-4 rounded-full overflow-hidden">
-                            {chain.iconUrl && (
-                              <Image
-                                alt={chain.name ?? 'Chain icon'}
-                                src={chain.iconUrl}
-                                width={16}
-                                height={16}
-                              />
-                            )}
-                          </div>
-                        )}
+                      <button onClick={openChainModal} type="button" className="flex items-center gap-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] px-3 py-2 rounded-lg text-xs font-mono text-[#888888] transition-all">
+                        {chain.hasIcon && <div className="w-4 h-4 rounded-full overflow-hidden">{chain.iconUrl && <Image alt={chain.name ?? 'Chain icon'} src={chain.iconUrl} width={16} height={16} />}</div>}
                         {chain.name}
                       </button>
-
-                      <button 
-                        onClick={openAccountModal} 
-                        type="button" 
-                        className="px-4 py-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] text-white font-mono text-xs rounded-lg transition-all"
-                      >
+                      <button onClick={openAccountModal} type="button" className="px-4 py-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] text-white font-mono text-xs rounded-lg transition-all">
                         {account.displayName}
                         {account.displayBalance ? ` (${account.displayBalance})` : ''}
                       </button>
@@ -276,10 +327,8 @@ export default function SgldVaultApp() {
 
       {/* --- MAIN APP INTERFACE --- */}
       <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 my-12 gap-6">
-        
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl flex flex-col gap-6">
           
-          {/* HEADER METRICS */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
               <Image src="/logo.png" alt="Syncrate Logo" width={28} height={28} className="object-contain rounded-full" />
@@ -307,7 +356,6 @@ export default function SgldVaultApp() {
           </div>
 
           {txStatus === 'success' ? (
-            /* SUCCESS MESSAGE */
             <div className="text-center py-6 flex flex-col items-center">
               <div className="w-11 h-11 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4">
                 <span className="text-emerald-500 text-lg">✓</span>
@@ -318,61 +366,38 @@ export default function SgldVaultApp() {
               </button>
             </div>
           ) : (
-            /* CONTROLS */
             <div className="flex flex-col gap-4">
-              
-              {/* DEPOSIT / WITHDRAW TABS */}
               <div className="grid grid-cols-2 bg-[#030303] border border-[#111111] rounded-xl p-1">
                 <button type="button" onClick={() => handleTabSwitch('deposit')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'deposit' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Deposit</button>
                 <button type="button" onClick={() => handleTabSwitch('withdraw')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'withdraw' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Withdraw</button>
               </div>
 
-              {/* FEE ROW (Cleanly displayed without the XAU box) */}
               <div className="flex justify-end items-center mt-1 h-6">
                 <span className="text-[10px] text-[#555]">
                   Fee: {activeTab === 'deposit' ? '0%' : '0.10%'}
                 </span>
               </div>
 
-              {/* INPUT FIELD */}
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors relative mt-1">
                 <div className="flex items-center justify-between text-[10px] font-mono tracking-wider text-[#666666] uppercase">
                   <span>Amount ({activeTab === 'deposit' ? 'XAU' : 'SGLD'})</span>
                   <div className="flex items-center gap-1.5">
-                    <span>
-                      Balance: {isConnected ? (activeTab === 'deposit' ? xausBalance.toFixed(2) : sgldBalance.toFixed(2)) : '0.00'}
-                    </span>
-                    {isConnected && (
-                      <button onClick={handleMaxBalance} type="button" className="text-[9px] font-bold text-[#0037FF] hover:text-[#002CD6] transition-colors uppercase">Max</button>
-                    )}
+                    <span>Balance: {isConnected ? (activeTab === 'deposit' ? xausBalance.toFixed(2) : sgldBalance.toFixed(2)) : '0.00'}</span>
+                    {isConnected && <button onClick={handleMaxBalance} type="button" className="text-[9px] font-bold text-[#0037FF] hover:text-[#002CD6] transition-colors uppercase">Max</button>}
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between gap-4">
-                  <input 
-                    type="number" 
-                    placeholder="0.00"
-                    value={inputAmount}
-                    onChange={(e) => setInputAmount(e.target.value)}
-                    disabled={txStatus !== 'idle' && txStatus !== 'approved'}
-                    className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50 min-w-0"
-                  />
-                  <span className="text-sm font-medium text-[#888]">
-                    {activeTab === 'deposit' ? 'XAU' : 'SGLD'}
-                  </span>
+                  <input type="number" placeholder="0.00" value={inputAmount} onChange={(e) => setInputAmount(e.target.value)} disabled={txStatus !== 'idle' && txStatus !== 'approved'} className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50 min-w-0" />
+                  <span className="text-sm font-medium text-[#888]">{activeTab === 'deposit' ? 'XAU' : 'SGLD'}</span>
                 </div>
               </div>
 
-              {/* ACTION BUTTONS */}
               <div className="mt-2">
                 {!isConnected ? (
                   <ConnectButton.Custom>
                     {({ openConnectModal }) => (
-                      <button 
-                        onClick={openConnectModal} 
-                        type="button" 
-                        className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-md shadow-[#0037FF]/10"
-                      >
+                      <button onClick={openConnectModal} type="button" className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-md shadow-[#0037FF]/10">
                         Connect Wallet
                       </button>
                     )}
@@ -393,7 +418,6 @@ export default function SgldVaultApp() {
                   </>
                 )}
               </div>
-
             </div>
           )}
         </div>
@@ -401,4 +425,16 @@ export default function SgldVaultApp() {
       <div className="h-4" />
     </div>
   )
+}
+
+// ==========================================
+// THE MAIN ROUTER EXPORT
+// This looks at 'IS_LIVE' and decides which component to show.
+// ==========================================
+export default function AppPortal() {
+  if (!IS_LIVE) {
+    return <LaunchingSoonUI />
+  }
+
+  return <SgldVaultAppUI />
 }
