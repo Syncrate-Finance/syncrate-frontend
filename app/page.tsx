@@ -282,21 +282,62 @@ export default function LaunchingSoon() {
         </Link>
       </section>
 
-      {/* Partner Marquee Section */}
-      <section className="w-full max-w-6xl mx-auto py-3 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
-        <div className="relative flex overflow-x-hidden w-full max-w-4xl [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
-          <div className="flex w-max shrink-0 gap-24 md:gap-32 pr-24 md:pr-32 items-center animate-[marquee_10s_linear_infinite] hover:[animation-play-state:paused]">
-            {[1, 2, 3, 4].map((trackIndex) => (
-              <div key={trackIndex} className="flex shrink-0 gap-12 md:gap-16 items-center">
-                <Image src="/alluca.png" alt="Alluca Gold" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/rwaxyz.png" alt="RWAXYZ" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/veritas.png" alt="veritas" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-              </div>
-            ))}
+            {/* Partner Swipeable Section */}
+      <section className="w-full max-w-6xl mx-auto py-8 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
+        
+        {/* Title */}
+        <span className="text-sm font-medium text-[#888888] mb-6 tracking-wide">
+          Building With
+        </span>
+        
+        {/* Swipeable Container */}
+        <div className="w-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none [mask-image:_linear-gradient(to_right,transparent_0,_black_32px,_black_calc(100%-32px),transparent_100%)] md:[mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+          
+          <div className="flex w-max shrink-0 items-center justify-start gap-12 md:gap-16 px-12 md:px-32 py-2">
+            <Image 
+              src="/alluca.png" 
+              alt="Alluca Gold" 
+              width={120} 
+              height={48} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/pyth-icon.png" 
+              alt="Pyth" 
+              width={120} 
+              height={48} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/chainlink.png" 
+              alt="Chainlink" 
+              width={120} 
+              height={48} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/rwaxyz.png" 
+              alt="RWAXYZ" 
+              width={120} 
+              height={48} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/veritas.png" 
+              alt="Veritas" 
+              width={120} 
+              height={48} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/amanat-icon.png" 
+              alt="Amanat Vaults" 
+              width={120} 
+              height={48} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
           </div>
+          
         </div>
       </section>
 
