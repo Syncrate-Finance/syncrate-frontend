@@ -46,7 +46,7 @@ export default function BlogPost() {
 
           {/* ARTICLE METADATA & TITLE */}
           <div className="flex flex-col gap-4 mb-8">
-            <span className="text-[#888888] text-sm font-mono">02 Jul 2026</span>
+            <span className="text-[#888888] text-sm font-mono">17 Jul 2026</span>
             <h1 className="text-4xl md:text-5xl font-normal tracking-tight text-white leading-[1.1]">
               The Opportunity Cost of Pure Safety: ReThinking the Gold Thesis
             </h1>
