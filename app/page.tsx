@@ -332,6 +332,13 @@ export default function LaunchingSoon() {
           </div>
           
         </div>
+        {/* Faint Square Slider Indicator */}
+        <div className="flex items-center justify-center gap-2 mt-8 md:hidden">
+          <div className="w-1.5 h-1.5 bg-[#666666]"></div>
+          <div className="w-1.5 h-1.5 bg-[#222222]"></div>
+          <div className="w-1.5 h-1.5 bg-[#222222]"></div>
+        </div>
+
       </section>
 
       {/* --- FOOTER SECTION --- */}
