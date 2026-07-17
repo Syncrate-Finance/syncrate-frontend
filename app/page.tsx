@@ -302,13 +302,6 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
-              src="/pyth-icon.png" 
-              alt="Pyth" 
-              width={120} 
-              height={48} 
-              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
-            />
-            <Image 
               src="/chainlink.PNG" 
               alt="Chainlink" 
               width={130} 
@@ -325,15 +318,15 @@ export default function LaunchingSoon() {
             <Image 
               src="/veritas.png" 
               alt="Veritas" 
-              width={125} 
-              height={50} 
+              width={130} 
+              height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
-              src="/amanat-icon.png" 
+              src="/amanat.png" 
               alt="Amanat Vaults" 
-              width={120} 
-              height={48} 
+              width={130} 
+              height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
           </div>
