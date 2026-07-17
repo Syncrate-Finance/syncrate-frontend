@@ -265,7 +265,7 @@ export default function LaunchingSoon() {
           {/* Card Top: Image */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#111111] overflow-hidden border-b border-[#222222]">
             <Image 
-              src="/blog1.PNG" // Upload a thumbnail image of your choice to public/
+              src="/blog1.jpg" // Upload a thumbnail image of your choice to public/
               alt="Syncrate News Feature"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -275,7 +275,7 @@ export default function LaunchingSoon() {
           {/* Card Bottom: Content */}
           <div className="p-6 md:p-8 flex flex-col gap-4">
             <h3 className="text-lg md:text-xl font-normal text-[#E5E5E5] leading-snug group-hover:text-white transition-colors">
-              Introducing Syncrate: The Yield Layer for Tokenized Gold
+              The Opportunity Cost of Pure Safety: Re-Thinking the Gold Thesis
             </h3>
             <span className="text-xs text-[#888888]">02 Jul, 2026</span>
           </div>
