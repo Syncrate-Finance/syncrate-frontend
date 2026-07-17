@@ -12,7 +12,7 @@ export default function Blog() {
         <div className="flex items-center">
           <Link href="/">
             <Image 
-              src="/logo.jpg" 
+              src="/logo.png" 
               alt="Syncrate Logo" 
               width={32} 
               height={32} 
