@@ -44,7 +44,7 @@ export default function Blog() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* Post Block 1 */}
-          <Link href="/blog/post-1" className="flex flex-col bg-[#161616] rounded-[32px] p-2 hover:bg-[#1A1A1A] transition-colors group cursor-pointer">
+          <Link href="/blog/rethinking-the-gold-thesis" className="flex flex-col bg-[#161616] rounded-[32px] p-2 hover:bg-[#1A1A1A] transition-colors group cursor-pointer">
             <div className="overflow-hidden rounded-[24px] w-full aspect-[16/9]">
               <Image 
                 src="/blog1.PNG" 
