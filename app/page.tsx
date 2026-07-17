@@ -311,22 +311,22 @@ export default function LaunchingSoon() {
             <Image 
               src="/chainlink.png" 
               alt="Chainlink" 
-              width={120} 
-              height={48} 
+              width={130} 
+              height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
               src="/rwaxyz.png" 
               alt="RWAXYZ" 
-              width={120} 
-              height={48} 
+              width={130} 
+              height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
               src="/veritas.png" 
               alt="Veritas" 
-              width={120} 
-              height={48} 
+              width={125} 
+              height={50} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
