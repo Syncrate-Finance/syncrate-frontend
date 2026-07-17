@@ -277,7 +277,7 @@ export default function LaunchingSoon() {
             <h3 className="text-lg md:text-xl font-normal text-[#E5E5E5] leading-snug group-hover:text-white transition-colors">
               The Opportunity Cost of Pure Safety: Re-Thinking the Gold Thesis
             </h3>
-            <span className="text-xs text-[#888888]">02 Jul, 2026</span>
+            <span className="text-xs text-[#888888]">17 Jul, 2026</span>
           </div>
         </Link>
       </section>
