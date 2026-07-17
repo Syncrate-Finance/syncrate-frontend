@@ -55,7 +55,7 @@ export default function BlogPost() {
           {/* HERO IMAGE */}
           <div className="w-full aspect-[16/9] relative rounded-[24px] overflow-hidden mb-10 border border-[#222222]">
             <Image 
-              src="/blog1.PNG" 
+              src="/blog1.jpg" 
               alt="Rethinking the Gold Thesis" 
               fill
               className="object-cover grayscale opacity-90"
