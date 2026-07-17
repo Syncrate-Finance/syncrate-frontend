@@ -283,10 +283,10 @@ export default function LaunchingSoon() {
       </section>
 
             {/* Partner Swipeable Section */}
-      <section className="w-full max-w-6xl mx-auto py-8 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
+      <section className="w-full max-w-6xl mx-auto py-4 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
         
         {/* Title */}
-        <span className="text-sm font-medium text-[#888888] mb-6 tracking-wide">
+        <span className="text-sm font-medium text-[#888888] mb-4 tracking-wide">
           Building With
         </span>
         
@@ -333,7 +333,7 @@ export default function LaunchingSoon() {
           
         </div>
         {/* Faint Square Slider Indicator */}
-        <div className="flex items-center justify-center gap-2 mt-8 md:hidden">
+        <div className="flex items-center justify-center gap-2 mt-4 md:hidden">
           <div className="w-1.5 h-1.5 bg-[#666666]"></div>
           <div className="w-1.5 h-1.5 bg-[#222222]"></div>
           <div className="w-1.5 h-1.5 bg-[#222222]"></div>
