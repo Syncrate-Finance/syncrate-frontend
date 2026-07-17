@@ -259,9 +259,10 @@ export default function LaunchingSoon() {
 
         {/* Featured Card */}
         <Link 
-          href="/blog/rethinking-the-gold-thesis
-          className="group block w-full max-w-2xl border border-[#222222] rounded-xl overflow-hidden bg-[#0A0A0A] hover:border-[#444444] transition-colors duration-300">
-        
+          href="/blog/rethinking-the-gold-thesis"
+          className="group block w-full max-w-2xl border border-[#222222] rounded-xl overflow-hidden bg-[#0A0A0A] hover:border-[#444444] transition-colors duration-300"
+        >
+
           {/* Card Top: Image */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#111111] overflow-hidden border-b border-[#222222]">
             <Image 
