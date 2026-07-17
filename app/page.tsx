@@ -259,7 +259,7 @@ export default function LaunchingSoon() {
 
         {/* Featured Card */}
         <Link 
-          href="/blog" 
+          href="/blog/rethinking-the-gold-thesis
           className="group block w-full max-w-2xl border border-[#222222] rounded-xl overflow-hidden bg-[#0A0A0A] hover:border-[#444444] transition-colors duration-300"
         >
           {/* Card Top: Image */}
@@ -291,8 +291,8 @@ export default function LaunchingSoon() {
                 <Image src="/alluca.png" alt="Alluca Gold" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
                 <Image src="/pyth-icon.png" alt="Pyth" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
                 <Image src="/chainlink.png" alt="Chainlink" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/morpho-icon.png" alt="Morpho" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
-                <Image src="/ziba.png" alt="Ziba" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+                <Image src="/rwaxyz-icon.png" alt="RWAXYZ" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
+                <Image src="/veritas.png" alt="veritas" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
                 <Image src="/amanat-icon.png" alt="Amanat Vaults" width={100} height={30} className="object-contain shrink-0 w-auto opacity-50 grayscale" />
               </div>
             ))}
