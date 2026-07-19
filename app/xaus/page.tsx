@@ -356,11 +356,11 @@ export default function XAUsProductPage() {
         },
         {
           q: "Is there a minimum requirement for minting and redemption?",
-          a: "Yes. The minimum minting amount is $10,000 worth of supported stablecoins. XAUs can be redeemed back into USDC/USDT with a minimum redemption amount of 32.148 XAUs (equivalent to 1kg gold bar)"
+          a: "No. There is no minimum minting requirement and XAUs can be redeemed back into USDC/USDT at any amount"
         },
         {
           q: "What is the fee structure?",
-          a: "There is a 0.1% mint fee on every mint transaction, capped at $1,000. A 0.25% fee is charged on every redemption transaction."
+          a: "A 0.25% fee is charged on every XAUs redemption transaction."
         }
       ].map((faq, index) => {
         // Local state management handles individual open/close toggles cleanly
