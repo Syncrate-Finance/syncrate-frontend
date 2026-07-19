@@ -165,7 +165,7 @@ export default function LaunchingSoon() {
 
         <div className="mt-32 mb-16">
           <p className="text-3xl md:text-4xl font-normal tracking-tighter text-white max-w-3xl leading-[1.1]">
-            Physical gold holds generational value, but it remains static onchain. Investors are forced to choose between the safety of gold backing or the growth of decentralized finance. Syncrate removes this friction, turning static asset preservation into active thematic market exposure.
+            Physical gold holds generational value, but it remains static onchain. Investors are forced to choose between the safety of gold backing or the growth of decentralized finance. Syncrate removes this friction, turning static asset preservation into yield generating assets.
           </p>
         </div>
 
