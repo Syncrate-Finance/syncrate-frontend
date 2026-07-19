@@ -14,7 +14,7 @@ export default function XAUsProductPage() {
     {
       id: 1,
       title: "LBMA-Standard",
-      description: "All Syncrate Gold bars are LBMA-standard, sourced directly through Ziba Refinery by our trading partner (Alluca Gold), ensuring each gold bar is bullion-market authentic and globally accepted.",
+      description: "All Syncrate Gold bars are LBMA-standard, sourced directly from Ziba Refinery by our bullion supplier (Alluca Gold), ensuring each gold bar is bullion-market authentic and globally accepted.",
       bgImage: "/feature-1.PNG", 
       logos: ["/alluca.png"]
     },
@@ -23,12 +23,12 @@ export default function XAUsProductPage() {
       title: "Securly Vaulted",
       description: "Syncrate partners with Amanat Vaults - a UAE leading vaulting firm, to physical safeguard Syncrate's physical gold bars.",
       bgImage: "/feature-2.PNG",
-      logos: ["/amanat-icon.png"]
+      logos: ["/amanat.png"]
     },
     {
       id: 3,
       title: "Accessible Everywhere",
-      description: "XAUs is deployed across multiple chains, enabling robust liquidy and seamless ownership.",
+      description: "XAUs is deployed across multiple chains and exchanges, enabling robust liquidy and seamless ownership.",
       bgImage: "/feature-3.PNG",
       logos: ["/eth.png", "/base.jpeg"]
     }
