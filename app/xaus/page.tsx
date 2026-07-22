@@ -213,7 +213,7 @@ export default function XAUsProductPage() {
               </div>
             </div>
 
-                                    {/* --- LIVE METRICS GRID --- */}
+            {/* --- LIVE METRICS GRID --- */}
             <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                 <div>
@@ -265,6 +265,9 @@ export default function XAUsProductPage() {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </main>
 
       {/* --- XAUs FEATURES SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
