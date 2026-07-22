@@ -213,7 +213,7 @@ export default function XAUsProductPage() {
               </div>
             </div>
 
-                        {/* --- LIVE METRICS GRID --- */}
+                                    {/* --- LIVE METRICS GRID --- */}
             <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                 <div>
@@ -235,7 +235,7 @@ export default function XAUsProductPage() {
               </div>
 
               {/* External Links Bar */}
-              <div className="flex items-center gap-4 pt-2">
+              <div className="flex items-center gap-3">
                 <a
                   href={`https://basescan.org/token/${XAUS_ADDRESS}`}
                   target="_blank"
@@ -251,13 +251,13 @@ export default function XAUsProductPage() {
                 </a>
 
                 <a
-                  href="https://dune.com" // Replace with your specific Dune dashboard URL
+                  href="https://dune.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
                 >
                   <Image src="/dune.png" alt="Dune Analytics" width={14} height={14} className="rounded-full object-cover" />
-                  Dune Analytics
+                  Dune
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
