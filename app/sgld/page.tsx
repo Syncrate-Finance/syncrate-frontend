@@ -1,16 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { GeistSans } from 'geist/font/sans'Yes, you will need to update the `SGLD/page.tsx` file to flip the master toggle and plug in your live Base Mainnet addresses for the Syncrate Prime Vault!
-
-Here is the clean code with **`IS_LIVE = true`** and the `XAUS_ADDRESS` updated to match your verified Base Mainnet XAUs token. 
-
-**Important:** Make sure to replace `SGLD_VAULT_ADDRESS` with your actual deployed vault contract address, and update the `VAULT_INCEPTION` date to match your real deployment date.
-
-```tsx
-'use client'
-
-import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
@@ -141,7 +131,7 @@ function LaunchingSoonUI() {
           </span>
           <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
             <a 
-              href="[https://x.com/syncratenetwork](https://x.com/syncratenetwork)" 
+              href="https://x.com/syncratenetwork" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hover:text-white transition-colors"
@@ -150,7 +140,7 @@ function LaunchingSoonUI() {
             </a>
             <span className="text-[#222222]">•</span>
             <a 
-              href="[https://linkedin.com/company/syncrateprotocol](https://linkedin.com/company/syncrateprotocol)" 
+              href="https://linkedin.com/company/syncrateprotocol" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hover:text-white transition-colors"
@@ -159,7 +149,7 @@ function LaunchingSoonUI() {
             </a>
             <span className="text-[#222222]">•</span>
             <a 
-              href="[https://syncrate.org/blog](https://syncrate.org/blog)" 
+              href="https://syncrate.org/blog" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hover:text-white transition-colors"
@@ -324,7 +314,7 @@ function SgldVaultAppUI() {
       {/* --- HEADER --- */}
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link className="flex items-center gap-2 group" href="/">
-          <Image alt="Syncrate Logo" className="object-contain rounded-full" height="{32}" src="/logo.png" width="{32}"/>
+          <Image alt="Syncrate Logo" className="object-contain rounded-full" height={32} src="/logo.png" width={32}/>
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD VAULT</span>
         </Link>
         
@@ -340,7 +330,7 @@ function SgldVaultAppUI() {
                   return (
                     <div className="flex items-center gap-3">
                       <button onClick={openChainModal} type="button" className="flex items-center gap-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] px-3 py-2 rounded-lg text-xs font-mono text-[#888888] transition-all">
-                        {chain.hasIcon && <div className="w-4 h-4 rounded-full overflow-hidden">{chain.iconUrl && <Image 'Chain ?? alt="{chain.name" height="{16}" icon'} src="{chain.iconUrl}" width="{16}"/>}</div>}
+                        {chain.hasIcon && <div className="w-4 h-4 rounded-full overflow-hidden">{chain.iconUrl && <img alt={chain.name ?? 'Chain icon'} src={chain.iconUrl} width={16} height={16} />}</div>}
                         {chain.name}
                       </button>
                       <button onClick={openAccountModal} type="button" className="px-4 py-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] text-white font-mono text-xs rounded-lg transition-all">
@@ -362,7 +352,7 @@ function SgldVaultAppUI() {
           
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <Image alt="Syncrate Logo" className="object-contain rounded-full" height="{28}" src="/logo.png" width="{28}"/>
+              <Image alt="Syncrate Logo" className="object-contain rounded-full" height={28} src="/logo.png" width={28}/>
               <h1 className="text-lg font-medium text-white tracking-tight">Syncrate Prime Vault</h1>
             </div>
           </div>
