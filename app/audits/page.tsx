@@ -26,7 +26,7 @@ export default function AuditReportsPage() {
 
   return (
     <div 
-      className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased w-full overflow-x-hidden ${GeistSans.variable} ${GeistMono.variable}`} 
+      className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col antialiased w-full overflow-x-hidden ${GeistSans.variable} ${GeistMono.variable}`} 
       style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}
     >
       <div className="w-full">
@@ -124,5 +124,6 @@ export default function AuditReportsPage() {
           </div>
         </main>
       </div>
+    </div>
   )
 }
