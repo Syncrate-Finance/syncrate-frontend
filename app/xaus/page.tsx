@@ -5,7 +5,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Link from 'next/link'
 import Image from 'next/image'
-import { createPublicClient, http, formatUnits, parseAbi } from 'viem'
+import { createPublicClient, http, formatUnits } from 'viem'
 import { base } from 'viem/chains'
 
 // Initialize Base public client
@@ -36,40 +36,39 @@ export default function XAUsProductPage() {
   const [mintPrice] = useState<number>(4154.91) // Real-time gold mint quote
 
   // Fetch live onchain supply and compute Market Cap
- useEffect(() => {
-  async function fetchOnChainData() {
-    try {
-      const rawSupply = (await publicClient.readContract({
-  address: XAUS_ADDRESS,
-  abi: xausAbi,
-  functionName: 'totalSupply',
-} as any)) as bigint
+  useEffect(() => {
+    async function fetchOnChainData() {
+      try {
+        const rawSupply = (await publicClient.readContract({
+          address: XAUS_ADDRESS,
+          abi: xausAbi,
+          functionName: 'totalSupply',
+        } as any)) as bigint
 
-      const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
+        const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
 
-      // Format Total Supply
-      const supplyString = `${formattedSupply.toLocaleString('en-US', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-      })} XAUs`
-      setTotalSupply(supplyString)
+        // Format Total Supply
+        const supplyString = `${formattedSupply.toLocaleString('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })} XAUs`
+        setTotalSupply(supplyString)
 
-      // Calculate Market Cap
-      const calculatedMarketCap = formattedSupply * mintPrice
-      const mcapString = `$${calculatedMarketCap.toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}`
-      setMarketCap(mcapString)
+        // Calculate Market Cap
+        const calculatedMarketCap = formattedSupply * mintPrice
+        const mcapString = `$${calculatedMarketCap.toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`
+        setMarketCap(mcapString)
 
-    } catch (error) {
-      console.error('Error querying live XAUs supply on Base:', error)
+      } catch (error) {
+        console.error('Error querying live XAUs supply on Base:', error)
+      }
     }
-  }
 
-  fetchOnChainData()
-}, [mintPrice])
-
+    fetchOnChainData()
+  }, [mintPrice])
 
   const features = [
     {
