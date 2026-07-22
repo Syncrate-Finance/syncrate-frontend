@@ -404,7 +404,7 @@ export default function XAUsProductPage() {
 
             <div className="w-full md:w-[420px] flex flex-col mt-4 md:mt-0 border-t border-[#222222]">
               <Link 
-                href="#" 
+                href="/asset-statements"
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
               >
                 <div className="flex items-center gap-4">
