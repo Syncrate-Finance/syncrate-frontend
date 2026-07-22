@@ -17,10 +17,10 @@ export default function AssetStatementsPage() {
   const statements: AssetStatement[] = [
     {
       id: '1',
-      title: 'Syncrate Gold Custodian Reserve Statement July 2026',
-      fileName: 'Syncrate_Gold_Reserve_Statement_Jul_2026.pdf',
+      title: 'Inital Gold Procurement from Alluca Gold',
+      fileName: 'Syncrate_Gold_Procurement_Alluca_Gold.pdf',
       fileSize: '450 KB',
-      pdfUrl: '/Syncrate_Gold_Reserve_Statement_Jul_2026.pdf', // File placed in /public root
+      pdfUrl: '/Syncrate_Gold_Procurement_Alluca_Gold.pdf', 
     },
   ]
 
