@@ -14,7 +14,7 @@ import { parseUnits, formatUnits } from 'viem'
 // Set to 'false' to show the "Launching Soon" waitlist.
 // Set to 'true' to instantly bring back the full dApp.
 // ==========================================
-const IS_LIVE = false;
+const IS_LIVE = true;
 
 // ==========================================
 // CONFIGURATIONS & ABIS
@@ -38,9 +38,9 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
       USDC: { address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', decimals: 6 },
       USDT: { address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2', decimals: 6 },
     },
-    xaus: '0x0000000000000000000000000000000000000000', 
-    goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', 
-    mintController: '0x0000000000000000000000000000000000000000', 
+    xaus: '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3', 
+    goldPriceFeed: '0x52136E92A6829C5dB852EB6c019d67e7E2fbCF31', 
+    mintController: '0xA6053c69043C370c4033F89c5Fceb21019b305D5', 
     defaultAsset: 'USDC',
   },
   4663: {
