@@ -424,7 +424,7 @@ export default function XAUsProductPage() {
               </Link>
 
               <Link 
-                href="#" 
+                href="/audits" 
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
               >
                 <div className="flex items-center gap-4">
