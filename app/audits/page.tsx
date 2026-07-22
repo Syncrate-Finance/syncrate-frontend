@@ -17,10 +17,10 @@ export default function AuditReportsPage() {
   const reports: AuditReport[] = [
     {
       id: '1',
-      title: 'Syncrate Gold Bureau Veritas Audit Jul 2026',
-      fileName: 'Syncrate_Gold_Bureau_Veritas_Audit_Jul_2026.pdf',
+      title: 'Syncrate Gold Bureau Veritas Audit June 2026',
+      fileName: 'Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf',
       fileSize: '615 KB',
-      pdfUrl: '/audits/Syncrate_Gold_Bureau_Veritas_Audit_Jul_2026.pdf',
+      pdfUrl: '/audits/Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf',
     },
   ]
 
