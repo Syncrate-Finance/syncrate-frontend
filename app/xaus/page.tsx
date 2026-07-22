@@ -1,15 +1,69 @@
 'use client'
 
-import { useState, useRef, UIEvent } from 'react'
+import { useState, useRef, useEffect, UIEvent } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Link from 'next/link'
 import Image from 'next/image'
+import { createPublicClient, http, formatUnits, parseAbi } from 'viem'
+import { base } from 'viem/chains'
+
+// Initialize Base public client
+const publicClient = createPublicClient({
+  chain: base,
+  transport: http('https://mainnet.base.org'),
+})
+
+// XAUs Contract Details
+const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3'
+const xausAbi = parseAbi([
+  'function totalSupply() view returns (uint256)'
+])
 
 export default function XAUsProductPage() {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  
+
+  // Live Onchain & Price State
+  const [totalSupply, setTotalSupply] = useState<string>('-')
+  const [marketCap, setMarketCap] = useState<string>('-')
+  const [mintPrice] = useState<number>(4154.91) // Set dynamically or via price feed
+
+  // Fetch live supply and calculate Market Cap
+  useEffect(() => {
+    async function fetchOnChainData() {
+      try {
+        const rawSupply = await publicClient.readContract({
+          address: XAUS_ADDRESS,
+          abi: xausAbi,
+          functionName: 'totalSupply',
+        })
+
+        const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
+
+        // Format Total Supply (e.g. "193 XAUs")
+        const supplyString = `${formattedSupply.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })} XAUs`
+        setTotalSupply(supplyString)
+
+        // Calculate & Format Market Cap
+        const calculatedMarketCap = formattedSupply * mintPrice
+        const mcapString = `$${calculatedMarketCap.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`
+        setMarketCap(mcapString)
+
+      } catch (error) {
+        console.error('Error reading XAUs supply on Base:', error)
+      }
+    }
+
+    fetchOnChainData()
+  }, [mintPrice])
+
   const features = [
     {
       id: 1,
@@ -31,6 +85,25 @@ export default function XAUsProductPage() {
       description: "XAUs is deployed across multiple chains and exchanges, enabling robust liquidy and seamless ownership.",
       bgImage: "/feature-3.PNG",
       logos: ["/eth.png", "/base.jpeg"]
+    }
+  ]
+
+  const faqs = [
+    {
+      q: "What is XAUs?",
+      a: "Syncrate Gold (XAUs) is a digital asset where each token is fully backed by one troy ounce of 99.99% pure physical gold bullion secured in reputable UAE vaults."
+    },
+    {
+      q: "How can I verify the physical gold backing?",
+      a: "Transparency is maintained via independent third-party physical audits conducted by Bureau Veritas alongside bi-annual vault statement reconciliations available on our transparency dashboard."
+    },
+    {
+      q: "Is there a minimum requirement for minting and redemption?",
+      a: "No. There is no minimum minting requirement and XAUs can be redeemed back into USDC/USDT at any amount"
+    },
+    {
+      q: "What is the fee structure?",
+      a: "A 0.25% fee is charged on every XAUs redemption transaction."
     }
   ]
 
@@ -119,7 +192,7 @@ export default function XAUsProductPage() {
                 <div className="flex items-center gap-8">
                   <div>
                     <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">Mint Price</p>
-                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">$4,154.91</p>
+                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">${mintPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
                   </div>
                   <div>
                     <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">Redeem Price</p>
@@ -132,10 +205,11 @@ export default function XAUsProductPage() {
               </div>
             </div>
 
+            {/* LIVE METRICS GRID */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">-</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{marketCap}</p>
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Bullion Weight</p>
@@ -143,7 +217,7 @@ export default function XAUsProductPage() {
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">-</p>
+                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
               </div>
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault Gold Bars</p>
@@ -187,7 +261,7 @@ export default function XAUsProductPage() {
                   src={feature.bgImage}
                   alt={feature.title}
                   fill
-                  sizes="(max-w-768px) 320px, 400px"
+                  sizes="(max-width: 768px) 320px, 400px"
                   className="object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/90 to-transparent" />
@@ -215,7 +289,7 @@ export default function XAUsProductPage() {
                               src={logoPath} 
                               alt="Integrated Network Partner" 
                               fill
-                              sizes="(max-w-768px) 96px, 96px"
+                              sizes="(max-width: 768px) 96px, 96px"
                               className="object-contain object-left brightness-0 invert" 
                             />
                           </div>
@@ -259,7 +333,6 @@ export default function XAUsProductPage() {
 
       {/* --- TRANSPARENCY & VERIFICATION SECTION --- */}
       <section className="relative w-full overflow-hidden border-t border-[#111111] py-16 md:py-24">
-        {/* Full-bleed background */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
             src="/XAUs-bg-cover.PNG" 
@@ -272,17 +345,15 @@ export default function XAUsProductPage() {
         </div>
 
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
-          {/* Section Indicator Label */}
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-xs font-mono -[#666666] tracking-widest block">
+            <span className="text-xs font-mono text-[#666666] tracking-widest block">
               Transparency
             </span>
           </div>
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-start">
-            {/* Headers & Text */}
             <div className="max-w-xl">
-              <h2 className="text-2xl md:text-4x1 font-normal text-white tracking-tight mb-6 leading-tight">
+              <h2 className="text-2xl md:text-4xl font-normal text-white tracking-tight mb-6 leading-tight">
                 Transparent by Design
               </h2>
               <p className="text-sm md:text-lg text-[#888888] leading-relaxed">
@@ -290,9 +361,7 @@ export default function XAUsProductPage() {
               </p>
             </div>
 
-            {/* Clickable Action Links */}
             <div className="w-full md:w-[420px] flex flex-col mt-4 md:mt-0 border-t border-[#222222]">
-              {/* Link 1: Asset Statements */}
               <Link 
                 href="#" 
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
@@ -313,7 +382,6 @@ export default function XAUsProductPage() {
                 </svg>
               </Link>
 
-              {/* Link 2: Audit Reports */}
               <Link 
                 href="#" 
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
@@ -337,73 +405,26 @@ export default function XAUsProductPage() {
           </div>
         </div>
       </section>
-{/* --- FAQs SECTION --- */}
-<section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
-  <div className="max-w-3xl">
-    <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-12">
-      FAQs
-    </h2>
 
-    <div className="flex flex-col border-t border-[#222222]">
-      {[
-        {
-          q: "What is XAUs?",
-          a: "Syncrate Gold (XAUs) is a digital asset where each token is fully backed by one troy ounce of 99.99% pure physical gold bullion secured in reputable UAE vaults."
-        },
-        {
-          q: "How can I verify the physical gold backing?",
-          a: "Transparency is maintained via independent third-party physical audits conducted by Bureau Veritas alongside bi-annual vault statement reconciliations available on our transparency dashboard."
-        },
-        {
-          q: "Is there a minimum requirement for minting and redemption?",
-          a: "No. There is no minimum minting requirement and XAUs can be redeemed back into USDC/USDT at any amount"
-        },
-        {
-          q: "What is the fee structure?",
-          a: "A 0.25% fee is charged on every XAUs redemption transaction."
-        }
-      ].map((faq, index) => {
-        // Local state management handles individual open/close toggles cleanly
-        const [isOpen, setIsOpen] = useState(false);
+      {/* --- FAQs SECTION --- */}
+      <section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
+        <div className="max-w-3xl">
+          <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-12">
+            FAQs
+          </h2>
 
-        return (
-          <div key={index} className="border-b border-[#222222] w-full">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="w-full flex items-center justify-between py-6 text-left group hover:bg-white/[0.02] px-2 transition-colors duration-200"
-            >
-              <span className="text-base md:text-lg font-normal text-[#F5F5F5] pr-4">
-                {faq.q}
-              </span>
-              <span className="text-xl font-mono text-[#AAAAAA] group-hover:text-white transition-colors w-6 h-6 flex items-center justify-center select-none">
-                {isOpen ? '–' : '+'}
-              </span>
-            </button>
-            
-            <div 
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isOpen ? 'max-h-40 opacity-100 mb-6' : 'max-h-0 opacity-0'
-              }`}
-            >
-              <p className="text-sm md:text-base text-[#888888] leading-relaxed px-2 max-w-2xl">
-                {faq.a}
-              </p>
-            </div>
+          <div className="flex flex-col border-t border-[#222222]">
+            {faqs.map((faq, index) => (
+              <FaqItem key={index} question={faq.q} answer={faq.a} />
+            ))}
           </div>
-        );
-      })}
-    </div>
-  </div>
-</section>
-      
+        </div>
+      </section>
+
       {/* --- FOOTER SECTION --- */}
       <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
-          
-          {/* Top Row: Links and Small Logo */}
           <div className="flex justify-between items-start text-sm text-[#F5F5F5] font-medium">
-            
-            {/* Left: Stacked Links */}
             <div className="flex flex-col gap-5">
               <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
               <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
@@ -414,7 +435,6 @@ export default function XAUsProductPage() {
               <a href="https://linkedin.com/company/syncrateprotocol" className="hover:text-[#888888] transition-colors">LinkedIn</a>
             </div>
 
-            {/* Right: Small Logo Visual */}
             <div className="flex items-center">
               <Image 
                 src="/footer-icon.PNG" 
@@ -424,10 +444,8 @@ export default function XAUsProductPage() {
                 className="object-contain"
               />
             </div>
-            
           </div>
 
-          {/* Bottom: Faint Legal Disclosure */}
           <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
             <p>
               Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. USDS is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
@@ -445,10 +463,39 @@ export default function XAUsProductPage() {
               Syncrate may not be available to residents of certain jurisdictions, including where prohibited by local law or regulation. It is the responsibility of users to ensure their participation complies with applicable laws in their jurisdiction.
             </p>
           </div>
-
         </div>
       </footer>
+    </div>
+  )
+}
+
+// Extracted Sub-component for FAQ items to fix React Hooks rules inside map loops
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <div className="border-b border-[#222222] w-full">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between py-6 text-left group hover:bg-white/[0.02] px-2 transition-colors duration-200"
+      >
+        <span className="text-base md:text-lg font-normal text-[#F5F5F5] pr-4">
+          {question}
+        </span>
+        <span className="text-xl font-mono text-[#AAAAAA] group-hover:text-white transition-colors w-6 h-6 flex items-center justify-center select-none">
+          {isOpen ? '–' : '+'}
+        </span>
+      </button>
       
+      <div 
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-40 opacity-100 mb-6' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <p className="text-sm md:text-base text-[#888888] leading-relaxed px-2 max-w-2xl">
+          {answer}
+        </p>
+      </div>
     </div>
   )
 }
