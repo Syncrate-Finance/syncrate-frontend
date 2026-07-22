@@ -213,28 +213,58 @@ export default function XAUsProductPage() {
               </div>
             </div>
 
-            {/* --- LIVE METRICS GRID --- */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{marketCap}</p>
+                        {/* --- LIVE METRICS GRID --- */}
+            <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{marketCap}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Bullion Weight</p>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">193 Troy Oz</p>
+                </div>
+                <div>
+                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault Gold Bars</p>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">6 Bars</p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Bullion Weight</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">193 Troy Oz</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
-              </div>
-              <div>
-                <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault Gold Bars</p>
-                <p className="text-xl md:text-2xl font-normal text-white tracking-tight">6 Bars</p>
+
+              {/* External Links Bar */}
+              <div className="flex items-center gap-4 pt-2">
+                <a
+                  href={`https://basescan.org/token/${XAUS_ADDRESS}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
+                >
+                  <Image src="/base.jpeg" alt="BaseScan" width={14} height={14} className="rounded-full object-cover" />
+                  BaseScan
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+
+                <a
+                  href="https://dune.com" // Replace with your specific Dune dashboard URL
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
+                >
+                  <Image src="/dune.png" alt="Dune Analytics" width={14} height={14} className="rounded-full object-cover" />
+                  Dune Analytics
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
               </div>
             </div>
-          </div>
-        </div>
-      </main>
 
       {/* --- XAUs FEATURES SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
