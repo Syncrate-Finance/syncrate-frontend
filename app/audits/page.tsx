@@ -14,7 +14,7 @@ interface AuditReport {
 }
 
 export default function AuditReportsPage() {
-  // Add or edit your PDF report links here
+  // Single audit report configuration
   const reports: AuditReport[] = [
     {
       id: '1',
@@ -22,20 +22,6 @@ export default function AuditReportsPage() {
       fileName: 'Syncrate_Gold_Bureau_Veritas_Audit_Jul_2026.pdf',
       fileSize: '615 KB',
       pdfUrl: '/audits/Syncrate_Gold_Bureau_Veritas_Audit_Jul_2026.pdf',
-    },
-    {
-      id: '2',
-      title: 'Syncrate Gold Bureau Veritas Audit Jan 2026',
-      fileName: 'Syncrate_Gold_Bureau_Veritas_Audit_Jan_2026.pdf',
-      fileSize: '314 KB',
-      pdfUrl: '/audits/Syncrate_Gold_Bureau_Veritas_Audit_Jan_2026.pdf',
-    },
-    {
-      id: '3',
-      title: 'Syncrate Gold Bureau Veritas Audit Jul 2025',
-      fileName: 'Syncrate_Gold_Bureau_Veritas_Audit_Jul_2025.pdf',
-      fileSize: '399 KB',
-      pdfUrl: '/audits/Syncrate_Gold_Bureau_Veritas_Audit_Jul_2025.pdf',
     },
   ]
 
@@ -75,7 +61,7 @@ export default function AuditReportsPage() {
             </p>
           </div>
 
-          {/* --- PDF RECTANGLE BLOCKS LIST --- */}
+          {/* --- SINGLE PDF BLOCK --- */}
           <div className="flex flex-col gap-4">
             {reports.map((report) => (
               <div 
