@@ -14,7 +14,7 @@ import { parseUnits, formatUnits } from 'viem'
 // Set to 'false' to show the "Launching Soon" waitlist.
 // Set to 'true' to instantly bring back the full Vault dApp.
 // ==========================================
-const IS_LIVE = true;
+const IS_LIVE = FALSE;
 
 // ==========================================
 // CONFIGURATIONS & ABIS
