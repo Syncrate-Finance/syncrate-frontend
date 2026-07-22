@@ -15,7 +15,7 @@ const publicClient = createPublicClient({
 })
 
 // XAUs Address & Minimal ABI
-const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3'
+const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3' as `0x${string}`
 const xausAbi = [
   {
     name: 'totalSupply',
@@ -40,10 +40,10 @@ export default function XAUsProductPage() {
   async function fetchOnChainData() {
     try {
       const rawSupply = (await publicClient.readContract({
-        address: XAUS_ADDRESS,
-        abi: xausAbi,
-        functionName: 'totalSupply',
-      })) as bigint
+  address: XAUS_ADDRESS,
+  abi: xausAbi,
+  functionName: 'totalSupply',
+} as any)) as bigint
 
       const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
 
