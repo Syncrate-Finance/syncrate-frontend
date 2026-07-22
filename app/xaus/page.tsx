@@ -256,7 +256,7 @@ export default function XAUsProductPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
                 >
-                  <Image src="/dune.png" alt="Dune Analytics" width={14} height={14} className="rounded-full object-cover" />
+                  <Image src="/dune.JPG" alt="Dune Analytics" width={14} height={14} className="rounded-full object-cover" />
                   Dune
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
