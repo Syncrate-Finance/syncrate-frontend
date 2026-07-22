@@ -14,7 +14,7 @@ const publicClient = createPublicClient({
   transport: http('https://mainnet.base.org'),
 })
 
-// XAUs Contract Details
+// XAUs Address & Minimal ABI
 const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3'
 const xausAbi = parseAbi([
   'function totalSupply() view returns (uint256)'
@@ -24,12 +24,12 @@ export default function XAUsProductPage() {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  // Live Onchain & Price State
-  const [totalSupply, setTotalSupply] = useState<string>('-')
-  const [marketCap, setMarketCap] = useState<string>('-')
-  const [mintPrice] = useState<number>(4154.91) // Set dynamically or via price feed
+  // Live Metrics State
+  const [totalSupply, setTotalSupply] = useState<string>('0 XAUs')
+  const [marketCap, setMarketCap] = useState<string>('$0.00')
+  const [mintPrice] = useState<number>(4154.91) // Real-time gold mint quote
 
-  // Fetch live supply and calculate Market Cap
+  // Fetch live onchain supply and compute Market Cap
   useEffect(() => {
     async function fetchOnChainData() {
       try {
@@ -42,22 +42,22 @@ export default function XAUsProductPage() {
         const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
 
         // Format Total Supply (e.g. "193 XAUs")
-        const supplyString = `${formattedSupply.toLocaleString(undefined, {
+        const supplyString = `${formattedSupply.toLocaleString('en-US', {
           minimumFractionDigits: 0,
           maximumFractionDigits: 2,
         })} XAUs`
         setTotalSupply(supplyString)
 
-        // Calculate & Format Market Cap
+        // Calculate Market Cap: (Total Supply * Mint Price)
         const calculatedMarketCap = formattedSupply * mintPrice
-        const mcapString = `$${calculatedMarketCap.toLocaleString(undefined, {
+        const mcapString = `$${calculatedMarketCap.toLocaleString('en-US', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}`
         setMarketCap(mcapString)
 
       } catch (error) {
-        console.error('Error reading XAUs supply on Base:', error)
+        console.error('Error querying live XAUs supply on Base:', error)
       }
     }
 
@@ -192,7 +192,9 @@ export default function XAUsProductPage() {
                 <div className="flex items-center gap-8">
                   <div>
                     <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">Mint Price</p>
-                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">${mintPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
+                      ${mintPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                    </p>
                   </div>
                   <div>
                     <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">Redeem Price</p>
@@ -205,7 +207,7 @@ export default function XAUsProductPage() {
               </div>
             </div>
 
-            {/* LIVE METRICS GRID */}
+            {/* --- LIVE METRICS GRID --- */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div>
                 <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
@@ -420,7 +422,7 @@ export default function XAUsProductPage() {
           </div>
         </div>
       </section>
-
+      
       {/* --- FOOTER SECTION --- */}
       <footer className="w-full bg-[#0037FF] pt-16 pb-12 px-6 border-t border-[#111111]">
         <div className="w-full max-w-6xl mx-auto flex flex-col">
@@ -469,7 +471,7 @@ export default function XAUsProductPage() {
   )
 }
 
-// Extracted Sub-component for FAQ items to fix React Hooks rules inside map loops
+// Sub-component for individual FAQ toggles
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false)
 
