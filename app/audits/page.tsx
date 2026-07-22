@@ -20,7 +20,7 @@ export default function AuditReportsPage() {
       title: 'Syncrate Gold Bureau Veritas Audit June 2026',
       fileName: 'Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf',
       fileSize: '615 KB',
-      pdfUrl: '/audits/Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf',
+      pdfUrl: '/Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf', // Points to root of /public
     },
   ]
 
