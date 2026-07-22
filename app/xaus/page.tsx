@@ -16,9 +16,15 @@ const publicClient = createPublicClient({
 
 // XAUs Address & Minimal ABI
 const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3'
-const xausAbi = parseAbi([
-  'function totalSupply() view returns (uint256)'
-])
+const xausAbi = [
+  {
+    name: 'totalSupply',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [{ type: 'uint256' }],
+  },
+] as const
 
 export default function XAUsProductPage() {
   const [activeIndex, setActiveIndex] = useState(0)
