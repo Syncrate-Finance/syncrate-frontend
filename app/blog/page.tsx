@@ -14,9 +14,9 @@ export default function Blog() {
   const posts: BlogPost[] = [
     // --- POST 2 (NEWEST / MOST RECENT) ---
     {
-      title: 'Title of Your New Blog Post Goes Here',
-      href: '/blog/your-new-post-slug',
-      imageSrc: '/blog2.jpg', // Place blog2.jpg in public/
+      title: 'XAUs is Live: Gold Built for DeFi',
+      href: '/blog/xaus-is-live',
+      imageSrc: '/blog2.PNG', // Place blog2.jpg in public/
       date: '23 Jul 2026',
     },
     // --- POST 1 (PREVIOUS POST) ---
