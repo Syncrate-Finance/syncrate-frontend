@@ -3,7 +3,31 @@ import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 
+interface BlogPost {
+  title: string
+  href: string
+  imageSrc: string
+  date: string
+}
+
 export default function Blog() {
+  const posts: BlogPost[] = [
+    // --- POST 2 (NEWEST / MOST RECENT) ---
+    {
+      title: 'Title of Your New Blog Post Goes Here',
+      href: '/blog/your-new-post-slug',
+      imageSrc: '/blog2.jpg', // Place blog2.jpg in public/
+      date: '23 Jul 2026',
+    },
+    // --- POST 1 (PREVIOUS POST) ---
+    {
+      title: 'The Opportunity Cost: Rethinking the Gold Thesis.',
+      href: '/blog/rethinking-the-gold-thesis',
+      imageSrc: '/blog1.jpg',
+      date: '17 Jul 2026',
+    },
+  ]
+
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
@@ -39,28 +63,31 @@ export default function Blog() {
 
         {/* Blog Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Post Block 1 */}
-          <Link href="/blog/rethinking-the-gold-thesis" className="flex flex-col bg-[#161616] rounded-[32px] p-2 hover:bg-[#1A1A1A] transition-colors group cursor-pointer">
-            <div className="overflow-hidden rounded-[24px] w-full aspect-[16/9]">
-              <Image 
-                src="/blog1.jpg" 
-                alt="Blog 1" 
-                width={800} 
-                height={450} 
-                className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
-              />
-            </div>
-            <div className="p-5 flex flex-col flex-grow">
-              <h2 className="text-xl font-normal text-white tracking-tight leading-snug mb-12">
-                The Opportunity Cost: Rethinking the Gold Thesis.
-              </h2>
-              <p className="text-sm text-[#888888] mt-auto">
-                17 Jul 2026
-              </p>
-            </div>
-          </Link>
-
+          {posts.map((post, index) => (
+            <Link 
+              key={index} 
+              href={post.href} 
+              className="flex flex-col bg-[#161616] rounded-[32px] p-2 hover:bg-[#1A1A1A] transition-colors group cursor-pointer"
+            >
+              <div className="overflow-hidden rounded-[24px] w-full aspect-[16/9]">
+                <Image 
+                  src={post.imageSrc} 
+                  alt={post.title} 
+                  width={800} 
+                  height={450} 
+                  className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                />
+              </div>
+              <div className="p-5 flex flex-col flex-grow">
+                <h2 className="text-xl font-normal text-white tracking-tight leading-snug mb-12">
+                  {post.title}
+                </h2>
+                <p className="text-sm text-[#888888] mt-auto">
+                  {post.date}
+                </p>
+              </div>
+            </Link>
+          ))}
         </div>
       </main>
     </div>
