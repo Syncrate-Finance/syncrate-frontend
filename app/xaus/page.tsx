@@ -251,7 +251,7 @@ export default function XAUsProductPage() {
                 </a>
 
                 <a
-                  href="https://dune.com"
+                  href="https://dune.com/syncratenetwork5167/syncrate-xaus-overview"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
