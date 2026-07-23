@@ -323,6 +323,13 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
+              src="/saffron.PNG" 
+              alt="Saffron" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
               src="/amanat.png" 
               alt="Amanat Vaults" 
               width={130} 
