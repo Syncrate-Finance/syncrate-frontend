@@ -128,16 +128,14 @@ The launch of XAUs is a major milestone, but it’s only the beginning. As we ex
 Gold shouldn't just sit onchain. It should move, interact, and work.
 </p>
 
-<p>
-  Explore XAUs: 
-  <a 
-    href="https://www.syncrate.org/xaus" 
-    target="_blank" 
-    rel="noopener noreferrer"
+<p className="text-white">
+  Explore XAUs:{' '}
+  <Link 
+    href="/xaus" 
     className="text-[#888888] underline hover:text-white transition-colors"
   >
     https://www.syncrate.org/xaus
-  </a>
+  </Link>
 </p>
           </article>
           
