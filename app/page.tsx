@@ -265,7 +265,7 @@ export default function LaunchingSoon() {
           {/* Card Top: Image */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#111111] overflow-hidden border-b border-[#222222]">
             <Image 
-              src="/blog2.jpg" // Upload a thumbnail image of your choice to public/
+              src="/blog2.PNG" // Upload a thumbnail image of your choice to public/
               alt="Syncrate News Feature"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
