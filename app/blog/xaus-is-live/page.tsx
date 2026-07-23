@@ -46,7 +46,7 @@ export default function BlogPost() {
 
           {/* ARTICLE METADATA & TITLE */}
           <div className="flex flex-col gap-4 mb-8">
-            <span className="text-[#888888] text-sm font-mono">17 Jul 2026</span>
+            <span className="text-[#888888] text-sm font-mono">23 Jul 2026</span>
             <h1 className="text-4xl md:text-5xl font-normal tracking-tight text-white leading-[1.1]">
               XAUs is Live: Gold built for DeFi
             </h1>
@@ -55,7 +55,7 @@ export default function BlogPost() {
           {/* HERO IMAGE */}
           <div className="w-full aspect-[16/9] relative rounded-[24px] overflow-hidden mb-10 border border-[#222222]">
             <Image 
-              src="/blog2.jpg" 
+              src="/blog2.PNG" 
               alt="XAUs is Live" 
               fill
               className="object-cover grayscale opacity-90"
@@ -129,7 +129,15 @@ Gold shouldn't just sit onchain. It should move, interact, and work.
 </p>
 
 <p>
-<strong>Explore XAUs:</strong> https://www.syncrate.org/xaus
+  Explore XAUs: 
+  <a 
+    href="https://www.syncrate.org/xaus" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-[#888888] underline hover:text-white transition-colors"
+  >
+    https://www.syncrate.org/xaus
+  </a>
 </p>
           </article>
           
