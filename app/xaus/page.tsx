@@ -88,9 +88,9 @@ export default function XAUsProductPage() {
     {
       id: 3,
       title: "Accessible Everywhere",
-      description: "XAUs is deployed across multiple chains and exchanges, enabling robust liquidy and seamless ownership.",
+      description: "XAUs is deployed across multiple exchanges, enabling robust liquidy and seamless ownership.",
       bgImage: "/feature-3.PNG",
-      logos: ["/eth.png", "/base.jpeg"]
+      logos: ["/uniswap.PNG", "/base.jpeg"]
     }
   ]
 
