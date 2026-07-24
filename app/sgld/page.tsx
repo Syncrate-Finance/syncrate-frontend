@@ -10,40 +10,38 @@ import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTr
 import { parseUnits, formatUnits } from 'viem'
 
 // ==========================================
-// 🚀 THE MASTER TOGGLE
-// Set to 'false' to show the "Launching Soon" waitlist.
-// Set to 'true' to instantly bring back the full Vault dApp.
+// 🚀 CONFIGURATIONS
 // ==========================================
 const IS_LIVE = true;
 
-// ==========================================
-// CONFIGURATIONS & ABIS
-// ==========================================
-// Base Mainnet Contract Addresses
-const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3' // Live XAUs Base Mainnet Address
-const SGLD_VAULT_ADDRESS = '0x2123541BE6F7dA2b429BC703A591944DC7Db26a3' // TODO: Replace with your LIVE SGLD Vault Address
+const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3' as const
+const SGLD_VAULT_ADDRESS = '0x2123541BE6F7dA2b429BC703A591944DC7Db26a3' as const
 
-// Launch date for APY calculation (Update this to your actual deployment date)
 const VAULT_INCEPTION = new Date('2026-06-01T00:00:00Z').getTime()
 
-// Minimal ABIs for interacting with the contracts
 const erc20Abi = [
-  { type: 'function', name: 'approve', inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }], outputs: [{ type: 'bool' }] },
-  { type: 'function', name: 'allowance', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ type: 'uint256' }] }
+  { type: 'function', name: 'approve', inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }], outputs: [{ type: 'bool' }], stateMutability: 'nonpayable' },
+  { type: 'function', name: 'allowance', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ type: 'uint256' }], stateMutability: 'view' }
 ] as const
 
 const vaultAbi = [
-  // Custom XAU Path
-  { type: 'function', name: 'depositXAUs', inputs: [{ name: 'xausAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
-  { type: 'function', name: 'withdrawToXAUs', inputs: [{ name: 'sharesAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
-  // Metrics
-  { type: 'function', name: 'totalAssets', inputs: [], outputs: [{ type: 'uint256' }] },
-  { type: 'function', name: 'totalSupply', inputs: [], outputs: [{ type: 'uint256' }] }
+  { type: 'function', name: 'depositXAUs', inputs: [{ name: 'xausAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }], stateMutability: 'nonpayable' },
+  { type: 'function', name: 'withdrawToXAUs', inputs: [{ name: 'sharesAmount', type: 'uint256' }], outputs: [{ type: 'uint256' }], stateMutability: 'nonpayable' },
+  { type: 'function', name: 'totalAssets', inputs: [], outputs: [{ type: 'uint256' }], stateMutability: 'view' },
+  { type: 'function', name: 'totalSupply', inputs: [], outputs: [{ type: 'uint256' }], stateMutability: 'view' }
 ] as const
 
+export default function AppPortal() {
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => setIsMounted(true), [])
+
+  if (!isMounted) return <div className="min-h-screen bg-[#030303] flex items-center justify-center"><span className="w-8 h-8 border-2 border-t-transparent border-white rounded-full animate-spin" /></div>
+
+  return IS_LIVE ? <SgldVaultAppUI /> : <LaunchingSoonUI />
+}
 
 // ==========================================
-// COMPONENT A: THE WAITLIST (LAUNCHING SOON)
+// COMPONENT A: LAUNCHING SOON
 // ==========================================
 function LaunchingSoonUI() {
   const [email, setEmail] = useState('')
@@ -54,14 +52,13 @@ function LaunchingSoonUI() {
     e.preventDefault()
     if (!email) return
     setLoading(true)
-    // TODO: Replace with your actual email API integration
     await new Promise((resolve) => setTimeout(resolve, 1000)) 
     setLoading(false)
     setSubmitted(true)
   }
 
   return (
-    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.className}`}>
       <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-8 relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-[#0037FF]/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -70,32 +67,24 @@ function LaunchingSoonUI() {
             <span className="px-2.5 py-0.5 rounded-full bg-[#0037FF]/10 border border-[#0037FF]/20 text-[10px] font-mono uppercase tracking-wider text-[#0037FF] font-semibold">
               Syncrate Prime
             </span>
-            <span className="text-[10px] font-mono text-[#666666] uppercase">
-              Base Mainnet
-            </span>
+            <span className="text-[10px] font-mono text-[#666666] uppercase">Base Mainnet</span>
           </div>
-          <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
-            Launching Soon
-          </h1>
+          <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">Launching Soon</h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            The Syncrate Prime vault is coming soon. Join the waitlist to be the first to get notified when we go live.
+            The Syncrate Prime vault is coming soon. Join the waitlist to be notified when we go live.
           </p>
         </div>
 
         <div className="border-t border-[#111111] pt-6 relative z-10">
           {submitted ? (
-            <div className="bg-[#050505] border border-emerald-950/40 rounded-xl p-5 text-center flex flex-col gap-1.5 animate-in fade-in zoom-in-95 duration-300">
+            <div className="bg-[#050505] border border-emerald-950/40 rounded-xl p-5 text-center flex flex-col gap-1.5">
               <span className="text-sm font-medium text-emerald-400">You're on the list!</span>
-              <span className="text-xs text-[#666666]">
-                We will contact you the second the vault contracts go live.
-              </span>
+              <span className="text-xs text-[#666666]">We will contact you the second the vault contracts go live.</span>
             </div>
           ) : (
             <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4">
-              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors">
-                <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
-                  Email Address
-                </label>
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2">
+                <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">Email Address</label>
                 <input 
                   type="email" 
                   required
@@ -112,98 +101,50 @@ function LaunchingSoonUI() {
                 disabled={!email || loading}
                 className="w-full py-4 bg-[#0037FF] text-white hover:bg-[#002CD6] font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-30 shadow-lg shadow-[#0037FF]/10"
               >
-                {loading ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
-                    Adding you...
-                  </>
-                ) : (
-                  'Secure Early Access'
-                )}
+                {loading ? 'Adding you...' : 'Secure Early Access'}
               </button>
             </form>
           )}
-        </div>
-
-        <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6 relative z-10">
-          <span className="text-[10px] font-mono text-[#444444] uppercase tracking-wider">
-            Follow our updates
-          </span>
-          <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
-            <a 
-              href="https://x.com/syncratenetwork" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-white transition-colors"
-            >
-              X (Twitter)
-            </a>
-            <span className="text-[#222222]">•</span>
-            <a 
-              href="https://linkedin.com/company/syncrateprotocol" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-white transition-colors"
-            >
-              LinkedIn
-            </a>
-            <span className="text-[#222222]">•</span>
-            <a 
-              href="https://syncrate.org/blog" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-white transition-colors"
-            >
-              Blog
-            </a>
-          </div>
         </div>
       </div>
     </div>
   )
 }
 
-
 // ==========================================
-// COMPONENT B: THE ACTIVE DAPP (VAULT)
+// COMPONENT B: ACTIVE VAULT DAPP
 // ==========================================
 function SgldVaultAppUI() {
-  const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => setIsMounted(true), [])
-
   const { isConnected, address } = useAccount()
 
-  // Core Flow States
   const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit')
   const [inputAmount, setInputAmount] = useState('')
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
 
-  // --- WAGMI READ: Balances ---
-  const { data: xausData, refetch: refetchXaus } = useBalance({ address, token: XAUS_ADDRESS as `0x${string}` })
-  const { data: sgldData, refetch: refetchSgld } = useBalance({ address, token: SGLD_VAULT_ADDRESS as `0x${string}` })
+  // Balances
+  const { data: xausData, refetch: refetchXaus } = useBalance({ address, token: XAUS_ADDRESS })
+  const { data: sgldData, refetch: refetchSgld } = useBalance({ address, token: SGLD_VAULT_ADDRESS })
 
   const xausBalance = xausData ? parseFloat(xausData.formatted) : 0.00
   const sgldBalance = sgldData ? parseFloat(sgldData.formatted) : 0.00
 
-  // --- WAGMI READ: Allowance ---
+  // Allowance
   const { data: currentAllowance, refetch: refetchAllowance } = useReadContract({
-    address: XAUS_ADDRESS as `0x${string}`,
+    address: XAUS_ADDRESS,
     abi: erc20Abi,
     functionName: 'allowance',
-    args: address ? [address, SGLD_VAULT_ADDRESS as `0x${string}`] : undefined,
+    args: address ? [address, SGLD_VAULT_ADDRESS] : undefined,
     query: { enabled: !!address },
   })
 
-  // --- WAGMI READ: Vault Global Metrics ---
-  const { data: totalAssetsData } = useReadContract({ address: SGLD_VAULT_ADDRESS as `0x${string}`, abi: vaultAbi, functionName: 'totalAssets' })
-  const { data: totalSupplyData } = useReadContract({ address: SGLD_VAULT_ADDRESS as `0x${string}`, abi: vaultAbi, functionName: 'totalSupply' })
+  // Vault Metrics (Assuming standard 18 Decimals for XAUs and SGLD shares)
+  const { data: totalAssetsData } = useReadContract({ address: SGLD_VAULT_ADDRESS, abi: vaultAbi, functionName: 'totalAssets' })
+  const { data: totalSupplyData } = useReadContract({ address: SGLD_VAULT_ADDRESS, abi: vaultAbi, functionName: 'totalSupply' })
 
-  // Parse Live Vault Data
-  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 6)) : 0 
-  const vaultSupply = totalSupplyData ? parseFloat(formatUnits(totalSupplyData as bigint, 6)) : 0 
+  const vaultTVL = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 18)) : 0 
+  const vaultSupply = totalSupplyData ? parseFloat(formatUnits(totalSupplyData as bigint, 18)) : 0 
   const sharePrice = vaultSupply > 0 ? (vaultTVL / vaultSupply) : 1.00
 
-  // --- Calculate Actual APY ---
   const daysElapsed = Math.max((Date.now() - VAULT_INCEPTION) / (1000 * 60 * 60 * 24), 1)
   const vaultApy = vaultSupply > 0 ? ((sharePrice - 1.00) / 1.00) * (365 / daysElapsed) * 100 : 0.00
 
@@ -213,15 +154,13 @@ function SgldVaultAppUI() {
     return value.toFixed(2)
   }
 
-  // --- WAGMI WRITE: Transactions ---
+  // Transactions
   const { data: approveTxHash, writeContract: writeApprove, isPending: isApprovePending } = useWriteContract()
   const { data: processTxHash, writeContract: writeProcess, isPending: isProcessPending } = useWriteContract()
 
-  // --- WAGMI RECEIPTS ---
   const { isLoading: isApproveConfirming, isSuccess: isApproveSuccess } = useWaitForTransactionReceipt({ hash: approveTxHash })
   const { isLoading: isProcessConfirming, isSuccess: isProcessSuccess } = useWaitForTransactionReceipt({ hash: processTxHash })
 
-  // --- EFFECT ROUTERS ---
   useEffect(() => {
     if (isApprovePending || isApproveConfirming) setTxStatus('approving')
     if (isApproveSuccess) {
@@ -239,16 +178,23 @@ function SgldVaultAppUI() {
     }
   }, [isProcessPending, isProcessConfirming, isProcessSuccess, refetchXaus, refetchSgld])
 
-  // Smart checking to skip approval if user already approved enough or is withdrawing
+  // Smart Allowance Router Check
   useEffect(() => {
-    if (!inputAmount || isNaN(Number(inputAmount)) || !xausData) return
+    if (!inputAmount || isNaN(Number(inputAmount)) || Number(inputAmount) <= 0) return
 
     if (activeTab === 'withdraw') {
       if (txStatus === 'idle') setTxStatus('approved')
       return
     }
 
-    const inputUnits = parseUnits(inputAmount, xausData.decimals)
+    const decimals = xausData?.decimals ?? 18
+    let inputUnits = BigInt(0)
+    try {
+      inputUnits = parseUnits(inputAmount, decimals)
+    } catch {
+      return
+    }
+
     const allowed = currentAllowance ? (currentAllowance as bigint) : BigInt(0)
 
     if (allowed >= inputUnits) {
@@ -258,103 +204,70 @@ function SgldVaultAppUI() {
     }
   }, [inputAmount, activeTab, currentAllowance, xausData, txStatus])
 
-  // --- INTERACTION HANDLERS ---
   const handleMaxBalance = () => {
     if (activeTab === 'deposit') setInputAmount(xausBalance.toString())
     else setInputAmount(sgldBalance.toString())
   }
 
   const handleApprove = () => {
-    if (!xausData) return
+    if (!xausData || !inputAmount) return
     const amountToApprove = parseUnits(inputAmount, xausData.decimals)
     writeApprove({
-      address: XAUS_ADDRESS as `0x${string}`,
+      address: XAUS_ADDRESS,
       abi: erc20Abi,
       functionName: 'approve',
-      args: [SGLD_VAULT_ADDRESS as `0x${string}`, amountToApprove],
-    } as any)
+      args: [SGLD_VAULT_ADDRESS, amountToApprove],
+    })
   }
 
   const handleProcess = () => {
-    if (!address) return
+    if (!address || !inputAmount) return
     if (activeTab === 'deposit') {
       if (!xausData) return
       const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
       writeProcess({
-        address: SGLD_VAULT_ADDRESS as `0x${string}`,
+        address: SGLD_VAULT_ADDRESS,
         abi: vaultAbi,
         functionName: 'depositXAUs',
         args: [amountToDeposit],
-      } as any)
+      })
     } else {
       if (!sgldData) return
       const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
       writeProcess({
-        address: SGLD_VAULT_ADDRESS as `0x${string}`,
+        address: SGLD_VAULT_ADDRESS,
         abi: vaultAbi,
         functionName: 'withdrawToXAUs',
         args: [sharesToRedeem],
-      } as any)
+      })
     }
   }
 
   const resetFlow = () => { setInputAmount(''); setTxStatus('idle') }
   const handleTabSwitch = (tab: 'deposit' | 'withdraw') => {
-    if (txStatus === 'idle' || txStatus === 'success' || txStatus === 'approved') {
-      setActiveTab(tab); resetFlow()
-    }
+    setActiveTab(tab)
+    resetFlow()
   }
 
-  // Hydration fallback
-  if (!isMounted) return <div className="min-h-screen bg-[#030303] flex items-center justify-center"><span className="w-8 h-8 border-2 border-t-transparent border-white rounded-full animate-spin" /></div>
-
   return (
-    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.className}`}>
       
-      {/* --- HEADER --- */}
+      {/* HEADER */}
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link className="flex items-center gap-2 group" href="/">
           <Image alt="Syncrate Logo" className="object-contain rounded-full" height={32} src="/logo.png" width={32}/>
           <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD VAULT</span>
         </Link>
-        
-        <ConnectButton.Custom>
-          {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
-            const ready = mounted;
-            const connected = ready && account && chain;
-            return (
-              <div {...(!ready && { 'aria-hidden': true, 'style': { opacity: 0, pointerEvents: 'none', userSelect: 'none' } })}>
-                {(() => {
-                  if (!connected) return <button onClick={openConnectModal} type="button" className="px-5 py-2.5 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all">Connect Wallet</button>;
-                  if (chain.unsupported) return <button onClick={openChainModal} type="button" className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium text-sm rounded-lg transition-all">Wrong network</button>;
-                  return (
-                    <div className="flex items-center gap-3">
-                      <button onClick={openChainModal} type="button" className="flex items-center gap-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] px-3 py-2 rounded-lg text-xs font-mono text-[#888888] transition-all">
-                        {chain.hasIcon && <div className="w-4 h-4 rounded-full overflow-hidden">{chain.iconUrl && <img alt={chain.name ?? 'Chain icon'} src={chain.iconUrl} width={16} height={16} />}</div>}
-                        {chain.name}
-                      </button>
-                      <button onClick={openAccountModal} type="button" className="px-4 py-2 bg-[#111111] hover:bg-[#1A1A1A] border border-[#222222] text-white font-mono text-xs rounded-lg transition-all">
-                        {account.displayName}
-                        {account.displayBalance ? ` (${account.displayBalance})` : ''}
-                      </button>
-                    </div>
-                  );
-                })()}
-              </div>
-            );
-          }}
-        </ConnectButton.Custom>
+        <ConnectButton />
       </header>
 
-      {/* --- MAIN APP INTERFACE --- */}
+      {/* MAIN INTERFACE */}
       <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 my-12 gap-6">
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl flex flex-col gap-6">
           
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-3">
-              <Image alt="Syncrate Logo" className="object-contain rounded-full" height={28} src="/logo.png" width={28}/>
-              <h1 className="text-lg font-medium text-white tracking-tight">Syncrate Prime Vault</h1>
-            </div>
+          <div className="flex items-center gap-3">
+            <Image alt="Syncrate Logo" className="object-contain rounded-full" height={28} src="/logo.png" width={28}/>
+            <h1 className="text-lg font-medium text-white tracking-tight">Syncrate Prime Vault</h1>
           </div>
 
           <div className="grid grid-cols-4 gap-2 border-y border-[#111111] py-4 my-1">
@@ -381,7 +294,7 @@ function SgldVaultAppUI() {
               <div className="w-11 h-11 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4">
                 <span className="text-emerald-500 text-lg">✓</span>
               </div>
-              <h3 className="text-base font-medium text-white mb-2">Transaction Success</h3>
+              <h3 className="text-base font-medium text-white mb-2">Transaction Successful</h3>
               <button onClick={resetFlow} className="w-full mt-4 py-3 bg-[#111111] text-xs font-medium rounded-lg hover:bg-[#222222] text-white transition-all border border-[#222222]">
                 Dismiss
               </button>
@@ -393,18 +306,12 @@ function SgldVaultAppUI() {
                 <button type="button" onClick={() => handleTabSwitch('withdraw')} className={`py-2 text-xs font-medium rounded-lg transition-all ${activeTab === 'withdraw' ? 'bg-[#1a1a1a] text-white' : 'text-[#666666] hover:text-[#999999]'}`}>Withdraw</button>
               </div>
 
-              <div className="flex justify-end items-center mt-1 h-6">
-                <span className="text-[10px] text-[#555]">
-                  Fee: {activeTab === 'deposit' ? '0%' : '0.10%'}
-                </span>
-              </div>
-
-              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors relative mt-1">
+              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 relative mt-1">
                 <div className="flex items-center justify-between text-[10px] font-mono tracking-wider text-[#666666] uppercase">
                   <span>Amount ({activeTab === 'deposit' ? 'XAU' : 'SGLD'})</span>
                   <div className="flex items-center gap-1.5">
                     <span>Balance: {isConnected ? (activeTab === 'deposit' ? xausBalance.toFixed(2) : sgldBalance.toFixed(2)) : '0.00'}</span>
-                    {isConnected && <button onClick={handleMaxBalance} type="button" className="text-[9px] font-bold text-[#0037FF] hover:text-[#002CD6] transition-colors uppercase">Max</button>}
+                    {isConnected && <button onClick={handleMaxBalance} type="button" className="text-[9px] font-bold text-[#0037FF] uppercase">Max</button>}
                   </div>
                 </div>
 
@@ -416,23 +323,17 @@ function SgldVaultAppUI() {
 
               <div className="mt-2">
                 {!isConnected ? (
-                  <ConnectButton.Custom>
-                    {({ openConnectModal }) => (
-                      <button onClick={openConnectModal} type="button" className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-md shadow-[#0037FF]/10">
-                        Connect Wallet
-                      </button>
-                    )}
-                  </ConnectButton.Custom>
+                  <ConnectButton />
                 ) : (
                   <>
                     {(txStatus === 'idle' || txStatus === 'approving') && activeTab === 'deposit' && (
-                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving'} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 transition-all flex items-center justify-center gap-2">
+                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving'} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 transition-all">
                         {txStatus === 'approving' ? 'Approving...' : `Approve XAU`}
                       </button>
                     )}
 
                     {(txStatus === 'approved' || txStatus === 'processing') && (
-                      <button onClick={handleProcess} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'processing'} className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#0037FF]/10">
+                      <button onClick={handleProcess} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'processing'} className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-lg shadow-[#0037FF]/10">
                         {txStatus === 'processing' ? 'Processing...' : (activeTab === 'deposit' ? 'Confirm Deposit' : `Withdraw to XAU`)}
                       </button>
                     )}
@@ -443,19 +344,6 @@ function SgldVaultAppUI() {
           )}
         </div>
       </main>
-      <div className="h-4" />
     </div>
   )
-}
-
-// ==========================================
-// THE MAIN ROUTER EXPORT
-// This looks at 'IS_LIVE' and decides which component to show.
-// ==========================================
-export default function AppPortal() {
-  if (!IS_LIVE) {
-    return <LaunchingSoonUI/>
-  }
-
-  return <SgldVaultAppUI/>
 }
