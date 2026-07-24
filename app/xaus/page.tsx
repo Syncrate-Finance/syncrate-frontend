@@ -269,6 +269,44 @@ export default function XAUsProductPage() {
         </div>
       </main>
 
+{/* Trade XAUs on: Uniswap & Aerodrome Row */}
+  <div className="flex items-center gap-3 mt-1">
+    <span className="text-zinc-400 text-sm font-medium mr-1">Trade XAUs on</span>
+
+    {/* Uniswap */}
+    <a
+      href="https://app.uniswap.org" // Replace with your exact token swap URL if needed
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-800 bg-zinc-950/80 hover:bg-zinc-900 transition-colors text-zinc-300 text-sm font-normal"
+    >
+      <img
+        src="/uniswap.PNG"
+        alt="Uniswap"
+        className="w-5 h-5 rounded-full"
+      />
+      <span>Uniswap</span>
+      <span className="text-zinc-500 text-xs font-mono ml-0.5">↗</span>
+    </a>
+
+    {/* Aerodrome */}
+    <a
+      href="https://aerodrome.finance" // Replace with your exact pool/swap URL if needed
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-800 bg-zinc-950/80 hover:bg-zinc-900 transition-colors text-zinc-300 text-sm font-normal"
+    >
+      <img
+        src="/aerodrome.png"
+        alt="Aerodrome"
+        className="w-5 h-5 rounded-full"
+      />
+      <span>Aerodrome</span>
+      <span className="text-zinc-500 text-xs font-mono ml-0.5">↗</span>
+    </a>
+  </div>
+</div>
+
       {/* --- XAUs FEATURES SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
         <hr className="border-[#222222] mb-12" />
