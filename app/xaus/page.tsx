@@ -266,7 +266,7 @@ export default function XAUsProductPage() {
               </div>
 
               {/* Trade XAUs Section */}
-              <div className="flex flex-col gap-3 mt-10">
+              <div className="flex flex-col gap-3 mt-12">
                 {/* Standalone Header */}
                 <p className="text-xl font-normal text-[#666666]">Trade XAUs on</p>
 
