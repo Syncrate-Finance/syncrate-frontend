@@ -225,52 +225,7 @@ function SgldVaultAppUI() {
     if (activeTab === 'deposit') {
       if (!xausData) return
       const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
-      writeProcess({
-        address: SGLD_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'depositXAUs',
-        args: [amountToDeposit],
-      } as unknown as any)
-    } else {
-      if (!sgldData) return
-      const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
-      writeProcess({
-        address: SGLD_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'withdrawToXAUs',
-        args: [sharesToRedeem],
-      } as unknown as any)
-    }
-  }
-
-  const handleProcess = () => {
-    if (!address || !inputAmount) return
-    if (activeTab === 'deposit') {
-      if (!xausData) return
-      const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
-      writeProcess({
-        address: SGLD_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'depositXAUs',
-        args: [amountToDeposit],
-      } as any)
-    } else {
-      if (!sgldData) return
-      const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
-      writeProcess({
-        address: SGLD_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'withdrawToXAUs',
-        args: [sharesToRedeem],
-      } as any)
-    }
-  }
-
-  const handleProcess = () => {
-    if (!address || !inputAmount) return
-    if (activeTab === 'deposit') {
-      if (!xausData) return
-      const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
+      // @ts-ignore
       writeProcess({
         address: SGLD_VAULT_ADDRESS,
         abi: vaultAbi,
@@ -280,6 +235,7 @@ function SgldVaultAppUI() {
     } else {
       if (!sgldData) return
       const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
+      // @ts-ignore
       writeProcess({
         address: SGLD_VAULT_ADDRESS,
         abi: vaultAbi,
