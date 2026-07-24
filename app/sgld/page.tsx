@@ -209,7 +209,7 @@ function SgldVaultAppUI() {
     else setInputAmount(sgldBalance.toString())
   }
 
-    const handleApprove = () => {
+      const handleApprove = () => {
     if (!xausData || !inputAmount) return
     const amountToApprove = parseUnits(inputAmount, xausData.decimals)
     writeApprove({
@@ -217,7 +217,30 @@ function SgldVaultAppUI() {
       abi: erc20Abi,
       functionName: 'approve',
       args: [SGLD_VAULT_ADDRESS, amountToApprove],
-    } as any)
+    } as unknown as any)
+  }
+
+  const handleProcess = () => {
+    if (!address || !inputAmount) return
+    if (activeTab === 'deposit') {
+      if (!xausData) return
+      const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
+      writeProcess({
+        address: SGLD_VAULT_ADDRESS,
+        abi: vaultAbi,
+        functionName: 'depositXAUs',
+        args: [amountToDeposit],
+      } as unknown as any)
+    } else {
+      if (!sgldData) return
+      const sharesToRedeem = parseUnits(inputAmount, sgldData.decimals)
+      writeProcess({
+        address: SGLD_VAULT_ADDRESS,
+        abi: vaultAbi,
+        functionName: 'withdrawToXAUs',
+        args: [sharesToRedeem],
+      } as unknown as any)
+    }
   }
 
   const handleProcess = () => {
