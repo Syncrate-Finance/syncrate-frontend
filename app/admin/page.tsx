@@ -4,19 +4,23 @@ import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { parseUnits, formatUnits } from 'viem'
+import { parseUnits, formatUnits, keccak256, stringToBytes } from 'viem'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 // Base Mainnet Contract Address
 const SYNCRATE_ENGINE_ADDRESS = '0xA6053c69043C370c4033F89c5Fceb21019b305D5' 
 
+// Compute standard keccak256 hash for RESERVE_MANAGER_ROLE
+const RESERVE_MANAGER_ROLE = keccak256(stringToBytes('RESERVE_MANAGER_ROLE'))
+
 const engineAbi = [
   { type: 'function', name: 'reserveCap', inputs: [], outputs: [{ type: 'uint256' }] },
-  { type: 'function', name: 'updateReserveCap', inputs: [{ name: 'newReserveCap', type: 'uint256' }], outputs: [] }
+  { type: 'function', name: 'updateReserveCap', inputs: [{ name: 'newReserveCap', type: 'uint256' }], outputs: [] },
+  { type: 'function', name: 'hasRole', inputs: [{ name: 'role', type: 'bytes32' }, { name: 'account', type: 'address' }], outputs: [{ type: 'bool' }] }
 ] as const
 
 export default function AdminDashboard() {
-  const { isConnected } = useAccount()
+  const { address, isConnected } = useAccount()
   const [newCap, setNewCap] = useState('')
 
   // --- READ: Current Cap from Contract ---
@@ -26,27 +30,35 @@ export default function AdminDashboard() {
     functionName: 'reserveCap',
   })
 
-  // Format the BigInt contract value back to readable numbers (assuming 18 decimals)
+  // --- READ: Check if Connected Wallet has RESERVE_MANAGER_ROLE ---
+  const { data: isReserveManager, isLoading: isRoleChecking } = useReadContract({
+    address: SYNCRATE_ENGINE_ADDRESS as `0x${string}`,
+    abi: engineAbi,
+    functionName: 'hasRole',
+    args: [RESERVE_MANAGER_ROLE, address as `0x${string}`],
+    query: {
+      enabled: Boolean(isConnected && address), // Only run if wallet is connected
+    }
+  })
+
   const currentCap = currentCapData ? parseFloat(formatUnits(currentCapData as bigint, 18)) : 0
 
-    // --- WRITE: Update Cap ---
+  // --- WRITE: Update Cap ---
   const { data: txHash, writeContract, isPending } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash: txHash,
   })
 
-  // Handle the success state with a side-effect
   useEffect(() => {
     if (isConfirmed) {
       setNewCap('')
-      refetchCap() // Instantly refresh the UI metric on success
+      refetchCap()
     }
   }, [isConfirmed, refetchCap])
 
   const handleUpdateCap = () => {
     if (!newCap || isNaN(Number(newCap))) return
-    
-    // Format input string to 18-decimal BigInt for execution
+
     const parsedCap = parseUnits(newCap, 18)
 
     writeContract({
@@ -79,7 +91,28 @@ export default function AdminDashboard() {
           <div className="flex flex-col items-center py-4">
             <ConnectButton />
           </div>
+        ) : isRoleChecking ? (
+          /* Loading State while checking on-chain role */
+          <div className="flex items-center justify-center py-6 gap-2 text-xs text-[#666666] font-mono">
+            <span className="w-4 h-4 border-2 border-t-transparent border-[#666666] rounded-full animate-spin" />
+            Verifying Reserve Manager Permissions...
+          </div>
+        ) : !isReserveManager ? (
+          /* Access Denied Card for Non-Admin Wallets */
+          <div className="bg-[#110505] border border-[#331111] rounded-xl p-4 flex flex-col items-center text-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-[#220A0A] text-[#FF4D4D] flex items-center justify-center text-xs font-mono font-bold">
+              ✕
+            </div>
+            <div>
+              <p className="text-sm font-medium text-[#FF6B6B]">Unauthorized Wallet</p>
+              <p className="text-xs text-[#884444] mt-1 font-mono">
+                {address?.slice(0, 6)}...{address?.slice(-4)} does not have RESERVE_MANAGER_ROLE.
+              </p>
+            </div>
+            <ConnectButton showBalance={false} />
+          </div>
         ) : (
+          /* Authorized Manager Input Form */
           <div className="flex flex-col gap-4">
             <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors">
               <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
@@ -110,7 +143,7 @@ export default function AdminDashboard() {
                 </>
               ) : (
                 'Push Cap Update'
-              )}
+              )} 
             </button>
           </div>
         )}
