@@ -440,6 +440,13 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
+              src="/saffron.PNG" 
+              alt="Saffron" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
               src="/chainlink.PNG" 
               alt="Chainlink" 
               width={130} 
@@ -454,6 +461,13 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
+              src="/uniswap-icon.png" 
+              alt="Uniswap" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
               src="/veritas.png" 
               alt="Veritas" 
               width={130} 
@@ -461,8 +475,8 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
-              src="/saffron.PNG" 
-              alt="Saffron" 
+              src="/aerodrome-icon.png" 
+              alt="Aerodrome" 
               width={130} 
               height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
