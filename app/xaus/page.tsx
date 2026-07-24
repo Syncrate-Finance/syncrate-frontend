@@ -213,7 +213,7 @@ export default function XAUsProductPage() {
               </div>
             </div>
 
-            {/* --- LIVE METRICS GRID --- */}
+                        {/* --- LIVE METRICS GRID --- */}
             <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                 <div>
@@ -234,78 +234,78 @@ export default function XAUsProductPage() {
                 </div>
               </div>
 
-              {/* External Links Bar */}
-              <div className="flex items-center gap-3">
-                <a
-                  href={`https://basescan.org/token/${XAUS_ADDRESS}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
-                >
-                  <Image src="/basescan.jpg" alt="BaseScan" width={14} height={14} className="rounded-full object-cover" />
-                  BaseScan
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </a>
+              {/* --- EXTERNAL LINKS & TRADING --- */}
+              <div className="flex flex-col gap-4">
+                {/* BaseScan & Dune Row */}
+                <div className="flex items-center gap-3">
+                  <a
+                    href={`https://basescan.org/token/${XAUS_ADDRESS}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
+                  >
+                    <Image src="/basescan.jpg" alt="BaseScan" width={14} height={14} className="rounded-full object-cover" />
+                    BaseScan
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
 
-                <a
-                  href="https://dune.com/syncratenetwork5167/syncrate-xaus-overview"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
-                >
-                  <Image src="/dune.JPG" alt="Dune Analytics" width={14} height={14} className="rounded-full object-cover" />
-                  Dune
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </a>
+                  <a
+                    href="https://dune.com/syncratenetwork5167/syncrate-xaus-overview"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
+                  >
+                    <Image src="/dune.JPG" alt="Dune Analytics" width={14} height={14} className="rounded-full object-cover" />
+                    Dune
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+                </div>
+
+                {/* Trade XAUs on: Uniswap & Aerodrome Row */}
+                <div className="flex items-center gap-3 mt-1">
+                  <span className="text-[#AAAAAA] text-xs font-mono mr-1">Trade XAUs on</span>
+
+                  {/* Uniswap */}
+                  <a
+                    href="https://app.uniswap.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
+                  >
+                    <Image src="/uniswap.PNG" alt="Uniswap" width={14} height={14} className="rounded-full object-cover" />
+                    Uniswap
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+
+                  {/* Aerodrome */}
+                  <a
+                    href="https://aerodrome.finance"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
+                  >
+                    <Image src="/aerodrome.png" alt="Aerodrome" width={14} height={14} className="rounded-full object-cover" />
+                    Aerodrome
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
-
-{/* Trade XAUs on: Uniswap & Aerodrome Row */}
-  <div className="flex items-center gap-3 mt-1">
-    <span className="text-zinc-400 text-sm font-medium mr-1">Trade XAUs on</span>
-
-    {/* Uniswap */}
-    <a
-      href="https://app.uniswap.org" // Replace with your exact token swap URL if needed
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-800 bg-zinc-950/80 hover:bg-zinc-900 transition-colors text-zinc-300 text-sm font-normal"
-    >
-      <img
-        src="/uniswap.PNG"
-        alt="Uniswap"
-        className="w-5 h-5 rounded-full"
-      />
-      <span>Uniswap</span>
-      <span className="text-zinc-500 text-xs font-mono ml-0.5">↗</span>
-    </a>
-
-    {/* Aerodrome */}
-    <a
-      href="https://aerodrome.finance" // Replace with your exact pool/swap URL if needed
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-800 bg-zinc-950/80 hover:bg-zinc-900 transition-colors text-zinc-300 text-sm font-normal"
-    >
-      <img
-        src="/aerodrome.png"
-        alt="Aerodrome"
-        className="w-5 h-5 rounded-full"
-      />
-      <span>Aerodrome</span>
-      <span className="text-zinc-500 text-xs font-mono ml-0.5">↗</span>
-    </a>
-  </div>
-</div>
 
       {/* --- XAUs FEATURES SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 md:py-16">
