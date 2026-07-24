@@ -268,7 +268,7 @@ export default function XAUsProductPage() {
               {/* Trade XAUs Section */}
               <div className="flex flex-col gap-3 mt-10">
                 {/* Standalone Header */}
-                <p className="text-l font-normal text-[#888888]">Trade XAUs on</p>
+                <p className="text-xl font-normal text-[#666666]">Trade XAUs on</p>
 
                 {/* Uniswap & Aerodrome Row */}
                 <div className="flex items-center gap-3">
