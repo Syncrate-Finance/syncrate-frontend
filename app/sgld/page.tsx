@@ -21,7 +21,7 @@ const IS_LIVE = false;
 // ==========================================
 // Base Mainnet Contract Addresses
 const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3' // Live XAUs Base Mainnet Address
-const SGLD_VAULT_ADDRESS = '0x0000000000000000000000000000000000000000' // TODO: Replace with your LIVE SGLD Vault Address
+const SGLD_VAULT_ADDRESS = '0x2123541BE6F7dA2b429BC703A591944DC7Db26a3' // TODO: Replace with your LIVE SGLD Vault Address
 
 // Launch date for APY calculation (Update this to your actual deployment date)
 const VAULT_INCEPTION = new Date('2026-06-01T00:00:00Z').getTime()
