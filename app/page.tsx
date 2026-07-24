@@ -355,7 +355,7 @@ export default function LaunchingSoon() {
             <div className="flex flex-col gap-5">
               <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
               <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
-              <a href="#" className="hover:text-[#888888] transition-colors">Brand Kit</a>
+              <a href="https://discord.gg/NUPeCHW8xJ" className="hover:text-[#888888] transition-colors">Discord</a>
               <a href="#" className="hover:text-[#888888] transition-colors">Terms & Disclosures</a>
               <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
               <a href="https://x.com/syncratefi" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
