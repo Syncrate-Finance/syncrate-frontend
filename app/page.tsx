@@ -245,34 +245,43 @@ export default function LaunchingSoon() {
         </div>
       </section>
 
-      {/* --- CONTRACTS SECTION --- */}
+            {/* --- CONTRACTS SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 pt-8 pb-16">
         <div className="w-full h-[2px] bg-[#333333] mb-6" />
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-6">
           <span className="text-lg font-medium text-white">
             Contracts
           </span>
-          <span className="text-xs font-mono text-[#888888]">Base Mainnet</span>
+          <span className="text-xs font-mono text-[#AAAAAA] bg-[#111111] px-3 py-1 rounded-full border border-[#222222]">
+            Base Mainnet
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Compact List Container */}
+        <div className="w-full border border-[#222222] rounded-xl bg-[#0A0A0A] overflow-hidden flex flex-col">
+          
           {/* XAUs Token */}
           <a 
             href="https://basescan.org/token/0xfa581c1F9c48fdb4137Aea343BA810434B3177d3"
             target="_blank"
             rel="noopener noreferrer"
-            className="group bg-[#0A0A0A] border border-[#222222] hover:border-[#444444] rounded-xl p-5 flex flex-col justify-between transition-all duration-200"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
           >
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">XAUs Token</span>
-                <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors">↗</span>
+            <div className="flex flex-col mb-3 sm:mb-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
+                  XAUs Token
+                </span>
+                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
               </div>
-              <p className="text-xs text-[#888888] mb-4">Syncrate Gold Asset</p>
+              <span className="text-xs text-[#888888]">Syncrate Gold Asset</span>
             </div>
-            <p className="text-[11px] font-mono text-[#AAAAAA] bg-[#111111] px-2.5 py-1.5 rounded border border-[#222222] truncate">
-              0xfa581c1F9c48fdb4137Aea343BA810434B3177d3
-            </p>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
+                0xfa581c1F9c48fdb4137Aea343BA810434B3177d3
+              </span>
+              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
+            </div>
           </a>
 
           {/* SyncrateEngine */}
@@ -280,37 +289,47 @@ export default function LaunchingSoon() {
             href="https://basescan.org/address/0xA6053c69043C370c4033F89c5Fceb21019b305D5"
             target="_blank"
             rel="noopener noreferrer"
-            className="group bg-[#0A0A0A] border border-[#222222] hover:border-[#444444] rounded-xl p-5 flex flex-col justify-between transition-all duration-200"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
           >
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">SyncrateEngine</span>
-                <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors">↗</span>
+            <div className="flex flex-col mb-3 sm:mb-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
+                  SyncrateEngine
+                </span>
+                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
               </div>
-              <p className="text-xs text-[#888888] mb-4">Minting & Redemption Engine</p>
+              <span className="text-xs text-[#888888]">Minting & Redemption Engine</span>
             </div>
-            <p className="text-[11px] font-mono text-[#AAAAAA] bg-[#111111] px-2.5 py-1.5 rounded border border-[#222222] truncate">
-              0xA6053c69043C370c4033F89c5Fceb21019b305D5
-            </p>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
+                0xA6053c69043C370c4033F89c5Fceb21019b305D5
+              </span>
+              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
+            </div>
           </a>
 
           {/* SYNC Token */}
           <a 
-            href="https://basescan.org/token/0x822E514B961c9798f53103D256A0888a6dBD7F2"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="group bg-[#0A0A0A] border border-[#222222] hover:border-[#444444] rounded-xl p-5 flex flex-col justify-between transition-all duration-200"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
           >
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">SYNC Token</span>
-                <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors">↗</span>
+            <div className="flex flex-col mb-3 sm:mb-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
+                  SYNC Token
+                </span>
+                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
               </div>
-              <p className="text-xs text-[#888888] mb-4">Protocol Ecosystem Token</p>
+              <span className="text-xs text-[#888888]">Protocol Ecosystem Token</span>
             </div>
-            <p className="text-[11px] font-mono text-[#AAAAAA] bg-[#111111] px-2.5 py-1.5 rounded border border-[#222222] truncate">
-              0x822E514B961c9798f53103D256A0888a6dBD7F2
-            </p>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
+                Not Live
+              </span>
+              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
+            </div>
           </a>
 
           {/* Uniswap Pool */}
@@ -318,18 +337,23 @@ export default function LaunchingSoon() {
             href="https://app.uniswap.org"
             target="_blank"
             rel="noopener noreferrer"
-            className="group bg-[#0A0A0A] border border-[#222222] hover:border-[#444444] rounded-xl p-5 flex flex-col justify-between transition-all duration-200"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
           >
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">Uniswap Pool</span>
-                <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors">↗</span>
+            <div className="flex flex-col mb-3 sm:mb-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
+                  Uniswap Pool
+                </span>
+                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
               </div>
-              <p className="text-xs text-[#888888] mb-4">XAUs Liquidity Pair (v3)</p>
+              <span className="text-xs text-[#888888]">XAUs Liquidity Pair (v3)</span>
             </div>
-            <p className="text-[11px] font-mono text-[#AAAAAA] bg-[#111111] px-2.5 py-1.5 rounded border border-[#222222] truncate">
-              XAUs / USDC Pool
-            </p>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none sm:min-w-[364px] text-center">
+                XAUs / USDC Uniswap Pool
+              </span>
+              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
+            </div>
           </a>
 
           {/* Aerodrome Pool */}
@@ -337,19 +361,25 @@ export default function LaunchingSoon() {
             href="https://aerodrome.finance"
             target="_blank"
             rel="noopener noreferrer"
-            className="group bg-[#0A0A0A] border border-[#222222] hover:border-[#444444] rounded-xl p-5 flex flex-col justify-between transition-all duration-200"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 hover:bg-[#111111] transition-colors duration-200"
           >
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">Aerodrome Pool</span>
-                <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors">↗</span>
+            <div className="flex flex-col mb-3 sm:mb-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
+                  Aerodrome Pool
+                </span>
+                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
               </div>
-              <p className="text-xs text-[#888888] mb-4">XAUs Liquidity Pool</p>
+              <span className="text-xs text-[#888888]">XAUs Liquidity Pool</span>
             </div>
-            <p className="text-[11px] font-mono text-[#AAAAAA] bg-[#111111] px-2.5 py-1.5 rounded border border-[#222222] truncate">
-              XAUs / USDC Pool
-            </p>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none sm:min-w-[364px] text-center">
+                XAUs / USDC Aerodrome Pool
+              </span>
+              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
+            </div>
           </a>
+
         </div>
       </section>
 
