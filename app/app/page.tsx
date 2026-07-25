@@ -220,9 +220,13 @@ function MintingAppUI() {
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => setIsMounted(true), [])
 
-  const activeChainId = useChainId()
+  const { isConnected, address, chainId: accountChainId } = useAccount()
+
+  // 🔥 THE FIX: Properly derive the target network. 
+  // If disconnected or on an unsupported chain, force it to 8453 (Base).
+  const targetChainId = accountChainId && CHAIN_CONFIGS[accountChainId] ? accountChainId : 8453;
   
-  const activeConfig = useMemo(() => CHAIN_CONFIGS[activeChainId] || CHAIN_CONFIGS[8453], [activeChainId])
+  const activeConfig = useMemo(() => CHAIN_CONFIGS[targetChainId], [targetChainId])
   const availableStablecoins = useMemo(() => Object.keys(activeConfig.stablecoins), [activeConfig])
 
   const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint')
@@ -238,29 +242,31 @@ function MintingAppUI() {
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
   const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
 
-  useEffect(() => setSelectedAsset(null), [activeChainId])
+  // Reset selected asset if the network changes
+  useEffect(() => setSelectedAsset(null), [targetChainId])
 
   const activeStablecoinConfig = useMemo(() => activeConfig.stablecoins[paymentAsset], [activeConfig, paymentAsset])
-
-  const { isConnected, address } = useAccount()
   const isMintControllerValid = activeConfig.mintController !== ZERO_ADDRESS
 
-  // Read Chainlink XAU/USD feed - pinned to targeted active chain
+  // Read Chainlink XAU/USD feed - pinned STRICTLY to the targetChainId
   const { data: roundData, isError: isPriceError } = useReadContract({
     address: activeConfig.goldPriceFeed !== ZERO_ADDRESS ? activeConfig.goldPriceFeed : undefined,
     abi: AGGREGATOR_V3_ABI,
     functionName: 'latestRoundData',
-    chainId: activeChainId || 8453,
+    chainId: targetChainId, // <-- This ensures it reads from Base even when disconnected
     query: {
       enabled: activeConfig.goldPriceFeed !== ZERO_ADDRESS,
       refetchInterval: 15000,
     },
   })
 
-  // Extract price reliably without long hanging/loading states
+  // Safely extract price 
   const goldPricePerOunce = useMemo(() => {
     if (!roundData || isPriceError) return null;
+    
+    // Viem returns tuples as arrays
     const answer = Array.isArray(roundData) ? roundData[1] : (roundData as any)?.answer;
+    
     if (!answer || answer <= BigInt(0)) return null;
     return Number(answer) / 1e8;
   }, [roundData, isPriceError]);
@@ -269,6 +275,7 @@ function MintingAppUI() {
     address: isMintControllerValid ? activeConfig.mintController : undefined,
     abi: MINT_CONTROLLER_ABI,
     functionName: 'nextQueueIndex',
+    chainId: targetChainId,
     query: { enabled: isMintControllerValid, refetchInterval: 10000 }
   })
 
@@ -279,6 +286,7 @@ function MintingAppUI() {
     abi: MINT_CONTROLLER_ABI,
     functionName: 'redemptionQueue',
     args: [targetIndex],
+    chainId: targetChainId,
     query: { enabled: !!queuedRequest && isMintControllerValid, refetchInterval: 10000 }
   })
 
@@ -287,6 +295,7 @@ function MintingAppUI() {
     abi: ERC20_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
+    chainId: targetChainId,
     query: { enabled: !!address && !!activeStablecoinConfig?.address && activeStablecoinConfig.address !== ZERO_ADDRESS, refetchInterval: 10000, }
   })
 
@@ -295,6 +304,7 @@ function MintingAppUI() {
     abi: ERC20_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
+    chainId: targetChainId,
     query: { enabled: !!address && !!activeConfig.xaus && activeConfig.xaus !== ZERO_ADDRESS, refetchInterval: 10000, }
   })
 
