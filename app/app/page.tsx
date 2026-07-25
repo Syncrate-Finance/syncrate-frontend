@@ -222,7 +222,7 @@ function MintingAppUI() {
 
   const { isConnected, address, chainId: accountChainId } = useAccount()
 
-  // 🔥 THE FIX: Properly derive the target network. 
+  // Properly derive the target network. 
   // If disconnected or on an unsupported chain, force it to 8453 (Base).
   const targetChainId = accountChainId && CHAIN_CONFIGS[accountChainId] ? accountChainId : 8453;
   
@@ -248,17 +248,29 @@ function MintingAppUI() {
   const activeStablecoinConfig = useMemo(() => activeConfig.stablecoins[paymentAsset], [activeConfig, paymentAsset])
   const isMintControllerValid = activeConfig.mintController !== ZERO_ADDRESS
 
-  // Read Chainlink XAU/USD feed - pinned STRICTLY to the targetChainId
-  const { data: roundData, isError: isPriceError } = useReadContract({
+    // Read Chainlink XAU/USD feed
+  const { data: roundData, isError: isPriceError, error: priceError } = useReadContract({
     address: activeConfig.goldPriceFeed !== ZERO_ADDRESS ? activeConfig.goldPriceFeed : undefined,
     abi: AGGREGATOR_V3_ABI,
     functionName: 'latestRoundData',
-    chainId: targetChainId, // <-- This ensures it reads from Base even when disconnected
+    chainId: targetChainId,
     query: {
       enabled: activeConfig.goldPriceFeed !== ZERO_ADDRESS,
       refetchInterval: 15000,
     },
   })
+
+  // TEMPORARY DEBUG LOGGING
+  useEffect(() => {
+    console.log("--- PRICE FEED DEBUG ---")
+    console.log("1. Target Chain ID:", targetChainId)
+    console.log("2. Feed Address:", activeConfig.goldPriceFeed)
+    console.log("3. Raw Round Data:", roundData)
+    if (priceError) {
+      console.error("4. WAGMI ERROR:", priceError.name, priceError.message)
+    }
+  }, [roundData, priceError, activeConfig, targetChainId])
+
 
   // Safely extract price 
   const goldPricePerOunce = useMemo(() => {
