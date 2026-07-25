@@ -33,13 +33,13 @@ interface ChainConfig {
 }
 
 const CHAIN_CONFIGS: Record<number, ChainConfig> = {
-  8453: {
+  8453: { // Base Mainnet
     stablecoins: {
       USDC: { address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', decimals: 6 },
       USDT: { address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2', decimals: 6 },
     },
     xaus: '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3', 
-    goldPriceFeed: '0x52136E92A6829C5dB852EB6c019d67e7E2fbCF31', 
+    goldPriceFeed: '0x52136e92A6B29C5dB852EB6c019d67e7E2fbcF31', 
     mintController: '0xA6053c69043C370c4033F89c5Fceb21019b305D5', 
     defaultAsset: 'USDC',
   },
@@ -54,7 +54,31 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
   },
 };
 
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const;
+
+// Standard Chainlink AggregatorV3Interface ABI
+const AGGREGATOR_V3_ABI = [
+  {
+    inputs: [],
+    name: 'latestRoundData',
+    outputs: [
+      { name: 'roundId', type: 'uint80' },
+      { name: 'answer', type: 'int256' },
+      { name: 'startedAt', type: 'uint256' },
+      { name: 'updatedAt', type: 'uint256' },
+      { name: 'answeredInRound', type: 'uint80' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', type: 'uint8' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+] as const;
 
 const ERC20_ABI = [
   { name: 'approve', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'spender', type: 'address' }, { name: 'value', type: 'uint256' }], outputs: [{ name: '', type: 'bool' }] },
@@ -66,7 +90,7 @@ const MINT_CONTROLLER_ABI = [
   { inputs: [{ internalType: 'uint256', name: 'xauAmount', type: 'uint256' }, { internalType: 'address', name: 'stablecoinAddress', type: 'address' }], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
   { inputs: [], name: 'nextQueueIndex', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
   { inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], name: 'redemptionQueue', outputs: [{ internalType: 'address', name: 'account', type: 'address' }, { internalType: 'address', name: 'stablecoin', type: 'address' }, { internalType: 'uint256', name: 'amountOwed', type: 'uint256' }], stateMutability: 'view', type: 'function' }
-] as const
+] as const;
 
 
 // ==========================================
@@ -222,14 +246,24 @@ function MintingAppUI() {
   const { isConnected, address } = useAccount()
   const isMintControllerValid = activeConfig.mintController !== ZERO_ADDRESS
 
-  const { data: priceData } = useReadContract({
+  // Read Chainlink XAU/USD feed using latestRoundData
+  const { data: roundData, isError: isPriceError } = useReadContract({
     address: activeConfig.goldPriceFeed !== ZERO_ADDRESS ? activeConfig.goldPriceFeed : undefined,
-    abi: [{ inputs: [], name: 'latestAnswer', outputs: [{ internalType: 'int256', name: '', type: 'int256' }], stateMutability: 'view', type: 'function' }],
-    functionName: 'latestAnswer',
-    query: { enabled: activeConfig.goldPriceFeed !== ZERO_ADDRESS, refetchInterval: 10000 },
+    abi: AGGREGATOR_V3_ABI,
+    functionName: 'latestRoundData',
+    query: {
+      enabled: activeConfig.goldPriceFeed !== ZERO_ADDRESS,
+      refetchInterval: 15000,
+    },
   })
 
-  const goldPricePerOunce = priceData ? Number(priceData) / 1e8 : 2415.50
+  // Extract answer (8 decimals for XAU/USD) and convert to human-readable number
+  const goldPricePerOunce = useMemo(() => {
+    if (!roundData || isPriceError) return null;
+    const answer = roundData[1]; // int256 answer
+    if (answer <= 0n) return null;
+    return Number(answer) / 1e8;
+  }, [roundData, isPriceError]);
 
   const { data: currentFrontIndex } = useReadContract({
     address: isMintControllerValid ? activeConfig.mintController : undefined,
@@ -292,10 +326,15 @@ function MintingAppUI() {
   }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus])
 
   const calculatedOutput = (() => {
-    if (!inputAmount || parseFloat(inputAmount) <= 0) return activeTab === 'mint' ? '0.0000' : '0.00'
+    if (!inputAmount || parseFloat(inputAmount) <= 0 || goldPricePerOunce === null) {
+      return activeTab === 'mint' ? '0.0000' : '0.00'
+    }
     const amount = parseFloat(inputAmount)
-    if (activeTab === 'mint') return (amount / goldPricePerOunce).toFixed(4)
-    else return (amount * goldPricePerOunce * 0.9975).toFixed(2)
+    if (activeTab === 'mint') {
+      return (amount / goldPricePerOunce).toFixed(4)
+    } else {
+      return (amount * goldPricePerOunce * 0.9975).toFixed(2) // 0.25% fee
+    }
   })()
 
   const handleMaxBalance = () => {
@@ -377,7 +416,6 @@ function MintingAppUI() {
         <div className="flex items-center gap-1.5 sm:gap-3">
           <ConnectButton.Custom>
             {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
-              const ready = mounted && account && chain;
               return (
                 <div {...(!mounted && { 'aria-hidden': true, style: { opacity: 0, pointerEvents: 'none', userSelect: 'none' } })} className="flex items-center gap-1.5 sm:gap-3">
                   {(() => {
@@ -492,7 +530,10 @@ function MintingAppUI() {
               <div className="bg-[#030303] border border-[#111111] rounded-xl p-4 font-mono text-xs flex flex-col gap-2 mt-1">
                 <div className="flex justify-between items-center text-[#666666]">
                   <span>Live Gold Price Feed</span>
-                  <span className="text-white font-sans">${goldPricePerOunce.toFixed(2)} <span className="text-[10px] font-mono text-[#666666]">/ oz</span></span>
+                  <span className="text-white font-sans">
+                    {goldPricePerOunce !== null ? `$${goldPricePerOunce.toFixed(2)}` : 'Loading...'}
+                    <span className="text-[10px] font-mono text-[#666666]"> / oz</span>
+                  </span>
                 </div>
                 {activeTab === 'redeem' && <div className="flex justify-between items-center text-[#666666] pt-2 border-t border-[#111111]"><span>Redemption Fee</span><span className="text-white">0.25%</span></div>}
               </div>
@@ -511,12 +552,12 @@ function MintingAppUI() {
                 ) : (
                   <>
                     {(txStatus === 'idle' || txStatus === 'approving') && (
-                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2">
+                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid || goldPricePerOunce === null} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2">
                         {txStatus === 'approving' ? <><span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />Approving Allowances...</> : !isMintControllerValid ? 'Addresses Not Active on This Network' : `Approve ${activeTab === 'mint' ? paymentAsset : 'XAUs'}`}
                       </button>
                     )}
                     {(txStatus === 'approved' || txStatus === 'processing') && (
-                      <button onClick={handleProcess} disabled={txStatus === 'processing' || !isMintControllerValid} className={`w-full py-4 text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${activeTab === 'mint' ? 'bg-[#0037FF] hover:bg-[#002CD6] shadow-[#0037FF]/10' : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'}`}>
+                      <button onClick={handleProcess} disabled={txStatus === 'processing' || !isMintControllerValid || goldPricePerOunce === null} className={`w-full py-4 text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${activeTab === 'mint' ? 'bg-[#0037FF] hover:bg-[#002CD6] shadow-[#0037FF]/10' : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'}`}>
                         {txStatus === 'processing' ? <><span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />{activeTab === 'mint' ? 'Minting XAUs...' : 'Redeeming XAUs...'}</> : activeTab === 'mint' ? 'Mint XAUs' : 'Redeem XAUs'}
                       </button>
                     )}
