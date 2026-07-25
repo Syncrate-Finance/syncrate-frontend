@@ -568,8 +568,8 @@ function MintingAppUI() {
           )}
         </div>
 
-        <Link href="/app/sgld" className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300">
-          <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">Earn yield on your XAUs ➔</span>
+        <Link href="/sgld" className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] hover:border-[#222222] rounded-xl px-4 py-3 flex items-center justify-between group transition-all duration-300">
+          <span className="text-xs text-[#444444] group-hover:text-white group-hover:translate-x-0.5 transition-all font-mono">Launch Syncrate Prime ➔</span>
         </Link>
         {renderDashboard()}
       </main>
