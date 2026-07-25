@@ -261,7 +261,7 @@ function MintingAppUI() {
   const goldPricePerOunce = useMemo(() => {
     if (!roundData || isPriceError) return null;
     const answer = roundData[1]; // int256 answer
-    if (answer <= 0n) return null;
+    if (answer <= BigInt (0)) return null;
     return Number(answer) / 1e8;
   }, [roundData, isPriceError]);
 
