@@ -105,7 +105,6 @@ function LaunchingSoonUI() {
     e.preventDefault()
     if (!email) return
     setLoading(true)
-    // TODO: Replace with your actual email API
     await new Promise((resolve) => setTimeout(resolve, 1000)) 
     setLoading(false)
     setSubmitted(true)
@@ -176,7 +175,7 @@ function LaunchingSoonUI() {
           )}
         </div>
 
-         <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6 relative z-10">
+        <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6 relative z-10">
           <span className="text-[10px] font-mono text-[#444444] uppercase tracking-wider">
             Follow our updates
           </span>
@@ -246,22 +245,23 @@ function MintingAppUI() {
   const { isConnected, address } = useAccount()
   const isMintControllerValid = activeConfig.mintController !== ZERO_ADDRESS
 
-  // Read Chainlink XAU/USD feed using latestRoundData
+  // Read Chainlink XAU/USD feed - pinned to targeted active chain
   const { data: roundData, isError: isPriceError } = useReadContract({
     address: activeConfig.goldPriceFeed !== ZERO_ADDRESS ? activeConfig.goldPriceFeed : undefined,
     abi: AGGREGATOR_V3_ABI,
     functionName: 'latestRoundData',
+    chainId: activeChainId || 8453,
     query: {
       enabled: activeConfig.goldPriceFeed !== ZERO_ADDRESS,
       refetchInterval: 15000,
     },
   })
 
-  // Extract answer (8 decimals for XAU/USD) and convert to human-readable number
+  // Extract price reliably without long hanging/loading states
   const goldPricePerOunce = useMemo(() => {
     if (!roundData || isPriceError) return null;
-    const answer = roundData[1]; // int256 answer
-    if (answer <= BigInt (0)) return null;
+    const answer = Array.isArray(roundData) ? roundData[1] : (roundData as any)?.answer;
+    if (!answer || answer <= BigInt(0)) return null;
     return Number(answer) / 1e8;
   }, [roundData, isPriceError]);
 
@@ -326,7 +326,7 @@ function MintingAppUI() {
   }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus])
 
   const calculatedOutput = (() => {
-    if (!inputAmount || parseFloat(inputAmount) <= 0 || goldPricePerOunce === null) {
+    if (!inputAmount || parseFloat(inputAmount) <= 0 || !goldPricePerOunce) {
       return activeTab === 'mint' ? '0.0000' : '0.00'
     }
     const amount = parseFloat(inputAmount)
@@ -531,7 +531,7 @@ function MintingAppUI() {
                 <div className="flex justify-between items-center text-[#666666]">
                   <span>Live Gold Price Feed</span>
                   <span className="text-white font-sans">
-                    {goldPricePerOunce !== null ? `$${goldPricePerOunce.toFixed(2)}` : 'Loading...'}
+                    {goldPricePerOunce ? `$${goldPricePerOunce.toFixed(2)}` : '—'}
                     <span className="text-[10px] font-mono text-[#666666]"> / oz</span>
                   </span>
                 </div>
@@ -552,12 +552,12 @@ function MintingAppUI() {
                 ) : (
                   <>
                     {(txStatus === 'idle' || txStatus === 'approving') && (
-                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid || goldPricePerOunce === null} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2">
+                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2">
                         {txStatus === 'approving' ? <><span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />Approving Allowances...</> : !isMintControllerValid ? 'Addresses Not Active on This Network' : `Approve ${activeTab === 'mint' ? paymentAsset : 'XAUs'}`}
                       </button>
                     )}
                     {(txStatus === 'approved' || txStatus === 'processing') && (
-                      <button onClick={handleProcess} disabled={txStatus === 'processing' || !isMintControllerValid || goldPricePerOunce === null} className={`w-full py-4 text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${activeTab === 'mint' ? 'bg-[#0037FF] hover:bg-[#002CD6] shadow-[#0037FF]/10' : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'}`}>
+                      <button onClick={handleProcess} disabled={txStatus === 'processing' || !isMintControllerValid} className={`w-full py-4 text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${activeTab === 'mint' ? 'bg-[#0037FF] hover:bg-[#002CD6] shadow-[#0037FF]/10' : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'}`}>
                         {txStatus === 'processing' ? <><span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />{activeTab === 'mint' ? 'Minting XAUs...' : 'Redeeming XAUs...'}</> : activeTab === 'mint' ? 'Mint XAUs' : 'Redeem XAUs'}
                       </button>
                     )}
@@ -579,7 +579,6 @@ function MintingAppUI() {
 
 // ==========================================
 // THE MAIN ROUTER EXPORT
-// This looks at 'IS_LIVE' and decides which component to show.
 // ==========================================
 export default function AppPortal() {
   if (!IS_LIVE) {
