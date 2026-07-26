@@ -15,7 +15,7 @@ const publicClient = createPublicClient({
 })
 
 // XAUs Address & Minimal ABI
-const XAUS_ADDRESS = '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3' as `0x${string}`
+const XAUS_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as `0x${string}`
 const xausAbi = [
   {
     name: 'totalSupply',
