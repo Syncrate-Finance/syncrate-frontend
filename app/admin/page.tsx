@@ -8,7 +8,7 @@ import { parseUnits, formatUnits, keccak256, stringToBytes } from 'viem'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 // Base Mainnet Contract Address
-const SYNCRATE_ENGINE_ADDRESS = '0xA6053c69043C370c4033F89c5Fceb21019b305D5' 
+const SYNCRATE_ENGINE_ADDRESS = '0x37c0078D297243A22ac247cd93f1cafed9Dbe461' 
 
 // Compute standard keccak256 hash for RESERVE_MANAGER_ROLE
 const RESERVE_MANAGER_ROLE = keccak256(stringToBytes('RESERVE_MANAGER_ROLE'))
