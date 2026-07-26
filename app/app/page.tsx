@@ -38,9 +38,9 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
       USDC: { address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', decimals: 6 },
       USDT: { address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2', decimals: 6 },
     },
-    xaus: '0xfa581c1F9c48fdb4137Aea343BA810434B3177d3', 
+    xaus: '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb', 
     goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', 
-    mintController: '0xA6053c69043C370c4033F89c5Fceb21019b305D5', 
+    mintController: '0x9c8671ec3e032bbdb0a9b7577468763dc553da40', 
     defaultAsset: 'USDC',
   },
   4663: {
