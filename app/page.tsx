@@ -262,7 +262,7 @@ export default function LaunchingSoon() {
           
           {/* XAUs Token */}
           <a 
-            href="https://basescan.org/token/0xfa581c1F9c48fdb4137Aea343BA810434B3177d3"
+            href="https://basescan.org/token/0x10C5E0643bCc6C915Cad0335f70A96c1532766eb"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
@@ -278,7 +278,7 @@ export default function LaunchingSoon() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
-                0xfa581c1F9c48fdb4137Aea343BA810434B3177d3
+                0x10C5E0643bCc6C915Cad0335f70A96c1532766eb
               </span>
               <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
             </div>
@@ -286,7 +286,7 @@ export default function LaunchingSoon() {
 
           {/* SyncrateEngine */}
           <a 
-            href="https://basescan.org/address/0xA6053c69043C370c4033F89c5Fceb21019b305D5"
+            href="https://basescan.org/address/0x37c0078D297243A22ac247cd93f1cafed9Dbe461"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
@@ -302,7 +302,7 @@ export default function LaunchingSoon() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
-                0xA6053c69043C370c4033F89c5Fceb21019b305D5
+                0x37c0078D297243A22ac247cd93f1cafed9Dbe461
               </span>
               <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
             </div>
