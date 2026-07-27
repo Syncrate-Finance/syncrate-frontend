@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
-import { parseUnits, formatUnits } from 'viem'
+import { parseUnits, formatUnits, maxUint256 } from 'viem'
 
 // ==========================================
 // 🚀 THE MASTER TOGGLE
