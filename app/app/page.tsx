@@ -86,10 +86,14 @@ const ERC20_ABI = [
 ] as const;
 
 const MINT_CONTROLLER_ABI = [
-  { inputs: [{ internalType: 'uint256', name: 'xauAmount', type: 'uint256' }, { internalType: 'address', name: 'tokenAddress', type: 'address' }], name: 'mint', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-  { inputs: [{ internalType: 'uint256', name: 'xauAmount', type: 'uint256' }, { internalType: 'address', name: 'stablecoinAddress', type: 'address' }], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-  { inputs: [], name: 'nextQueueIndex', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-  { inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], name: 'redemptionQueue', outputs: [{ internalType: 'address', name: 'account', type: 'address' }, { internalType: 'address', name: 'stablecoin', type: 'address' }, { internalType: 'uint256', name: 'amountOwed', type: 'uint256' }], stateMutability: 'view', type: 'function' }
+  { inputs: [
+    { internalType: 'uint256', name: 'stablecoin', type: 'uint256' },
+    { internalType: 'address', name: 'tokenAddress', type: 'address' }
+  ], name: 'mint', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+{ inputs: [
+    { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
+    { internalType: 'address', name: 'stablecoinAddress', type: 'address' }
+  ], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
 ] as const;
 
 
@@ -381,18 +385,31 @@ function MintingAppUI() {
   }
 
     const handleProcess = () => {
-    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
-    const isMint = activeTab === 'mint'
-    
-    // Both minting and redeeming in SyncrateEngine expect XAU amounts formatted to 18 decimals (wei)
+  if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
+
+  const isMint = activeTab === 'mint'
+  const targetTokenAddress = activeStablecoinConfig.address
+
+  if (isMint) {
+    // Correct: pass stablecoin amount in its native decimals
+    const parsedAmount = parseUnits(inputAmount, activeStablecoinConfig.decimals)
+    writeAction({
+      address: activeConfig.mintController,
+      abi: MINT_CONTROLLER_ABI,
+      functionName: 'mint',
+      args: [parsedAmount, targetTokenAddress],
+    } as any)
+  } else {
+    // Redeem still takes XAUs amount (18 decimals)
     const parsedAmount = parseUnits(inputAmount, 18)
-    
-    const targetTokenAddress = activeStablecoinConfig.address
-    if (activeConfig.mintController === ZERO_ADDRESS) { alert('Mint Controller address not configured for this network.'); return }
-    
-    if (isMint) writeAction({ address: activeConfig.mintController, abi: MINT_CONTROLLER_ABI, functionName: 'mint', args: [parsedAmount, targetTokenAddress] } as any)
-    else writeAction({ address: activeConfig.mintController, abi: MINT_CONTROLLER_ABI, functionName: 'redeem', args: [parsedAmount, targetTokenAddress] } as any)
+    writeAction({
+      address: activeConfig.mintController,
+      abi: MINT_CONTROLLER_ABI,
+      functionName: 'redeem',
+      args: [parsedAmount, targetTokenAddress],
+    } as any)
   }
+}
 
   const resetFlow = () => { setInputAmount(''); setTxStatus('idle'); resetApprove(); resetAction() }
   const handleTabSwitch = (tab: 'mint' | 'redeem') => { if (txStatus === 'idle' || txStatus === 'success') { setActiveTab(tab); resetFlow() } }
