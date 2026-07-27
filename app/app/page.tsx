@@ -40,7 +40,7 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
     },
     xaus: '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb', 
     goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', 
-    mintController: '0x9c8671ec3e032bbdb0a9b7577468763dc553da40', 
+    mintController: '0x37c0078D297243A22ac247cd93f1cafed9Dbe461', 
     defaultAsset: 'USDC',
   },
   4663: {
