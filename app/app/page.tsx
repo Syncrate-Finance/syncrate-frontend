@@ -377,7 +377,7 @@ function MintingAppUI() {
     }
     if (targetTokenAddress === ZERO_ADDRESS) { alert('Contract addresses not yet configured for this network.'); return }
     const parsedAmount = parseUnits(inputAmount, decimals)
-    writeApprove({ address: targetTokenAddress, abi: ERC20_ABI, functionName: 'approve', args: [activeConfig.mintController, parsedAmount] } as any)
+    writeApprove({ address: targetTokenAddress, abi: ERC20_ABI, functionName: 'approve', args: [activeConfig.mintController, maxUint256] } as any)
   }
 
   const handleProcess = () => {
