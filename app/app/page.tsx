@@ -36,7 +36,7 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
   8453: { // Base Mainnet
     stablecoins: {
       USDC: { address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', decimals: 6 },
-      USDT: { address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2', decimals: 6 },
+      USDT: { address: '0x37c0078D297243A22ac247cd93f1cafed9Dbe461', decimals: 6 },
     },
     xaus: '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb', 
     goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', 
