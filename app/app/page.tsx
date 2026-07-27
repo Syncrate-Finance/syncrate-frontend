@@ -380,11 +380,13 @@ function MintingAppUI() {
     writeApprove({ address: targetTokenAddress, abi: ERC20_ABI, functionName: 'approve', args: [activeConfig.mintController, maxUint256] } as any)
   }
 
-  const handleProcess = () => {
+    const handleProcess = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
     const isMint = activeTab === 'mint'
-    const decimals = isMint ? activeStablecoinConfig.decimals : 18
-    const parsedAmount = parseUnits(inputAmount, decimals)
+    
+    // Both minting and redeeming in SyncrateEngine expect XAU amounts formatted to 18 decimals (wei)
+    const parsedAmount = parseUnits(inputAmount, 18)
+    
     const targetTokenAddress = activeStablecoinConfig.address
     if (activeConfig.mintController === ZERO_ADDRESS) { alert('Mint Controller address not configured for this network.'); return }
     
