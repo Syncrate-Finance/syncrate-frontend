@@ -6,7 +6,7 @@ import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseUnits, formatUnits, maxUint256 } from 'viem'
 
 // ==========================================
@@ -90,7 +90,7 @@ const MINT_CONTROLLER_ABI = [
     { internalType: 'uint256', name: 'stablecoin', type: 'uint256' },
     { internalType: 'address', name: 'tokenAddress', type: 'address' }
   ], name: 'mint', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-{ inputs: [
+  { inputs: [
     { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
     { internalType: 'address', name: 'stablecoinAddress', type: 'address' }
   ], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
@@ -226,8 +226,6 @@ function MintingAppUI() {
 
   const { isConnected, address, chainId: accountChainId } = useAccount()
 
-  // Properly derive the target network. 
-  // If disconnected or on an unsupported chain, force it to 8453 (Base).
   const targetChainId = accountChainId && CHAIN_CONFIGS[accountChainId] ? accountChainId : 8453;
   
   const activeConfig = useMemo(() => CHAIN_CONFIGS[targetChainId], [targetChainId])
@@ -246,13 +244,11 @@ function MintingAppUI() {
   const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'approved' | 'processing' | 'success'>('idle')
   const [queuedRequest, setQueuedRequest] = useState<{ amount: number, position: number, status: 'pending' | 'processing' } | null>(null)
 
-  // Reset selected asset if the network changes
   useEffect(() => setSelectedAsset(null), [targetChainId])
 
   const activeStablecoinConfig = useMemo(() => activeConfig.stablecoins[paymentAsset], [activeConfig, paymentAsset])
   const isMintControllerValid = activeConfig.mintController !== ZERO_ADDRESS
 
-    // Read Chainlink XAU/USD feed
   const { data: roundData, isError: isPriceError, error: priceError } = useReadContract({
     address: activeConfig.goldPriceFeed !== ZERO_ADDRESS ? activeConfig.goldPriceFeed : undefined,
     abi: AGGREGATOR_V3_ABI,
@@ -264,7 +260,6 @@ function MintingAppUI() {
     },
   })
 
-  // TEMPORARY DEBUG LOGGING
   useEffect(() => {
     console.log("--- PRICE FEED DEBUG ---")
     console.log("1. Target Chain ID:", targetChainId)
@@ -275,14 +270,9 @@ function MintingAppUI() {
     }
   }, [roundData, priceError, activeConfig, targetChainId])
 
-
-  // Safely extract price 
   const goldPricePerOunce = useMemo(() => {
     if (!roundData || isPriceError) return null;
-    
-    // Viem returns tuples as arrays
     const answer = Array.isArray(roundData) ? roundData[1] : (roundData as any)?.answer;
-    
     if (!answer || answer <= BigInt(0)) return null;
     return Number(answer) / 1e8;
   }, [roundData, isPriceError]);
@@ -339,17 +329,14 @@ function MintingAppUI() {
     else if (approveError) { setTxStatus('idle'); resetApprove() }
   }, [isApprovalMining, isApprovalConfirmed, approveError, resetApprove, txStatus])
 
+  // FIX 2: Clear local queue state and properly handle transaction success screen
   useEffect(() => {
     if (isActionMining) setTxStatus('processing')
     else if (isActionConfirmed && txStatus === 'processing') {
-      if (activeTab === 'redeem') {
-        setQueuedRequest({ amount: parseFloat(inputAmount), position: 1, status: 'pending' })
-        setTxStatus('idle'); setInputAmount('')
-      } else {
-        setTxStatus('success')
-      }
+      setQueuedRequest(null) // Instant redemptions clear queue display
+      setTxStatus('success')
     } else if (actionError) { setTxStatus('approved'); resetAction() }
-  }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, inputAmount, txStatus])
+  }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, txStatus])
 
   const calculatedOutput = (() => {
     if (!inputAmount || parseFloat(inputAmount) <= 0 || !goldPricePerOunce) {
@@ -380,38 +367,35 @@ function MintingAppUI() {
       decimals = 18 
     }
     if (targetTokenAddress === ZERO_ADDRESS) { alert('Contract addresses not yet configured for this network.'); return }
-    const parsedAmount = parseUnits(inputAmount, decimals)
     writeApprove({ address: targetTokenAddress, abi: ERC20_ABI, functionName: 'approve', args: [activeConfig.mintController, maxUint256] } as any)
   }
 
-    const handleProcess = () => {
-  if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
+  const handleProcess = () => {
+    if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
 
-  const isMint = activeTab === 'mint'
-  const targetTokenAddress = activeStablecoinConfig.address
+    const isMint = activeTab === 'mint'
+    const targetTokenAddress = activeStablecoinConfig.address
 
-  if (isMint) {
-    // Correct: pass stablecoin amount in its native decimals
-    const parsedAmount = parseUnits(inputAmount, activeStablecoinConfig.decimals)
-    writeAction({
-      address: activeConfig.mintController,
-      abi: MINT_CONTROLLER_ABI,
-      functionName: 'mint',
-      args: [parsedAmount, targetTokenAddress],
-    } as any)
-  } else {
-    // Redeem still takes XAUs amount (18 decimals)
-    const parsedAmount = parseUnits(inputAmount, 18)
-    writeAction({
-      address: activeConfig.mintController,
-      abi: MINT_CONTROLLER_ABI,
-      functionName: 'redeem',
-      args: [parsedAmount, targetTokenAddress],
-    } as any)
+    if (isMint) {
+      const parsedAmount = parseUnits(inputAmount, activeStablecoinConfig.decimals)
+      writeAction({
+        address: activeConfig.mintController,
+        abi: MINT_CONTROLLER_ABI,
+        functionName: 'mint',
+        args: [parsedAmount, targetTokenAddress],
+      } as any)
+    } else {
+      const parsedAmount = parseUnits(inputAmount, 18)
+      writeAction({
+        address: activeConfig.mintController,
+        abi: MINT_CONTROLLER_ABI,
+        functionName: 'redeem',
+        args: [parsedAmount, targetTokenAddress],
+      } as any)
+    }
   }
-}
 
-  const resetFlow = () => { setInputAmount(''); setTxStatus('idle'); resetApprove(); resetAction() }
+  const resetFlow = () => { setInputAmount(''); setTxStatus('idle'); setQueuedRequest(null); resetApprove(); resetAction() }
   const handleTabSwitch = (tab: 'mint' | 'redeem') => { if (txStatus === 'idle' || txStatus === 'success') { setActiveTab(tab); resetFlow() } }
 
   const renderDashboard = () => {
@@ -592,14 +576,40 @@ function MintingAppUI() {
                   </div>
                 ) : (
                   <>
+                    {/* FIX 1: Explicit text styling prevents blank white rendering */}
                     {(txStatus === 'idle' || txStatus === 'approving') && (
-                      <button onClick={handleApprove} disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid} className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2">
-                        {txStatus === 'approving' ? <><span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />Approving Allowances...</> : !isMintControllerValid ? 'Addresses Not Active on This Network' : `Approve ${activeTab === 'mint' ? paymentAsset : 'XAUs'}`}
+                      <button 
+                        onClick={handleApprove} 
+                        disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid} 
+                        className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2"
+                      >
+                        {txStatus === 'approving' ? (
+                          <><span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />Approving Allowances...</>
+                        ) : !isMintControllerValid ? (
+                          'Addresses Not Active on This Network'
+                        ) : (
+                          `Approve ${activeTab === 'mint' ? paymentAsset : 'XAUs'}`
+                        )}
                       </button>
                     )}
                     {(txStatus === 'approved' || txStatus === 'processing') && (
-                      <button onClick={handleProcess} disabled={txStatus === 'processing' || !isMintControllerValid} className={`w-full py-4 text-white font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${activeTab === 'mint' ? 'bg-[#0037FF] hover:bg-[#002CD6] shadow-[#0037FF]/10' : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'}`}>
-                        {txStatus === 'processing' ? <><span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />{activeTab === 'mint' ? 'Minting XAUs...' : 'Redeeming XAUs...'}</> : activeTab === 'mint' ? 'Mint XAUs' : 'Redeem XAUs'}
+                      <button 
+                        onClick={handleProcess} 
+                        disabled={txStatus === 'processing' || !isMintControllerValid} 
+                        className={`w-full py-4 font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${
+                          activeTab === 'mint' 
+                            ? 'bg-[#0037FF] text-white hover:bg-[#002CD6] shadow-[#0037FF]/10' 
+                            : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'
+                        }`}
+                      >
+                        {txStatus === 'processing' ? (
+                          <>
+                            <span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />
+                            {activeTab === 'mint' ? 'Minting XAUs...' : 'Redeeming XAUs...'}
+                          </>
+                        ) : (
+                          activeTab === 'mint' ? 'Mint XAUs' : 'Redeem XAUs'
+                        )}
                       </button>
                     )}
                   </>
