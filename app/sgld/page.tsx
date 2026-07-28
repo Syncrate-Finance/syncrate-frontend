@@ -12,7 +12,7 @@ import { parseUnits, formatUnits } from 'viem'
 // ==========================================
 // 🚀 CONFIGURATIONS
 // ==========================================
-const IS_LIVE = false;
+const IS_LIVE = true;
 
 const XAUS_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
 const SGLD_VAULT_ADDRESS = '0x9dc4a31FAF646DB5051b9e14520900387E3e3B7a' as const
