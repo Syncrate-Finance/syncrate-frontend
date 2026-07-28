@@ -9,6 +9,11 @@ export const viewport = {
 export const metadata = {
   title: 'Syncrate',
   description: 'DeFi yield, backed by the real world.',
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png', // Uses logo.png for mobile history cards & wallet previews
+  },
 }
 
 export default function RootLayout({
