@@ -1,18 +1,44 @@
 import './globals.css'
-import { Providers } from './providers' // Ensure this path matches your file location
+import { Providers } from './providers' 
 
-// Tweak 1: This tells Safari/Chrome to color the top status bar and bottom areas
 export const viewport = {
   themeColor: '#030303',
 }
 
 export const metadata = {
-  title: 'Syncrate',
+  metadataBase: new URL('https://syncrate.org'), // Ensures relative image URLs work properly
+  title: 'Syncrate | Real Gold Yield Onchain',
   description: 'DeFi yield, backed by the real world.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
-    apple: '/logo.png', // Uses logo.png for mobile history cards & wallet previews
+    apple: '/logo.png',
+  },
+  
+  // Explicitly tell scrapers what banner image to use
+  openGraph: {
+    title: 'Syncrate | Real Gold Yield Onchain',
+    description: 'DeFi yield, backed by the real world.',
+    url: 'https://syncrate.org',
+    siteName: 'Syncrate',
+    images: [
+      {
+        url: '/logo.png', // Save a 1200x630 banner in your /public folder
+        width: 1200,
+        height: 630,
+        alt: 'Syncrate',
+      },
+    ],
+    type: 'website',
+  },
+
+  // Force Twitter/X to display a large summary card
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Syncrate | Real Gold Yield Onchain',
+    description: 'DeFi yield, backed by the real world.',
+    images: ['/og-image.png'],
+    creator: '@syncratefi',
   },
 }
 
@@ -23,7 +49,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* TWEAK 2: This forces the absolute bottom layer of the site to be dark */}
       <body className="bg-[#030303]">
         <Providers>
           {children}
