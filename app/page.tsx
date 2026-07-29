@@ -370,7 +370,7 @@ export default function LaunchingSoon() {
                   </span>
                   <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden"></span>
                 </div>
-                <span className="text-xs text-[#888888]">Syncrate Protocol Smart Contract Audit</span>
+                <span className="text-xs text-[#888888]">SyncrateEngine & XAUsToken Audit</span>
               </div>
             </div>
 
@@ -442,6 +442,13 @@ export default function LaunchingSoon() {
             <Image 
               src="/saffron.PNG" 
               alt="Saffron" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/chainlink.PNG" 
+              alt="Chainlink" 
               width={130} 
               height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
