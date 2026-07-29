@@ -23,7 +23,7 @@ export const metadata = {
     siteName: 'Syncrate',
     images: [
       {
-        url: '/logo.png', // Save a 1200x630 banner in your /public folder
+        url: '/og-image.png', // Save a 1200x630 banner in your /public folder
         width: 1200,
         height: 630,
         alt: 'Syncrate',
