@@ -7,8 +7,8 @@ export const viewport = {
 
 export const metadata = {
   metadataBase: new URL('https://syncrate.org'), // Ensures relative image URLs work properly
-  title: 'Syncrate | Tokenized Gold, Built for DeFi',
-  description: 'Tokenized Gold, Built for DeFi.',
+  title: 'Syncrate | Tokenized gold, built for DeFi',
+  description: 'Tokenized gold, built for DeFi.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
@@ -17,8 +17,8 @@ export const metadata = {
   
   // Explicitly tell scrapers what banner image to use
   openGraph: {
-    title: 'Syncrate | Real Gold Yield Onchain',
-    description: 'DeFi yield, backed by the real world.',
+    title: 'Syncrate | Tokenized gold, built for DeFi',
+    description: 'Tokenized gold, built for DeFi.',
     url: 'https://syncrate.org',
     siteName: 'Syncrate',
     images: [
@@ -35,10 +35,10 @@ export const metadata = {
   // Force Twitter/X to display a large summary card
   twitter: {
     card: 'summary_large_image',
-    title: 'Syncrate | Real Gold Yield Onchain',
-    description: 'DeFi yield, backed by the real world.',
+    title: 'Syncrate | Tokenized gold, built for DeFi',
+    description: 'Tokennized gold, built for DeFi.',
     images: ['/og-image.png'],
-    creator: '@syncratefi',
+    creator: '@syncrateorg',
   },
 }
 
