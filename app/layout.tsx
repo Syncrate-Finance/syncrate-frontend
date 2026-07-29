@@ -36,7 +36,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Syncrate | Tokenized gold, built for DeFi',
-    description: 'Tokennized gold, built for DeFi.',
+    description: 'Tokenized gold, built for DeFi.',
     images: ['/og-image.png'],
     creator: '@syncrateorg',
   },
