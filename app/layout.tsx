@@ -7,8 +7,8 @@ export const viewport = {
 
 export const metadata = {
   metadataBase: new URL('https://syncrate.org'), // Ensures relative image URLs work properly
-  title: 'Syncrate | Real Gold Yield Onchain',
-  description: 'DeFi yield, backed by the real world.',
+  title: 'Syncrate | Tokenized Gold, Built for DeFi',
+  description: 'Tokenized Gold, Built for DeFi.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
