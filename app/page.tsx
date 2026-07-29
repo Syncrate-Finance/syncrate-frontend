@@ -332,54 +332,6 @@ export default function LaunchingSoon() {
             </div>
           </a>
 
-          {/* Uniswap Pool */}
-          <a 
-            href="https://app.uniswap.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
-          >
-            <div className="flex flex-col mb-3 sm:mb-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
-                  Uniswap Pool
-                </span>
-                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
-              </div>
-              <span className="text-xs text-[#888888]">XAUs Liquidity Pair (v3)</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none sm:min-w-[364px] text-center">
-                XAUs / USDC Uniswap Pool
-              </span>
-              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
-            </div>
-          </a>
-
-          {/* Aerodrome Pool */}
-          <a 
-            href="https://aerodrome.finance"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 hover:bg-[#111111] transition-colors duration-200"
-          >
-            <div className="flex flex-col mb-3 sm:mb-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
-                  Aerodrome Pool
-                </span>
-                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
-              </div>
-              <span className="text-xs text-[#888888]">XAUs Liquidity Pool</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none sm:min-w-[364px] text-center">
-                XAUs / USDC Aerodrome Pool
-              </span>
-              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
-            </div>
-          </a>
-
         </div>
       </section>
 
