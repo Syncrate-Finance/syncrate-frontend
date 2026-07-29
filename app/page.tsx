@@ -245,8 +245,8 @@ export default function LaunchingSoon() {
         </div>
       </section>
 
-            {/* --- CONTRACTS SECTION --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 pt-8 pb-16">
+      {/* --- CONTRACTS SECTION --- */}
+      <section className="w-full max-w-6xl mx-auto px-6 pt-8 pb-12">
         <div className="w-full h-[2px] bg-[#333333] mb-6" />
         <div className="flex justify-between items-center mb-6">
           <span className="text-lg font-medium text-white">
@@ -313,7 +313,7 @@ export default function LaunchingSoon() {
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 hover:bg-[#111111] transition-colors duration-200"
           >
             <div className="flex flex-col mb-3 sm:mb-0">
               <div className="flex items-center gap-2 mb-1">
@@ -332,6 +332,54 @@ export default function LaunchingSoon() {
             </div>
           </a>
 
+        </div>
+      </section>
+
+      {/* --- SECURITY AUDITS SECTION --- */}
+      <section className="w-full max-w-6xl mx-auto px-6 pt-4 pb-16">
+        <div className="w-full h-[2px] bg-[#333333] mb-6" />
+        <div className="flex justify-between items-center mb-6">
+          <span className="text-lg font-medium text-white">
+            Security Audits
+          </span>
+        </div>
+
+        {/* Audit List Container */}
+        <div className="w-full border border-[#222222] rounded-xl bg-[#0A0A0A] overflow-hidden flex flex-col">
+          <a 
+            href="https://github.com/Syncrate-Finance/audits/blob/main/AstraSec-AuditReport-Syncrate-XAUs.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 hover:bg-[#111111] transition-colors duration-200"
+          >
+            <div className="flex items-center gap-4 mb-3 sm:mb-0">
+              {/* Auditor Logo Container */}
+              <div className="w-10 h-10 rounded-lg bg-[#111111] border border-[#222222] flex items-center justify-center p-2 shrink-0">
+                <Image 
+                  src="/astrasec.png" 
+                  alt="AstraSec Logo" 
+                  width={24} 
+                  height={24} 
+                  className="object-contain"
+                />
+              </div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
+                    AstraSec Security Audit
+                  </span>
+                  <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
+                </div>
+                <span className="text-xs text-[#888888]">Syncrate Protocol Smart Contract Audit</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-mono text-white bg-[#1a1a1a] group-hover:bg-white group-hover:text-[#030303] px-3 py-1.5 rounded border border-[#333333] transition-colors duration-200 flex items-center gap-1.5">
+                Read Audit <span className="text-[10px]">↗</span>
+              </span>
+            </div>
+          </a>
         </div>
       </section>
 
