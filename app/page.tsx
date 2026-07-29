@@ -454,8 +454,8 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
-              src="/chainlink.PNG" 
-              alt="Chainlink" 
+              src="/astrasec.PNG" 
+              alt="Astra Sec" 
               width={130} 
               height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
