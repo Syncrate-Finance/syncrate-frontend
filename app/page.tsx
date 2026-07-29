@@ -340,14 +340,14 @@ export default function LaunchingSoon() {
         <div className="w-full h-[2px] bg-[#333333] mb-6" />
         <div className="flex justify-between items-center mb-6">
           <span className="text-lg font-medium text-white">
-            Security Audits
+            Smart Contract Audits
           </span>
         </div>
 
         {/* Audit List Container */}
         <div className="w-full border border-[#222222] rounded-xl bg-[#0A0A0A] overflow-hidden flex flex-col">
           <a 
-            href="https://github.com/Syncrate-Finance/audits/blob/main/AstraSec-AuditReport-Syncrate-XAUs.pdf"
+            href="https://github.com/Syncrate-Finance/audits"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 hover:bg-[#111111] transition-colors duration-200"
@@ -366,9 +366,9 @@ export default function LaunchingSoon() {
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
-                    AstraSec Security Audit
+                    AstraSec v1.0 Audit
                   </span>
-                  <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
+                  <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden"></span>
                 </div>
                 <span className="text-xs text-[#888888]">Syncrate Protocol Smart Contract Audit</span>
               </div>
