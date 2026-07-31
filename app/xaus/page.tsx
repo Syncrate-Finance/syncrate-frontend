@@ -264,45 +264,6 @@ export default function XAUsProductPage() {
                   </svg>
                 </a>
               </div>
-
-              {/* Trade XAUs Section */}
-              <div className="flex flex-col gap-3 mt-12">
-                {/* Standalone Header */}
-                <p className="text-xl font-normal text-white">Trade XAUs on</p>
-
-                {/* Uniswap & Aerodrome Row */}
-                <div className="flex items-center gap-3">
-                  {/* Uniswap */}
-                  <a
-                    href="https://app.uniswap.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
-                  >
-                    <Image src="/uniswap.PNG" alt="Uniswap" width={14} height={14} className="rounded-full object-cover" />
-                    Uniswap
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
-                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                      <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
-                  </a>
-
-                  {/* Aerodrome */}
-                  <a
-                    href="https://aerodrome.finance"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] text-xs font-mono text-[#AAAAAA] hover:text-white transition-all"
-                  >
-                    <Image src="/aerodrome.jpg" alt="Aerodrome" width={14} height={14} className="rounded-full object-cover" />
-                    Aerodrome
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
-                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                      <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>
