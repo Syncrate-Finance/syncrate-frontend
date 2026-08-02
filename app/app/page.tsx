@@ -508,7 +508,7 @@ function MintingAppUI() {
                     </div>
                   ) : (
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white select-none flex-shrink-0 whitespace-nowrap">
-                      <Image src="/xaus-icon2.png" alt="XAUs logo" width={16} height={16} className="rounded-full flex-shrink-0" />
+                      <Image src="/XAUs-icon2.png" alt="XAUs logo" width={16} height={16} className="rounded-full flex-shrink-0" />
                       <span>XAUs</span>
                     </div>
                   )}
@@ -527,7 +527,7 @@ function MintingAppUI() {
                   <input type="text" readOnly value={calculatedOutput} className="bg-transparent text-xl md:text-2xl text-white/90 font-sans focus:outline-none w-full cursor-default min-w-0" />
                   {activeTab === 'mint' ? (
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
-                      <Image src="/xaus-icon2.png" alt="XAUs logo" width={16} height={16} className="rounded-full flex-shrink-0" />
+                      <Image src="/XAUs-icon2.png" alt="XAUs logo" width={16} height={16} className="rounded-full flex-shrink-0" />
                       <span>XAUs</span>
                     </div>
                   ) : (
