@@ -49,8 +49,8 @@ export default function XAUsProductPage() {
 
         // Format Total Supply
         const supplyString = `${formattedSupply.toLocaleString('en-US', {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 2,
+          minimumFractionDigits: 4,
+          maximumFractionDigits: 4,
         })} XAUs`
         setTotalSupply(supplyString)
 
