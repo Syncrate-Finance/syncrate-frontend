@@ -1,31 +1,25 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'XAUs | Syncrate Gold',
-  description:
-    'Syncrate Gold (XAUs) — 1:1 gold-pegged token each representing 1 troy oz of LBMA-standard physical gold.',
+  title: 'Syncrate',
+
   openGraph: {
-    title: 'XAUs | Syncrate Gold',
-    description:
-      '1:1 gold-pegged token each representing 1 troy oz of LBMA-standard physical gold.',
+    title: 'Syncrage',
     url: 'https://syncrate.org/xaus',
-    siteName: 'Syncrate',
     images: [
       {
-        url: '/xaus-og.png', // or a dedicated /xaus-og.png
+        url: '/embed.PNG',
         width: 1200,
-        height: 630,
-        alt: 'Syncrate XAUs',
+        height: 600,
+        alt: 'Syncrate Gold',
       },
     ],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'XAUs | Syncrate Gold',
-    description:
-      '1:1 gold-pegged token each representing 1 troy oz of LBMA-standard physical gold.',
-    images: ['/xaus-og.png'],
+    title: 'Syncrate',
+    images: ['/embed.PNG'],
   },
 }
 
