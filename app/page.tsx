@@ -406,13 +406,6 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
-              src="/astrasec.png" 
-              alt="Astra Sec" 
-              width={130} 
-              height={52} 
-              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
-            />
-            <Image 
               src="/rwaxyz.png" 
               alt="RWAXYZ" 
               width={130} 
@@ -429,13 +422,6 @@ export default function LaunchingSoon() {
             <Image 
               src="/veritas.png" 
               alt="Veritas" 
-              width={130} 
-              height={52} 
-              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
-            />
-            <Image 
-              src="/aerodrome-icon.png" 
-              alt="Aerodrome" 
               width={130} 
               height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
