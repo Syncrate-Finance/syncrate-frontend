@@ -4,11 +4,11 @@ export const metadata: Metadata = {
   title: 'Syncrate',
 
   openGraph: {
-    title: 'Syncrage',
+    title: 'Syncrate',
     url: 'https://syncrate.org/xaus',
     images: [
       {
-        url: '/embed.PNG',
+        url: '/embed.PNG?v=2',
         width: 1200,
         height: 600,
         alt: 'Syncrate Gold',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Syncrate',
-    images: ['/embed.PNG'],
+    images: ['/embed.PNG?v=2'],
   },
 }
 
