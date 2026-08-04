@@ -19,7 +19,7 @@ export const metadata = {
     url: 'https://syncrate.org',
     images: [
       {
-        url: '/embed.PNG',
+        url: '/embed.PNG?v=2',
         width: 1200,
         height: 600,
         alt: 'Syncrate',
@@ -29,9 +29,9 @@ export const metadata = {
   },
 
   twitter: {
-    card: 'summary_large_image', // Keeps the full banner layout
-    title: 'Syncrate',            // Renders only "Syncrate" inside the translucent bottom badge
-    images: ['/embed.PNG'],
+    card: 'summary_large_image', 
+    title: 'Syncrate',         
+    images: ['/embed.PNG?v=2'],
     creator: '@syncratenetwork',
   },
 }
