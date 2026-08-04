@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     url: 'https://syncrate.org/xaus',
     images: [
       {
-        url: '/embed.PNG?v=2',
+        url: '/embed.PNG',
         width: 1200,
         height: 600,
         alt: 'Syncrate Gold',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Syncrate',
-    images: ['/embed.PNG?v=2'],
+    images: ['/embed.PNG'],
   },
 }
 
