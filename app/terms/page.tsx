@@ -34,29 +34,31 @@ export default function TermsPage() {
         <div className="space-y-16 text-sm leading-relaxed text-neutral-400">
 
           {/* 1. Terms of Service */}
-          <section id="terms-of-use" className="scroll-mt-12">
-            <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
-              1. Terms of Service
-            </h2>
-             <h3 className="text-xl font-medium text-white mb-3 tracking tight">
-              Acceptance of Terms
-             </h3>
-            <p className="mb-3">
-              These Terms of Service (“Terms”) govern your access to and use of the Syncrate website, applications, smart contracts, and related services (collectively, the “Services”).
-            </p>
-             <p className="mb-3">
-             By accessing or using the Services, you acknowledge that you have read, understood, and agree to be legally bound by these Terms. If you do not agree with any part of these Terms, you must not access or use the Services.
-             </p>
-            <p className="mb-3">
-              These Terms constitute a legally binding agreement between you and Syncrate (or its applicable operating or issuing entity, depending on the Service provided).
-            </p>
- <h3 className="text-xl font-medium text-white mt-4 mb-3 tracking tight">
-              Eligibility
-             </h3>
-<p className="mb-3">
-              You may only use the Services if:
-            </p>
-<ul className="list-disc list-outside ml-6 space-y-3 pl-1">
+<section id="terms-of-use" className="scroll-mt-12">
+  <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
+    1. Terms of Service
+  </h2>
+
+  <h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+    Acceptance of Terms
+  </h3>
+  <p className="mb-3">
+    These Terms of Service (“Terms”) govern your access to and use of the Syncrate website, applications, smart contracts, and related services (collectively, the “Services”).
+  </p>
+  <p className="mb-3">
+    By accessing or using the Services, you acknowledge that you have read, understood, and agree to be legally bound by these Terms. If you do not agree with any part of these Terms, you must not access or use the Services.
+  </p>
+  <p className="mb-3">
+    These Terms constitute a legally binding agreement between you and Syncrate (or its applicable operating or issuing entity, depending on the Service provided).
+  </p>
+
+  <h3 className="text-xl font-medium text-white mt-6 mb-3 tracking-tight">
+    Eligibility
+  </h3>
+  <p className="mb-3">
+    You may only use the Services if:
+  </p>
+  <ul className="list-disc list-outside ml-6 space-y-3 pl-1 mb-3">
     <li>
       you are at least 18 years old (or the legal age of majority in your jurisdiction);
     </li>
@@ -70,53 +72,39 @@ export default function TermsPage() {
       you are not located in, or ordinarily resident in, any jurisdiction where access to the Services would violate applicable law or where Syncrate has restricted access.
     </li>
   </ul>
-<p className="mb-3">
-              Syncrate reserves the right to refuse or terminate access to the Services at any time where required for legal, regulatory, compliance, or security reasons.
-            </p>
-<h3 className="text-xl font-medium text-white mt-4 mb-3 tracking tight">
-              Nature of the Services
-             </h3>
-<p className="mb-3">
-Syncrate provides technology infrastructure designed to facilitate the issuance, management, redemption, and transfer of tokenized real-world assets and related digital asset products.
-</p>
-<p className="mb-3">
-              The Services may include:
-            </p>
-<ul className="list-disc list-outside ml-6 space-y-3 pl-1">
-    <li>
-      digital asset issuance;
-    </li>
-    <li>
-          minting and redemption functionality;
-    </li>
-    <li>
-    blockchain-based smart contracts;
-</li>
-<li>
-user dashboards;
-</li>
-<li>
-transaction history;
-</li>
-<li>
-informational content;
-</li>
-<li>
-APIs;
-</li>
-<li>
-documentation;
-</li>
-<li>
-other related services.
-<li>
-<p className="mb-3">
-              Certain Services may require identity verification, additional documentation, or compliance reviews before access is granted.
-            </p>
-<p className="mb-3">
-Availability of particular Services may vary depending on jurisdiction, regulatory requirements, or product eligibility.
-</p>
-          </section>
+  <p className="mb-3">
+    Syncrate reserves the right to refuse or terminate access to the Services at any time where required for legal, regulatory, compliance, or security reasons.
+  </p>
+
+  <h3 className="text-xl font-medium text-white mt-6 mb-3 tracking-tight">
+    Nature of the Services
+  </h3>
+  <p className="mb-3">
+    Syncrate provides technology infrastructure designed to facilitate the issuance, management, redemption, and transfer of tokenized real-world assets and related digital asset products.
+  </p>
+  <p className="mb-3">
+    The Services may include:
+  </p>
+  <ul className="list-disc list-outside ml-6 space-y-3 pl-1 mb-6">
+    <li>digital asset issuance;</li>
+    <li>minting and redemption functionality;</li>
+    <li>blockchain-based smart contracts;</li>
+    <li>user dashboards;</li>
+    <li>transaction history;</li>
+    <li>informational content;</li>
+    <li>APIs;</li>
+    <li>documentation;</li>
+    <li>other related services.</li>
+  </ul>
+  
+  <p className="mb-3">
+    Certain Services may require identity verification, additional documentation, or compliance reviews before access is granted.
+  </p>
+  <p className="mb-3">
+    Availability of particular Services may vary depending on jurisdiction, regulatory requirements, or product eligibility.
+  </p>
+</section>
+
 
           {/* 2. Token Minting & Redemption Terms */}
           <section id="minting-redemption" className="scroll-mt-12">
