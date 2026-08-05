@@ -112,6 +112,18 @@ export default function TermsPage() {
   <p className="mb-2">
     Your continued use of the Services after revised Terms become effective constitutes acceptance of the updated Terms.
   </p>
+<h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+    No Investment, Financial or Legal Advice
+  </h3>
+<p className="mb-2">
+    The information provided through the Services is for general informational purposes only and should not be interpreted as financial, investment, legal, accounting, tax, or other professional advice.
+  </p>
+  <p className="mb-2">
+    Nothing contained within the Services constitutes: an offer to sell securities, investment advice, portfolio management, financial planning, or a recommendation to buy, sell, or hold any digital asset.
+  </p>
+<p classNams="mb-2">
+Users remain solely responsible for evaluating the suitability of any transaction and obtaining independent professional advice where appropriate.
+</p>
 </section>
 
 
