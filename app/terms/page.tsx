@@ -42,20 +42,20 @@ export default function TermsPage() {
   <h3 className="text-xl font-medium text-white mb-3 tracking-tight">
     Acceptance of Terms
   </h3>
-  <p className="mb-3">
+  <p className="mb-2">
     These Terms of Service (“Terms”) govern your access to and use of the Syncrate website, applications, smart contracts, and related services (collectively, the “Services”).
   </p>
-  <p className="mb-3">
+  <p className="mb-2">
     By accessing or using the Services, you acknowledge that you have read, understood, and agree to be legally bound by these Terms. If you do not agree with any part of these Terms, you must not access or use the Services.
   </p>
-  <p className="mb-3">
+  <p className="mb-2">
     These Terms constitute a legally binding agreement between you and Syncrate (or its applicable operating or issuing entity, depending on the Service provided).
   </p>
 
   <h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
     Eligibility
   </h3>
-  <p className="mb-3">
+  <p className="mb-2">
     You may only use the Services if:
   </p>
   <ul className="list-disc list-outside ml-6 space-y-3 pl-1 mb-3">
@@ -72,17 +72,17 @@ export default function TermsPage() {
       you are not located in, or ordinarily resident in, any jurisdiction where access to the Services would violate applicable law or where Syncrate has restricted access.
     </li>
   </ul>
-  <p className="mb-3">
+  <p className="mb-2">
     Syncrate reserves the right to refuse or terminate access to the Services at any time where required for legal, regulatory, compliance, or security reasons.
   </p>
 
   <h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
     Nature of the Services
   </h3>
-  <p className="mb-3">
+  <p className="mb-2">
     Syncrate provides technology infrastructure designed to facilitate the issuance, management, redemption, and transfer of tokenized real-world assets and related digital asset products.
   </p>
-  <p className="mb-3">
+  <p className="mb-2">
     The Services may include:
   </p>
   <ul className="list-disc list-outside ml-6 space-y-3 pl-1 mb-6">
@@ -97,11 +97,20 @@ export default function TermsPage() {
     <li>other related services.</li>
   </ul>
   
-  <p className="mb-3">
+  <p className="mb-2">
     Certain Services may require identity verification, additional documentation, or compliance reviews before access is granted.
   </p>
-  <p className="mb-3">
+  <p className="mb-2">
     Availability of particular Services may vary depending on jurisdiction, regulatory requirements, or product eligibility.
+  </p>
+<h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+    Changes to these Terms
+  </h3>
+  <p className="mb-2">
+    Syncrate may update these Terms from time to time to reflect changes in applicable law, regulatory requirements, technology, or the Services.
+  </p>
+  <p className="mb-2">
+    Your continued use of the Services after revised Terms become effective constitutes acceptance of the updated Terms.
   </p>
 </section>
 
