@@ -197,14 +197,23 @@ Where reasonably practicable, users will be notified of planned service interrup
           {/* 3. AML/KYC Notice */}
           <section id="aml-kyc" className="scroll-mt-12">
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
-              3. Anti-Money Laundering (AML) & Sanctions Notice
+              3. Anti-Money Laundering (AML) & KYC Notice
             </h2>
-            <p className="mb-3">
-              Syncrate is committed to compliance with applicable international sanctions laws and anti-money laundering regulations. Interface endpoints actively screen connected Web3 wallet addresses against global sanctions registries (including OFAC, EU, and UN lists).
+            <p className="mb-2">
+              Syncrate is committed to maintaining the integrity of its platform and complying with applicable anti-money laundering (“AML”), counter-terrorist financing (“CTF”), sanctions, and know-your-customer (“KYC”) laws and regulations. Interface endpoints actively screen connected Web3 wallet addresses against global sanctions registries (including OFAC, EU, and UN lists).
             </p>
-            <p className="mb-3">
-              Addresses identified as interacting with sanctioned entities, mixing services, or illicit activities will be restricted from using the web interface.
+            <p className="mb-2">
+              Certain Services, including the minting and redemption of XAUs, require identity verification before access is granted. Users may be asked to provide personal information, identification documents, proof of address, source of funds, or other information reasonably required to satisfy applicable compliance obligations.
             </p>
+           <p className="mb-2">
+              Syncrate reserves the right to request additional information or documentation at any time, delay, suspend, or reject transactions pending compliance review, refuse access to the Services where legal or regulatory requirements cannot be satisfied and report suspicious activity to the appropriate authorities where required by applicable law.
+            </p>
+         <p className="mb-2">
+              Users represent and warrant that they are not subject to applicable sanctions, acting on behalf of sanctioned persons or entities, or engaging in activities prohibited under applicable laws and regulations.
+            </p>
+<p className="mb-2">
+By using the Services, you acknowledge that compliance checks may be conducted before or after a transaction and agree to cooperate with any reasonable requests necessary to satisfy Syncrate’s legal and regulatory obligations.
+</p>
           </section>
 
           {/* 4. Privacy Policy */}
@@ -212,12 +221,42 @@ Where reasonably practicable, users will be notified of planned service interrup
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
               4. Privacy Policy
             </h2>
-            <p className="mb-3">
-              Syncrate does not collect, store, or sell personal identifying information such as names, physical addresses, or government identification numbers. 
+          <h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
+    Information We Collect
+  </h3>
+            <p className="mb-2">
+              Syncrate may collect personal and technical information necessary to provide its Services, including: name and contact information; identity verification (KYC) documentation where required; wallet addresses and blockchain transaction data; device, browser, and usage information; communications submitted through our website or support channels. 
             </p>
-            <p className="mb-3">
-              Public blockchain data (including wallet addresses, transaction hashes, and on-chain interactions with the XAUs token and Syncrate Engine contracts) is inherently transparent and immutable on the Base blockchain[span_9](start_span)[span_9](end_span). Web interface hosting services may record basic network telemetry (such as IP addresses and browser headers) strictly for security and DDoS mitigation.
+            <p className="mb-2">
+              Blockchain transactions are publicly recorded on their respective networks and are not controlled by Syncrate.
             </p>
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
+    How We Use Your Information
+  </h3>
+            <p className="mb-2">
+              Information collected may be used to provide and improve the Services, verify user identity and satisfy regulatory obligations, process minting and redemption requests, communicate with users regarding their accounts or transactions, maintain platform security and prevent fraud, comply with applicable legal and regulatory requirements.
+            </p>
+            <p className="mb-2">
+              Syncrate does not sell users’ personal information to third parties.
+            </p>
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
+    Data Sharing
+  </h3>
+            <p className="mb-2">
+              Information may be shared with trusted service providers, compliance partners, custodians, legal advisers, auditors, or competent regulatory authorities where necessary to operate the Services or comply with applicable law.
+            </p>
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
+    Data Security
+  </h3>
+            <p className="mb-2">
+              Syncrate implements reasonable administrative, technical, and organizational safeguards designed to protect personal information. However, no method of electronic storage or transmission can be guaranteed to be completely secure.
+</p>
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
+    Your Rights
+  </h3>
+            <p className="mb-2">
+              Subject to applicable law, users may request access to, correction of, or deletion of their personal information by contacting Syncrate. Certain information may be retained where required for legal, regulatory, or compliance purposes.
+</p>
           </section>
 
           {/* 5. Cookie Policy */}
@@ -225,22 +264,37 @@ Where reasonably practicable, users will be notified of planned service interrup
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
               5. Cookie Policy
             </h2>
-            <p className="mb-3">
+            <p className="mb-2">
               The Syncrate web application uses essential session storage and local browser storage strictly to maintain user preferences (such as connected wallet state and RPC network selections). We do not utilize third-party tracking cookies, behavioral analytics cookies, or cross-site advertising scripts.
             </p>
+<p className="mb-2">
+Users may manage or disable cookies through their browser settings. Disabling certain cookies may affect the availability or functionality of parts of the website.
+</p>
           </section>
 
           {/* 6. Virtual Asset & Smart Contract Disclaimer */}
           <section id="disclaimer" className="scroll-mt-12">
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
-              6. Virtual Asset & Smart Contract Disclaimer
+              6. Virtual Asset & Smart Contract Risk Disclosure
             </h2>
-            <p className="mb-3">
-              XAUs is a synthetic software token and does not represent direct legal ownership or physical custody of physical gold bullion. Interactions with smart contracts, decentralized finance protocols, and digital assets carry inherent software risks, including potential bugs, oracle latency, and network congestion[span_10](start_span)[span_10](end_span).
+            <p className="mb-2">
+              XAUs is a synthetic software token and does not represent direct legal ownership or physical custody of physical gold bullion. Interactions with smart contracts, decentralized finance protocols, and digital assets carry inherent software risks, including potential bugs, oracle latency, and network congestion.
             </p>
-            <p className="mb-3">
-              All smart-contract interactions are executed autonomously on-chain on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind. You assume total responsibility for all risks associated with cryptographic wallet management and protocol interactions.
+            <p className="mb-2">
+              All smart-contract interactions are executed autonomously onchain on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind. Users are solely responsible for safeguarding their wallets, private keys, recovery phrases, and access credentials. Syncrate cannot recover lost private keys or reverse blockchain transactions.
             </p>
+<p className="mb-2">
+Users are solely responsible for safeguarding their wallets, private keys, recovery phrases, and access credentials. Syncrate cannot recover lost private keys or reverse blockchain transactions.
+</p>
+<p className="mb-2">
+Nothing in the Services guarantees uninterrupted availability, error-free operation, or protection from all technical or cybersecurity risks. Users should carefully evaluate the risks associated with digital assets before using the Services.
+</p>
+<p className="mb-2">
+To the maximum extent permitted by applicable law, Syncrate shall not be liable for losses arising from blockchain network failures, smart contract vulnerabilities, third-party infrastructure failures, user error, unauthorized wallet access, or other risks inherent to decentralized technologies.
+</p>
+<p className="mb-2">
+By accessing or using the Services, you acknowledge that you understand these risks and assume responsibility for your use of the Services.
+</p>
           </section>
 
         </div>
