@@ -103,7 +103,7 @@ export default function TermsPage() {
   <p className="mb-2">
     Availability of particular Services may vary depending on jurisdiction, regulatory requirements, or product eligibility.
   </p>
-<h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
     Changes to these Terms
   </h3>
   <p className="mb-2">
@@ -121,7 +121,7 @@ export default function TermsPage() {
   <p className="mb-2">
     Nothing contained within the Services constitutes: an offer to sell securities, investment advice, portfolio management, financial planning, or a recommendation to buy, sell, or hold any digital asset.
   </p>
-<p classNams="mb-2">
+<p className="mb-2">
 Users remain solely responsible for evaluating the suitability of any transaction and obtaining independent professional advice where appropriate.
 </p>
 </section>
@@ -132,15 +132,66 @@ Users remain solely responsible for evaluating the suitability of any transactio
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
               2. Token Minting & Redemption Terms
             </h2>
-            <p className="mb-3">
-              <strong>Minting:</strong> Minting XAUs requires depositing permitted USD-denominated stablecoin collateral into the Syncrate Engine[span_2](start_span)[span_2](end_span). All mint transactions are fee-free (0%) and execute synchronously based on real-time Chainlink Gold/USD oracle feeds[span_3](start_span)[span_3](end_span).
-            </p>
-            <p className="mb-3">
-              <strong>Redemptions:</strong> Redemptions burn XAUs to release equivalent underlying stablecoin collateral minus a standard 0.25% protocol fee[span_4](start_span)[span_4](end_span). 
-            </p>
-            <p className="mb-3">
-              <strong>Dual-Path Settlement:</strong> Immediate redemption is subject to available contract liquidity buffers[span_5](start_span)[span_5](end_span). If buffer liquidity is insufficient, redemptions automatically enter an asynchronous First-In, First-Out (FIFO) queue[span_6](start_span)[span_6](end_span). Tokens are burned immediately upon queuing to lock economic claims[span_7](start_span)[span_7](end_span). Queue processing relies on public execution (`processQueue`) as collateral buffers are replenished[span_8](start_span)[span_8](end_span).
-            </p>
+  <h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+    Overview
+  </h3>
+  <p className="mb-2">
+    These Token Minting & Redemption Terms govern the creation (“Minting”) and redemption of XAUs through the Syncrate protocol.
+  </p>
+  <p className="mb-2">
+    By minting or redeeming XAUs, you acknowledge and agree to these terms in addition to the Syncrate Terms of Service.
+  </p>
+<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+    Minting
+  </h3>
+  <p className="mb-2">
+  XAUs may only be minted by depositing a supported stablecoin through the Syncrate protocol. The amount of XAUs issued is calculated using the applicable gold reference price available at the time the transaction is processed. No XAUs are created without the successful receipt of the required collateral.
+  </p>
+<p className="mb-2">
+Syncrate reserves the right to reject or suspend mint requests where required for legal, regulatory, compliance, security, or operational reasons.
+</p>
+<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+    Redemption
+  </h3>
+  <p className="mb-2">
+XAUs holders may redeem XAUs through the Syncrate protocol, subject to applicable eligibility requirements, fees, and operational procedures. Redemption proceeds are settled in supported stablecoins unless otherwise specified.
+</p>
+<p className="mb-2">
+Where immediate liquidity is unavailable, redemption requests may be processed through the protocol’s redemption queue in accordance with the protocol’s operating procedures.
+</p>
+<p className="mb-2">
+Redemption is considered complete only once settlement has been successfully processed by the protocol.
+  </p>
+<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+    Pricing
+  </h3>
+  <p className="mb-2">
+    Minting and redemption calculations are based on the protocol’s designated pricing mechanism at the time of execution.
+</p>
+<p className="mb-2">
+    Users acknowledge that quoted amounts may differ from estimates shown prior to transaction execution due to market movements, oracle updates, transaction timing, network conditions, or applicable fees.
+</p>
+<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+    Fees
+  </h3>
+  <p className="mb-2">
+    Syncrate may charge minting, redemption, or other protocol fees. Applicable fees will be disclosed through the user interface before a transaction is confirmed and may be updated from time to time.
+</p>
+<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+    Finality
+  </h3>
+  <p className="mb-2">
+    Blockchain transactions are irreversible once confirmed on the applicable network. Users are solely responsible for verifying wallet addresses, transaction details, and amounts before submitting any mint or redemption request.
+</p>
+<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+    Suspension of Services
+  </h3>
+  <p className="mb-2">
+    Syncrate may temporarily suspend minting or redemption where necessary to protect users or protocol reserves, respond to security incidents or technical failures, comply with legal or regulatory obligations and perform protocol maintenance or upgrades.
+</p>
+<p className="mb-2">
+Where reasonably practicable, users will be notified of planned service interruptions.
+</p>
           </section>
 
           {/* 3. AML/KYC Notice */}
