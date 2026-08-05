@@ -26,7 +26,7 @@ export default function TermsPage() {
             <li><a href="#aml-kyc" className="hover:text-white transition-colors">3. AML/KYC Notice</a></li>
             <li><a href="#privacy-policy" className="hover:text-white transition-colors">4. Privacy Policy</a></li>
             <li><a href="#cookie-policy" className="hover:text-white transition-colors">5. Cookie Policy</a></li>
-            <li><a href="#disclaimer" className="hover:text-white transition-colors">6. Virtual Asset & Smart Contract Disclaimer</a></li>
+            <li><a href="#disclaimer" className="hover:text-white transition-colors">6. Virtual Asset & Smart Contract Risk Disclosure</a></li>
           </ul>
         </nav>
 
@@ -272,7 +272,7 @@ Users may manage or disable cookies through their browser settings. Disabling ce
 </p>
           </section>
 
-          {/* 6. Virtual Asset & Smart Contract Disclaimer */}
+          {/* 6. Virtual Asset & Smart Contract Risk Disclosure */}
           <section id="disclaimer" className="scroll-mt-12">
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
               6. Virtual Asset & Smart Contract Risk Disclosure
