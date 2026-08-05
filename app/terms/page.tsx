@@ -7,8 +7,8 @@ export default function TermsPage() {
         
         {/* Header */}
         <header className="mb-16 border-b border-neutral-800 pb-10">
-          <h1 className="text-2xl font-light tracking-tight text-white mb-4">
-            Terms of Service
+          <h1 className="text-4xl font-bold tracking-tight text-white mb-4">
+            Terms & Legal Disclosures
           </h1>
           <p className="text-sm text-neutral-500">
             Last Updated: August 2026
@@ -21,7 +21,7 @@ export default function TermsPage() {
             Table of Contents
           </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-neutral-400">
-            <li><a href="#terms-of-use" className="hover:text-white transition-colors">1. Terms of Use</a></li>
+            <li><a href="#terms-of-service" className="hover:text-white transition-colors">1. Terms of Service</a></li>
             <li><a href="#minting-redemption" className="hover:text-white transition-colors">2. Token Minting & Redemption Terms</a></li>
             <li><a href="#aml-kyc" className="hover:text-white transition-colors">3. AML/KYC Notice</a></li>
             <li><a href="#privacy-policy" className="hover:text-white transition-colors">4. Privacy Policy</a></li>
@@ -33,16 +33,22 @@ export default function TermsPage() {
         {/* Content Sections */}
         <div className="space-y-16 text-sm leading-relaxed text-neutral-400">
 
-          {/* 1. Terms of Use */}
+          {/* 1. Terms of Service */}
           <section id="terms-of-use" className="scroll-mt-12">
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
-              1. Terms of Use
+              1. Terms of Service
             </h2>
+             <h3 className="text-l font-medium text-white tracking tight">
+              Acceptance of Terms
+             </h3>
             <p className="mb-3">
-              By accessing or using the Syncrate interface, smart contracts, or protocol (collectively, the "Platform"), you agree to be bound by these Terms of Use. If you do not agree to all terms, you must immediately cease accessing and using the Platform.
+              These Terms of Service (“Terms”) govern your access to and use of the Syncrate website, applications, smart contracts, and related services (collectively, the “Services”).
             </p>
+             <p className="mb-3">
+             By accessing or using the Services, you acknowledge that you have read, understood, and agree to be legally bound by these Terms. If you do not agree with any part of these Terms, you must not access or use the Services.
+             </p>
             <p className="mb-3">
-              The Platform provides decentralized smart-contract routing for synthetic gold exposure (XAUs) on the Base network[span_1](start_span)[span_1](end_span). You represent and warrant that you are legally permitted to interact with Web3 software in your jurisdiction and are not located in or a resident of any restricted or sanctioned territory.
+              These Terms constitute a legally binding agreement between you and Syncrate (or its applicable operating or issuing entity, depending on the Service provided).
             </p>
           </section>
 
