@@ -50,6 +50,72 @@ export default function TermsPage() {
             <p className="mb-3">
               These Terms constitute a legally binding agreement between you and Syncrate (or its applicable operating or issuing entity, depending on the Service provided).
             </p>
+ <h3 className="text-xl font-medium text-white mt-4 mb-3 tracking tight">
+              Eligibility
+             </h3>
+<p className="mb-3">
+              You may only use the Services if:
+            </p>
+<ul className="list-disc list-outside ml-6 space-y-3 pl-1">
+    <li>
+      you are at least 18 years old (or the legal age of majority in your jurisdiction);
+    </li>
+    <li>
+      you have the legal capacity to enter into binding agreements;
+    </li>
+    <li>
+      your use of the Services complies with all applicable laws and regulations;
+    </li>
+    <li>
+      you are not located in, or ordinarily resident in, any jurisdiction where access to the Services would violate applicable law or where Syncrate has restricted access.
+    </li>
+  </ul>
+<p className="mb-3">
+              Syncrate reserves the right to refuse or terminate access to the Services at any time where required for legal, regulatory, compliance, or security reasons.
+            </p>
+<h3 className="text-xl font-medium text-white mt-4 mb-3 tracking tight">
+              Nature of the Services
+             </h3>
+<p className="mb-3">
+Syncrate provides technology infrastructure designed to facilitate the issuance, management, redemption, and transfer of tokenized real-world assets and related digital asset products.
+</p>
+<p className="mb-3">
+              The Services may include:
+            </p>
+<ul className="list-disc list-outside ml-6 space-y-3 pl-1">
+    <li>
+      digital asset issuance;
+    </li>
+    <li>
+          minting and redemption functionality;
+    </li>
+    <li>
+    blockchain-based smart contracts;
+</li>
+<li>
+user dashboards;
+</li>
+<li>
+transaction history;
+</li>
+<li>
+informational content;
+</li>
+<li>
+APIs;
+</li>
+<li>
+documentation;
+</li>
+<li>
+other related services.
+<li>
+<p className="mb-3">
+              Certain Services may require identity verification, additional documentation, or compliance reviews before access is granted.
+            </p>
+<p className="mb-3">
+Availability of particular Services may vary depending on jurisdiction, regulatory requirements, or product eligibility.
+</p>
           </section>
 
           {/* 2. Token Minting & Redemption Terms */}
