@@ -39,7 +39,7 @@ export default function TermsPage() {
     1. Terms of Service
   </h2>
 
-  <h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+  <h3 className="text-l font-medium text-white mb-3 tracking-tight">
     Acceptance of Terms
   </h3>
   <p className="mb-2">
@@ -52,7 +52,7 @@ export default function TermsPage() {
     These Terms constitute a legally binding agreement between you and Syncrate (or its applicable operating or issuing entity, depending on the Service provided).
   </p>
 
-  <h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+  <h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Eligibility
   </h3>
   <p className="mb-2">
@@ -76,7 +76,7 @@ export default function TermsPage() {
     Syncrate reserves the right to refuse or terminate access to the Services at any time where required for legal, regulatory, compliance, or security reasons.
   </p>
 
-  <h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+  <h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Nature of the Services
   </h3>
   <p className="mb-2">
@@ -103,7 +103,7 @@ export default function TermsPage() {
   <p className="mb-2">
     Availability of particular Services may vary depending on jurisdiction, regulatory requirements, or product eligibility.
   </p>
-<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Changes to these Terms
   </h3>
   <p className="mb-2">
@@ -112,7 +112,7 @@ export default function TermsPage() {
   <p className="mb-2">
     Your continued use of the Services after revised Terms become effective constitutes acceptance of the updated Terms.
   </p>
-<h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     No Investment, Financial or Legal Advice
   </h3>
 <p className="mb-2">
@@ -132,7 +132,7 @@ Users remain solely responsible for evaluating the suitability of any transactio
             <h2 className="text-xl font-medium text-white mb-4 border-b border-neutral-900 pb-2">
               2. Token Minting & Redemption Terms
             </h2>
-  <h3 className="text-xl font-medium text-white mb-3 tracking-tight">
+  <h3 className="text-l font-medium text-white mb-3 tracking-tight">
     Overview
   </h3>
   <p className="mb-2">
@@ -141,7 +141,7 @@ Users remain solely responsible for evaluating the suitability of any transactio
   <p className="mb-2">
     By minting or redeeming XAUs, you acknowledge and agree to these terms in addition to the Syncrate Terms of Service.
   </p>
-<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Minting
   </h3>
   <p className="mb-2">
@@ -150,7 +150,7 @@ Users remain solely responsible for evaluating the suitability of any transactio
 <p className="mb-2">
 Syncrate reserves the right to reject or suspend mint requests where required for legal, regulatory, compliance, security, or operational reasons.
 </p>
-<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Redemption
   </h3>
   <p className="mb-2">
@@ -162,7 +162,7 @@ Where immediate liquidity is unavailable, redemption requests may be processed t
 <p className="mb-2">
 Redemption is considered complete only once settlement has been successfully processed by the protocol.
   </p>
-<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Pricing
   </h3>
   <p className="mb-2">
@@ -171,19 +171,19 @@ Redemption is considered complete only once settlement has been successfully pro
 <p className="mb-2">
     Users acknowledge that quoted amounts may differ from estimates shown prior to transaction execution due to market movements, oracle updates, transaction timing, network conditions, or applicable fees.
 </p>
-<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Fees
   </h3>
   <p className="mb-2">
     Syncrate may charge minting, redemption, or other protocol fees. Applicable fees will be disclosed through the user interface before a transaction is confirmed and may be updated from time to time.
 </p>
-<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Finality
   </h3>
   <p className="mb-2">
     Blockchain transactions are irreversible once confirmed on the applicable network. Users are solely responsible for verifying wallet addresses, transaction details, and amounts before submitting any mint or redemption request.
 </p>
-<h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
+<h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Suspension of Services
   </h3>
   <p className="mb-2">
