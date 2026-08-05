@@ -58,7 +58,7 @@ export default function TermsPage() {
   <p className="mb-2">
     You may only use the Services if:
   </p>
-  <ul className="list-disc list-outside ml-6 space-y-3 pl-1 mb-3">
+  <ul className="list-disc list-outside ml-6 space-y-2 pl-1 mb-2">
     <li>
       you are at least 18 years old (or the legal age of majority in your jurisdiction);
     </li>
