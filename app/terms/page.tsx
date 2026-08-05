@@ -52,7 +52,7 @@ export default function TermsPage() {
     These Terms constitute a legally binding agreement between you and Syncrate (or its applicable operating or issuing entity, depending on the Service provided).
   </p>
 
-  <h3 className="text-xl font-medium text-white mt-6 mb-3 tracking-tight">
+  <h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
     Eligibility
   </h3>
   <p className="mb-3">
@@ -76,7 +76,7 @@ export default function TermsPage() {
     Syncrate reserves the right to refuse or terminate access to the Services at any time where required for legal, regulatory, compliance, or security reasons.
   </p>
 
-  <h3 className="text-xl font-medium text-white mt-6 mb-3 tracking-tight">
+  <h3 className="text-xl font-medium text-white mt-10 mb-3 tracking-tight">
     Nature of the Services
   </h3>
   <p className="mb-3">
