@@ -7,11 +7,11 @@ export default function TermsPage() {
         
         {/* Header */}
         <header className="mb-16 border-b border-neutral-800 pb-10">
-          <h1 className="text-4xl font-light tracking-tight text-white mb-4">
-            Legal Terms & Disclosures
+          <h1 className="text-xl font-light tracking-tight text-white mb-4">
+            Terms of Service
           </h1>
-          <p className="text-sm text-neutral-500 uppercase tracking-widest">
-            Last Updated: 5th August 2026
+          <p className="text-sm text-neutral-500 tracking-widest">
+            Last Updated: August 2026
           </p>
         </header>
 
