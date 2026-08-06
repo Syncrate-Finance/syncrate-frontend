@@ -35,6 +35,7 @@ export default function XAUsProductPage({
 }: XAUsProductPageProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const infoModalRef = useRef<HTMLDivElement>(null)
 
   // Live Metrics State
   const [totalSupply, setTotalSupply] = useState<string>('0 XAUs')
@@ -43,6 +44,25 @@ export default function XAUsProductPage({
   const [unallocatedBullion, setUnallocatedBullion] = useState<string>('0 Troy Oz')
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false)
   const [mintPrice] = useState<number>(4154.91) // Real-time gold mint quote
+
+  // Close popover on outside click/tap
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (infoModalRef.current && !infoModalRef.current.contains(event.target as Node)) {
+        setShowInfoModal(false)
+      }
+    }
+
+    if (showInfoModal) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('touchstart', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [showInfoModal])
 
   // Fetch live onchain supply and compute Market Cap & Unallocated Bullion
   useEffect(() => {
@@ -233,22 +253,22 @@ export default function XAUsProductPage({
             <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                 <div>
-                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Market Cap</p>
+                  <p className="text-xs font-mono tracking-tight text-[#666666] mb-1"> XAUs MarketCap</p>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{marketCap}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Current Bullion Weight</p>
+                  <p className="text-xs font-mono tracking-tight text-[#666666] mb-1">Bullion Weight</p>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
                     {totalVaultWeight.toLocaleString('en-US')} Troy Oz
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Circulating Supply</p>
+                  <p className="text-xs font-mono tracking-tight text-[#666666] uppercase mb-1">Circulating Supply</p>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
                 </div>
-                <div className="relative">
+                <div className="relative" ref={infoModalRef}>
                   <div className="flex items-center gap-1.5 mb-1">
-                    <p className="text-xs font-mono tracking-wider text-[#666666] uppercase">Unallocated Bullion</p>
+                    <p className="text-xs font-mono tracking-tight text-[#666666]">Unallocated Bullion</p>
                     <button 
                       onClick={() => setShowInfoModal(!showInfoModal)}
                       className="text-[#666666] hover:text-white transition-colors focus:outline-none"
@@ -263,12 +283,12 @@ export default function XAUsProductPage({
                   </div>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{unallocatedBullion}</p>
 
-                  {/* Onscreen Info Popover */}
+                  {/* Onscreen Info Popover (Aligned to Right on Mobile to Prevent Overflow) */}
                   {showInfoModal && (
-                    <div className="absolute top-8 left-0 z-50 w-64 p-3 bg-[#111111] border border-[#222222] rounded-lg shadow-xl text-xs text-[#AAAAAA] leading-relaxed">
+                    <div className="absolute top-8 right-0 md:left-0 z-50 w-60 md:w-64 p-3 bg-[#111111] border border-[#222222] rounded-lg shadow-2xl text-xs text-[#AAAAAA] leading-relaxed">
                       <div className="flex justify-between items-center mb-1 text-white font-mono text-[11px]">
                         <span>UNALLOCATED BULLION</span>
-                        <button onClick={() => setShowInfoModal(false)} className="hover:text-red-400">✕</button>
+                        <button onClick={() => setShowInfoModal(false)} className="hover:text-red-400 p-0.5">✕</button>
                       </div>
                       Represents the total physical gold in the vault that has not yet been minted onchain as XAUs tokens (Current Bullion Weight minus Circulating Supply).
                     </div>
