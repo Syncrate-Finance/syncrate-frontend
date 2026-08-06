@@ -220,7 +220,7 @@ export default function XAUsProductPage({
             </h1>
 
             <p className="text-sm md:text-base text-[#AAAAAA] leading-relaxed mb-8 max-w-xl">
-              Backed by 99.99% pure LBMA-standard gold, with each token representing 1 troy oz. Vaulted securely with reputable custodians in the UAE.
+              Backed by 99.99% pure LBMA-standard gold. Each XAUs token representing 1 troy oz of physical bars vaulted securely with reputable custodians in the UAE.
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
