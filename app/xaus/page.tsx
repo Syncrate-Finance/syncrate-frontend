@@ -290,7 +290,7 @@ export default function XAUsProductPage({
                         <span>UNALLOCATED BULLION</span>
                         <button onClick={() => setShowInfoModal(false)} className="hover:text-red-400 p-0.5">✕</button>
                       </div>
-                      Represents the total physical gold in the vault that has not yet been minted onchain as XAUs tokens (Current Bullion Weight minus Circulating Supply).
+                      Represents the total physical gold in custody that has not yet been minted onchain as XAUs tokens.
                     </div>
                   )}
                 </div>
