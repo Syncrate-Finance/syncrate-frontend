@@ -226,7 +226,7 @@ export default function XAUsProductPage({
             <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
               <div className="flex-shrink-0">
                 <Link href="/app" className="inline-block px-8 py-3.5 bg-white text-black font-medium text-sm rounded-md hover:bg-[#E5E5E5] transition-all">
-                  Buy XAUs
+                  Mint XAUs
                 </Link>
               </div>
 
