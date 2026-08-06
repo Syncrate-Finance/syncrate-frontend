@@ -263,7 +263,7 @@ export default function XAUsProductPage({
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono tracking-tight text-[#666666] uppercase mb-1">Circulating Supply</p>
+                  <p className="text-xs font-mono tracking-tight text-[#666666] mb-1">Circulating Supply</p>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
                 </div>
                 <div className="relative" ref={infoModalRef}>
