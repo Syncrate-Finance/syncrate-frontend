@@ -26,16 +26,25 @@ const xausAbi = [
   },
 ] as const
 
-export default function XAUsProductPage() {
+interface XAUsProductPageProps {
+  initialVaultWeight?: number
+}
+
+export default function XAUsProductPage({ 
+  initialVaultWeight = 193 
+}: XAUsProductPageProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   // Live Metrics State
   const [totalSupply, setTotalSupply] = useState<string>('0 XAUs')
   const [marketCap, setMarketCap] = useState<string>('$0.00')
+  const [totalVaultWeight, setTotalVaultWeight] = useState<number>(initialVaultWeight)
+  const [unallocatedBullion, setUnallocatedBullion] = useState<string>('0 Troy Oz')
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false)
   const [mintPrice] = useState<number>(4154.91) // Real-time gold mint quote
 
-  // Fetch live onchain supply and compute Market Cap
+  // Fetch live onchain supply and compute Market Cap & Unallocated Bullion
   useEffect(() => {
     async function fetchOnChainData() {
       try {
@@ -47,7 +56,7 @@ export default function XAUsProductPage() {
 
         const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
 
-        // Format Total Supply
+        // Format Supply (Circulating)
         const supplyString = `${formattedSupply.toLocaleString('en-US', {
           minimumFractionDigits: 4,
           maximumFractionDigits: 4,
@@ -62,13 +71,20 @@ export default function XAUsProductPage() {
         })}`
         setMarketCap(mcapString)
 
+        // Calculate Unallocated Bullion dynamically (Vault Weight - Circulating Supply)
+        const remainingUnallocated = Math.max(0, totalVaultWeight - formattedSupply)
+        setUnallocatedBullion(`${remainingUnallocated.toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4,
+        })} Troy Oz`)
+
       } catch (error) {
         console.error('Error querying live XAUs supply on Base:', error)
       }
     }
 
     fetchOnChainData()
-  }, [mintPrice])
+  }, [mintPrice, totalVaultWeight])
 
   const features = [
     {
@@ -213,7 +229,7 @@ export default function XAUsProductPage() {
               </div>
             </div>
 
-                                    {/* --- LIVE METRICS GRID --- */}
+            {/* --- LIVE METRICS GRID --- */}
             <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                 <div>
@@ -221,16 +237,42 @@ export default function XAUsProductPage() {
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{marketCap}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Bullion Weight</p>
-                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">193 Troy Oz</p>
+                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Current Bullion Weight</p>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
+                    {totalVaultWeight.toLocaleString('en-US')} Troy Oz
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Total Supply</p>
+                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Circulating Supply</p>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
                 </div>
-                <div>
-                  <p className="text-xs font-mono tracking-wider text-[#666666] uppercase mb-1">Vault Gold Bars</p>
-                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">6 Bars</p>
+                <div className="relative">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <p className="text-xs font-mono tracking-wider text-[#666666] uppercase">Unallocated Bullion</p>
+                    <button 
+                      onClick={() => setShowInfoModal(!showInfoModal)}
+                      className="text-[#666666] hover:text-white transition-colors focus:outline-none"
+                      aria-label="Info on Unallocated Bullion"
+                    >
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{unallocatedBullion}</p>
+
+                  {/* Onscreen Info Popover */}
+                  {showInfoModal && (
+                    <div className="absolute top-8 left-0 z-50 w-64 p-3 bg-[#111111] border border-[#222222] rounded-lg shadow-xl text-xs text-[#AAAAAA] leading-relaxed">
+                      <div className="flex justify-between items-center mb-1 text-white font-mono text-[11px]">
+                        <span>UNALLOCATED BULLION</span>
+                        <button onClick={() => setShowInfoModal(false)} className="hover:text-red-400">✕</button>
+                      </div>
+                      Represents the total physical gold in the vault that has not yet been minted onchain as XAUs tokens (Current Bullion Weight minus Circulating Supply).
+                    </div>
+                  )}
                 </div>
               </div>
 
