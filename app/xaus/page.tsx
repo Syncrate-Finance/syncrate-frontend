@@ -144,6 +144,10 @@ export default function XAUsProductPage({
       a: "No. There is no minimum minting requirement and XAUs can be redeemed back into USDC/USDT at any amount"
     },
     {
+      q: "Can I redeem my physical gold?",
+      a: "Yes. Physical gold redemption is available with a minimum redemption amount of 160.75 XAUs (5 kg of gold). To initiate a physical redemption, reach out to our team for further instructions and KYC verifications."
+    },
+    {
       q: "What is the fee structure?",
       a: "A 0.25% fee is charged on every XAUs redemption transaction."
     }
