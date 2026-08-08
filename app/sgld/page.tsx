@@ -387,39 +387,42 @@ function PrimeVaultAppUI() {
   }
 
   const handleApprove = () => {
-    if (!xausData || !inputAmount) return
-    const amountToApprove = parseUnits(inputAmount, xausData.decimals)
-    writeApprove({
-      address: XAUS_ADDRESS,
-      abi: erc20Abi,
-      functionName: 'approve',
-      args: [PRIME_VAULT_ADDRESS, amountToApprove],
+  if (!xausData || !inputAmount || !address) return
+  const amountToApprove = parseUnits(inputAmount, xausData.decimals)
+  writeApprove({
+    address: XAUS_ADDRESS,
+    abi: erc20Abi,
+    functionName: 'approve',
+    args: [PRIME_VAULT_ADDRESS, amountToApprove],
+    account: address,          // ← add this
+  })
+}
+
+const handleProcess = () => {
+  if (!address || !inputAmount) return
+
+  if (activeTab === 'deposit') {
+    if (!xausData) return
+    const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
+    writeProcess({
+      address: PRIME_VAULT_ADDRESS,
+      abi: vaultAbi,
+      functionName: 'deposit',
+      args: [amountToDeposit, address],
+      account: address,        // ← add this
+    })
+  } else {
+    if (!syXausData) return
+    const sharesToRedeem = parseUnits(inputAmount, syXausData.decimals)
+    writeProcess({
+      address: PRIME_VAULT_ADDRESS,
+      abi: vaultAbi,
+      functionName: 'redeem',
+      args: [sharesToRedeem, address, address],
+      account: address,        // ← add this
     })
   }
-
-  const handleProcess = () => {
-    if (!address || !inputAmount) return
-
-    if (activeTab === 'deposit') {
-      if (!xausData) return
-      const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
-      writeProcess({
-        address: PRIME_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'deposit',
-        args: [amountToDeposit, address],
-      })
-    } else {
-      if (!syXausData) return
-      const sharesToRedeem = parseUnits(inputAmount, syXausData.decimals)
-      writeProcess({
-        address: PRIME_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'redeem',
-        args: [sharesToRedeem, address, address],
-      })
-    }
-  }
+}
 
   const resetFlow = () => {
     setInputAmount('')
