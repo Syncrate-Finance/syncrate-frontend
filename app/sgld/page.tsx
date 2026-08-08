@@ -1,6 +1,6 @@
 'use client'
 
-import { base } from 'wagmi/chains'   // ← add this import at the top
+import { base } from 'wagmi/chains'
 import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import Image from 'next/image'
@@ -245,11 +245,12 @@ function PrimeVaultAppUI() {
     functionName: 'totalSupply',
   })
 
+  // assets = 18 decimals, shares = 21 decimals (18 + _decimalsOffset)
   const vaultTVL = totalAssetsData
     ? parseFloat(formatUnits(totalAssetsData as bigint, 18))
     : 0
   const vaultSupply = totalSupplyData
-    ? parseFloat(formatUnits(totalSupplyData as bigint, 18))
+    ? parseFloat(formatUnits(totalSupplyData as bigint, 21))
     : 0
   const sharePrice = vaultSupply > 0 ? vaultTVL / vaultSupply : 1.0
 
@@ -284,7 +285,7 @@ function PrimeVaultAppUI() {
   let redeemSharesWei: bigint | undefined
   try {
     if (activeTab === 'withdraw' && inputAmount && Number(inputAmount) > 0) {
-      redeemSharesWei = parseUnits(inputAmount, syXausData?.decimals ?? 18)
+      redeemSharesWei = parseUnits(inputAmount, syXausData?.decimals ?? 21)
     }
   } catch {
     redeemSharesWei = undefined
@@ -302,7 +303,7 @@ function PrimeVaultAppUI() {
 
   const previewSharesFmt =
     previewShares !== undefined
-      ? parseFloat(formatUnits(previewShares as bigint, 18)).toFixed(4)
+      ? parseFloat(formatUnits(previewShares as bigint, 21)).toFixed(4)
       : null
   const previewNetAssetsFmt =
     previewNetAssets !== undefined
@@ -388,45 +389,45 @@ function PrimeVaultAppUI() {
   }
 
   const handleApprove = () => {
-  if (!xausData || !inputAmount || !address) return
-  const amountToApprove = parseUnits(inputAmount, xausData.decimals)
-  writeApprove({
-    address: XAUS_ADDRESS,
-    abi: erc20Abi,
-    functionName: 'approve',
-    args: [PRIME_VAULT_ADDRESS, amountToApprove],
-    account: address,
-    chain: base,               // ← add this
-  })
-}
-
-const handleProcess = () => {
-  if (!address || !inputAmount) return
-
-  if (activeTab === 'deposit') {
-    if (!xausData) return
-    const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
-    writeProcess({
-      address: PRIME_VAULT_ADDRESS,
-      abi: vaultAbi,
-      functionName: 'deposit',
-      args: [amountToDeposit, address],
+    if (!xausData || !inputAmount || !address) return
+    const amountToApprove = parseUnits(inputAmount, xausData.decimals)
+    writeApprove({
+      address: XAUS_ADDRESS,
+      abi: erc20Abi,
+      functionName: 'approve',
+      args: [PRIME_VAULT_ADDRESS, amountToApprove],
       account: address,
-      chain: base,             // ← add this
-    })
-  } else {
-    if (!syXausData) return
-    const sharesToRedeem = parseUnits(inputAmount, syXausData.decimals)
-    writeProcess({
-      address: PRIME_VAULT_ADDRESS,
-      abi: vaultAbi,
-      functionName: 'redeem',
-      args: [sharesToRedeem, address, address],
-      account: address,
-      chain: base,             // ← add this
+      chain: base,
     })
   }
-}
+
+  const handleProcess = () => {
+    if (!address || !inputAmount) return
+
+    if (activeTab === 'deposit') {
+      if (!xausData) return
+      const amountToDeposit = parseUnits(inputAmount, xausData.decimals)
+      writeProcess({
+        address: PRIME_VAULT_ADDRESS,
+        abi: vaultAbi,
+        functionName: 'deposit',
+        args: [amountToDeposit, address],
+        account: address,
+        chain: base,
+      })
+    } else {
+      if (!syXausData) return
+      const sharesToRedeem = parseUnits(inputAmount, syXausData.decimals)
+      writeProcess({
+        address: PRIME_VAULT_ADDRESS,
+        abi: vaultAbi,
+        functionName: 'redeem',
+        args: [sharesToRedeem, address, address],
+        account: address,
+        chain: base,
+      })
+    }
+  }
 
   const resetFlow = () => {
     setInputAmount('')
