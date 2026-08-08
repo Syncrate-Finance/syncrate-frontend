@@ -1,5 +1,6 @@
 'use client'
 
+import { base } from 'wagmi/chains'   // ← add this import at the top
 import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import Image from 'next/image'
@@ -394,7 +395,8 @@ function PrimeVaultAppUI() {
     abi: erc20Abi,
     functionName: 'approve',
     args: [PRIME_VAULT_ADDRESS, amountToApprove],
-    account: address,          // ← add this
+    account: address,
+    chain: base,               // ← add this
   })
 }
 
@@ -409,7 +411,8 @@ const handleProcess = () => {
       abi: vaultAbi,
       functionName: 'deposit',
       args: [amountToDeposit, address],
-      account: address,        // ← add this
+      account: address,
+      chain: base,             // ← add this
     })
   } else {
     if (!syXausData) return
@@ -419,7 +422,8 @@ const handleProcess = () => {
       abi: vaultAbi,
       functionName: 'redeem',
       args: [sharesToRedeem, address, address],
-      account: address,        // ← add this
+      account: address,
+      chain: base,             // ← add this
     })
   }
 }
