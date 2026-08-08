@@ -15,7 +15,7 @@ import { parseUnits, formatUnits } from 'viem'
 const IS_LIVE = false;
 
 const XAUS_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
-const SGLD_VAULT_ADDRESS = '0x9dc4a31FAF646DB5051b9e14520900387E3e3B7a' as const
+const SGLD_VAULT_ADDRESS = '0xbA93Aa354a3B47A936d713b8FB90126D4d35546B' as const
 
 const VAULT_INCEPTION = new Date('2026-06-01T00:00:00Z').getTime()
 
