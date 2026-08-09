@@ -40,10 +40,10 @@ export default function XAUsProductPage({
   // Live Metrics State
   const [totalSupply, setTotalSupply] = useState<string>('0 XAUs')
   const [marketCap, setMarketCap] = useState<string>('$0.00')
-  const [totalVaultWeight, setTotalVaultWeight] = useState<number>(initialVaultWeight)
+  const [totalVaultWeight] = useState<number>(initialVaultWeight)
   const [unallocatedBullion, setUnallocatedBullion] = useState<string>('0 Troy Oz')
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false)
-  const [mintPrice] = useState<number>(4154.91) // Real-time gold mint quote
+  const [goldPrice] = useState<number>(4154.91) // Gold market price for market cap calculation
 
   // Close popover on outside click/tap
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function XAUsProductPage({
         setTotalSupply(supplyString)
 
         // Calculate Market Cap
-        const calculatedMarketCap = formattedSupply * mintPrice
+        const calculatedMarketCap = formattedSupply * goldPrice
         const mcapString = `$${calculatedMarketCap.toLocaleString('en-US', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
@@ -104,7 +104,7 @@ export default function XAUsProductPage({
     }
 
     fetchOnChainData()
-  }, [mintPrice, totalVaultWeight])
+  }, [goldPrice, totalVaultWeight])
 
   const features = [
     {
@@ -227,30 +227,10 @@ export default function XAUsProductPage({
               Backed by 99.99% pure LBMA-standard gold. Each XAUs token representing 1 troy oz of physical bars vaulted securely with reputable custodians in the UAE.
             </p>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-8 sm:gap-12 mb-12 font-sans">
-              <div className="flex-shrink-0">
-                <Link href="/app" className="inline-block px-8 py-3.5 bg-white text-black font-medium text-sm rounded-md hover:bg-[#E5E5E5] transition-all">
-                  Mint XAUs
-                </Link>
-              </div>
-
-              <div className="flex flex-col gap-2 border-l border-[#222222] pl-8">
-                <div className="flex items-center gap-8">
-                  <div>
-                    <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">Mint Price</p>
-                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
-                      ${mintPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-mono tracking-wider text-[#666666] uppercase mb-0.5">Redeem Price</p>
-                    <p className="text-xl md:text-2xl font-normal text-white tracking-tight">$4,123.54</p>
-                  </div>
-                </div>
-                <p className="text-[11px] text-[#555555] tracking-normal font-normal">
-                  Real-time price quote available in the mint/redeem web-app.
-                </p>
-              </div>
+            <div className="mb-12 font-sans">
+              <Link href="/app" className="inline-block px-8 py-3.5 bg-white text-black font-medium text-sm rounded-md hover:bg-[#E5E5E5] transition-all">
+                Mint XAUs
+              </Link>
             </div>
 
             {/* --- LIVE METRICS GRID --- */}
