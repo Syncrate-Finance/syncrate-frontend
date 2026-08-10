@@ -8,6 +8,9 @@ export const viewport = {
 export const metadata = {
   metadataBase: new URL('https://syncrate.org'),
   title: 'Syncrate',
+  other: {
+    'base:app_id': '6a79a989d198f685bc61e2e5',
+  },
   icons: {
     icon: '/logo2.jpg',
     shortcut: '/logo2.jpg',
