@@ -95,7 +95,7 @@ export default function BlogPost() {
 </ul>
 
                <h2 className="text-2xl font-normal text-white pt-6 border-t border-[#222222] tracking-tight">
-              The Modular Architecture: XAUs and SGLD
+              The Modular Architecture: XAUs and syXAUs
             </h2>
 
               <p>
@@ -104,7 +104,7 @@ export default function BlogPost() {
 
                <ul>
   <li><strong>Syncrate Gold (XAUs):</strong> Provides direct exposure to tokenized gold.</li>
-  <li><strong>Syncrate Prime (SGLD):</strong> Built on top of XAUs, SGLD deploys gold-backed capital into real-world financing arrangements to generate yield.</li>
+  <li><strong>Syncrate Prime (syXAUs):</strong> Built on top of XAUs, syXAUs deploys gold-backed capital into real-world financing arrangements to generate yield.</li>
 </ul>
 
                 <p>
