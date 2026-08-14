@@ -18,7 +18,7 @@ import { parseUnits, formatUnits } from 'viem'
 // ==========================================
 // 🚀 CONFIGURATIONS
 // ==========================================
-const IS_LIVE = false
+const IS_LIVE = true
 
 const XAUS_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
 const PRIME_VAULT_ADDRESS = '0xbA93Aa354a3B47A936d713b8FB90126D4d35546B' as const
