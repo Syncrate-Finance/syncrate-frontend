@@ -38,12 +38,9 @@ export default function XAUsProductPage({
   const infoModalRef = useRef<HTMLDivElement>(null)
 
   // Live Metrics State
-  const [totalSupply, setTotalSupply] = useState<string>('0 XAUs')
-  const [marketCap, setMarketCap] = useState<string>('$0.00')
   const [totalVaultWeight] = useState<number>(initialVaultWeight)
   const [unallocatedBullion, setUnallocatedBullion] = useState<string>('0 Troy Oz')
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false)
-  const [goldPrice] = useState<number>(4154.91) // Gold market price for market cap calculation
 
   // Close popover on outside click/tap
   useEffect(() => {
@@ -64,7 +61,7 @@ export default function XAUsProductPage({
     }
   }, [showInfoModal])
 
-  // Fetch live onchain supply and compute Market Cap & Unallocated Bullion
+  // Fetch live onchain supply and compute Unallocated Bullion dynamically
   useEffect(() => {
     async function fetchOnChainData() {
       try {
@@ -75,21 +72,6 @@ export default function XAUsProductPage({
         } as any)) as bigint
 
         const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
-
-        // Format Supply (Circulating)
-        const supplyString = `${formattedSupply.toLocaleString('en-US', {
-          minimumFractionDigits: 4,
-          maximumFractionDigits: 4,
-        })} XAUs`
-        setTotalSupply(supplyString)
-
-        // Calculate Market Cap
-        const calculatedMarketCap = formattedSupply * goldPrice
-        const mcapString = `$${calculatedMarketCap.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}`
-        setMarketCap(mcapString)
 
         // Calculate Unallocated Bullion dynamically (Vault Weight - Circulating Supply)
         const remainingUnallocated = Math.max(0, totalVaultWeight - formattedSupply)
@@ -104,7 +86,7 @@ export default function XAUsProductPage({
     }
 
     fetchOnChainData()
-  }, [goldPrice, totalVaultWeight])
+  }, [totalVaultWeight])
 
   const features = [
     {
@@ -235,20 +217,12 @@ export default function XAUsProductPage({
 
             {/* --- LIVE METRICS GRID --- */}
             <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
-                <div>
-                  <p className="text-xs font-mono tracking-tight text-[#666666] mb-1"> XAUs MarketCap</p>
-                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{marketCap}</p>
-                </div>
+              <div className="grid grid-cols-2 gap-6 md:gap-12 mb-6 max-w-lg">
                 <div>
                   <p className="text-xs font-mono tracking-tight text-[#666666] mb-1">Bullion Weight</p>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
                     {totalVaultWeight.toLocaleString('en-US')} Troy Oz
                   </p>
-                </div>
-                <div>
-                  <p className="text-xs font-mono tracking-tight text-[#666666] mb-1">Circulating Supply</p>
-                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
                 </div>
                 <div className="relative" ref={infoModalRef}>
                   <div className="flex items-center gap-1.5 mb-1">
