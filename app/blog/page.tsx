@@ -14,8 +14,8 @@ export default function Blog() {
   const posts: BlogPost[] = [
     // --- POST 2 (NEWEST / MOST RECENT) ---
     {
-      title: 'XAUs is Live: Gold Built for DeFi',
-      href: '/blog/xaus-is-live',
+      title: 'SGLD is Live: Gold Built for DeFi',
+      href: '/blog/sgld-is-live',
       imageSrc: '/blog2.PNG', // Place blog2.jpg in public/
       date: '23 Jul 2026',
     },
