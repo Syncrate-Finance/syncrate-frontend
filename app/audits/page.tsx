@@ -41,8 +41,8 @@ export default function AuditReportsPage() {
               className="object-contain rounded-full" 
             />
           </Link>
-          <Link href="/xaus" className="px-4 py-2 rounded-full bg-[#111111] hover:bg-[#1c1c1c] text-white border border-[#222222] text-xs font-medium transition-colors">
-            ← Back to XAUs
+          <Link href="/sgld" className="px-4 py-2 rounded-full bg-[#111111] hover:bg-[#1c1c1c] text-white border border-[#222222] text-xs font-medium transition-colors">
+            ← Back to SGLD
           </Link>
         </header>
 
@@ -56,7 +56,7 @@ export default function AuditReportsPage() {
               Audit Reports
             </h1>
             <p className="text-xs md:text-base text-[#AAAAAA] max-w-2xl leading-relaxed">
-              Independent physical vault verification and reserve audit statements for Syncrate Gold (XAUs) conducted by Bureau Veritas.
+              Independent physical vault verification and reserve audit statements for Syncrate Gold (SGLD) conducted by Bureau Veritas.
             </p>
           </div>
 
