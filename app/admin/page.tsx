@@ -82,7 +82,7 @@ export default function AdminDashboard() {
           <div className="flex flex-col gap-0.5">
             <span className="text-[10px] font-mono uppercase text-[#666666]">Active Reserve Cap</span>
             <span className="text-xl font-medium text-white font-mono">
-              {currentCap.toLocaleString(undefined, { minimumFractionDigits: 2 })} XAUs
+              {currentCap.toLocaleString(undefined, { minimumFractionDigits: 2 })} SGLD
             </span>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function AdminDashboard() {
                   disabled={isPending || isConfirming}
                   className="bg-transparent text-lg text-white placeholder-[#333333] focus:outline-none font-mono w-full"
                 />
-                <span className="text-xs font-mono text-[#444444]">XAUs</span>
+                <span className="text-xs font-mono text-[#444444]">SGLD</span>
               </div>
             </div>
 
