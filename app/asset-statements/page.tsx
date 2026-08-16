@@ -41,8 +41,8 @@ export default function AssetStatementsPage() {
               className="object-contain rounded-full" 
             />
           </Link>
-          <Link href="/xaus" className="px-4 py-2 rounded-full bg-[#111111] hover:bg-[#1c1c1c] text-white border border-[#222222] text-xs font-medium transition-colors">
-            ← Back to XAUs
+          <Link href="/sgld" className="px-4 py-2 rounded-full bg-[#111111] hover:bg-[#1c1c1c] text-white border border-[#222222] text-xs font-medium transition-colors">
+            ← Back to SGLD
           </Link>
         </header>
 
