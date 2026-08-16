@@ -136,16 +136,16 @@ Users remain solely responsible for evaluating the suitability of any transactio
     Overview
   </h3>
   <p className="mb-2">
-    These Token Minting & Redemption Terms govern the creation (“Minting”) and redemption of XAUs through the Syncrate protocol.
+    These Token Minting & Redemption Terms govern the creation (“Minting”) and redemption of SGLD through the Syncrate protocol.
   </p>
   <p className="mb-2">
-    By minting or redeeming XAUs, you acknowledge and agree to these terms in addition to the Syncrate Terms of Service.
+    By minting or redeeming SGLD, you acknowledge and agree to these terms in addition to the Syncrate Terms of Service.
   </p>
 <h3 className="text-l font-medium text-white mt-10 mb-3 tracking-tight">
     Minting
   </h3>
   <p className="mb-2">
-  XAUs may only be minted by depositing a supported stablecoin through the Syncrate protocol. The amount of XAUs issued is calculated using the applicable gold reference price available at the time the transaction is processed. No XAUs are created without the successful receipt of the required collateral.
+  SGLD may only be minted by depositing a supported stablecoin through the Syncrate protocol. The amount of SGLD issued is calculated using the applicable gold reference price available at the time the transaction is processed. No SGLD are created without the successful receipt of the required collateral.
   </p>
 <p className="mb-2">
 Syncrate reserves the right to reject or suspend mint requests where required for legal, regulatory, compliance, security, or operational reasons.
@@ -154,7 +154,7 @@ Syncrate reserves the right to reject or suspend mint requests where required fo
     Redemption
   </h3>
   <p className="mb-2">
-XAUs holders may redeem XAUs through the Syncrate protocol, subject to applicable eligibility requirements, fees, and operational procedures. Redemption proceeds are settled in supported stablecoins unless otherwise specified.
+SGLD holders may redeem SGLD through the Syncrate protocol, subject to applicable eligibility requirements, fees, and operational procedures. Redemption proceeds are settled in supported stablecoins unless otherwise specified.
 </p>
 <p className="mb-2">
 Where immediate liquidity is unavailable, redemption requests may be processed through the protocol’s redemption queue in accordance with the protocol’s operating procedures.
@@ -203,7 +203,7 @@ Where reasonably practicable, users will be notified of planned service interrup
               Syncrate is committed to maintaining the integrity of its platform and complying with applicable anti-money laundering (“AML”), counter-terrorist financing (“CTF”), sanctions, and know-your-customer (“KYC”) laws and regulations. Interface endpoints actively screen connected Web3 wallet addresses against global sanctions registries (including OFAC, EU, and UN lists).
             </p>
             <p className="mb-2">
-              Certain Services, including the minting and redemption of XAUs, require identity verification before access is granted. Users may be asked to provide personal information, identification documents, proof of address, source of funds, or other information reasonably required to satisfy applicable compliance obligations.
+              Certain Services, including the minting and redemption of SGLD, require identity verification before access is granted. Users may be asked to provide personal information, identification documents, proof of address, source of funds, or other information reasonably required to satisfy applicable compliance obligations.
             </p>
            <p className="mb-2">
               Syncrate reserves the right to request additional information or documentation at any time, delay, suspend, or reject transactions pending compliance review, refuse access to the Services where legal or regulatory requirements cannot be satisfied and report suspicious activity to the appropriate authorities where required by applicable law.
@@ -278,7 +278,7 @@ Users may manage or disable cookies through their browser settings. Disabling ce
               6. Virtual Asset & Smart Contract Risk Disclosure
             </h2>
             <p className="mb-2">
-              XAUs is a synthetic software token and does not represent direct legal ownership or physical custody of physical gold bullion. Interactions with smart contracts, decentralized finance protocols, and digital assets carry inherent software risks, including potential bugs, oracle latency, and network congestion.
+              SGLD is a digital asset token and does not represent direct legal ownership or physical custody of physical gold bullion. Interactions with smart contracts, decentralized finance protocols, and digital assets carry inherent software risks, including potential bugs, oracle latency, and network congestion.
             </p>
             <p className="mb-2">
               All smart-contract interactions are executed autonomously onchain on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind. Users are solely responsible for safeguarding their wallets, private keys, recovery phrases, and access credentials. Syncrate cannot recover lost private keys or reverse blockchain transactions.
