@@ -42,7 +42,7 @@ export default function LaunchingSoon() {
             </svg>
           </a>
           <Link href="/app" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
-            Mint XAUs
+            Mint SGLD
           </Link>
         </div>
       </header>
@@ -76,12 +76,12 @@ export default function LaunchingSoon() {
       {/* --- NEW PRODUCTS HEADER & SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
         
-        {/* PRODUCT CARD 1: XAUs */}
+        {/* PRODUCT CARD 1: SGLD */}
         <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-[#222222] bg-[#030303] flex flex-col justify-between p-6 md:p-8">
           <div className="absolute inset-0 z-0">
             <Image
               src="/XAUs-bg-cover.PNG" 
-              alt="XAUs Background"
+              alt="SGLD Background"
               fill
               className="object-cover opacity-35"
               priority
@@ -92,7 +92,7 @@ export default function LaunchingSoon() {
             <div className="relative w-48 h-48 md:w-56 md:h-56">
               <Image
                 src="/XAUs-icon.png" 
-                alt="XAUs Icon Visual"
+                alt="SGLD Icon Visual"
                 fill
                 className="object-contain"
               />
@@ -101,12 +101,12 @@ export default function LaunchingSoon() {
 
           <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
             <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
-              XAUs
+              SGLD
             </h3>
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-              Each Syncrate Gold (XAUs) is backed 1:1 by LBMA-standard physical gold, held in secure vaults with reputable custodians in the UAE.
+              Each Syncrate Gold (SGLD) is backed 1:1 by LBMA-standard physical gold, held in secure vaults with reputable custodians in the UAE.
             </p>
-            <Link href="/xaus">
+            <Link href="/sgld">
               <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
                 View Product <span>→</span>
               </button>
@@ -142,7 +142,7 @@ export default function LaunchingSoon() {
               Syncrate Prime
             </h3>
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-              Syncrate Prime is yield vault product that gives XAUs holders an optional path to deploy their gold exposure into short-term, gold-backed financing opportunities and earn yield from the underlying financing returns.
+              Syncrate Prime is a yield vault product that gives SGLD holders an optional path to deploy their gold exposure into, gold-backed financing opportunities and earn yield from the underlying returns.
             </p>
             <Link href="/sgld">
               <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
@@ -174,7 +174,7 @@ export default function LaunchingSoon() {
             Real Yield Source
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            syXAUs' growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly from short-term gold financing arrangements with bullion banks and refiners who pay a financing spread that flows back to the Syncrate Prime vault.
+            sySGLD's growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly from short-term gold financing arrangements with bullion banks and refiners who pay a financing spread that flows back to the Syncrate Prime vault.
           </p>
         </div>
 
@@ -183,7 +183,7 @@ export default function LaunchingSoon() {
             Institutional-Grade Custody
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            While syXAUs earns additional upside, the base layer remains anchored. Each XAUs token are securely backed 1:1 by physical gold held in independent UAE vaults, tracked and priced continuously by Chainlink's decentralized oracle infrastructure.
+            While sySGLD earns additional upside, the base layer remains anchored. Each SGLD token are securely backed 1:1 by physical gold held in independent UAE vaults, tracked and priced continuously by Chainlink's decentralized oracle infrastructure.
           </p>
         </div>
 
@@ -229,7 +229,7 @@ export default function LaunchingSoon() {
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Oracle</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              Real-time gold price feeds and reserve data, powered by <span className="text-blue-500 font-medium">Chainlink</span> giving the XAUs accurate, tamper-resistant pricing to calculate NAV and yield.
+              Real-time gold price feeds and reserve data, powered by <span className="text-blue-500 font-medium">Chainlink</span> giving the SGLD token accurate, tamper-resistant pricing to calculate NAV and yield.
             </p>
           </div>
 
@@ -239,7 +239,7 @@ export default function LaunchingSoon() {
             </div>
             <h4 className="text-lg font-medium text-white mb-3">Custody & Financing</h4>
             <p className="text-sm text-[#888888] leading-relaxed">
-              Secure custodial storage and financing for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing XAUs are held independently and always verfiable.
+              Secure custodial storage and financing for physical gold bars, by <span className="text-blue-500 font-medium">Amanat Vaults</span>, ensuring the assets backing SGLD are held independently and always verfiable.
             </p>
           </div>
         </div>
@@ -260,7 +260,7 @@ export default function LaunchingSoon() {
         {/* Compact List Container */}
         <div className="w-full border border-[#222222] rounded-xl bg-[#0A0A0A] overflow-hidden flex flex-col">
           
-          {/* XAUs Token */}
+          {/* SGLD Token */}
           <a 
             href="https://basescan.org/token/0x10C5E0643bCc6C915Cad0335f70A96c1532766eb"
             target="_blank"
@@ -270,7 +270,7 @@ export default function LaunchingSoon() {
             <div className="flex flex-col mb-3 sm:mb-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
-                  XAUs Token
+                  SGLD Token
                 </span>
                 <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
               </div>
@@ -349,7 +349,7 @@ export default function LaunchingSoon() {
 
         {/* Featured Card */}
         <Link 
-          href="/blog/xaus-is-live"
+          href="/blog/sgld-is-live"
           className="group block w-full max-w-2xl border border-[#222222] rounded-xl overflow-hidden bg-[#0A0A0A] hover:border-[#444444] transition-colors duration-300">
         
           {/* Card Top: Image */}
@@ -365,7 +365,7 @@ export default function LaunchingSoon() {
           {/* Card Bottom: Content */}
           <div className="p-6 md:p-8 flex flex-col gap-4">
             <h3 className="text-lg md:text-xl font-normal text-[#E5E5E5] leading-snug group-hover:text-white transition-colors">
-              XAUs is Live: Gold, Built for DeFi
+              SGLD is Live: Gold, Built for DeFi
             </h3>
             <span className="text-xs text-[#888888]">23 Jul, 2026</span>
           </div>
@@ -472,7 +472,7 @@ export default function LaunchingSoon() {
 
           <div className="w-full mt-16 flex flex-col gap-2 text-[10px] md:text-xs text-[#F5F5F5] leading-relaxed text-justify md:text-left">
             <p>
-              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. XAUs is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
+              Syncrate is a technology platform and does not constitute an offer to sell or a solicitation of an offer to buy any securities, financial instruments, or investment products in any jurisdiction where such offer or solicitation would be unlawful. SGLD is not legal tender, is not insured by any government deposit insurance scheme, and is not guaranteed by any bank or financial institution.
             </p>
             <p>
               Yield generated through Syncrate is derived from underlying gold financing activity and is not fixed, guaranteed, or assured. Past performance of any financing cycle is not indicative of future results. The value of gold and the performance of financing partners can fluctuate, and depositors may be exposed to counterparty, custodial, operational, and market risks, including potential loss of principal.
