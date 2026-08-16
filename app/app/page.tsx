@@ -26,7 +26,7 @@ interface StablecoinConfig {
 
 interface ChainConfig {
   stablecoins: Record<string, StablecoinConfig>;
-  xaus: `0x${string}`;
+  sgld: `0x${string}`;
   goldPriceFeed: `0x${string}`;
   mintController: `0x${string}`;
   defaultAsset: string;
@@ -38,7 +38,7 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
       USDC: { address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', decimals: 6 },
       USDT: { address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2', decimals: 6 },
     },
-    xaus: '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb', 
+    sgld: '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb', 
     goldPriceFeed: '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31', 
     mintController: '0x37c0078D297243A22ac247cd93f1cafed9Dbe461', 
     defaultAsset: 'USDC',
@@ -47,7 +47,7 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
     stablecoins: {
       USDG: { address: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168', decimals: 18 },
     },
-    xaus: '0x0000000000000000000000000000000000000000', 
+    sgld: '0x0000000000000000000000000000000000000000', 
     goldPriceFeed: '0x1F954Dc24a49708C26E0C1777f16750B5C6d5a2c', 
     mintController: '0x0000000000000000000000000000000000000000', 
     defaultAsset: 'USDG',
@@ -122,7 +122,7 @@ function LaunchingSoonUI() {
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono uppercase tracking-wider text-amber-500 font-semibold">
-              XAUs
+              SGLD
             </span>
             <span className="text-[10px] font-mono text-[#666666] uppercase">
               Base Mainnet
@@ -132,7 +132,7 @@ function LaunchingSoonUI() {
             Launching Soon
           </h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            The XAUs minting & redemption dApp is coming soon. Join the waitlist and be the first to get notified when we go live.
+            The SGLD minting & redemption dApp is coming soon. Join the waitlist and be the first to get notified when we go live.
           </p>
         </div>
 
@@ -305,17 +305,17 @@ function MintingAppUI() {
     query: { enabled: !!address && !!activeStablecoinConfig?.address && activeStablecoinConfig.address !== ZERO_ADDRESS, refetchInterval: 10000, }
   })
 
-  const { data: xausBalanceRaw } = useReadContract({
-    address: activeConfig.xaus !== ZERO_ADDRESS ? activeConfig.xaus : undefined,
+  const { data: sgldBalanceRaw } = useReadContract({
+    address: activeConfig.sgld !== ZERO_ADDRESS ? activeConfig.sgld : undefined,
     abi: ERC20_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
     chainId: targetChainId,
-    query: { enabled: !!address && !!activeConfig.xaus && activeConfig.xaus !== ZERO_ADDRESS, refetchInterval: 10000, }
+    query: { enabled: !!address && !!activeConfig.sgld && activeConfig.sgld !== ZERO_ADDRESS, refetchInterval: 10000, }
   })
 
   const stablecoinBalance = stablecoinBalanceRaw && activeStablecoinConfig ? parseFloat(formatUnits(stablecoinBalanceRaw, activeStablecoinConfig.decimals)) : 0
-  const xausBalance = xausBalanceRaw ? parseFloat(formatUnits(xausBalanceRaw, 18)) : 0
+  const sgldBalance = sgldBalanceRaw ? parseFloat(formatUnits(sgldBalanceRaw, 18)) : 0
 
   const { writeContract: writeApprove, data: approveTxHash, error: approveError, reset: resetApprove } = useWriteContract()
   const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({ hash: approveTxHash })
@@ -352,7 +352,7 @@ function MintingAppUI() {
 
   const handleMaxBalance = () => {
     if (activeTab === 'mint') setInputAmount(stablecoinBalance.toString())
-    else setInputAmount(xausBalance.toString())
+    else setInputAmount(sgldBalance.toString())
   }
 
   const handleApprove = () => {
@@ -363,7 +363,7 @@ function MintingAppUI() {
       targetTokenAddress = activeStablecoinConfig.address
       decimals = activeStablecoinConfig.decimals
     } else {
-      targetTokenAddress = activeConfig.xaus
+      targetTokenAddress = activeConfig.sgld
       decimals = 18 
     }
     if (targetTokenAddress === ZERO_ADDRESS) { alert('Contract addresses not yet configured for this network.'); return }
@@ -435,7 +435,7 @@ function MintingAppUI() {
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center border-b border-[#111111]">
         <Link href="/" className="flex items-center gap-2 group">
           <Image src="/logo.png" alt="Syncrate Logo" width={32} height={32} className="object-contain rounded-full" />
-          <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">XAUs MINT</span>
+          <span className="text-xs font-mono tracking-widest text-[#666666] group-hover:text-white transition-colors hidden xs:inline">SGLD MINT</span>
         </Link>
 
         <div className="flex items-center gap-1.5 sm:gap-3">
@@ -467,7 +467,7 @@ function MintingAppUI() {
       <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 my-12 gap-6">
         <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 md:p-8 shadow-xl">
           <div className="flex gap-6 border-b border-[#111111] pb-4 mb-6">
-            <button onClick={() => handleTabSwitch('mint')} className={`text-sm font-medium pb-4 -mb-[18px] transition-colors ${activeTab === 'mint' ? 'text-white border-b-2 border-white' : 'text-[#666666] hover:text-[#AAAAAA]'}`}>Mint XAUs</button>
+            <button onClick={() => handleTabSwitch('mint')} className={`text-sm font-medium pb-4 -mb-[18px] transition-colors ${activeTab === 'mint' ? 'text-white border-b-2 border-white' : 'text-[#666666] hover:text-[#AAAAAA]'}`}>Mint SGLD</button>
             <button onClick={() => handleTabSwitch('redeem')} className={`text-sm font-medium pb-4 -mb-[18px] transition-colors ${activeTab === 'redeem' ? 'text-white border-b-2 border-white' : 'text-[#666666] hover:text-[#AAAAAA]'}`}>Redeem</button>
           </div>
 
@@ -476,7 +476,7 @@ function MintingAppUI() {
               <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4"><span className="text-emerald-500 text-lg">✓</span></div>
               <h3 className="text-lg font-medium text-white mb-2">Transaction Success</h3>
               <p className="text-xs text-[#888888] max-w-xs mb-6 leading-relaxed">
-                {activeTab === 'mint' ? 'Your payment was processed and your native XAUs have been minted successfully.' : `Your XAUs have been successfully redeemed for ${paymentAsset}.`}
+                {activeTab === 'mint' ? 'Transaction successful. SGLD have been minted and sent to your wallet.' : `Your SGLD have been successfully redeemed for ${paymentAsset}.`}
               </p>
               <button onClick={resetFlow} className="px-6 py-2.5 bg-[#111111] text-xs font-medium rounded-md hover:bg-[#222222] text-white transition-all">
                 {activeTab === 'mint' ? 'Mint Again' : 'Redeem Again'}
@@ -508,14 +508,14 @@ function MintingAppUI() {
                     </div>
                   ) : (
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-white select-none flex-shrink-0 whitespace-nowrap">
-                      <Image src="/XAUs-icon2.png" alt="XAUs logo" width={16} height={16} className="rounded-full flex-shrink-0" />
-                      <span>XAUs</span>
+                      <Image src="/XAUs-icon2.png" alt="SGLD logo" width={16} height={16} className="rounded-full flex-shrink-0" />
+                      <span>SGLD</span>
                     </div>
                   )}
                 </div>
                 <div className="flex justify-end items-center gap-2 mt-1">
                   <span className="text-[10px] text-[#666666] font-mono">
-                    Balance: {isConnected ? (activeTab === 'mint' ? stablecoinBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : xausBalance.toFixed(4)) : (activeTab === 'mint' ? '0.00' : '0.0000')} {activeTab === 'mint' ? paymentAsset : 'XAUs'}
+                    Balance: {isConnected ? (activeTab === 'mint' ? stablecoinBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : sgldBalance.toFixed(4)) : (activeTab === 'mint' ? '0.00' : '0.0000')} {activeTab === 'mint' ? paymentAsset : 'SGLD'}
                   </span>
                   {isConnected && <button onClick={handleMaxBalance} disabled={txStatus !== 'idle' && txStatus !== 'approved'} className="text-[9px] font-bold text-[#0037FF] hover:text-[#002CD6] transition-colors disabled:opacity-50 uppercase tracking-wider">Max</button>}
                 </div>
@@ -527,8 +527,8 @@ function MintingAppUI() {
                   <input type="text" readOnly value={calculatedOutput} className="bg-transparent text-xl md:text-2xl text-white/90 font-sans focus:outline-none w-full cursor-default min-w-0" />
                   {activeTab === 'mint' ? (
                     <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-lg px-3 py-2 flex items-center gap-2 text-xs font-medium text-[#AAAAAA] select-none flex-shrink-0 whitespace-nowrap">
-                      <Image src="/XAUs-icon2.png" alt="XAUs logo" width={16} height={16} className="rounded-full flex-shrink-0" />
-                      <span>XAUs</span>
+                      <Image src="/XAUs-icon2.png" alt="SGLD logo" width={16} height={16} className="rounded-full flex-shrink-0" />
+                      <span>SGLD</span>
                     </div>
                   ) : (
                     <div className="relative flex-shrink-0">
@@ -588,7 +588,7 @@ function MintingAppUI() {
                         ) : !isMintControllerValid ? (
                           'Addresses Not Active on This Network'
                         ) : (
-                          `Approve ${activeTab === 'mint' ? paymentAsset : 'XAUs'}`
+                          `Approve ${activeTab === 'mint' ? paymentAsset : 'SGLD'}`
                         )}
                       </button>
                     )}
@@ -605,10 +605,10 @@ function MintingAppUI() {
                         {txStatus === 'processing' ? (
                           <>
                             <span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />
-                            {activeTab === 'mint' ? 'Minting XAUs...' : 'Redeeming XAUs...'}
+                            {activeTab === 'mint' ? 'Minting SGLD...' : 'Redeeming SGLD...'}
                           </>
                         ) : (
-                          activeTab === 'mint' ? 'Mint XAUs' : 'Redeem XAUs'
+                          activeTab === 'mint' ? 'Mint SGLD' : 'Redeem SGLD'
                         )}
                       </button>
                     )}
