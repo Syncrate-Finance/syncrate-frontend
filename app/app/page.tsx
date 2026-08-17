@@ -18,16 +18,17 @@ const IS_LIVE = true;
 
 // ==========================================
 // GEOBLOCKING RESTRICTED JURISDICTIONS
-// ISO 3166-1 alpha-2 codes: US, CA, GB + EU/EEA members
+// ISO 3166-1 alpha-2 codes
 // ==========================================
 const BLOCKED_COUNTRIES = new Set([
-  'US', // United States
-  'CA', // Canada
-  'GB', // United Kingdom
-  // EU & EEA Member States
-  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 
-  'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 
-  'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO'
+  'CU', // Cuba
+  'IR', // Iran
+  'KP', // North Korea
+  'RU', // Russia
+  'BY', // Belarus
+  'SY', // Syria
+  'AU', // Australia
+  'UA', // Ukraine (Covers Crimea, Donetsk, and Luhansk regions)
 ]);
 
 // ==========================================
