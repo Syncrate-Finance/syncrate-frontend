@@ -17,6 +17,20 @@ import { parseUnits, formatUnits, maxUint256 } from 'viem'
 const IS_LIVE = true;
 
 // ==========================================
+// GEOBLOCKING RESTRICTED JURISDICTIONS
+// ISO 3166-1 alpha-2 codes: US, CA, GB + EU/EEA members
+// ==========================================
+const BLOCKED_COUNTRIES = new Set([
+  'US', // United States
+  'CA', // Canada
+  'GB', // United Kingdom
+  // EU & EEA Member States
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 
+  'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 
+  'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO'
+]);
+
+// ==========================================
 // CONFIGURATIONS & ABIS
 // ==========================================
 interface StablecoinConfig {
@@ -96,6 +110,47 @@ const MINT_CONTROLLER_ABI = [
   ], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
 ] as const;
 
+// ==========================================
+// COMPONENT: GEO-RESTRICTED BANNER / CARD
+// ==========================================
+function GeoRestrictedUI() {
+  return (
+    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
+      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-6 relative overflow-hidden">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-mono uppercase tracking-wider text-red-400 font-semibold">
+              Restricted Region
+            </span>
+          </div>
+          <h1 className="text-xl font-semibold text-white tracking-tight mt-2">
+            Access Restricted
+          </h1>
+          <p className="text-sm text-[#888888] leading-relaxed">
+            Direct SGLD minting is not available in your jurisdiction. You can trade SGLD on secondary markets.
+          </p>
+        </div>
+
+        <div className="border-t border-[#111111] pt-6 flex flex-col gap-3">
+          <a
+            href="https://uniswap.org" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-full py-3.5 bg-white text-[#030303] hover:bg-[#E5E5E5] font-medium text-xs rounded-lg transition-all text-center"
+          >
+            Explore Secondary Markets
+          </a>
+          <Link
+            href="/sgld"
+            className="w-full py-3.5 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#222222] font-medium text-xs rounded-lg transition-all text-center"
+          >
+            Learn More About SGLD
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 // ==========================================
 // COMPONENT A: THE WAITLIST (LAUNCHING SOON)
@@ -317,10 +372,10 @@ function MintingAppUI() {
   const stablecoinBalance = stablecoinBalanceRaw && activeStablecoinConfig ? parseFloat(formatUnits(stablecoinBalanceRaw, activeStablecoinConfig.decimals)) : 0
   const sgldBalance = sgldBalanceRaw ? parseFloat(formatUnits(sgldBalanceRaw, 18)) : 0
 
-  const { writeContract: writeApprove, data: approveTxHash, error: approveError, reset: resetApprove } = useWriteContract()
+  const { writeContract: writeApprove, data: approveTxHash, error: approveError, reset: resetApprove, isPending: isApprovePending } = useWriteContract()
   const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({ hash: approveTxHash })
 
-  const { writeContract: writeAction, data: actionTxHash, error: actionError, reset: resetAction } = useWriteContract()
+  const { writeContract: writeAction, data: actionTxHash, error: actionError, reset: resetAction, isPending: isActionPending } = useWriteContract()
   const { isLoading: isActionMining, isSuccess: isActionConfirmed } = useWaitForTransactionReceipt({ hash: actionTxHash })
 
   useEffect(() => {
@@ -329,11 +384,10 @@ function MintingAppUI() {
     else if (approveError) { setTxStatus('idle'); resetApprove() }
   }, [isApprovalMining, isApprovalConfirmed, approveError, resetApprove, txStatus])
 
-  // FIX 2: Clear local queue state and properly handle transaction success screen
   useEffect(() => {
     if (isActionMining) setTxStatus('processing')
     else if (isActionConfirmed && txStatus === 'processing') {
-      setQueuedRequest(null) // Instant redemptions clear queue display
+      setQueuedRequest(null)
       setTxStatus('success')
     } else if (actionError) { setTxStatus('approved'); resetAction() }
   }, [isActionMining, isActionConfirmed, actionError, resetAction, activeTab, txStatus])
@@ -358,13 +412,10 @@ function MintingAppUI() {
   const handleApprove = () => {
     if (!inputAmount || parseFloat(inputAmount) <= 0 || !activeStablecoinConfig || !isMintControllerValid) return
     let targetTokenAddress: `0x${string}`
-    let decimals: number
     if (activeTab === 'mint') {
       targetTokenAddress = activeStablecoinConfig.address
-      decimals = activeStablecoinConfig.decimals
     } else {
       targetTokenAddress = activeConfig.sgld
-      decimals = 18 
     }
     if (targetTokenAddress === ZERO_ADDRESS) { alert('Contract addresses not yet configured for this network.'); return }
     writeApprove({ address: targetTokenAddress, abi: ERC20_ABI, functionName: 'approve', args: [activeConfig.mintController, maxUint256] } as any)
@@ -576,15 +627,26 @@ function MintingAppUI() {
                   </div>
                 ) : (
                   <>
-                    {/* FIX 1: Explicit text styling prevents blank white rendering */}
                     {(txStatus === 'idle' || txStatus === 'approving') && (
                       <button 
                         onClick={handleApprove} 
-                        disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || !isMintControllerValid} 
-                        className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 disabled:hover:bg-[#111111] transition-all flex items-center justify-center gap-2"
+                        disabled={!inputAmount || parseFloat(inputAmount) <= 0 || txStatus === 'approving' || isApprovePending || !isMintControllerValid} 
+                        className={`w-full py-4 font-medium text-sm rounded-lg border transition-all flex items-center justify-center gap-2 ${
+                          isApprovePending || txStatus === 'approving'
+                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/30 cursor-not-allowed'
+                            : 'bg-[#111111] hover:bg-[#1A1A1A] text-white border-[#333333] disabled:opacity-40 disabled:hover:bg-[#111111]'
+                        }`}
                       >
-                        {txStatus === 'approving' ? (
-                          <><span className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />Approving Allowances...</>
+                        {isApprovePending ? (
+                          <>
+                            <span className="w-4 h-4 border-2 border-t-transparent border-amber-400 rounded-full animate-spin" />
+                            Confirm in Wallet...
+                          </>
+                        ) : txStatus === 'approving' ? (
+                          <>
+                            <span className="w-4 h-4 border-2 border-t-transparent border-amber-400 rounded-full animate-spin" />
+                            Approving Allowances...
+                          </>
                         ) : !isMintControllerValid ? (
                           'Addresses Not Active on This Network'
                         ) : (
@@ -595,14 +657,19 @@ function MintingAppUI() {
                     {(txStatus === 'approved' || txStatus === 'processing') && (
                       <button 
                         onClick={handleProcess} 
-                        disabled={txStatus === 'processing' || !isMintControllerValid} 
-                        className={`w-full py-4 font-medium text-sm rounded-lg disabled:opacity-60 transition-all flex items-center justify-center gap-2 shadow-lg ${
+                        disabled={txStatus === 'processing' || isActionPending || !isMintControllerValid} 
+                        className={`w-full py-4 font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-60 ${
                           activeTab === 'mint' 
                             ? 'bg-[#0037FF] text-white hover:bg-[#002CD6] shadow-[#0037FF]/10' 
                             : 'bg-white text-black hover:bg-[#E5E5E5] shadow-white/10'
                         }`}
                       >
-                        {txStatus === 'processing' ? (
+                        {isActionPending ? (
+                          <>
+                            <span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />
+                            Confirm in Wallet...
+                          </>
+                        ) : txStatus === 'processing' ? (
                           <>
                             <span className={`w-4 h-4 border-2 border-t-transparent rounded-full animate-spin ${activeTab === 'mint' ? 'border-white' : 'border-black'}`} />
                             {activeTab === 'mint' ? 'Minting SGLD...' : 'Redeeming SGLD...'}
@@ -629,9 +696,45 @@ function MintingAppUI() {
 }
 
 // ==========================================
-// THE MAIN ROUTER EXPORT
+// THE MAIN ROUTER EXPORT (WITH GEOBLOCK CHECK)
 // ==========================================
 export default function AppPortal() {
+  const [isBlocked, setIsBlocked] = useState(false)
+  const [checkingGeo, setCheckingGeo] = useState(true)
+
+  useEffect(() => {
+    async function checkGeoLocation() {
+      try {
+        // Fetch geo information using IP detection service
+        const res = await fetch('https://ipapi.co/json/')
+        if (res.ok) {
+          const data = await res.json()
+          if (data.country_code && BLOCKED_COUNTRIES.has(data.country_code)) {
+            setIsBlocked(true)
+          }
+        }
+      } catch (err) {
+        console.error("Geo-blocking verification failed:", err)
+      } finally {
+        setCheckingGeo(false)
+      }
+    }
+
+    checkGeoLocation()
+  }, [])
+
+  if (checkingGeo) {
+    return (
+      <div className="min-h-screen bg-[#030303] flex items-center justify-center">
+        <span className="w-8 h-8 border-2 border-t-transparent border-white rounded-full animate-spin" />
+      </div>
+    )
+  }
+
+  if (isBlocked) {
+    return <GeoRestrictedUI />
+  }
+
   if (!IS_LIVE) {
     return <LaunchingSoonUI />
   }
