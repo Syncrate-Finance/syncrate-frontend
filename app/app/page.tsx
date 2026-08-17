@@ -137,12 +137,12 @@ function GeoRestrictedUI() {
 
         <div className="border-t border-[#111111] pt-6 flex flex-col gap-3">
           <a
-            href="https://uniswap.org" 
+            href="https://aerodrome.finance/deposit?token0=0x10c5e0643bcc6c915cad0335f70a96c1532766eb&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=-1&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da" 
             target="_blank" 
             rel="noopener noreferrer"
             className="w-full py-3.5 bg-white text-[#030303] hover:bg-[#E5E5E5] font-medium text-xs rounded-lg transition-all text-center"
           >
-            Explore Secondary Markets
+            Buy SGLD on Aerodrome
           </a>
           <Link
             href="/sgld"
