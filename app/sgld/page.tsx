@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState, useRef, useEffect, UIEvent } from 'react'
@@ -38,9 +39,12 @@ export default function SGLDProductPage({
   const infoModalRef = useRef<HTMLDivElement>(null)
 
   // Live Metrics State
+  const [totalSupply, setTotalSupply] = useState<string>('0 SGLD')
+  const [marketCap, setMarketCap] = useState<string>('$0.00')
   const [totalVaultWeight] = useState<number>(initialVaultWeight)
   const [unallocatedBullion, setUnallocatedBullion] = useState<string>('0 Troy Oz')
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false)
+  const [goldPrice] = useState<number>(4154.91) // Gold market price for market cap calculation
 
   // Close popover on outside click/tap
   useEffect(() => {
@@ -61,7 +65,7 @@ export default function SGLDProductPage({
     }
   }, [showInfoModal])
 
-  // Fetch live onchain supply and compute Unallocated Bullion dynamically
+  // Fetch live onchain supply and compute Market Cap & Unallocated Bullion
   useEffect(() => {
     async function fetchOnChainData() {
       try {
@@ -72,6 +76,21 @@ export default function SGLDProductPage({
         } as any)) as bigint
 
         const formattedSupply = parseFloat(formatUnits(rawSupply, 18))
+
+        // Format Supply (Circulating)
+        const supplyString = `${formattedSupply.toLocaleString('en-US', {
+          minimumFractionDigits: 4,
+          maximumFractionDigits: 4,
+        })} SGLD`
+        setTotalSupply(supplyString)
+
+        // Calculate Market Cap
+        const calculatedMarketCap = formattedSupply * goldPrice
+        const mcapString = `$${calculatedMarketCap.toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`
+        setMarketCap(mcapString)
 
         // Calculate Unallocated Bullion dynamically (Vault Weight - Circulating Supply)
         const remainingUnallocated = Math.max(0, totalVaultWeight - formattedSupply)
@@ -86,7 +105,7 @@ export default function SGLDProductPage({
     }
 
     fetchOnChainData()
-  }, [totalVaultWeight])
+  }, [goldPrice, totalVaultWeight])
 
   const features = [
     {
@@ -106,7 +125,7 @@ export default function SGLDProductPage({
     {
       id: 3,
       title: "Accessible Everywhere",
-      description: "SGLD is deployed across multiple exchanges and DeFi protocols, enabling robust liquidy and seamless ownership.",
+      description: "SGLD is deployed across multiple exchanges, enabling robust liquidy and seamless ownership.",
       bgImage: "/feature-3.PNG",
       logos: ["/uniswap.PNG", "/base.jpeg"]
     }
@@ -127,7 +146,7 @@ export default function SGLDProductPage({
     },
     {
       q: "Can I redeem my physical gold?",
-      a: "Yes. Physical gold redemption is available with a minimum redemption amount of 160.75 SGLD (5 kg of gold). To initiate a physical redemption, reach out to our team for further instructions and KYC verifications."
+      a: "Yes. Physical gold redemption is available with a minimum redemption amount of 160.75 SGLD (5 kg of gold). A 5% fee is charged on all physical SGLD redemptions. To initiate a physical redemption, reach out to our team for further instructions and KYC verifications."
     },
     {
       q: "What is the fee structure?",
@@ -217,12 +236,20 @@ export default function SGLDProductPage({
 
             {/* --- LIVE METRICS GRID --- */}
             <div className="pt-8 border-t border-[#111111]/50 backdrop-blur-sm">
-              <div className="grid grid-cols-2 gap-6 md:gap-12 mb-6 max-w-lg">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                  <p className="text-xs font-mono tracking-tight text-[#666666] mb-1"> SGLD MarketCap</p>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{marketCap}</p>
+                </div>
                 <div>
                   <p className="text-xs font-mono tracking-tight text-[#666666] mb-1">Bullion Weight</p>
                   <p className="text-xl md:text-2xl font-normal text-white tracking-tight">
                     {totalVaultWeight.toLocaleString('en-US')} Troy Oz
                   </p>
+                </div>
+                <div>
+                  <p className="text-xs font-mono tracking-tight text-[#666666] mb-1">Circulating Supply</p>
+                  <p className="text-xl md:text-2xl font-normal text-white tracking-tight">{totalSupply}</p>
                 </div>
                 <div className="relative" ref={infoModalRef}>
                   <div className="flex items-center gap-1.5 mb-1">
