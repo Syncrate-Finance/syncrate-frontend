@@ -24,6 +24,9 @@ const BLOCKED_COUNTRIES = new Set([
   'CU', // Cuba
   'IR', // Iran
   'KP', // North Korea
+  'US', // USA
+  'CA', // Canada
+  'GB', // United Kingdom
   'RU', // Russia
   'BY', // Belarus
   'SY', // Syria
