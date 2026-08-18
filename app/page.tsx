@@ -27,7 +27,7 @@ export default function LaunchingSoon() {
         <div className="flex items-center gap-3 text-sm font-medium">
           {/* Whitepaper Button */}
           <a 
-            href="/syncrate-whitepaper.pdf" 
+            href="/whitepaper.pdf" 
             target="_blank" 
             rel="noopener noreferrer"
             className="w-10 h-10 flex items-center justify-center rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors"
