@@ -310,7 +310,7 @@ export default function LaunchingSoon() {
 
           {/* SYNC Token */}
           <a 
-            href="#"
+            href="https://basescan.org/token/0xd93c521d39ee255bcc3cc9b6269e380fc08e022a"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 hover:bg-[#111111] transition-colors duration-200"
@@ -326,7 +326,7 @@ export default function LaunchingSoon() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
-                Not Live
+                0xD93c521D39Ee255Bcc3CC9b6269e380fc08e022A
               </span>
               <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
             </div>
