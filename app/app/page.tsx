@@ -17,24 +17,6 @@ import { parseUnits, formatUnits, maxUint256 } from 'viem'
 const IS_LIVE = true;
 
 // ==========================================
-// GEOBLOCKING RESTRICTED JURISDICTIONS
-// ISO 3166-1 alpha-2 codes
-// ==========================================
-const BLOCKED_COUNTRIES = new Set([
-  'CU', // Cuba
-  'IR', // Iran
-  'KP', // North Korea
-  'US', // USA
-  'CA', // Canada
-  'GB', // United Kingdom
-  'RU', // Russia
-  'BY', // Belarus
-  'SY', // Syria
-  'AU', // Australia
-  'UA', // Ukraine (Covers Crimea, Donetsk, and Luhansk regions)
-]);
-
-// ==========================================
 // CONFIGURATIONS & ABIS
 // ==========================================
 interface StablecoinConfig {
