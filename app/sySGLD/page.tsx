@@ -145,15 +145,13 @@ function LaunchingSoonUI() {
               Syncrate Prime
             </span>
             <span className="text-[10px] font-mono text-[#666666] uppercase">
-              Base Mainnet
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
             Launching Soon
           </h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            The Syncrate Prime vault is coming soon. Join the waitlist to be
-            notified when we go live.
+            Syncrate Prime is launching soon. Join the waitlist to be notified when we go live.
           </p>
         </div>
 
@@ -164,7 +162,7 @@ function LaunchingSoonUI() {
                 You&apos;re on the list!
               </span>
               <span className="text-xs text-[#666666]">
-                We will contact you the second the vault contracts go live.
+                We'll reach out as soon as Syncrate Prime goes live.
               </span>
             </div>
           ) : (
