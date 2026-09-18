@@ -505,7 +505,7 @@ export default function SGLDProductPage({
               <a href="https://discord.gg/Q9MRKP69Fj" className="hover:text-[#888888] transition-colors">Discord</a>
               <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
               <Link href="/terms" className="hover:text-[#888888] transition-colors">Terms & Disclosures</Link>
-              <a href="https://x.com/syncratenetwork" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
+              <a href="https://x.com/syncratelabs" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
               <a href="https://github.com/Syncrate-Finance" className="hover:text-[#888888] transition-colors">GitHub</a>
             </div>
 
