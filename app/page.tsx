@@ -316,7 +316,7 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
-              src="/dwf.jpg" 
+              src="/dwf.JPG" 
               alt="DWF Labs" 
               width={130} 
               height={52} 
