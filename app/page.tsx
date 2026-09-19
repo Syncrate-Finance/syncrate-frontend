@@ -245,96 +245,6 @@ export default function LaunchingSoon() {
         </div>
       </section>
 
-      {/* --- CONTRACTS SECTION --- */}
-      <section className="w-full max-w-6xl mx-auto px-6 pt-8 pb-12">
-        <div className="w-full h-[2px] bg-[#333333] mb-6" />
-        <div className="flex justify-between items-center mb-6">
-          <span className="text-lg font-medium text-white">
-            Contracts
-          </span>
-          <span className="text-xs font-mono text-[#AAAAAA] bg-[#111111] px-3 py-1 rounded-full border border-[#222222]">
-            Base Mainnet
-          </span>
-        </div>
-
-        {/* Compact List Container */}
-        <div className="w-full border border-[#222222] rounded-xl bg-[#0A0A0A] overflow-hidden flex flex-col">
-          
-          {/* SGLD Token */}
-          <a 
-            href="https://basescan.org/token/0x10C5E0643bCc6C915Cad0335f70A96c1532766eb"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
-          >
-            <div className="flex flex-col mb-3 sm:mb-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
-                  SGLD Token
-                </span>
-                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
-              </div>
-              <span className="text-xs text-[#888888]">Syncrate Gold Asset</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
-                0x10C5E0643bCc6C915Cad0335f70A96c1532766eb
-              </span>
-              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
-            </div>
-          </a>
-
-          {/* SyncrateEngine */}
-          <a 
-            href="https://basescan.org/address/0x37c0078D297243A22ac247cd93f1cafed9Dbe461"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border-b border-[#222222] hover:bg-[#111111] transition-colors duration-200"
-          >
-            <div className="flex flex-col mb-3 sm:mb-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
-                  SyncrateEngine
-                </span>
-                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
-              </div>
-              <span className="text-xs text-[#888888]">Minting & Redemption Engine</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
-                0x37c0078D297243A22ac247cd93f1cafed9Dbe461
-              </span>
-              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
-            </div>
-          </a>
-
-          {/* SYNC Token */}
-          <a 
-            href="https://basescan.org/token/0xd93c521d39ee255bcc3cc9b6269e380fc08e022a"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 hover:bg-[#111111] transition-colors duration-200"
-          >
-            <div className="flex flex-col mb-3 sm:mb-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-medium text-white group-hover:text-[#FFD700] transition-colors">
-                  SYNC Token
-                </span>
-                <span className="text-[10px] font-mono text-[#666666] group-hover:text-white transition-colors sm:hidden">↗</span>
-              </div>
-              <span className="text-xs text-[#888888]">Protocol Ecosystem Token</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-mono text-[#AAAAAA] bg-[#1a1a1a] px-3 py-1.5 rounded border border-[#333333] truncate max-w-[240px] sm:max-w-none">
-                0xD93c521D39Ee255Bcc3CC9b6269e380fc08e022A
-              </span>
-              <span className="text-xs font-mono text-[#666666] group-hover:text-white transition-colors hidden sm:block">↗</span>
-            </div>
-          </a>
-
-        </div>
-      </section>
-
       {/* --- NEWS & INSIGHTS SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 pb-24">
         {/* Header */}
@@ -401,6 +311,48 @@ export default function LaunchingSoon() {
             <Image 
               src="/chainlink.PNG" 
               alt="Chainlink" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/dwf.jpg" 
+              alt="DWF Labs" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/bolts.jpg" 
+              alt="Bolts" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/arrakis.jpg" 
+              alt="Arrakis" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+            <Image 
+              src="/hydrex.jpg" 
+              alt="Hydrex" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+             <Image 
+              src="/shoji.jpg" 
+              alt="Shoji" 
+              width={130} 
+              height={52} 
+              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
+            />
+             <Image 
+              src="/aerodrome.jpg" 
+              alt="Aerodrome" 
               width={130} 
               height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
