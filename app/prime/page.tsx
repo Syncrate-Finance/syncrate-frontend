@@ -25,14 +25,14 @@ const IS_PRIVATE_BETA = true
 const BETA_ACCESS_CODE = '802683'
 
 // ── EDITABLE METRICS ──────────────────────
-const MANUAL_TVL = 856200 // Vault TVL in SGLD / USD
-const MANUAL_APY = 12 // APY percentage (%)
+const MANUAL_TVL = 878280 // Vault TVL in SGLD / USD
+const MANUAL_APY = 11 // APY percentage (%)
 // ──────────────────────────────────────────
 
 const SGLD_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
 const PRIME_VAULT_ADDRESS = '0xbA93Aa354a3B47A936d713b8FB90126D4d35546B' as const
 
-const VAULT_INCEPTION = new Date('2026-09-15T00:00:00Z').getTime()
+const VAULT_INCEPTION = new Date('2026-08-08T00:00:00Z').getTime()
 
 const erc20Abi = [
   {
@@ -322,6 +322,15 @@ function PrimeVaultAppUI() {
     return value.toFixed(2)
   }
 
+  const formatSupply = (value: number) => {
+    return (
+      value.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }) + ' sySGLD'
+    )
+  }
+
   // Transactions
   const {
     data: approveTxHash,
@@ -561,7 +570,7 @@ function PrimeVaultAppUI() {
               <span className="text-[10px] font-mono uppercase text-[#666666]">
                 Vault TVL
               </span>
-              <span className="text-sm font-medium text-white">
+              <span className="text-xs sm:text-sm font-medium text-white">
                 ${formatMetric(vaultTVL)}
               </span>
             </div>
@@ -569,15 +578,15 @@ function PrimeVaultAppUI() {
               <span className="text-[10px] font-mono uppercase text-[#666666]">
                 Supply
               </span>
-              <span className="text-sm font-medium text-white">
-                {formatMetric(vaultSupply)}
+              <span className="text-xs sm:text-sm font-medium text-white">
+                {formatSupply(vaultSupply)}
               </span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-mono uppercase text-[#666666]">
                 Price
               </span>
-              <span className="text-sm font-medium text-white">
+              <span className="text-xs sm:text-sm font-medium text-white">
                 ${sharePrice.toFixed(4)}
               </span>
             </div>
@@ -585,7 +594,7 @@ function PrimeVaultAppUI() {
               <span className="text-[10px] font-mono uppercase text-[#0037FF]">
                 Est. APY
               </span>
-              <span className="text-sm font-medium text-[#0037FF]">
+              <span className="text-xs sm:text-sm font-medium text-[#0037FF]">
                 {vaultApy.toFixed(2)}%
               </span>
             </div>
