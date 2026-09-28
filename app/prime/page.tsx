@@ -18,17 +18,21 @@ import { parseUnits, formatUnits } from 'viem'
 // ==========================================
 // 🚀 CONFIGURATIONS
 // ==========================================
-const IS_LIVE = true
+// Toggle to `false` when launching publicly
+const IS_PRIVATE_BETA = true 
+
+// 6-Digit Access Code for Beta Testers
+const BETA_ACCESS_CODE = '8DHA79'
 
 // ── EDITABLE METRICS ──────────────────────
-const MANUAL_TVL = 378000 // Vault TVL in SGLD / USD
+const MANUAL_TVL = 1250000 // Vault TVL in SGLD / USD
 const MANUAL_APY = 12.5 // APY percentage (%)
 // ──────────────────────────────────────────
 
 const SGLD_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
 const PRIME_VAULT_ADDRESS = '0xbA93Aa354a3B47A936d713b8FB90126D4d35546B' as const
 
-const VAULT_INCEPTION = new Date('2026-09-20T00:00:00Z').getTime()
+const VAULT_INCEPTION = new Date('2026-08-08T00:00:00Z').getTime()
 
 const erc20Abi = [
   {
@@ -93,7 +97,17 @@ const vaultAbi = [
 
 export default function AppPortal() {
   const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => setIsMounted(true), [])
+  const [isUnlocked, setIsUnlocked] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+    if (typeof window !== 'undefined') {
+      const unlockedSession = localStorage.getItem('syncrate_beta_unlocked')
+      if (unlockedSession === 'true') {
+        setIsUnlocked(true)
+      }
+    }
+  }, [])
 
   if (!isMounted) {
     return (
@@ -103,24 +117,51 @@ export default function AppPortal() {
     )
   }
 
-  return IS_LIVE ? <PrimeVaultAppUI /> : <LaunchingSoonUI />
+  // Public launch mode bypasses beta gate
+  if (!IS_PRIVATE_BETA || isUnlocked) {
+    return <PrimeVaultAppUI />
+  }
+
+  return <BetaGateUI onUnlock={() => setIsUnlocked(true)} />
 }
 
 // ==========================================
-// COMPONENT A: LAUNCHING SOON
+// COMPONENT A: BETA ACCESS GATE
 // ==========================================
-function LaunchingSoonUI() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
+function BetaGateUI({ onUnlock }: { onUnlock: () => void }) {
+  const [accessCode, setAccessCode] = useState('')
+  const [error, setError] = useState(false)
 
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+  const handleVerify = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
-    setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setLoading(false)
-    setSubmitted(true)
+    if (accessCode.trim() === BETA_ACCESS_CODE) {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('syncrate_beta_unlocked', 'true')
+      }
+      setError(false)
+      onUnlock()
+    } else {
+      setError(true)
+    }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 6)
+    setAccessCode(val)
+    if (error) setError(false)
+
+    // Auto-submit when 6 digits are entered
+    if (val.length === 6) {
+      if (val === BETA_ACCESS_CODE) {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('syncrate_beta_unlocked', 'true')
+        }
+        setError(false)
+        onUnlock()
+      } else {
+        setError(true)
+      }
+    }
   }
 
   return (
@@ -130,56 +171,51 @@ function LaunchingSoonUI() {
       <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-8 relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-[#0037FF]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="flex flex-col gap-2 relative z-10">
+        <div className="flex flex-col gap-3 relative z-10">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full bg-[#0037FF]/10 border border-[#0037FF]/20 text-[10px] font-mono uppercase tracking-wider text-[#0037FF] font-semibold">
-              Syncrate Prime
+              Private Beta
             </span>
           </div>
-          <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
-            Launching Soon
+          <h1 className="text-2xl font-semibold text-white tracking-tight mt-1">
+            Syncrate Prime is in beta...
           </h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            Syncrate Prime is launching soon. Join the waitlist to be notified when we go live.
+            Access to Syncrate Prime is currently restricted to invited testers. Enter your 6-digit beta access code below.
           </p>
         </div>
 
         <div className="border-t border-[#111111] pt-6 relative z-10">
-          {submitted ? (
-            <div className="bg-[#050505] border border-emerald-950/40 rounded-xl p-5 text-center flex flex-col gap-1.5">
-              <span className="text-sm font-medium text-emerald-400">
-                You&apos;re on the list!
-              </span>
-              <span className="text-xs text-[#666666]">
-                We'll reach out as soon as Syncrate Prime goes live.
-              </span>
+          <form onSubmit={handleVerify} className="flex flex-col gap-4">
+            <div className={`bg-[#030303] border ${error ? 'border-red-500/50' : 'border-[#222222]'} rounded-xl p-4 flex flex-col gap-2 transition-colors`}>
+              <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
+                6-Digit Access Code
+              </label>
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder="000000"
+                value={accessCode}
+                onChange={handleInputChange}
+                className="bg-transparent text-white tracking-[0.3em] font-mono text-xl focus:outline-none w-full placeholder-[#333333]"
+              />
             </div>
-          ) : (
-            <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4">
-              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2">
-                <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  placeholder="name@domain.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={loading}
-                  className="bg-transparent text-white placeholder-[#333333] focus:outline-none font-mono w-full text-sm"
-                />
-              </div>
 
-              <button
-                type="submit"
-                disabled={!email || loading}
-                className="w-full py-4 bg-[#0037FF] text-white hover:bg-[#002CD6] font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-30 shadow-lg shadow-[#0037FF]/10"
-              >
-                {loading ? 'Adding you...' : 'Secure Early Access'}
-              </button>
-            </form>
-          )}
+            {error && (
+              <p className="text-xs text-red-400 font-mono">
+                Invalid access code. Please check and try again.
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={accessCode.length !== 6}
+              className="w-full py-4 bg-[#0037FF] text-white hover:bg-[#002CD6] font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-30 shadow-lg shadow-[#0037FF]/10"
+            >
+              Enter Vault
+            </button>
+          </form>
         </div>
       </div>
     </div>
