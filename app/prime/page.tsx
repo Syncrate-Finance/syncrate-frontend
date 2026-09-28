@@ -25,14 +25,14 @@ const IS_PRIVATE_BETA = true
 const BETA_ACCESS_CODE = '802683'
 
 // ── EDITABLE METRICS ──────────────────────
-const MANUAL_TVL = 882700 // Vault TVL in SGLD / USD
+const MANUAL_TVL = 856200 // Vault TVL in SGLD / USD
 const MANUAL_APY = 12 // APY percentage (%)
 // ──────────────────────────────────────────
 
 const SGLD_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
 const PRIME_VAULT_ADDRESS = '0xbA93Aa354a3B47A936d713b8FB90126D4d35546B' as const
 
-const VAULT_INCEPTION = new Date('2026-09-10T00:00:00Z').getTime()
+const VAULT_INCEPTION = new Date('2026-08-08T00:00:00Z').getTime()
 
 const erc20Abi = [
   {
@@ -178,16 +178,23 @@ function BetaGateUI({ onUnlock }: { onUnlock: () => void }) {
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-white tracking-tight mt-1">
-            Syncrate Prime
+            Syncrate Prime is in beta...
           </h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            Access to Syncrate Prime is currently restricted to invited users. Got an invite code? Enter it below to gain access. 
+            Access to Syncrate Prime is currently restricted to invited testers. Enter your 6-digit beta access code below.
           </p>
         </div>
 
         <div className="border-t border-[#111111] pt-6 relative z-10">
           <form onSubmit={handleVerify} className="flex flex-col gap-4">
-            <div className={`bg-[#030303] border ${error ? 'border-red-500/50' : 'border-[#222222]'} rounded-xl p-4 flex flex-col gap-2 transition-colors`}>
+            <div
+              className={`bg-[#030303] border ${
+                error ? 'border-red-500/50' : 'border-[#222222]'
+              } rounded-xl p-4 flex flex-col gap-2 transition-colors`}
+            >
+              <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
+                6-Digit Access Code
+              </label>
               <input
                 type="text"
                 inputMode="numeric"
@@ -199,18 +206,16 @@ function BetaGateUI({ onUnlock }: { onUnlock: () => void }) {
               />
             </div>
 
-            {error && (
-              <p className="text-xs text-red-400 font-mono">
-                Invalid access code. Please check and try again.
-              </p>
-            )}
-
             <button
               type="submit"
-              disabled={accessCode.length !== 6}
-              className="w-full py-4 bg-[#0037FF] text-white hover:bg-[#002CD6] font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-30 shadow-lg shadow-[#0037FF]/10"
+              disabled={accessCode.length !== 6 || error}
+              className={`w-full py-4 font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg ${
+                error
+                  ? 'bg-[#111111] text-red-400 border border-red-500/20 cursor-not-allowed opacity-80'
+                  : 'bg-[#0037FF] text-white hover:bg-[#002CD6] disabled:opacity-30 disabled:pointer-events-none shadow-[#0037FF]/10'
+              }`}
             >
-              Enter Vault
+              {error ? 'Invalid code' : 'Enter Vault'}
             </button>
           </form>
         </div>
