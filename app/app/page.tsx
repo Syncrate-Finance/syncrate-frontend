@@ -108,6 +108,8 @@ const MINT_CONTROLLER_ABI = [
     { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
     { internalType: 'address', name: 'stablecoinAddress', type: 'address' }
   ], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  { inputs: [], name: 'nextQueueIndex', outputs: [{ name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
+  { inputs: [{ name: '', type: 'uint256' }], name: 'redemptionQueue', outputs: [{ name: 'user', type: 'address' }, { name: 'sgldAmount', type: 'uint256' }, { name: 'stablecoinOwed', type: 'uint256' }], stateMutability: 'view', type: 'function' },
 ] as const;
 
 // ==========================================
@@ -457,7 +459,7 @@ function MintingAppUI() {
         <p className="text-[10px] text-[#444444] font-mono">No pending requests</p>
       </div>
     );
-    const liveAmountOwed = queueItemData && queueItemData[2] ? Number(formatUnits(queueItemData[2], activeStablecoinConfig?.decimals || 18)) : queuedRequest.amount
+    const liveAmountOwed = queueItemData && Array.isArray(queueItemData) && queueItemData[2] ? Number(formatUnits(queueItemData[2] as bigint, activeStablecoinConfig?.decimals || 18)) : queuedRequest.amount
     return (
       <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
         <div className="flex items-center justify-between border-b border-[#111111] pb-3">
@@ -685,6 +687,9 @@ function MintingAppUI() {
             </div>
           )}
         </div>
+
+        {renderDashboard()}
+      </main>
     </div>
   )
 }
@@ -699,7 +704,6 @@ export default function AppPortal() {
   useEffect(() => {
     async function checkGeoLocation() {
       try {
-        // Fetch geo information using IP detection service
         const res = await fetch('https://ipapi.co/json/')
         if (res.ok) {
           const data = await res.json()
