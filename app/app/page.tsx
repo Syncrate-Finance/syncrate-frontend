@@ -1,6 +1,3 @@
-Check for Syntax errors here:
-
-
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
