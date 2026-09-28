@@ -57,15 +57,12 @@ export default function PrimeBetaOnboardingPage() {
             <span className="px-2.5 py-0.5 rounded-full bg-[#0037FF]/10 border border-[#0037FF]/20 text-[10px] font-mono uppercase tracking-wider text-[#0037FF] font-semibold">
               Beta Access
             </span>
-            <span className="text-[10px] font-mono text-[#666666] uppercase">
-              Syncrate Prime
-            </span>
           </div>
           <h1 className="text-2xl font-semibold text-white tracking-tight mt-1">
-            Apply for Syncrate Prime
+            Syncrate Prime
           </h1>
           <p className="text-xs text-[#888888] leading-relaxed">
-            Fill out the details below to request early onboarding access to Syncrate Prime.
+            Request early access to Syncrate Prime.
           </p>
         </div>
 
@@ -86,7 +83,7 @@ export default function PrimeBetaOnboardingPage() {
             {/* Preferred Name */}
             <div className="flex flex-col gap-1.5">
               <label className="text-[10px] font-mono tracking-wider text-[#888888] uppercase flex justify-between">
-                <span>Preferred Name <span className="text-amber-500">*</span></span>
+                <span>Name <span className="text-amber-500">*</span></span>
                 <span className="text-[#555555] lowercase font-sans text-[10px]">(Legal name not required)</span>
               </label>
               <input
@@ -123,7 +120,7 @@ export default function PrimeBetaOnboardingPage() {
               {/* Telegram */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
-                  Telegram Handle
+                  Telegram Username
                 </label>
                 <input
                   type="text"
@@ -156,7 +153,7 @@ export default function PrimeBetaOnboardingPage() {
             {/* Wallet Address */}
             <div className="flex flex-col gap-1.5">
               <label className="text-[10px] font-mono tracking-wider text-[#888888] uppercase">
-                Interaction Wallet Address <span className="text-amber-500">*</span>
+                Wallet Address (Only enter the wallet you'll use to interact with Syncrate Prime)<span className="text-amber-500">*</span>
               </label>
               <input
                 type="text"
@@ -170,9 +167,9 @@ export default function PrimeBetaOnboardingPage() {
               />
               {/* SGLD Funding Notice */}
               <p className="text-[11px] text-[#666666] leading-normal mt-0.5">
-                Syncrate Prime is funded by SGLD, so applying users should already have minted. If you haven't yet, you can mint SGLD on our{' '}
+                Applicants should already hold SGLD. If you haven’t minted yet, you can do so on the{' '}
                 <a
-                  href="https://syncrate.org/sgld"
+                  href="https://syncrate.org/app"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white underline underline-offset-2 hover:text-[#0037FF] transition-colors"
@@ -185,7 +182,7 @@ export default function PrimeBetaOnboardingPage() {
             {/* Referral Name */}
             <div className="flex flex-col gap-1.5 mt-1">
               <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
-                Referred By (Name)
+                Referred By
               </label>
               <input
                 type="text"
