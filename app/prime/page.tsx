@@ -72,7 +72,7 @@ const vaultAbi = [
       { name: 'receiver', type: 'address' },
       { name: 'owner', type: 'address' },
     ],
-    outputs: [{ type: 'assets', type: 'uint256' }],
+    outputs: [{ name: 'assets', type: 'uint256' }],
     stateMutability: 'nonpayable',
   },
   {
