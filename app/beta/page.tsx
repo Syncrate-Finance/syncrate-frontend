@@ -72,9 +72,9 @@ export default function PrimeBetaOnboardingPage() {
             <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
               <span className="text-emerald-400 text-base">✓</span>
             </div>
-            <h3 className="text-sm font-medium text-white">Application Received</h3>
+            <h3 className="text-sm font-medium text-white">Application recieved</h3>
             <p className="text-xs text-[#666666] leading-relaxed max-w-xs">
-              Your application for Syncrate Prime beta access has been submitted. We'll reach out via your provided handles once verified.
+              We’ll review your request and contact you once your access is confirmed.
             </p>
           </div>
         ) : (
