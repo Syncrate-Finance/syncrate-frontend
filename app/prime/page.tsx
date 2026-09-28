@@ -178,10 +178,10 @@ function BetaGateUI({ onUnlock }: { onUnlock: () => void }) {
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-white tracking-tight mt-1">
-            Syncrate Prime is in beta...
+            Syncrate Prime
           </h1>
           <p className="text-sm text-[#888888] leading-relaxed">
-            Access to Syncrate Prime is currently restricted to invited testers. Enter your 6-digit beta access code below.
+            Access to Syncrate Prime is currently restricted to invited users. Got an invite code? Enter it below to gain access. 
           </p>
         </div>
 
