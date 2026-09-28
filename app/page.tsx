@@ -323,36 +323,8 @@ export default function LaunchingSoon() {
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
             />
             <Image 
-              src="/bolts.jpg" 
-              alt="Bolts" 
-              width={130} 
-              height={52} 
-              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
-            />
-            <Image 
               src="/arrakis.PNG" 
               alt="Arrakis" 
-              width={130} 
-              height={52} 
-              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
-            />
-            <Image 
-              src="/hydrex.jpg" 
-              alt="Hydrex" 
-              width={130} 
-              height={52} 
-              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
-            />
-             <Image 
-              src="/shoji.jpg" 
-              alt="Shoji" 
-              width={130} 
-              height={52} 
-              className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
-            />
-             <Image 
-              src="/aerodrome.jpg" 
-              alt="Aerodrome" 
               width={130} 
               height={52} 
               className="snap-center object-contain shrink-0 w-[120px] h-[48px] opacity-50 grayscale hover:opacity-100 transition-opacity duration-300" 
