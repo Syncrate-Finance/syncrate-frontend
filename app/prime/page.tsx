@@ -32,7 +32,7 @@ const MANUAL_APY = 12 // APY percentage (%)
 const SGLD_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
 const PRIME_VAULT_ADDRESS = '0xbA93Aa354a3B47A936d713b8FB90126D4d35546B' as const
 
-const VAULT_INCEPTION = new Date('2026-08-08T00:00:00Z').getTime()
+const VAULT_INCEPTION = new Date('2026-09-15T00:00:00Z').getTime()
 
 const erc20Abi = [
   {
