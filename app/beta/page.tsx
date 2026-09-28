@@ -35,11 +35,34 @@ export default function PrimeBetaOnboardingPage() {
     e.preventDefault()
     setLoading(true)
 
-    // TODO: Send formData to your backend API endpoint / database
-    await new Promise((resolve) => setTimeout(resolve, 1200))
+    try {
+      const res = await fetch('https://sheetdb.io/api/v1/n5sfcmr5ihdau', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          data: [
+            {
+              name: formData.name,
+              twitter: formData.twitter,
+              telegram: formData.telegram,
+              discord: formData.discord,
+              walletAddress: formData.walletAddress,
+              referredBy: formData.referredBy,
+            },
+          ],
+        }),
+      })
 
-    setLoading(false)
-    setSubmitted(true)
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        alert('Submission failed. Please try again.')
+      }
+    } catch (err) {
+      alert('Something went wrong. Please check your connection.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -72,7 +95,7 @@ export default function PrimeBetaOnboardingPage() {
             <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
               <span className="text-emerald-400 text-base">✓</span>
             </div>
-            <h3 className="text-sm font-medium text-white">Application recieved</h3>
+            <h3 className="text-sm font-medium text-white">Application received</h3>
             <p className="text-xs text-[#666666] leading-relaxed max-w-xs">
               We’ll review your request and contact you once your access is confirmed.
             </p>
@@ -153,7 +176,7 @@ export default function PrimeBetaOnboardingPage() {
             {/* Wallet Address */}
             <div className="flex flex-col gap-1.5">
               <label className="text-[10px] font-mono tracking-wider text-[#888888] uppercase">
-                Wallet Address (Only enter the wallet you'll use to interact with Syncrate Prime)<span className="text-amber-500">*</span>
+                Wallet Address (Only enter the wallet you'll use to interact with Syncrate Prime) <span className="text-amber-500">*</span>
               </label>
               <input
                 type="text"
