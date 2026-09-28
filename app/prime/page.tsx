@@ -214,6 +214,18 @@ function BetaGateUI({ onUnlock }: { onUnlock: () => void }) {
             >
               {error ? 'Invalid code' : 'Enter Vault'}
             </button>
+
+            <p className="text-center text-xs text-[#666666] mt-1">
+              Don't have a code?{' '}
+              <a
+                href="/beta"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#888888] hover:text-white underline transition-colors font-medium"
+              >
+                Request Access
+              </a>
+            </p>
           </form>
         </div>
       </div>
