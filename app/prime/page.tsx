@@ -22,7 +22,7 @@ import { parseUnits, formatUnits } from 'viem'
 const IS_PRIVATE_BETA = true 
 
 // 6-Digit Access Code for Beta Testers
-const BETA_ACCESS_CODE = '8DHA79'
+const BETA_ACCESS_CODE = '802683'
 
 // ── EDITABLE METRICS ──────────────────────
 const MANUAL_TVL = 882700 // Vault TVL in SGLD / USD
@@ -188,9 +188,6 @@ function BetaGateUI({ onUnlock }: { onUnlock: () => void }) {
         <div className="border-t border-[#111111] pt-6 relative z-10">
           <form onSubmit={handleVerify} className="flex flex-col gap-4">
             <div className={`bg-[#030303] border ${error ? 'border-red-500/50' : 'border-[#222222]'} rounded-xl p-4 flex flex-col gap-2 transition-colors`}>
-              <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
-                6-Digit Access Code
-              </label>
               <input
                 type="text"
                 inputMode="numeric"
