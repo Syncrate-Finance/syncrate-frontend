@@ -144,7 +144,7 @@ export default function LaunchingSoon() {
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
               Syncrate Prime is a yield vault product that gives SGLD holders an optional path to deploy their gold exposure into, gold-backed financing opportunities and earn yield from the underlying returns.
             </p>
-            <Link href="/sgld">
+            <Link href="/prime">
               <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
                 Launch Syncrate Prime <span>→</span>
               </button>
