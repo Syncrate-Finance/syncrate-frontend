@@ -30,7 +30,6 @@ const BLOCKED_COUNTRIES = new Set([
   'RU', // Russia
   'BY', // Belarus
   'SY', // Syria
-  'UA', // Ukraine (Covers Crimea, Donetsk, and Luhansk regions)
 ]);
 
 // ==========================================
