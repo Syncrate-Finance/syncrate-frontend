@@ -18,11 +18,6 @@ import { parseUnits, formatUnits } from 'viem'
 // ==========================================
 // 🚀 CONFIGURATIONS
 // ==========================================
-// Toggle to `false` when launching publicly
-const IS_PRIVATE_BETA = true 
-
-// 6-Digit Access Code for Beta Testers
-const BETA_ACCESS_CODE = '802683'
 
 // ── EDITABLE METRICS ──────────────────────
 const MANUAL_TVL = 878280 // Vault TVL in SGLD / USD
@@ -97,16 +92,9 @@ const vaultAbi = [
 
 export default function AppPortal() {
   const [isMounted, setIsMounted] = useState(false)
-  const [isUnlocked, setIsUnlocked] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
-    if (typeof window !== 'undefined') {
-      const unlockedSession = localStorage.getItem('syncrate_beta_unlocked')
-      if (unlockedSession === 'true') {
-        setIsUnlocked(true)
-      }
-    }
   }, [])
 
   if (!isMounted) {
@@ -117,124 +105,11 @@ export default function AppPortal() {
     )
   }
 
-  // Public launch mode bypasses beta gate
-  if (!IS_PRIVATE_BETA || isUnlocked) {
-    return <PrimeVaultAppUI />
-  }
-
-  return <BetaGateUI onUnlock={() => setIsUnlocked(true)} />
+  return <PrimeVaultAppUI />
 }
 
 // ==========================================
-// COMPONENT A: BETA ACCESS GATE
-// ==========================================
-function BetaGateUI({ onUnlock }: { onUnlock: () => void }) {
-  const [accessCode, setAccessCode] = useState('')
-  const [error, setError] = useState(false)
-
-  const handleVerify = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (accessCode.trim() === BETA_ACCESS_CODE) {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('syncrate_beta_unlocked', 'true')
-      }
-      setError(false)
-      onUnlock()
-    } else {
-      setError(true)
-    }
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/\D/g, '').slice(0, 6)
-    setAccessCode(val)
-    if (error) setError(false)
-
-    // Auto-submit when 6 digits are entered
-    if (val.length === 6) {
-      if (val === BETA_ACCESS_CODE) {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('syncrate_beta_unlocked', 'true')
-        }
-        setError(false)
-        onUnlock()
-      } else {
-        setError(true)
-      }
-    }
-  }
-
-  return (
-    <div
-      className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.className}`}
-    >
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-8 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-[#0037FF]/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="flex flex-col gap-3 relative z-10">
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-[#0037FF]/10 border border-[#0037FF]/20 text-[10px] font-mono uppercase tracking-wider text-[#0037FF] font-semibold">
-              Private Beta
-            </span>
-          </div>
-          <h1 className="text-2xl font-semibold text-white tracking-tight mt-1">
-            Syncrate Prime
-          </h1>
-          <p className="text-sm text-[#888888] leading-relaxed">
-            Access to Syncrate Prime is currently restricted to invited users. Have an inivite code? Enter it below to gain access.
-          </p>
-        </div>
-
-        <div className="border-t border-[#111111] pt-6 relative z-10">
-          <form onSubmit={handleVerify} className="flex flex-col gap-4">
-            <div
-              className={`bg-[#030303] border ${
-                error ? 'border-red-500/50' : 'border-[#222222]'
-              } rounded-xl p-4 flex flex-col gap-2 transition-colors`}
-            >
-              <input
-                type="text"
-                inputMode="numeric"
-                maxLength={6}
-                placeholder="000000"
-                value={accessCode}
-                onChange={handleInputChange}
-                className="bg-transparent text-white tracking-[0.3em] font-mono text-xl focus:outline-none w-full placeholder-[#333333]"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={accessCode.length !== 6 || error}
-              className={`w-full py-4 font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg ${
-                error
-                  ? 'bg-[#111111] text-red-400 border border-red-500/20 cursor-not-allowed opacity-80'
-                  : 'bg-[#0037FF] text-white hover:bg-[#002CD6] disabled:opacity-30 disabled:pointer-events-none shadow-[#0037FF]/10'
-              }`}
-            >
-              {error ? 'Invalid code' : 'Enter Vault'}
-            </button>
-
-            <p className="text-center text-xs text-[#666666] mt-1">
-              Don't have a code?{' '}
-              <a
-                href="/beta"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#888888] hover:text-white underline transition-colors font-medium"
-              >
-                Request Access
-              </a>
-            </p>
-          </form>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ==========================================
-// COMPONENT B: ACTIVE VAULT DAPP
+// COMPONENT: ACTIVE VAULT DAPP
 // ==========================================
 function PrimeVaultAppUI() {
   const { isConnected, address } = useAccount()
@@ -763,6 +638,19 @@ function PrimeVaultAppUI() {
                   </>
                 )}
               </div>
+
+              {/* Mint Link */}
+              <p className="text-center text-xs text-[#666666] mt-1">
+                Don't hold SGLD yet?{' '}
+                <a
+                  href="https://syncrate.org/app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#888888] hover:text-white underline transition-colors font-medium"
+                >
+                  Mint here
+                </a>
+              </p>
             </div>
           )}
         </div>
