@@ -49,6 +49,7 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const;
 
+// Standard Chainlink AggregatorV3Interface ABI
 const AGGREGATOR_V3_ABI = [
   {
     inputs: [],
@@ -86,12 +87,6 @@ const MINT_CONTROLLER_ABI = [
     { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
     { internalType: 'address', name: 'stablecoinAddress', type: 'address' }
   ], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-  { inputs: [], name: 'nextQueueIndex', outputs: [{ type: 'uint256' }], stateMutability: 'view', type: 'function' },
-  { inputs: [{ type: 'uint256' }], name: 'redemptionQueue', outputs: [
-    { name: 'account', type: 'address' },
-    { name: 'stablecoin', type: 'address' },
-    { name: 'amountOwed', type: 'uint256' }
-  ], stateMutability: 'view', type: 'function' },
 ] as const;
 
 // ==========================================
@@ -199,7 +194,7 @@ function PointsLeaderboard() {
 }
 
 // ==========================================
-// COMPONENT: THE ACTIVE DAPP (MINTING)
+// COMPONENT B: THE ACTIVE DAPP (MINTING)
 // ==========================================
 function MintingAppUI() {
   const [isMounted, setIsMounted] = useState(false)
@@ -326,7 +321,7 @@ function MintingAppUI() {
     if (activeTab === 'mint') {
       return (amount / goldPricePerOunce).toFixed(4)
     } else {
-      return (amount * goldPricePerOunce * 0.9975).toFixed(2)
+      return (amount * goldPricePerOunce * 0.9975).toFixed(2) // 0.25% fee
     }
   })()
 
@@ -614,15 +609,15 @@ function MintingAppUI() {
 
         {renderDashboard()}
 
-        {/* Points Leaderboard */}
-        <PointsLeaderboard />
+{/* Points Leaderboard */}
+<PointsLeaderboard />
       </main>
     </div>
   )
 }
 
 // ==========================================
-// MAIN EXPORT
+// THE MAIN ROUTER EXPORT
 // ==========================================
 export default function AppPortal() {
   return <MintingAppUI />
