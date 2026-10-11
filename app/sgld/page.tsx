@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState, useRef, useEffect, UIEvent } from 'react'
@@ -480,7 +479,7 @@ export default function SGLDProductPage({
         </div>
       </section>
 
-      {/* --- FAQs SECTION --- */}
+      {/* --- FAQS SECTION --- */}
       <section className="w-full max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-[#111111]">
         <div className="max-w-3xl">
           <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-12">
@@ -505,8 +504,8 @@ export default function SGLDProductPage({
               <a href="https://discord.gg/Q9MRKP69Fj" className="hover:text-[#888888] transition-colors">Discord</a>
               <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
               <Link href="/terms" className="hover:text-[#888888] transition-colors">Terms & Disclosures</Link>
-              <a href="https://t.me/syncratefi" className="hover:text-[#888888] transition-colors">Telegram
-<a href="https://x.com/syncratefinance" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
+              <a href="https://t.me/syncratefi" className="hover:text-[#888888] transition-colors">Telegram</a>
+              <a href="https://x.com/syncratefinance" className="hover:text-[#888888] transition-colors">X (formerly Twitter)</a>
               <a href="https://github.com/Syncrate-Finance" className="hover:text-[#888888] transition-colors">GitHub</a>
             </div>
 
