@@ -153,38 +153,36 @@ function PointsLeaderboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-[28px_1fr_70px_70px] gap-2 text-[10px] font-mono text-[#555555] uppercase px-1">
-        <span>#</span>
-        <span>Address</span>
-        <span className="text-right">Mint</span>
-        <span className="text-right">Total</span>
-      </div>
+      {/* Header */}
+<div className="grid grid-cols-[28px_1fr_90px] gap-2 text-[10px] font-mono text-[#555555] uppercase px-1">
+  <span>#</span>
+  <span>Address</span>
+  <span className="text-right">Points</span>
+</div>
 
-      <div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto">
-        {data.leaderboard.slice(0, 30).map((entry, i) => {
-          const isYou = address && entry.address.toLowerCase() === address.toLowerCase()
-          return (
-            <div
-              key={entry.address}
-              className={`grid grid-cols-[28px_1fr_70px_70px] gap-2 items-center py-2 px-2 rounded-lg text-xs ${
-                isYou ? 'bg-[#0037FF]/10 border border-[#0037FF]/20' : ''
-              }`}
-            >
-              <span className="text-[#666666] font-mono">{i + 1}</span>
-              <span className={`font-mono truncate ${isYou ? 'text-[#0037FF]' : 'text-white'}`}>
-                {shortAddress(entry.address)}
-                {isYou && <span className="ml-1 text-[9px]">YOU</span>}
-              </span>
-              <span className="text-right font-mono text-[#888888]">
-                {Math.round(entry.minterPoints).toLocaleString()}
-              </span>
-              <span className="text-right font-mono text-white">
-                {Math.round(entry.totalPoints).toLocaleString()}
-              </span>
-            </div>
-          )
-        })}
+{/* Rows */}
+<div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto">
+  {data.leaderboard.slice(0, 30).map((entry, i) => {
+    const isYou = address && entry.address.toLowerCase() === address.toLowerCase()
+    return (
+      <div
+        key={entry.address}
+        className={`grid grid-cols-[28px_1fr_90px] gap-2 items-center py-2 px-2 rounded-lg text-xs ${
+          isYou ? 'bg-[#0037FF]/10 border border-[#0037FF]/20' : ''
+        }`}
+      >
+        <span className="text-[#666666] font-mono">{i + 1}</span>
+        <span className={`font-mono truncate ${isYou ? 'text-[#0037FF]' : 'text-white'}`}>
+          {shortAddress(entry.address)}
+          {isYou && <span className="ml-1 text-[9px]">YOU</span>}
+        </span>
+        <span className="text-right font-mono text-white">
+          {Math.round(entry.totalPoints).toLocaleString()}
+        </span>
       </div>
+    )
+  })}
+</div>
 
       <p className="text-[10px] text-[#444444] border-t border-[#111111] pt-3">
         7M points to net minters · 3M to sySGLD holders · Calculated every Sunday
