@@ -185,7 +185,7 @@ function PointsLeaderboard() {
 </div>
 
       <p className="text-[10px] text-[#444444] border-t border-[#111111] pt-3">
-        7M points to net minters · 3M to sySGLD holders · Calculated every Sunday
+        7M points to net SGLD minters · 3M to Syncrate Prime depositors · Calculated every Sunday
       </p>
     </div>
   )
