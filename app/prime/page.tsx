@@ -752,6 +752,9 @@ function PrimeVaultAppUI() {
             </div>
           )}
         </div>
+
+        {/* RENDERED POINTS LEADERBOARD HERE */}
+        <PointsLeaderboard />
       </main>
     </div>
   )
