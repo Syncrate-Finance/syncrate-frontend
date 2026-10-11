@@ -1,6 +1,3 @@
-
-
-
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
@@ -11,26 +8,6 @@ import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseUnits, formatUnits, maxUint256 } from 'viem'
-
-// ==========================================
-// 🚀 THE MASTER TOGGLE
-// Set to 'false' to show the "Launching Soon" waitlist.
-// Set to 'true' to instantly bring back the full dApp.
-// ==========================================
-const IS_LIVE = true;
-
-// ==========================================
-// GEOBLOCKING RESTRICTED JURISDICTIONS
-// ISO 3166-1 alpha-2 codes
-// ==========================================
-const BLOCKED_COUNTRIES = new Set([
-  'CU', // Cuba
-  'IR', // Iran
-  'KP', // North Korea
-  'RU', // Russia
-  'BY', // Belarus
-  'SY', // Syria
-]);
 
 // ==========================================
 // CONFIGURATIONS & ABIS
@@ -72,7 +49,6 @@ const CHAIN_CONFIGS: Record<number, ChainConfig> = {
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const;
 
-// Standard Chainlink AggregatorV3Interface ABI
 const AGGREGATOR_V3_ABI = [
   {
     inputs: [],
@@ -110,169 +86,13 @@ const MINT_CONTROLLER_ABI = [
     { internalType: 'uint256', name: 'xauAmount', type: 'uint256' },
     { internalType: 'address', name: 'stablecoinAddress', type: 'address' }
   ], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  { inputs: [], name: 'nextQueueIndex', outputs: [{ type: 'uint256' }], stateMutability: 'view', type: 'function' },
+  { inputs: [{ type: 'uint256' }], name: 'redemptionQueue', outputs: [
+    { name: 'account', type: 'address' },
+    { name: 'stablecoin', type: 'address' },
+    { name: 'amountOwed', type: 'uint256' }
+  ], stateMutability: 'view', type: 'function' },
 ] as const;
-
-// ==========================================
-// COMPONENT: GEO-RESTRICTED BANNER / CARD
-// ==========================================
-function GeoRestrictedUI() {
-  return (
-    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-6 relative overflow-hidden">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-mono uppercase tracking-wider text-red-400 font-semibold">
-              Restricted Region
-            </span>
-          </div>
-          <h1 className="text-xl font-semibold text-white tracking-tight mt-2">
-            Access Restricted
-          </h1>
-          <p className="text-sm text-[#888888] leading-relaxed">
-            Direct SGLD minting is not available in your jurisdiction. You can trade SGLD on secondary markets.
-          </p>
-        </div>
-
-        <div className="border-t border-[#111111] pt-6 flex flex-col gap-3">
-          <a
-            href="https://uniswap.org" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-full py-3.5 bg-white text-[#030303] hover:bg-[#E5E5E5] font-medium text-xs rounded-lg transition-all text-center"
-          >
-            Buy SGLD on Uniswap
-          </a>
-          <Link
-            href="/sgld"
-            className="w-full py-3.5 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#222222] font-medium text-xs rounded-lg transition-all text-center"
-          >
-            Learn More About SGLD
-          </Link>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ==========================================
-// COMPONENT A: THE WAITLIST (LAUNCHING SOON)
-// ==========================================
-function LaunchingSoonUI() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000)) 
-    setLoading(false)
-    setSubmitted(true)
-  }
-
-  return (
-    <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] p-6 flex flex-col items-center justify-center antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-8 shadow-2xl flex flex-col gap-8 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono uppercase tracking-wider text-amber-500 font-semibold">
-              SGLD
-            </span>
-            <span className="text-[10px] font-mono text-[#666666] uppercase">
-              Base Mainnet
-            </span>
-          </div>
-          <h1 className="text-2xl font-semibold text-white tracking-tight mt-2">
-            Launching Soon
-          </h1>
-          <p className="text-sm text-[#888888] leading-relaxed">
-            The SGLD minting & redemption dApp is coming soon. Join the waitlist and be the first to get notified when we go live.
-          </p>
-        </div>
-
-        <div className="border-t border-[#111111] pt-6">
-          {submitted ? (
-            <div className="bg-[#050505] border border-emerald-950/40 rounded-xl p-5 text-center flex flex-col gap-1.5 animate-in fade-in zoom-in-95 duration-300">
-              <span className="text-sm font-medium text-emerald-400">You're on the list!</span>
-              <span className="text-xs text-[#666666]">
-                We will contact you the second the mint contracts go live.
-              </span>
-            </div>
-          ) : (
-            <form onSubmit={handleWaitlistSubmit} className="flex flex-col gap-4">
-              <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 focus-within:border-[#444444] transition-colors">
-                <label className="text-[10px] font-mono tracking-wider text-[#666666] uppercase">
-                  Email Address
-                </label>
-                <input 
-                  type="email" 
-                  required
-                  placeholder="name@domain.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={loading}
-                  className="bg-transparent text-white placeholder-[#333333] focus:outline-none font-mono w-full text-sm"
-                />
-              </div>
-
-              <button 
-                type="submit"
-                disabled={!email || loading}
-                className="w-full py-4 bg-white text-[#030303] hover:bg-[#E5E5E5] font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-30"
-              >
-                {loading ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-t-transparent border-[#030303] rounded-full animate-spin" />
-                    Adding you...
-                  </>
-                ) : (
-                  'Secure Early Access'
-                )}
-              </button>
-            </form>
-          )}
-        </div>
-
-        <div className="flex flex-col items-center gap-2 border-t border-[#111111] pt-6 relative z-10">
-          <span className="text-[10px] font-mono text-[#444444] uppercase tracking-wider">
-            Follow our updates
-          </span>
-          <div className="flex items-center gap-3 text-xs font-mono text-[#666666]">
-            <a 
-              href="https://x.com/syncratenetwork" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-white transition-colors"
-            >
-              X (Twitter)
-            </a>
-            <span className="text-[#222222]">•</span>
-            <a 
-              href="https://linkedin.com/company/syncrateprotocol" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-white transition-colors"
-            >
-              LinkedIn
-            </a>
-            <span className="text-[#222222]">•</span>
-            <a 
-              href="https://syncrate.org/blog" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-white transition-colors"
-            >
-              Blog
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 // ==========================================
 // POINTS LEADERBOARD
@@ -379,7 +199,7 @@ function PointsLeaderboard() {
 }
 
 // ==========================================
-// COMPONENT B: THE ACTIVE DAPP (MINTING)
+// COMPONENT: THE ACTIVE DAPP (MINTING)
 // ==========================================
 function MintingAppUI() {
   const [isMounted, setIsMounted] = useState(false)
@@ -506,7 +326,7 @@ function MintingAppUI() {
     if (activeTab === 'mint') {
       return (amount / goldPricePerOunce).toFixed(4)
     } else {
-      return (amount * goldPricePerOunce * 0.9975).toFixed(2) // 0.25% fee
+      return (amount * goldPricePerOunce * 0.9975).toFixed(2)
     }
   })()
 
@@ -794,56 +614,16 @@ function MintingAppUI() {
 
         {renderDashboard()}
 
-{/* Points Leaderboard */}
-<PointsLeaderboard />
+        {/* Points Leaderboard */}
+        <PointsLeaderboard />
       </main>
     </div>
   )
 }
 
 // ==========================================
-// THE MAIN ROUTER EXPORT (WITH GEOBLOCK CHECK)
+// MAIN EXPORT
 // ==========================================
 export default function AppPortal() {
-  const [isBlocked, setIsBlocked] = useState(false)
-  const [checkingGeo, setCheckingGeo] = useState(true)
-
-  useEffect(() => {
-    async function checkGeoLocation() {
-      try {
-        // Fetch geo information using IP detection service
-        const res = await fetch('https://ipapi.co/json/')
-        if (res.ok) {
-          const data = await res.json()
-          if (data.country_code && BLOCKED_COUNTRIES.has(data.country_code)) {
-            setIsBlocked(true)
-          }
-        }
-      } catch (err) {
-        console.error("Geo-blocking verification failed:", err)
-      } finally {
-        setCheckingGeo(false)
-      }
-    }
-
-    checkGeoLocation()
-  }, [])
-
-  if (checkingGeo) {
-    return (
-      <div className="min-h-screen bg-[#030303] flex items-center justify-center">
-        <span className="w-8 h-8 border-2 border-t-transparent border-white rounded-full animate-spin" />
-      </div>
-    )
-  }
-
-  if (isBlocked) {
-    return <GeoRestrictedUI />
-  }
-
-  if (!IS_LIVE) {
-    return <LaunchingSoonUI />
-  }
-
   return <MintingAppUI />
 }
