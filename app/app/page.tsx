@@ -112,7 +112,7 @@ function PointsLeaderboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/points/leaderboard')
+    fetch('/points/latest.json')
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch(() => setData(null))
