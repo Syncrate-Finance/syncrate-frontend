@@ -19,8 +19,7 @@ import { parseUnits, formatUnits } from 'viem'
 // 🚀 CONFIGURATIONS
 // ==========================================
 
-// ── EDITABLE METRICS (Fallback) ───────────
-const FALLBACK_TVL = 538927 // Fallback Vault TVL in SGLD / USD
+// ── EDITABLE METRICS ──────────────────────
 const MANUAL_APY = 11 // APY percentage (%)
 // ──────────────────────────────────────────
 
@@ -136,6 +135,7 @@ function PointsLeaderboard() {
   const { address } = useAccount()
   const [data, setData] = useState<WeekData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
     fetch('/points/latest.json')
@@ -156,13 +156,17 @@ function PointsLeaderboard() {
     )
   }
 
-  if (!data) {
+  if (!data || !data.leaderboard) {
     return (
       <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 text-center">
         <p className="text-xs text-[#666666]">Leaderboard coming soon</p>
       </div>
     )
   }
+
+  const displayedLeaderboard = showAll
+    ? data.leaderboard
+    : data.leaderboard.slice(0, 10)
 
   return (
     <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 sm:p-6 flex flex-col gap-4">
@@ -187,8 +191,8 @@ function PointsLeaderboard() {
       </div>
 
       {/* Rows */}
-      <div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto">
-        {data.leaderboard.slice(0, 30).map((entry, i) => {
+      <div className="flex flex-col gap-1 max-h-[320px] overflow-y-auto">
+        {displayedLeaderboard.map((entry, i) => {
           const isYou = address && entry.address.toLowerCase() === address.toLowerCase()
           return (
             <div
@@ -209,6 +213,16 @@ function PointsLeaderboard() {
           )
         })}
       </div>
+
+      {/* Show More / Show Less Toggle Button */}
+      {data.leaderboard.length > 10 && (
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="w-full py-2.5 mt-1 bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] rounded-lg text-xs font-medium text-[#AAAAAA] hover:text-white transition-all"
+        >
+          {showAll ? 'Show less' : `Show more (${data.leaderboard.length - 10} more)`}
+        </button>
+      )}
     </div>
   )
 }
@@ -256,7 +270,7 @@ function PrimeVaultAppUI() {
 
   const vaultTVL = totalAssetsData
     ? parseFloat(formatUnits(totalAssetsData as bigint, 18))
-    : FALLBACK_TVL
+    : 0
 
   const vaultApy = MANUAL_APY
 
@@ -265,7 +279,7 @@ function PrimeVaultAppUI() {
     1
   )
   const sharePrice = 1.0 + (vaultApy / 100) * (daysElapsed / 365)
-  const vaultSupply = sharePrice > 0 ? vaultTVL / sharePrice : vaultTVL
+  const vaultSupply = sharePrice > 0 ? vaultTVL / sharePrice : 0
 
   // Preview: deposit → shares out
   let depositAssetsWei: bigint | undefined
@@ -769,7 +783,7 @@ function PrimeVaultAppUI() {
           )}
         </div>
 
-        {/* POINTS LEADERBOARD */}
+        {/* POINTS LEADERBOARD (COMPACTED) */}
         <PointsLeaderboard />
       </main>
     </div>
