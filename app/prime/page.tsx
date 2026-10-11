@@ -55,6 +55,13 @@ const erc20Abi = [
 const vaultAbi = [
   {
     type: 'function',
+    name: 'totalAssets',
+    inputs: [],
+    outputs: [{ type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     name: 'deposit',
     inputs: [
       { name: 'assets', type: 'uint256' },
@@ -129,6 +136,7 @@ function PointsLeaderboard() {
   const { address } = useAccount()
   const [data, setData] = useState<WeekData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
     fetch('/points/latest.json')
@@ -149,13 +157,17 @@ function PointsLeaderboard() {
     )
   }
 
-  if (!data) {
+  if (!data || !data.leaderboard) {
     return (
       <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 text-center">
         <p className="text-xs text-[#666666]">Leaderboard coming soon</p>
       </div>
     )
   }
+
+  const displayedLeaderboard = showAll
+    ? data.leaderboard
+    : data.leaderboard.slice(0, 10)
 
   return (
     <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 sm:p-6 flex flex-col gap-4">
@@ -180,8 +192,8 @@ function PointsLeaderboard() {
       </div>
 
       {/* Rows */}
-      <div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto">
-        {data.leaderboard.slice(0, 30).map((entry, i) => {
+      <div className="flex flex-col gap-1 max-h-[320px] overflow-y-auto">
+        {displayedLeaderboard.map((entry, i) => {
           const isYou = address && entry.address.toLowerCase() === address.toLowerCase()
           return (
             <div
@@ -202,6 +214,16 @@ function PointsLeaderboard() {
           )
         })}
       </div>
+
+      {/* Show More / Show Less Toggle Button */}
+      {data.leaderboard.length > 10 && (
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="w-full py-2.5 mt-1 bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] rounded-lg text-xs font-medium text-[#AAAAAA] hover:text-white transition-all"
+        >
+          {showAll ? 'Show less' : `Show more (${data.leaderboard.length - 10} more)`}
+        </button>
+      )}
     </div>
   )
 }
@@ -240,8 +262,17 @@ function PrimeVaultAppUI() {
     query: { enabled: !!address },
   })
 
-  // ── CALCULATED METRICS FROM EDITABLE CONFIG ──
-  const vaultTVL = MANUAL_TVL
+  // ── DYNAMIC TVL FETCHING (ERC-4626 totalAssets) ──
+  const { data: totalAssetsData } = useReadContract({
+    address: PRIME_VAULT_ADDRESS,
+    abi: vaultAbi,
+    functionName: 'totalAssets',
+  })
+
+  const vaultTVL = totalAssetsData
+    ? parseFloat(formatUnits(totalAssetsData as bigint, 18))
+    : 538927
+
   const vaultApy = MANUAL_APY
 
   const daysElapsed = Math.max(
@@ -753,7 +784,7 @@ function PrimeVaultAppUI() {
           )}
         </div>
 
-        {/* RENDERED POINTS LEADERBOARD HERE */}
+        {/* POINTS LEADERBOARD (COMPACTED) */}
         <PointsLeaderboard />
       </main>
     </div>
