@@ -4,7 +4,6 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
-import HowItWorks from '../components/HowItWorks'
 
 export default function LaunchingSoon() {
   return (
