@@ -1,7 +1,8 @@
 {
   "weekStart": "2026-10-04",
   "weekEnd": "2026-10-11",
-  "calculatedAt": "2026-10-16T21:32:27.690Z",
+  "calculatedAt": "2026-10-16T21:47:54.993Z",
+  "cumulative": true,
   "totalMinterPointsDistributed": 7000000,
   "totalPrimePointsDistributed": 3000000,
   "totalNetMinted": "0",
