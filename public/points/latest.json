@@ -1,48 +1,10 @@
-
-
 {
-  "weekStart": "2026-10-05",
-  "weekEnd": "2026-10-12",
-  "calculatedAt": "2026-10-11T17:00:00.000Z",
+  "weekStart": "2026-10-04",
+  "weekEnd": "2026-10-11",
+  "calculatedAt": "2026-10-16T21:32:27.690Z",
   "totalMinterPointsDistributed": 7000000,
-  "totalPrimePointsDistributed": 0,
-  "totalNetMinted": "0.1323",
+  "totalPrimePointsDistributed": 3000000,
+  "totalNetMinted": "0",
   "totalPrimeSupply": "0",
-  "leaderboard": [
-    {
-      "address": "0xaAd3F4fB91776e36a42B68530dE2eD49f6A8883B",
-      "netMinted": "0.0984",
-      "minterPoints": 5206349,
-      "primePoints": 0,
-      "totalPoints": 5206349
-    },
-    {
-      "address": "0x7333574Fcb4811EA9CC46610d344785af61393E9",
-      "netMinted": "0.0227",
-      "minterPoints": 1201058,
-      "primePoints": 0,
-      "totalPoints": 1201058
-    },
-    {
-      "address": "0x6F87732cDf87852d578FCb00517c2C8A98e85b78",
-      "netMinted": "0.0075",
-      "minterPoints": 396825,
-      "primePoints": 0,
-      "totalPoints": 396825
-    },
-    {
-      "address": "0xeC82fA0B5956f0FE2C4Ab4dd12B4514127787350",
-      "netMinted": "0.0025",
-      "minterPoints": 132275,
-      "primePoints": 0,
-      "totalPoints": 132275
-    },
-    {
-      "address": "0x99497671106ba424Be13008ba427573c11431A89",
-      "netMinted": "0.0012",
-      "minterPoints": 63493,
-      "primePoints": 0,
-      "totalPoints": 63493
-    }
-  ]
+  "leaderboard": []
 }
