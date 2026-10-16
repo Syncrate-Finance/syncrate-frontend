@@ -1,4 +1,8 @@
-require('dotenv').config();
+try {
+  require('dotenv').config();
+} catch (_) {
+  // dotenv not installed — fine in CI if BASE_RPC_URL is set via secrets
+}
 const { createPublicClient, http, parseAbiItem, formatUnits } = require('viem');
 const { base } = require('viem/chains');
 const fs = require('fs');
