@@ -58,9 +58,6 @@ export default function LaunchingSoon() {
           Syncrate channels onchain capital into productive real-world assets, delivering transparent, gold-backed yield designed for the next generation of decentralized finance.
         </p>
       </main>
-
-      {/* --- SWIPEABLE CARDS SECTION --- */}
-      <HowItWorks />
       
       {/* Divider and Products Label Section */}
       <div className="w-full max-w-6xl mx-auto px-6 pt-16 pb-8">
