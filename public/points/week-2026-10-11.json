@@ -1,0 +1,47 @@
+{
+  "weekStart": "2026-10-11",
+  "weekEnd": "2026-10-18",
+  "calculatedAt": "2026-10-18T04:58:19.155Z",
+  "cumulative": true,
+  "totalMinterPointsDistributed": 7000000,
+  "totalPrimePointsDistributed": 3000000,
+  "totalNetMinted": "0",
+  "totalPrimeSupply": "0",
+  "leaderboard": [
+    {
+      "address": "0xaad3f4fb91776e36a42b68530de2ed49f6a8883b",
+      "netMinted": "0",
+      "minterPoints": 5206349,
+      "primePoints": 0,
+      "totalPoints": 5206349
+    },
+    {
+      "address": "0x7333b0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c093e9",
+      "netMinted": "0",
+      "minterPoints": 1201058,
+      "primePoints": 0,
+      "totalPoints": 1201058
+    },
+    {
+      "address": "0x6f87732cdf87852d578fcb00517c2c8a98e85b78",
+      "netMinted": "0",
+      "minterPoints": 396825,
+      "primePoints": 0,
+      "totalPoints": 396825
+    },
+    {
+      "address": "0xec82fa0b5956f0fe2c4ab4dd12b4514127787350",
+      "netMinted": "0",
+      "minterPoints": 132275,
+      "primePoints": 0,
+      "totalPoints": 132275
+    },
+    {
+      "address": "0x99497671106ba424be13008ba427573c11431a89",
+      "netMinted": "0",
+      "minterPoints": 63493,
+      "primePoints": 0,
+      "totalPoints": 63493
+    }
+  ]
+}
