@@ -24,7 +24,7 @@ const client = createPublicClient({
 });
 
 const SGLD_MINTED = parseAbiItem(
-  'event SGLDMinted(address indexed user, address token, uint256 sgldAmount, uint256 stablecoinAmount)'
+  'event SGLDMinted(address indexed user, address indexed collateralToken, uint256 sgldAmount, uint256 collateralSpent)'
 );
 const SGLD_REDEEMED_IMMEDIATE = parseAbiItem(
   'event SGLDRedeemedImmediate(address indexed user, address stablecoin, uint256 sgldAmount, uint256 netOwed, uint256 fee)'
@@ -77,7 +77,7 @@ async function main() {
   console.log(`\n=== SGLD Points — Week ${startDate} → ${endDate} (CUMULATIVE) ===\n`);
 
   const latestBlock = await client.getBlockNumber();
-  const fromBlock = latestBlock > 60000n ? latestBlock - 60000n : 0n;
+  const fromBlock = latestBlock > 350000n ? latestBlock - 350000n : 0n;
 
   console.log('Fetching mint & redeem events...');
   const [mintLogs, redeemImmLogs, redeemQueuedLogs] = await Promise.all([
