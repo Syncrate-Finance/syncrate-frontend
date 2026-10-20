@@ -432,16 +432,7 @@ function PrimeVaultAppUI() {
     if (!address || !inputAmount) return
 
     if (activeTab === 'deposit') {
-      if (!sgldData) return
-      const amountToDeposit = parseUnits(inputAmount, sgldData.decimals)
-      writeProcess({
-        address: PRIME_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'deposit',
-        args: [amountToDeposit, address],
-        account: address,
-        chain: base,
-      })
+      return // Deposits disabled
     } else {
       if (!sySgldData) return
       const sharesToRedeem = parseUnits(inputAmount, sySgldData.decimals)
@@ -686,7 +677,7 @@ function PrimeVaultAppUI() {
                     placeholder="0.00"
                     value={inputAmount}
                     onChange={(e) => setInputAmount(e.target.value)}
-                    disabled={txStatus !== 'idle' && txStatus !== 'approved'}
+                    disabled={activeTab === 'deposit' || (txStatus !== 'idle' && txStatus !== 'approved')}
                     className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50 min-w-0"
                   />
                   <span className="text-sm font-medium text-[#888]">
@@ -700,9 +691,6 @@ function PrimeVaultAppUI() {
                 Number(inputAmount) > 0 &&
                 (previewSharesFmt || previewNetAssetsFmt) && (
                   <div className="text-xs text-[#888888] px-1">
-                    {activeTab === 'deposit' && previewSharesFmt && (
-                      <span>You receive ≈ {previewSharesFmt} sySGLD</span>
-                    )}
                     {activeTab === 'withdraw' && previewNetAssetsFmt && (
                       <span>
                         You receive ≈ {previewNetAssetsFmt} SGLD{' '}
@@ -713,7 +701,13 @@ function PrimeVaultAppUI() {
                 )}
 
               <div className="mt-2">
-                {!isConnected ? (
+                {activeTab === 'deposit' ? (
+                  <div className="w-full py-4 px-4 bg-[#111111] border border-[#222222] rounded-lg text-center">
+                    <p className="text-xs text-[#888888] leading-relaxed">
+                      We're working to make Syncrate Prime better and safer, SGLD deposits is currently unavailable. sySGLD holders can redeem at anytime
+                    </p>
+                  </div>
+                ) : !isConnected ? (
                   <div className="w-full flex justify-center custom-rainbow-btn">
                     <ConnectButton.Custom>
                       {({ openConnectModal }) => (
@@ -722,48 +716,25 @@ function PrimeVaultAppUI() {
                           type="button"
                           className="w-full py-4 bg-white text-black font-medium text-sm rounded-lg hover:bg-[#E5E5E5] transition-all shadow-md"
                         >
-                          Connect Wallet to {activeTab === 'deposit' ? 'Deposit' : 'Withdraw'}
+                          Connect Wallet to Withdraw
                         </button>
                       )}
                     </ConnectButton.Custom>
                   </div>
                 ) : (
-                  <>
-                    {(txStatus === 'idle' || txStatus === 'approving') &&
-                      activeTab === 'deposit' && (
-                        <button
-                          onClick={handleApprove}
-                          disabled={
-                            !inputAmount ||
-                            parseFloat(inputAmount) <= 0 ||
-                            txStatus === 'approving'
-                          }
-                          className="w-full py-4 bg-[#111111] hover:bg-[#1A1A1A] text-white border border-[#333333] font-medium text-sm rounded-lg disabled:opacity-40 transition-all"
-                        >
-                          {txStatus === 'approving'
-                            ? 'Approving...'
-                            : 'Approve SGLD'}
-                        </button>
-                      )}
-
-                    {(txStatus === 'approved' || txStatus === 'processing') && (
-                      <button
-                        onClick={handleProcess}
-                        disabled={
-                          !inputAmount ||
-                          parseFloat(inputAmount) <= 0 ||
-                          txStatus === 'processing'
-                        }
-                        className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-lg shadow-[#0037FF]/10"
-                      >
-                        {txStatus === 'processing'
-                          ? 'Processing...'
-                          : activeTab === 'deposit'
-                            ? 'Confirm Deposit'
-                            : 'Withdraw to Sgld'}
-                      </button>
-                    )}
-                  </>
+                  <button
+                    onClick={handleProcess}
+                    disabled={
+                      !inputAmount ||
+                      parseFloat(inputAmount) <= 0 ||
+                      txStatus === 'processing'
+                    }
+                    className="w-full py-4 bg-[#0037FF] hover:bg-[#002CD6] text-white font-medium text-sm rounded-lg transition-all shadow-lg shadow-[#0037FF]/10"
+                  >
+                    {txStatus === 'processing'
+                      ? 'Processing...'
+                      : 'Withdraw to Sgld'}
+                  </button>
                 )}
               </div>
 
