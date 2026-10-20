@@ -25,8 +25,26 @@ const MANUAL_APY = 11 // APY percentage (%)
 
 const SGLD_ADDRESS = '0x10C5E0643bCc6C915Cad0335f70A96c1532766eb' as const
 const PRIME_VAULT_ADDRESS = '0xbA93Aa354a3B47A936d713b8FB90126D4d35546B' as const
+const GOLD_PRICE_FEED_ADDRESS = '0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31' as const
 
 const VAULT_INCEPTION = new Date('2026-08-08T00:00:00Z').getTime()
+
+// Standard Chainlink AggregatorV3Interface ABI
+const aggregatorV3Abi = [
+  {
+    inputs: [],
+    name: 'latestRoundData',
+    outputs: [
+      { name: 'roundId', type: 'uint80' },
+      { name: 'answer', type: 'int256' },
+      { name: 'startedAt', type: 'uint256' },
+      { name: 'updatedAt', type: 'uint256' },
+      { name: 'answeredInRound', type: 'uint80' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+] as const
 
 const erc20Abi = [
   {
@@ -261,16 +279,32 @@ function PrimeVaultAppUI() {
     query: { enabled: !!address },
   })
 
-  // ── DYNAMIC TVL FETCHING (ERC-4626 totalAssets) ──
+  // ── DYNAMIC TVL & LIVE GOLD PRICE FETCHING ──
   const { data: totalAssetsData } = useReadContract({
     address: PRIME_VAULT_ADDRESS,
     abi: vaultAbi,
     functionName: 'totalAssets',
+    chainId: base.id,
+    query: { refetchInterval: 15000 },
   })
 
-  const vaultTVL = totalAssetsData
-    ? parseFloat(formatUnits(totalAssetsData as bigint, 18))
-    : 0
+  const { data: roundData } = useReadContract({
+    address: GOLD_PRICE_FEED_ADDRESS,
+    abi: aggregatorV3Abi,
+    functionName: 'latestRoundData',
+    chainId: base.id,
+    query: { refetchInterval: 15000 },
+  })
+
+  const goldPricePerOunce = (() => {
+    if (!roundData) return null
+    const answer = Array.isArray(roundData) ? roundData[1] : (roundData as any)?.answer
+    if (!answer || answer <= BigInt(0)) return null
+    return Number(answer) / 1e8
+  })()
+
+  const totalAssetsNum = totalAssetsData ? parseFloat(formatUnits(totalAssetsData as bigint, 18)) : 0
+  const vaultTVL = goldPricePerOunce ? totalAssetsNum * goldPricePerOunce : 0
 
   const vaultApy = MANUAL_APY
 
@@ -279,7 +313,7 @@ function PrimeVaultAppUI() {
     1
   )
   const sharePrice = 1.0 + (vaultApy / 100) * (daysElapsed / 365)
-  const vaultSupply = sharePrice > 0 ? vaultTVL / sharePrice : 0
+  const vaultSupply = sharePrice > 0 ? totalAssetsNum / sharePrice : 0
 
   // Preview: deposit → shares out
   let depositAssetsWei: bigint | undefined
