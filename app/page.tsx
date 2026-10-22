@@ -54,9 +54,24 @@ export default function LaunchingSoon() {
         </h1>
 
         {/* Subheading */}
-        <p className="text-base text-[#888888] leading-relaxed mb-6 max-w-md">
+        <p className="text-base text-[#888888] leading-relaxed mb-8 max-w-md">
           Syncrate channels onchain capital into productive real-world assets, delivering transparent, gold-backed yield designed for the next generation of decentralized finance.
         </p>
+
+        {/* Hero Action Buttons */}
+        <div className="flex items-center gap-3 text-sm font-medium">
+          <Link href="/app" className="px-6 py-3 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors shadow-sm">
+            Open App
+          </Link>
+          <a 
+            href="https://docs.syncrate.org" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-6 py-3 rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors"
+          >
+            Read the docs
+          </a>
+        </div>
       </main>
       
       {/* Divider and Products Label Section */}
@@ -261,7 +276,7 @@ export default function LaunchingSoon() {
           {/* Card Top: Image */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#111111] overflow-hidden border-b border-[#222222]">
             <Image 
-              src="/blog2.PNG" // Upload a thumbnail image of your choice to public/
+              src="/blog2.PNG" 
               alt="Syncrate News Feature"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -372,7 +387,7 @@ export default function LaunchingSoon() {
             <div className="flex flex-col gap-5">
               <a href="mailto:team@syncrate.org" className="hover:text-[#888888] transition-colors">Contact</a>
               <a href="https://docs.syncrate.org" className="hover:text-[#888888] transition-colors">Documentation</a>
-              <a href="https://t.me/syncratefi" className="hover:text-[#888888] transition-colours">Telegram</a>
+              <a href="https://t.me/syncratefi" className="hover:text-[#888888] transition-colors">Telegram</a>
               <a href="https://discord.gg/p5v4P8qEbj" className="hover:text-[#888888] transition-colors">Discord</a>
               <Link href="/blog" className="hover:text-[#888888] transition-colors">Blog</Link>
               <Link href="/terms" className="hover:text-[#888888] transition-colors">Terms & Disclosures</Link>
