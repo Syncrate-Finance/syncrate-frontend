@@ -64,7 +64,7 @@ export default function LaunchingSoon() {
             Open App
           </Link>
           <a 
-            href="https://docs.syncrate.org" 
+            href="https://syncrate-1.gitbook.io/syncrate-docs/" 
             target="_blank" 
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors"
