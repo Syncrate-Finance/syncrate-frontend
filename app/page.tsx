@@ -25,23 +25,52 @@ export default function LaunchingSoon() {
           />
         </div>
 
-        {/* Right Menu Button & Dropdown */}
-        <div className="relative">
+        {/* Right Menu Button */}
+        <div>
           <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => setIsMenuOpen(true)}
             className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full border border-[#333333] bg-[#030303] text-white hover:bg-[#111111] transition-colors cursor-pointer"
-            aria-label="Toggle Menu"
+            aria-label="Open Menu"
           >
             <span className="w-4 h-[1.5px] bg-white rounded-full"></span>
             <span className="w-4 h-[1.5px] bg-white rounded-full"></span>
           </button>
+        </div>
+      </header>
 
-          {isMenuOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-[#0A0A0A] border border-[#222222] rounded-xl shadow-2xl py-2 z-50 flex flex-col">
+      {/* Full-Screen Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-[#030303] flex flex-col justify-between p-6 overflow-y-auto animate-in fade-in duration-200">
+          <div className="w-full max-w-6xl mx-auto flex flex-col">
+            {/* Overlay Header */}
+            <div className="flex justify-between items-center py-2">
+              <div className="flex items-center">
+                <Image 
+                  src="/logo.png" 
+                  alt="Syncrate Logo" 
+                  width={32} 
+                  height={32} 
+                  className="object-contain"
+                />
+              </div>
+              <button 
+                onClick={() => setIsMenuOpen(false)}
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-[#333333] bg-[#030303] text-white hover:bg-[#111111] transition-colors cursor-pointer"
+                aria-label="Close Menu"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            {/* Menu Links List */}
+            <div className="flex flex-col gap-6 mt-12">
               <a 
                 href="#ecosystem" 
                 onClick={() => setIsMenuOpen(false)} 
-                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+                className="text-2xl font-normal text-[#AAAAAA] hover:text-white transition-colors"
               >
                 Ecosystem
               </a>
@@ -50,14 +79,14 @@ export default function LaunchingSoon() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 onClick={() => setIsMenuOpen(false)} 
-                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+                className="text-2xl font-normal text-[#AAAAAA] hover:text-white transition-colors"
               >
                 Community
               </a>
               <a 
                 href="#products" 
                 onClick={() => setIsMenuOpen(false)} 
-                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+                className="text-2xl font-normal text-[#AAAAAA] hover:text-white transition-colors"
               >
                 Products
               </a>
@@ -66,14 +95,25 @@ export default function LaunchingSoon() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 onClick={() => setIsMenuOpen(false)} 
-                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+                className="text-2xl font-normal text-[#AAAAAA] hover:text-white transition-colors"
               >
                 Documentation
               </a>
             </div>
-          )}
+          </div>
+
+          {/* Overlay Bottom Action */}
+          <div className="w-full max-w-6xl mx-auto pt-8">
+            <Link 
+              href="/app" 
+              onClick={() => setIsMenuOpen(false)}
+              className="w-full py-4 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors font-medium text-sm flex items-center justify-center shadow-md"
+            >
+              Open app
+            </Link>
+          </div>
         </div>
-      </header>
+      )}
 
       {/* Hero Content */}
       <main className="w-full max-w-6xl mx-auto px-6 flex flex-col items-start text-left mt-12 md:mt-24">
