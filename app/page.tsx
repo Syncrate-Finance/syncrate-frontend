@@ -1,16 +1,19 @@
 'use client'
 
+import { useState } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function LaunchingSoon() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
   return (
     <div className={`min-h-screen bg-[#030303] text-[#F5F5F5] flex flex-col justify-between antialiased ${GeistSans.variable} ${GeistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif' }}>
       
       {/* Top Navigation Bar */}
-      <header className="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
+      <header className="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center relative">
         {/* Custom Logo */}
         <div className="flex items-center">
           <Image 
@@ -22,27 +25,53 @@ export default function LaunchingSoon() {
           />
         </div>
 
-        {/* Right Action Buttons */}
-        <div className="flex items-center gap-3 text-sm font-medium">
-          {/* Whitepaper Button */}
-          <a 
-            href="/whitepaper.pdf" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-[#333333] text-white hover:bg-[#111111] transition-colors"
-            aria-label="Read Whitepaper"
+        {/* Right Menu Button & Dropdown */}
+        <div className="relative">
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full border border-[#333333] bg-[#030303] text-white hover:bg-[#111111] transition-colors cursor-pointer"
+            aria-label="Toggle Menu"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-          </a>
-          <Link href="/app" className="px-5 py-2.5 rounded-full bg-white text-[#030303] hover:bg-[#E5E5E5] transition-colors">
-            Mint SGLD
-          </Link>
+            <span className="w-4 h-[1.5px] bg-white rounded-full"></span>
+            <span className="w-4 h-[1.5px] bg-white rounded-full"></span>
+          </button>
+
+          {isMenuOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-[#0A0A0A] border border-[#222222] rounded-xl shadow-2xl py-2 z-50 flex flex-col">
+              <a 
+                href="#ecosystem" 
+                onClick={() => setIsMenuOpen(false)} 
+                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+              >
+                Ecosystem
+              </a>
+              <a 
+                href="https://t.me/syncratefi" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={() => setIsMenuOpen(false)} 
+                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+              >
+                Community
+              </a>
+              <a 
+                href="#products" 
+                onClick={() => setIsMenuOpen(false)} 
+                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+              >
+                Products
+              </a>
+              <a 
+                href="https://syncrate-1.gitbook.io/syncrate-docs/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={() => setIsMenuOpen(false)} 
+                className="px-4 py-2.5 text-xs text-[#AAAAAA] hover:text-white hover:bg-white/[0.03] transition-colors"
+              >
+                Documentation
+              </a>
+            </div>
+          )}
         </div>
       </header>
 
@@ -75,7 +104,7 @@ export default function LaunchingSoon() {
       </main>
       
       {/* Divider and Products Label Section */}
-      <div className="w-full max-w-6xl mx-auto px-6 pt-16 pb-8">
+      <div id="products" className="w-full max-w-6xl mx-auto px-6 pt-16 pb-8">
         <div className="w-full h-[1px] bg-[#222222] mb-6" />
         <div className="flex justify-between items-center">
           <span className="text-lg font-medium text-white">
@@ -294,7 +323,7 @@ export default function LaunchingSoon() {
       </section>
 
       {/* Partner Swipeable Section */}
-      <section className="w-full max-w-6xl mx-auto py-4 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
+      <section id="ecosystem" className="w-full max-w-6xl mx-auto py-4 border-t border-[#6586FF] overflow-hidden flex flex-col items-center">
         
         {/* Title */}
         <span className="text-sm font-medium text-[#888888] mb-4 tracking-wide">
