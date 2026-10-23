@@ -436,7 +436,7 @@ export default function SGLDProductPage({
 
             <div className="w-full md:w-[420px] flex flex-col mt-4 md:mt-0 border-t border-[#222222]">
               <Link 
-                href="/asset-statements"
+                href="https://syncrate-1.gitbook.io/syncrate-docs/sgld/asset-verification"
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
               >
                 <div className="flex items-center gap-4">
@@ -456,7 +456,7 @@ export default function SGLDProductPage({
               </Link>
 
               <Link 
-                href="/audits" 
+                href="https://syncrate-1.gitbook.io/syncrate-docs/sgld/asset-verification" 
                 className="flex items-center justify-between py-5 border-b border-[#222222] group hover:bg-white/5 px-2 transition-all duration-300"
               >
                 <div className="flex items-center gap-4">
