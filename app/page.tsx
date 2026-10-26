@@ -254,7 +254,7 @@ export default function LaunchingSoon() {
             Real Yield Source
           </h4>
           <p className="text-sm text-[#888888] leading-relaxed">
-            sySGLD's growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly from short-term gold financing arrangements with bullion banks and refiners who pay a financing spread that flows back to the Syncrate Prime vault.
+            sySGLD's growth isn't built on synthetic promises or arbitrary token emissions. Yield is driven directly from short-term gold financing arrangements with bullion banks and refiners who pay a financing spread that flows back to sySGLD holders.
           </p>
         </div>
 
