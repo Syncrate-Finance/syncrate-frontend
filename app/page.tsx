@@ -188,7 +188,7 @@ export default function LaunchingSoon() {
             </p>
             <Link href="/sgld">
               <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
-                View Product <span>→</span>
+                Learn More about SGLD <span>→</span>
               </button>
             </Link>
           </div>
@@ -219,14 +219,14 @@ export default function LaunchingSoon() {
 
           <div className="relative z-20 mt-auto flex flex-col items-start text-left w-full">
             <h3 className="text-2xl md:text-3xl font-normal text-white mb-2 tracking-tight">
-              Syncrate Prime
+              sySGLD
             </h3>
             <p className="text-xs md:text-sm text-[#AAAAAA] leading-relaxed mb-6 max-w-sm">
-              Syncrate Prime is a yield vault product that gives SGLD holders an optional path to deploy their gold exposure into, gold-backed financing opportunities and earn yield from the underlying returns.
+              sySLGD is Syncrate's yield-bearing gold asset, with the underlying yield sourced directly from gold financing. With Syncrate, gold resellers and bullion banks can borrow physical gold bars and pay an interest instead of purchasing it. 
             </p>
-            <Link href="/prime">
+            <Link href="/sysgld">
               <button className="flex items-center gap-2 border border-[#333333] bg-black/60 backdrop-blur-md rounded-md px-5 py-2.5 text-xs font-medium text-white hover:bg-white hover:text-black transition-all duration-200">
-                Launch Syncrate Prime <span>→</span>
+                Learn More about sySGLD <span>→</span>
               </button>
             </Link>
           </div>
