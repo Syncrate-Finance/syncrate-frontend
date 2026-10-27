@@ -15,18 +15,23 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24.22.1'
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Run points calculation
         env:
           BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
-        run: node scripts/calculate-week.js
+        run: node scripts/calculate-week.cjs
 
       - name: Commit and push updated leaderboard
         run: |
@@ -35,3 +40,4 @@ jobs:
           git add public/points/latest.json public/points/week-*.json || true
           git diff --staged --quiet || git commit -m "points: weekly update $(date -u +%Y-%m-%d)"
           git push
+
