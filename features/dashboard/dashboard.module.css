@@ -18,7 +18,7 @@
   top: 8px;
   left: 8px;
   padding: 12px 18px;
-  background: #0037FF;
+  background: #142D63;
   color: white;
   border-radius: 8px;
   transform: translateY(-160%);
@@ -174,7 +174,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #0037FF;
+  background: #142D63;
 }
 .retryButton {
   display: inline-flex;

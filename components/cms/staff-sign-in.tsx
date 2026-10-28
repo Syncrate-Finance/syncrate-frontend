@@ -84,7 +84,7 @@ export function StaffSignIn() {
   const input =
     "mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-slate-900";
   const button =
-    "rounded-lg bg-[#0037FF] hover:bg-[#002CD6] px-5 py-3 text-white disabled:opacity-50";
+    "rounded-lg bg-[#142D63] hover:bg-[#0E214A] px-5 py-3 text-white disabled:opacity-50";
   return (
     <main className="mx-auto min-h-[70vh] max-w-lg px-6 py-20">
       <h1 className="text-3xl font-semibold">Syncrate staff sign-in</h1>

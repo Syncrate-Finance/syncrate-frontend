@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --brand-primary: #0037FF;
-  --brand-hover: #002CD6;
+  --brand-primary: #142D63;
+  --brand-hover: #0E214A;
 }
 
 @keyframes marquee {
