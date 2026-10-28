@@ -10,6 +10,7 @@ import {
   FileText,
 } from "lucide-react";
 import { MarketingHeader, MarketingBrand } from "./interactions";
+import { PartnerMarquee } from "./partners";
 import { GoldIllustration } from "./gold-illustration";
 import { listPublishedArticles } from "@/server/services/content";
 import styles from "./marketing.module.css";
@@ -404,36 +405,7 @@ export async function MarketingHomepage() {
               ))}
           </div>
         </section>
-        <section
-          className={`${styles.container} ${styles.nextStep}`}
-          aria-labelledby="next-step-heading"
-        >
-          <div>
-            <span className={styles.eyebrow}>YOUR NEXT CHAPTER</span>
-            <h2 id="next-step-heading">
-              Meet gold.
-              <br />
-              <em>On your terms.</em>
-            </h2>
-          </div>
-          <div>
-            <p>
-              Explore the platform, understand the products and decide what
-              comes next.
-            </p>
-            <Link href="/dashboard" className={styles.primaryButton}>
-              Open the overview
-              <ArrowUpRight size={17} />
-            </Link>
-            <a href="https://docs.syncrate.org" className={styles.textLink}>
-              Read the documentation
-              <ArrowRight size={16} />
-            </a>
-          </div>
-          <span className={styles.nextStepMark} aria-hidden="true">
-            S
-          </span>
-        </section>
+        <PartnerMarquee />
       </main>
 
       <footer className={styles.footer}>

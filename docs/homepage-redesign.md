@@ -8,7 +8,7 @@ Owner direction, October 28, 2026: rebuild only the public homepage so it has it
 2. A dark, three-stage explanation: physical foundation, SGLD on Base, wallet access.
 3. Side-by-side SGLD and informational sySGLD stories, followed by the three planned Prime terms. No invented rates or staking actions.
 4. An open document library with dated custody/procurement references and the whitepaper, replacing carousel slides.
-5. Published CMS insights with archive fallbacks, followed by a separate closing call to action.
+5. Published CMS insights with archive fallbacks, followed by a Building With partner marquee.
 6. Reworked homepage navigation and footer styling, with Syncrate branding, forest green, ivory and restrained gold accents.
 
 Buy SGLD still opens https://syncrate.org/app. No dashboard, mint, other product-page, authentication, API or database changes. Artwork is original code-native SVG and conceptual; it is not a live balance or reserve statement. No new dependencies or Theo media/font assets are used.
@@ -29,3 +29,10 @@ Final local validation: optimized build including TypeScript passed. Rendered ho
 The owner completed visual review and accepted the independent homepage direction. Follow-up changes remove the large wordmark from both shared marketing/dashboard brand links, preserve the accessible link names and original logo, remove the entire asset-facts row, and put the footer grid/disclosures/bottom row inside the same centered responsive container used by the homepage. Footer columns use bounded tracks and top alignment. Existing legacy page headers already use the logo without a separate wordmark.
 
 The owner explicitly selected deployment to the existing preview, not syncrate.org. No production activation is authorized. Other product content, wallet behavior, transaction code, backend and schema remain unchanged.
+
+
+## Building With partner section
+
+Replaces the Your Next Chapter closing call to action with the existing nine-partner catalogue and local logo assets. Two equal-width groups create a seamless 90-second right-to-left loop; the duplicate is hidden from assistive technology. A pause/resume button and hover pause are provided. Reduced-motion preference disables animation and shows a static grid of all nine partners. No new partner relationships, external destinations or dependency changes are introduced.
+
+Partner follow-up validation: local optimized build/TypeScript, 24 unit tests, five authorization integration tests and nine asset HTTP checks passed. Browser checks measured approximately 20.8px/second right-to-left motion, two equal 1872px groups in a 3744px track, functioning pause/resume, nine accessible partner entries and no page overflow at 390px/320px. Logo images load eagerly to avoid blank tiles during the loop. Reduced-motion CSS presents the single complete static grid.
