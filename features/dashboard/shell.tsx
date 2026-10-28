@@ -34,7 +34,6 @@ export function Brand({ footer = false }: { footer?: boolean }) {
       aria-label={footer ? 'Syncrate home' : 'Syncrate overview'}
     >
       <span className={styles.brandMark} aria-hidden="true" />
-      <span>syncrate</span>
     </Link>
   )
 }
