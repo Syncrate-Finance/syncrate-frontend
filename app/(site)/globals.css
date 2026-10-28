@@ -1,4 +1,11 @@
 @import "tailwindcss";
+
+:root {
+  --brand-primary: #0037FF;
+  --brand-hover: #002CD6;
+  --brand-paper: #f7f8fc;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0%);

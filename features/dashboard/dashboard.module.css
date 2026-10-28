@@ -1,7 +1,7 @@
 .dashboard {
   min-height: 100svh;
-  background: #f5f7f8;
-  color: #223b3e;
+  background: #f5f6f8;
+  color: #1c2545;
   font-family: var(--font-geist-sans), Arial, sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
@@ -18,7 +18,7 @@
   top: 8px;
   left: 8px;
   padding: 12px 18px;
-  background: #17383b;
+  background: #0037FF;
   color: white;
   border-radius: 8px;
   transform: translateY(-160%);
@@ -29,7 +29,7 @@
 .header {
   height: 56px;
   background: #fff;
-  border-bottom: 1px solid #edf0f1;
+  border-bottom: 1px solid #edeef1;
 }
 .headerInner {
   max-width: 1496px;
@@ -47,7 +47,7 @@
   min-height: 44px;
   align-items: center;
   gap: 8px;
-  color: #19383b;
+  color: #0037FF;
   white-space: nowrap;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 34px;
@@ -75,12 +75,12 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #6b787b;
+  color: #6b6e7b;
   transition: color 0.15s;
 }
 .desktopNavigation a:hover,
 .desktopNavigation .activeNavigation {
-  color: #172f32;
+  color: #171d32;
 }
 .headerActions {
   display: flex;
@@ -117,7 +117,7 @@
 .portfolioCard {
   min-height: 239px;
   background: #fff;
-  border: 1px solid #f0f3f3;
+  border: 1px solid #f0f1f3;
   border-radius: 28px;
   padding: 28px 32px 25px;
 }
@@ -133,7 +133,7 @@
 }
 .portfolioHeading > span {
   font-size: 11px;
-  color: #68787b;
+  color: #686c7b;
 }
 .portfolioValue {
   display: flex;
@@ -152,7 +152,7 @@
 }
 .balanceUnit {
   font-size: 14px;
-  color: #65787a;
+  color: #656a7a;
   margin-top: 12px;
 }
 .portfolioValue > .helpButton {
@@ -164,23 +164,23 @@
   align-items: center;
   gap: 6px;
   font-size: 10px;
-  color: #6b7b7d;
+  color: #6b6f7d;
   margin-top: -4px;
 }
 .valueDivider {
-  color: #b2bfc1;
+  color: #b2b5c1;
 }
 .liveDot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #087c87;
+  background: #0037FF;
 }
 .retryButton {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #087b86;
+  color: #0037FF;
   text-decoration: underline;
   text-underline-offset: 3px;
   font-size: 10px;
@@ -193,7 +193,7 @@
 }
 .metrics dt {
   font-size: 11px;
-  color: #67787b;
+  color: #676b7b;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -206,30 +206,30 @@
   font-weight: 300;
 }
 .metrics .tealDash {
-  color: #13848d;
+  color: #0037FF;
 }
 .helpButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #738183;
+  color: #737683;
   border-radius: 100%;
   padding: 2px;
   flex-shrink: 0;
 }
 .helpButton:focus-visible {
-  outline: 2px solid #087d87;
+  outline: 2px solid #0037FF;
   outline-offset: 3px;
 }
 .buyCard {
-  border: 1px solid #e3e9e9;
+  border: 1px solid #e3e4e9;
   border-radius: 28px;
   min-height: 239px;
   padding: 27px 29px 25px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: linear-gradient(130deg, #fff 5%, #f0f6f5 100%);
+  background: linear-gradient(130deg, #fff 5%, #f0f1f6 100%);
 }
 .buyCardHeading {
   display: flex;
@@ -263,7 +263,7 @@
   font-size: 15px;
   line-height: 1.6;
   letter-spacing: -0.2px;
-  color: #697a7e;
+  color: #696e7e;
   max-width: 285px;
   margin-top: 11px;
   margin-bottom: 22px;
@@ -275,7 +275,7 @@
 }
 .opportunitiesCard {
   background: #fff;
-  border: 1px solid #eef2f3;
+  border: 1px solid #eeeff3;
   border-radius: 28px;
   padding: 20px 24px 0;
   overflow: hidden;
@@ -304,7 +304,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  border: 1px solid #e9edef;
+  border: 1px solid #e9eaef;
   border-radius: 25px;
   padding: 5px 12px 5px 6px;
   font-size: 15px;
@@ -321,7 +321,7 @@
 }
 .positionsSubtitle {
   font-size: 11px;
-  color: #6b7b7d;
+  color: #6b6f7d;
   white-space: nowrap;
 }
 .tableScroll {
@@ -339,8 +339,8 @@
   padding: 5px 0 13px;
   font-size: 11px;
   font-weight: 400;
-  color: #687b7e;
-  border-bottom: 1px solid #edf1f2;
+  color: #686d7e;
+  border-bottom: 1px solid #edeef2;
 }
 .opportunitiesTable th:first-child {
   width: 31%;
@@ -360,7 +360,7 @@
 }
 .opportunitiesTable td {
   height: 86px;
-  border-bottom: 1px solid #edf1f2;
+  border-bottom: 1px solid #edeef2;
   padding: 12px 0;
   vertical-align: middle;
 }
@@ -371,7 +371,7 @@
   transition: background 0.15s;
 }
 .opportunitiesTable tbody tr:hover {
-  background: #fbfcfc;
+  background: #fbfbfc;
 }
 .opportunityName {
   display: inline-flex;
@@ -383,15 +383,15 @@
   max-width: 100%;
 }
 .opportunityName:focus-visible {
-  outline: 2px solid #087d87;
+  outline: 2px solid #0037FF;
   outline-offset: 4px;
 }
 .primeIcon {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background: linear-gradient(130deg, #e9f1ef, #dce9e5);
-  color: #416563;
+  background: linear-gradient(130deg, #e9ebf1, #dcdfe9);
+  color: #414965;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -410,18 +410,18 @@
   font-weight: 400;
 }
 .offerTitle > svg {
-  color: #91a0a2;
+  color: #9195a2;
   margin-left: 3px;
 }
 .providerName {
   display: block;
   font-size: 11px;
-  color: #718184;
+  color: #717584;
   margin-top: 3px;
 }
 .unannounced {
   font-size: 12px;
-  color: #718184;
+  color: #717584;
 }
 .networkLabel {
   display: inline-flex;
@@ -448,7 +448,7 @@
 .plannedLabel {
   display: block;
   font-size: 9px;
-  color: #78878a;
+  color: #787c8a;
   margin-top: 2px;
 }
 .rateCell {
@@ -459,7 +459,7 @@
 }
 .rateCell > span:last-child {
   font-size: 10px;
-  color: #718184;
+  color: #717584;
 }
 .upcomingBadge {
   display: inline-flex;
@@ -483,12 +483,12 @@
   border-radius: 50%;
 }
 .catalogueNote {
-  border-top: 1px solid #edf1f2;
+  border-top: 1px solid #edeef2;
   display: flex;
   align-items: center;
   gap: 7px;
   padding: 15px 0;
-  color: #708184;
+  color: #707484;
   font-size: 10px;
   line-height: 1.6;
 }
@@ -504,9 +504,9 @@
   gap: 15px;
   padding: 23px 27px;
   border-radius: 22px;
-  border: 1px solid #e4ebeb;
+  border: 1px solid #e4e6eb;
   margin-top: 23px;
-  background: #f8faf9;
+  background: #f8f8fa;
 }
 .informationIcon {
   width: 42px;
@@ -514,10 +514,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #dce7e4;
+  border: 1px solid #dcdee7;
   border-radius: 50%;
-  color: #49706b;
-  background: #edf4f1;
+  color: #495170;
+  background: #edeff4;
   flex-shrink: 0;
 }
 .informationStrip h2 {
@@ -527,7 +527,7 @@
 }
 .informationStrip p {
   font-size: 12px;
-  color: #6b7d80;
+  color: #6b7080;
   line-height: 1.6;
 }
 .informationStrip > a {
@@ -535,7 +535,7 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: #087b86;
+  color: #0037FF;
   margin-left: auto;
   white-space: nowrap;
 }
@@ -545,7 +545,7 @@
   justify-content: center;
   gap: 6px;
   font-size: 10px;
-  color: #738385;
+  color: #737785;
   margin-top: 19px;
 }
 .readOnlyNote > a {
@@ -559,7 +559,7 @@
   padding: 0 24px 26px;
 }
 .footerTop {
-  border-top: 1px solid #e4eaea;
+  border-top: 1px solid #e4e5ea;
   padding: 34px 3px 32px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -573,7 +573,7 @@
   height: 31px;
 }
 .footerTop p {
-  color: #748486;
+  color: #747886;
   font-size: 12px;
   margin-top: 14px;
 }
@@ -582,7 +582,7 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: #087b86;
+  color: #0037FF;
   margin-top: 16px;
 }
 .footerLinks {
@@ -591,13 +591,13 @@
   align-items: flex-start;
   gap: 10px;
   font-size: 12px;
-  color: #61777a;
+  color: #61667a;
 }
 .footerLinks h2 {
   font-size: 10px;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: #829093;
+  color: #828693;
   margin-bottom: 6px;
 }
 .footerLinks a {
@@ -606,15 +606,15 @@
   gap: 4px;
 }
 .footer a:hover {
-  color: #087b86;
+  color: #0037FF;
 }
 .footerBottom {
-  border-top: 1px solid #e4eaea;
+  border-top: 1px solid #e4e5ea;
   padding-top: 20px;
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #7a8a8d;
+  color: #7a7e8d;
 }
 .footerBottom > span:last-child {
   display: flex;
@@ -644,10 +644,10 @@
   justify-content: center;
   width: 64px;
   height: 64px;
-  border: 1px solid #e1eaea;
+  border: 1px solid #e1e3ea;
   border-radius: 20px;
-  background: #f4f8f7;
-  color: #5b7d7b;
+  background: #f4f5f8;
+  color: #5b627d;
   margin-bottom: 16px;
 }
 .emptyPositions h3 {
@@ -659,7 +659,7 @@
 .emptyPositions p {
   font-size: 12px;
   line-height: 1.7;
-  color: #6b7f82;
+  color: #6b7082;
   max-width: 340px;
   margin: 9px 0 17px;
 }
@@ -668,7 +668,7 @@
 }
 .emptyNote {
   font-size: 10px;
-  color: #859396;
+  color: #858996;
   margin-top: 16px;
 }
 .opportunityDialog,
@@ -684,8 +684,8 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: #e7f0ec;
-  color: #446d65;
+  background: #e7e9f0;
+  color: #444d6d;
   border-radius: 14px;
   margin-bottom: 19px;
 }
@@ -702,12 +702,12 @@
   margin-top: 4px;
 }
 .detailsTitle > span {
-  color: #6f8182;
+  color: #6f7382;
 }
 .detailsDescription {
   font-size: 13px;
   line-height: 1.8;
-  color: #6b7f81;
+  color: #6b7081;
   margin-top: 10px;
   max-width: 360px;
 }
@@ -715,14 +715,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 22px;
-  border-top: 1px solid #e7eeee;
-  border-bottom: 1px solid #e7eeee;
+  border-top: 1px solid #e7e9ee;
+  border-bottom: 1px solid #e7e9ee;
   padding: 23px 0;
   margin-top: 22px;
 }
 .detailsGrid dt {
   font-size: 11px;
-  color: #738486;
+  color: #737786;
 }
 .detailsGrid dd {
   display: flex;
@@ -734,7 +734,7 @@
 .detailsNote {
   font-size: 12px;
   line-height: 1.8;
-  color: #6b7d7f;
+  color: #6b6f7f;
   margin-top: 20px;
 }
 .detailsActions {
@@ -750,7 +750,7 @@
 }
 .dialogDescription {
   font-size: 12px;
-  color: #6b7f81;
+  color: #6b7081;
   margin-top: 7px;
 }
 .mobileNavigation {
@@ -764,7 +764,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 0;
-  border-bottom: 1px solid #e9efef;
+  border-bottom: 1px solid #e9eaef;
   font-size: 15px;
 }
 .infoMain {
@@ -777,7 +777,7 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: #708184;
+  color: #707484;
 }
 .infoHero {
   margin-top: 39px;
@@ -787,7 +787,7 @@
   align-items: center;
   gap: 8px;
   font-size: 11px;
-  color: #728486;
+  color: #727686;
   margin-bottom: 22px;
 }
 .infoHero h1 {
@@ -801,7 +801,7 @@
 .infoHero > p {
   font-size: 16px;
   line-height: 1.8;
-  color: #6c7f81;
+  color: #6c7181;
   max-width: 650px;
   margin-top: 23px;
 }
@@ -816,12 +816,12 @@
 }
 .infoCard {
   background: white;
-  border: 1px solid #e7ecec;
+  border: 1px solid #e7e8ec;
   border-radius: 24px;
   padding: 28px;
 }
 .infoCard > svg {
-  color: #537b70;
+  color: #535c7b;
   margin-bottom: 22px;
 }
 .infoCard h2 {
@@ -831,18 +831,18 @@
 }
 .infoCard p {
   font-size: 13px;
-  color: #6b7f81;
+  color: #6b7081;
   line-height: 1.9;
 }
 .infoRisk {
   font-size: 12px;
   line-height: 1.8;
-  color: #6f8386;
+  color: #6f7486;
   max-width: 750px;
   margin-top: 24px;
 }
 .infoRisk a {
-  color: #087b86;
+  color: #0037FF;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -1095,7 +1095,7 @@
   }
   .mobileOffer {
     padding: 20px 0;
-    border-bottom: 1px solid #edf1f2;
+    border-bottom: 1px solid #edeef2;
   }
   .mobileOffer:last-child {
     border: 0;
@@ -1114,7 +1114,7 @@
   }
   .mobileOfferHeading > div > span {
     font-size: 10px;
-    color: #718588;
+    color: #717688;
   }
   .mobileOfferHeading > .upcomingBadge {
     margin-left: auto;
@@ -1127,7 +1127,7 @@
   }
   .mobileOffer dt {
     font-size: 10px;
-    color: #74878a;
+    color: #74798a;
     margin-bottom: 4px;
   }
   .mobileOffer dd {

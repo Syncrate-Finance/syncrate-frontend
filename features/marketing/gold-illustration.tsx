@@ -69,15 +69,15 @@ export function GoldIllustration() {
             <stop offset="1" stopColor="#EED7A0" />
           </linearGradient>
           <radialGradient id="halo">
-            <stop stopColor="#CCCEAF" stopOpacity=".55" />
-            <stop offset="1" stopColor="#CCCEAF" stopOpacity="0" />
+            <stop stopColor="#DCE4FF" stopOpacity=".55" />
+            <stop offset="1" stopColor="#DCE4FF" stopOpacity="0" />
           </radialGradient>
           <filter id="gold-shadow" x="-.5" y="-1" width="2" height="3">
             <feGaussianBlur stdDeviation="16" />
           </filter>
         </defs>
         <circle cx="300" cy="245" r="230" fill="url(#halo)" />
-        <g stroke="#A5B6A4" strokeWidth=".7">
+        <g stroke="#AABCF2" strokeWidth=".7">
           <ellipse
             cx="300"
             cy="278"
@@ -104,7 +104,7 @@ export function GoldIllustration() {
           cy="360"
           rx="139"
           ry="28"
-          fill="#465C48"
+          fill="#17265D"
           opacity=".2"
           filter="url(#gold-shadow)"
         />
@@ -148,8 +148,8 @@ export function GoldIllustration() {
             GOLD
           </text>
         </g>
-        <path d="M410 242L449 222V195" stroke="#526D57" strokeDasharray="4 5" />
-        <circle cx="449" cy="195" r="4" fill="#365D48" />
+        <path d="M410 242L449 222V195" stroke="#0037FF" strokeDasharray="4 5" />
+        <circle cx="449" cy="195" r="4" fill="#0037FF" />
         <g transform="translate(429 122)">
           <circle r="76" fill="#A7803B" />
           <circle
@@ -179,12 +179,12 @@ export function GoldIllustration() {
             SGLD
           </text>
         </g>
-        <g fill="#728571">
+        <g fill="#7184BC">
           <circle cx="105" cy="225" r="3" />
           <circle cx="505" cy="337" r="3" />
           <path
             d="M98 225H111M105 218V232M498 337H512M505 330V344"
-            stroke="#728571"
+            stroke="#7184BC"
           />
         </g>
       </svg>
