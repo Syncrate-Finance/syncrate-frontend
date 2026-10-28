@@ -33,6 +33,13 @@ The owner explicitly selected deployment to the existing preview, not syncrate.o
 
 ## Building With partner section
 
-Replaces the Your Next Chapter closing call to action with the existing nine-partner catalogue and local logo assets. Two equal-width groups create a seamless 90-second right-to-left loop; the duplicate is hidden from assistive technology. A pause/resume button and hover pause are provided. Reduced-motion preference disables animation and shows a static grid of all nine partners. No new partner relationships, external destinations or dependency changes are introduced.
+Replaces the Your Next Chapter closing call to action with the existing nine-partner catalogue and local logo assets. Two equal-width groups create a seamless 90-second right-to-left loop; the duplicate is hidden from assistive technology. The owner requested a continuous logo-only loop with no visible controls, hover pause or captions. Accessible logo names remain in image alternative text. Reduced-motion preference disables animation and shows a static grid of all nine partners. No new partner relationships, external destinations or dependency changes are introduced.
 
-Partner follow-up validation: local optimized build/TypeScript, 24 unit tests, five authorization integration tests and nine asset HTTP checks passed. Browser checks measured approximately 20.8px/second right-to-left motion, two equal 1872px groups in a 3744px track, functioning pause/resume, nine accessible partner entries and no page overflow at 390px/320px. Logo images load eagerly to avoid blank tiles during the loop. Reduced-motion CSS presents the single complete static grid.
+Partner follow-up validation: local optimized build/TypeScript, 24 unit tests, five authorization integration tests and nine asset HTTP checks passed. Browser checks measured approximately 20.8px/second right-to-left motion, two equal 1872px groups in a 3744px track, nine accessible partner entries and no page overflow at 390px/320px. Logo images load eagerly to avoid blank tiles during the loop. Reduced-motion CSS presents the single complete static grid.
+
+
+## Continuous logo loop refinement
+
+The follow-up removes the pause/resume button, hover pause and visible partner-name captions. The 90-second linear infinite loop retains equal duplicate groups for seamless wrapping. Logos retain accessible names; the cloned group is hidden from assistive technology. The reduced-motion static grid remains. No client state or event handlers are needed for this component.
+
+Follow-up verification: optimized build and strict TypeScript passed, along with 24 unit tests and five public-schema authorization tests. Browser checks confirmed no captions or buttons, loaded logos, active right-to-left motion, equal-width groups and no horizontal overflow at desktop, 390px and 320px. The dependency audit endpoint was inaccessible (EACCES); the previously recorded findings remain open. Native PostgreSQL CI and preview deployment are tracked in the handoff.
