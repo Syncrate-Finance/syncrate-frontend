@@ -1,9 +1,7 @@
-# Syncrate blue brand palette
+# Syncrate background colours
 
-Owner direction, October 28, 2026: replace the green website brand with #0037FF, remove the decorative line above the homepage headline, and style For Business as a distinct light button.
+Owner clarification, October 28, 2026: change only green backgrounds to blue (#0037FF). Restore the original wording, heading, link, logo, border, focus-ring and artwork colours from before the broad blue-brand update. The original ivory page background remains. Green button and panel backgrounds use blue with complementary pale blue surfaces and darker blue hovers. Existing legacy blue backgrounds and semantic success indicators remain.
 
-Primary brand blue is #0037FF; the interactive hover shade is #002CD6. The public homepage uses an off-white #f7f8fc surface and the business link uses #e9edff with a visible border. Green-tinted surfaces, text, borders and artwork details have moved to complementary blue/neutral tones. The gold asset artwork and gold accents remain; legacy green success indicators retain their semantic meaning. No product content, routes, wallet transactions or authentication behavior changed. The For Business destination remains /business, which is still an unimplemented route.
+The homepage headline line stays removed. For Business keeps its separate 48px button shape, with a neutral off-white #eeeeeb background and the original green text. Its /business destination is still not implemented. The owner's copy and product/approach order remain unchanged.
 
-The palette covers the homepage and shared marketing shell, dashboard, public CMS content styles, shared UI controls, staff sign-in button and wallet connection dialog. Global brand variables live in app/(site)/globals.css. Existing component variant names remain compatible. The homepage keeps the owner's updated copy and product/approach order.
-
-Validation and preview/CI results are recorded in the workspace handoff. Existing dependency findings, staff-MFA acceptance and Production configuration remain separate open release work. Production deployment is not authorized.
+No authentication, wallet transaction, backend, database or Production configuration changes. Existing CMS certificate-chain and Production configuration issues remain separate release work. Verification and deployment results are recorded in the workspace handoff.

@@ -7,30 +7,30 @@
   display: inline-flex;
   gap: 8px;
   align-items: center;
-  color: #52576b;
+  color: #52696b;
   font-size: 13px;
   margin-bottom: 40px;
 }
 .back:hover {
-  color: #0037FF;
+  color: #087d87;
 }
 .document {
   background: white;
-  border: 1px solid #e7e8ed;
+  border: 1px solid #e7eded;
   border-radius: 28px;
   padding: 48px;
   overflow-wrap: anywhere;
 }
 .eyebrow {
   display: block;
-  color: #5c6175;
+  color: #5c7475;
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 20px;
 }
 .main h1 {
-  color: #0037FF;
+  color: #173c3e;
   font:
     500 clamp(32px, 5vw, 54px)/1.08 Georgia,
     serif;
@@ -38,14 +38,14 @@
   margin: 0 0 24px;
 }
 .summary {
-  color: #52576b;
+  color: #52696b;
   font-size: 16px;
   line-height: 1.8;
   max-width: 720px;
   margin: 0 0 32px;
 }
 .prose {
-  color: #29304a;
+  color: #29494a;
   line-height: 1.85;
   font-size: 16px;
 }
@@ -76,7 +76,7 @@
   font-size: 18px;
 }
 .prose a {
-  color: #0037FF;
+  color: #08727b;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -91,9 +91,9 @@
   list-style: decimal;
 }
 .prose blockquote {
-  border-left: 3px solid #9199b5;
+  border-left: 3px solid #91b5af;
   padding-left: 20px;
-  color: #52576b;
+  color: #52696b;
 }
 .prose table {
   display: block;
@@ -104,7 +104,7 @@
 .prose td,
 .prose th {
   padding: 10px;
-  border: 1px solid #dcdee5;
+  border: 1px solid #dce5e5;
 }
 .prose code {
   overflow-wrap: anywhere;
@@ -113,7 +113,7 @@
   border-radius: 4px;
 }
 .main a:focus-visible {
-  outline: 2px solid #0037FF;
+  outline: 2px solid #087d87;
   outline-offset: 4px;
   border-radius: 4px;
 }
@@ -128,7 +128,7 @@
 .archive {
   padding: 32px;
   background: white;
-  border: 1px solid #e7e8ed;
+  border: 1px solid #e7eded;
   border-radius: 24px;
 }
 .articleList h2,
@@ -145,7 +145,7 @@
   align-items: center;
 }
 .articleList p {
-  color: #52576b;
+  color: #52696b;
   line-height: 1.7;
 }
 .pagination {
@@ -153,7 +153,7 @@
   gap: 24px;
   justify-content: space-between;
   margin: 28px 0;
-  color: #52576b;
+  color: #52696b;
   font-size: 13px;
 }
 .archive {
@@ -164,7 +164,7 @@
   justify-content: space-between;
   gap: 20px;
   padding: 20px 0;
-  border-top: 1px solid #e7e8ed;
+  border-top: 1px solid #e7eded;
 }
 @media (max-width: 680px) {
   .main {

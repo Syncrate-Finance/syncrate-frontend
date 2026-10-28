@@ -1,7 +1,7 @@
 .dashboard {
   min-height: 100svh;
   background: #f5f6f8;
-  color: #1c2545;
+  color: #223b3e;
   font-family: var(--font-geist-sans), Arial, sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +29,7 @@
 .header {
   height: 56px;
   background: #fff;
-  border-bottom: 1px solid #edeef1;
+  border-bottom: 1px solid #edf0f1;
 }
 .headerInner {
   max-width: 1496px;
@@ -47,7 +47,7 @@
   min-height: 44px;
   align-items: center;
   gap: 8px;
-  color: #0037FF;
+  color: #19383b;
   white-space: nowrap;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 34px;
@@ -75,12 +75,12 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #6b6e7b;
+  color: #6b787b;
   transition: color 0.15s;
 }
 .desktopNavigation a:hover,
 .desktopNavigation .activeNavigation {
-  color: #171d32;
+  color: #172f32;
 }
 .headerActions {
   display: flex;
@@ -117,7 +117,7 @@
 .portfolioCard {
   min-height: 239px;
   background: #fff;
-  border: 1px solid #f0f1f3;
+  border: 1px solid #f0f3f3;
   border-radius: 28px;
   padding: 28px 32px 25px;
 }
@@ -133,7 +133,7 @@
 }
 .portfolioHeading > span {
   font-size: 11px;
-  color: #686c7b;
+  color: #68787b;
 }
 .portfolioValue {
   display: flex;
@@ -152,7 +152,7 @@
 }
 .balanceUnit {
   font-size: 14px;
-  color: #656a7a;
+  color: #65787a;
   margin-top: 12px;
 }
 .portfolioValue > .helpButton {
@@ -164,11 +164,11 @@
   align-items: center;
   gap: 6px;
   font-size: 10px;
-  color: #6b6f7d;
+  color: #6b7b7d;
   margin-top: -4px;
 }
 .valueDivider {
-  color: #b2b5c1;
+  color: #b2bfc1;
 }
 .liveDot {
   width: 5px;
@@ -180,7 +180,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #0037FF;
+  color: #087b86;
   text-decoration: underline;
   text-underline-offset: 3px;
   font-size: 10px;
@@ -193,7 +193,7 @@
 }
 .metrics dt {
   font-size: 11px;
-  color: #676b7b;
+  color: #67787b;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -206,23 +206,23 @@
   font-weight: 300;
 }
 .metrics .tealDash {
-  color: #0037FF;
+  color: #13848d;
 }
 .helpButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #737683;
+  color: #738183;
   border-radius: 100%;
   padding: 2px;
   flex-shrink: 0;
 }
 .helpButton:focus-visible {
-  outline: 2px solid #0037FF;
+  outline: 2px solid #087d87;
   outline-offset: 3px;
 }
 .buyCard {
-  border: 1px solid #e3e4e9;
+  border: 1px solid #e3e9e9;
   border-radius: 28px;
   min-height: 239px;
   padding: 27px 29px 25px;
@@ -263,7 +263,7 @@
   font-size: 15px;
   line-height: 1.6;
   letter-spacing: -0.2px;
-  color: #696e7e;
+  color: #697a7e;
   max-width: 285px;
   margin-top: 11px;
   margin-bottom: 22px;
@@ -275,7 +275,7 @@
 }
 .opportunitiesCard {
   background: #fff;
-  border: 1px solid #eeeff3;
+  border: 1px solid #eef2f3;
   border-radius: 28px;
   padding: 20px 24px 0;
   overflow: hidden;
@@ -304,7 +304,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  border: 1px solid #e9eaef;
+  border: 1px solid #e9edef;
   border-radius: 25px;
   padding: 5px 12px 5px 6px;
   font-size: 15px;
@@ -321,7 +321,7 @@
 }
 .positionsSubtitle {
   font-size: 11px;
-  color: #6b6f7d;
+  color: #6b7b7d;
   white-space: nowrap;
 }
 .tableScroll {
@@ -339,8 +339,8 @@
   padding: 5px 0 13px;
   font-size: 11px;
   font-weight: 400;
-  color: #686d7e;
-  border-bottom: 1px solid #edeef2;
+  color: #687b7e;
+  border-bottom: 1px solid #edf1f2;
 }
 .opportunitiesTable th:first-child {
   width: 31%;
@@ -360,7 +360,7 @@
 }
 .opportunitiesTable td {
   height: 86px;
-  border-bottom: 1px solid #edeef2;
+  border-bottom: 1px solid #edf1f2;
   padding: 12px 0;
   vertical-align: middle;
 }
@@ -383,7 +383,7 @@
   max-width: 100%;
 }
 .opportunityName:focus-visible {
-  outline: 2px solid #0037FF;
+  outline: 2px solid #087d87;
   outline-offset: 4px;
 }
 .primeIcon {
@@ -391,7 +391,7 @@
   height: 35px;
   border-radius: 50%;
   background: linear-gradient(130deg, #e9ebf1, #dcdfe9);
-  color: #414965;
+  color: #416563;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -410,18 +410,18 @@
   font-weight: 400;
 }
 .offerTitle > svg {
-  color: #9195a2;
+  color: #91a0a2;
   margin-left: 3px;
 }
 .providerName {
   display: block;
   font-size: 11px;
-  color: #717584;
+  color: #718184;
   margin-top: 3px;
 }
 .unannounced {
   font-size: 12px;
-  color: #717584;
+  color: #718184;
 }
 .networkLabel {
   display: inline-flex;
@@ -448,7 +448,7 @@
 .plannedLabel {
   display: block;
   font-size: 9px;
-  color: #787c8a;
+  color: #78878a;
   margin-top: 2px;
 }
 .rateCell {
@@ -459,7 +459,7 @@
 }
 .rateCell > span:last-child {
   font-size: 10px;
-  color: #717584;
+  color: #718184;
 }
 .upcomingBadge {
   display: inline-flex;
@@ -483,12 +483,12 @@
   border-radius: 50%;
 }
 .catalogueNote {
-  border-top: 1px solid #edeef2;
+  border-top: 1px solid #edf1f2;
   display: flex;
   align-items: center;
   gap: 7px;
   padding: 15px 0;
-  color: #707484;
+  color: #708184;
   font-size: 10px;
   line-height: 1.6;
 }
@@ -504,7 +504,7 @@
   gap: 15px;
   padding: 23px 27px;
   border-radius: 22px;
-  border: 1px solid #e4e6eb;
+  border: 1px solid #e4ebeb;
   margin-top: 23px;
   background: #f8f8fa;
 }
@@ -514,9 +514,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #dcdee7;
+  border: 1px solid #dce7e4;
   border-radius: 50%;
-  color: #495170;
+  color: #49706b;
   background: #edeff4;
   flex-shrink: 0;
 }
@@ -527,7 +527,7 @@
 }
 .informationStrip p {
   font-size: 12px;
-  color: #6b7080;
+  color: #6b7d80;
   line-height: 1.6;
 }
 .informationStrip > a {
@@ -535,7 +535,7 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: #0037FF;
+  color: #087b86;
   margin-left: auto;
   white-space: nowrap;
 }
@@ -545,7 +545,7 @@
   justify-content: center;
   gap: 6px;
   font-size: 10px;
-  color: #737785;
+  color: #738385;
   margin-top: 19px;
 }
 .readOnlyNote > a {
@@ -559,7 +559,7 @@
   padding: 0 24px 26px;
 }
 .footerTop {
-  border-top: 1px solid #e4e5ea;
+  border-top: 1px solid #e4eaea;
   padding: 34px 3px 32px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -573,7 +573,7 @@
   height: 31px;
 }
 .footerTop p {
-  color: #747886;
+  color: #748486;
   font-size: 12px;
   margin-top: 14px;
 }
@@ -582,7 +582,7 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: #0037FF;
+  color: #087b86;
   margin-top: 16px;
 }
 .footerLinks {
@@ -591,13 +591,13 @@
   align-items: flex-start;
   gap: 10px;
   font-size: 12px;
-  color: #61667a;
+  color: #61777a;
 }
 .footerLinks h2 {
   font-size: 10px;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: #828693;
+  color: #829093;
   margin-bottom: 6px;
 }
 .footerLinks a {
@@ -606,15 +606,15 @@
   gap: 4px;
 }
 .footer a:hover {
-  color: #0037FF;
+  color: #087b86;
 }
 .footerBottom {
-  border-top: 1px solid #e4e5ea;
+  border-top: 1px solid #e4eaea;
   padding-top: 20px;
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #7a7e8d;
+  color: #7a8a8d;
 }
 .footerBottom > span:last-child {
   display: flex;
@@ -644,10 +644,10 @@
   justify-content: center;
   width: 64px;
   height: 64px;
-  border: 1px solid #e1e3ea;
+  border: 1px solid #e1eaea;
   border-radius: 20px;
   background: #f4f5f8;
-  color: #5b627d;
+  color: #5b7d7b;
   margin-bottom: 16px;
 }
 .emptyPositions h3 {
@@ -659,7 +659,7 @@
 .emptyPositions p {
   font-size: 12px;
   line-height: 1.7;
-  color: #6b7082;
+  color: #6b7f82;
   max-width: 340px;
   margin: 9px 0 17px;
 }
@@ -668,7 +668,7 @@
 }
 .emptyNote {
   font-size: 10px;
-  color: #858996;
+  color: #859396;
   margin-top: 16px;
 }
 .opportunityDialog,
@@ -685,7 +685,7 @@
   width: 48px;
   height: 48px;
   background: #e7e9f0;
-  color: #444d6d;
+  color: #446d65;
   border-radius: 14px;
   margin-bottom: 19px;
 }
@@ -702,12 +702,12 @@
   margin-top: 4px;
 }
 .detailsTitle > span {
-  color: #6f7382;
+  color: #6f8182;
 }
 .detailsDescription {
   font-size: 13px;
   line-height: 1.8;
-  color: #6b7081;
+  color: #6b7f81;
   margin-top: 10px;
   max-width: 360px;
 }
@@ -715,14 +715,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 22px;
-  border-top: 1px solid #e7e9ee;
-  border-bottom: 1px solid #e7e9ee;
+  border-top: 1px solid #e7eeee;
+  border-bottom: 1px solid #e7eeee;
   padding: 23px 0;
   margin-top: 22px;
 }
 .detailsGrid dt {
   font-size: 11px;
-  color: #737786;
+  color: #738486;
 }
 .detailsGrid dd {
   display: flex;
@@ -734,7 +734,7 @@
 .detailsNote {
   font-size: 12px;
   line-height: 1.8;
-  color: #6b6f7f;
+  color: #6b7d7f;
   margin-top: 20px;
 }
 .detailsActions {
@@ -750,7 +750,7 @@
 }
 .dialogDescription {
   font-size: 12px;
-  color: #6b7081;
+  color: #6b7f81;
   margin-top: 7px;
 }
 .mobileNavigation {
@@ -764,7 +764,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 0;
-  border-bottom: 1px solid #e9eaef;
+  border-bottom: 1px solid #e9efef;
   font-size: 15px;
 }
 .infoMain {
@@ -777,7 +777,7 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: #707484;
+  color: #708184;
 }
 .infoHero {
   margin-top: 39px;
@@ -787,7 +787,7 @@
   align-items: center;
   gap: 8px;
   font-size: 11px;
-  color: #727686;
+  color: #728486;
   margin-bottom: 22px;
 }
 .infoHero h1 {
@@ -801,7 +801,7 @@
 .infoHero > p {
   font-size: 16px;
   line-height: 1.8;
-  color: #6c7181;
+  color: #6c7f81;
   max-width: 650px;
   margin-top: 23px;
 }
@@ -816,12 +816,12 @@
 }
 .infoCard {
   background: white;
-  border: 1px solid #e7e8ec;
+  border: 1px solid #e7ecec;
   border-radius: 24px;
   padding: 28px;
 }
 .infoCard > svg {
-  color: #535c7b;
+  color: #537b70;
   margin-bottom: 22px;
 }
 .infoCard h2 {
@@ -831,18 +831,18 @@
 }
 .infoCard p {
   font-size: 13px;
-  color: #6b7081;
+  color: #6b7f81;
   line-height: 1.9;
 }
 .infoRisk {
   font-size: 12px;
   line-height: 1.8;
-  color: #6f7486;
+  color: #6f8386;
   max-width: 750px;
   margin-top: 24px;
 }
 .infoRisk a {
-  color: #0037FF;
+  color: #087b86;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -1095,7 +1095,7 @@
   }
   .mobileOffer {
     padding: 20px 0;
-    border-bottom: 1px solid #edeef2;
+    border-bottom: 1px solid #edf1f2;
   }
   .mobileOffer:last-child {
     border: 0;
@@ -1114,7 +1114,7 @@
   }
   .mobileOfferHeading > div > span {
     font-size: 10px;
-    color: #717688;
+    color: #718588;
   }
   .mobileOfferHeading > .upcomingBadge {
     margin-left: auto;
@@ -1127,7 +1127,7 @@
   }
   .mobileOffer dt {
     font-size: 10px;
-    color: #74798a;
+    color: #74878a;
     margin-bottom: 4px;
   }
   .mobileOffer dd {
