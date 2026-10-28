@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 24.22.1
           cache: pnpm
-      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm install --frozen-lockfile
       - run: pnpm cms:types
       - run: pnpm cms:importmap
       - run: pnpm typecheck

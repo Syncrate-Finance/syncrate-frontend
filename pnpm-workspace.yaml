@@ -14,3 +14,13 @@ overrides:
   ws@^8: 8.22.0
   decode-uri-component: 0.5.1
   abitype@^1: 1.3.0
+
+# Keep unreviewed dependency scripts fatal in local and hosted installs.
+strictDepBuilds: true
+allowBuilds:
+  # Reviewed platform-binary installers needed by tsx and migration tooling.
+  'esbuild@0.18.20 || 0.25.12 || 0.28.2': true
+  # Optional native builds: these packages provide working JS fallbacks.
+  'bufferutil@4.1.0': false
+  'keccak@3.0.4': false
+  'utf-8-validate@5.0.10': false

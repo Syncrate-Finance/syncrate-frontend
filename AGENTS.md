@@ -24,3 +24,6 @@ This block is written and re-added by `next dev` â€” verify at `node_module
 <!-- END:nextjs-agent-rules -->
 
 - Phase 2 now includes a complete public homepage rebuild using the Theo homepage composition, as explicitly clarified by the owner. The homepage and /dashboard are both in scope. Keep truthful product data and preserve /app. See docs/homepage-assets.md for the original hero and visual-match limits.
+
+
+- Normal dependency verification must run `pnpm install --frozen-lockfile`, with the explicit version-scoped `allowBuilds` policy in pnpm-workspace.yaml. Do not use --ignore-scripts to hide missing build approvals; unknown dependency build scripts must remain fatal. Vercel's reported install failure was ERR_PNPM_IGNORED_BUILDS after dependencies had downloaded successfully.

@@ -4,7 +4,7 @@ Next.js, React, TypeScript, Tailwind, Wagmi/RainbowKit, Payload CMS and PostgreS
 
 ## Requirements
 
-Node 24.22.1 and pnpm 11.25.0; a local PostgreSQL database. Keep separate databases and secrets for local development, tests, previews and production. Package versions and the lockfile are included; use pnpm install --frozen-lockfile --ignore-scripts.
+Node 24.22.1 and pnpm 11.25.0; a local PostgreSQL database. Keep separate databases and secrets for local development, tests, previews and production. Package versions and the lockfile are included; use pnpm install --frozen-lockfile.
 
 ## Local setup
 
@@ -40,3 +40,8 @@ Publish Pages through the CMS to make them available at `/content/<slug>`. Publi
 Read-only wallet queries use the public Base transport provided by Wagmi. Wallet addresses are sent to the selected public RPC provider; they are not stored in the CMS. The new overview requests no signature or transaction. USD valuations and earnings/APY remain unavailable until verified data integrations exist. Prime's 3/6/9-month terms are upcoming with no actions or invented rates. An account change selects a separate cache key; a network mismatch or read failure hides the balance. Displayed token amounts use BigInt rather than floating-point arithmetic.
 
 See docs/phase2-status.md for verification and remaining work, docs/dependency-security.md for release blockers, and docs/homepage-assets.md for the original visual asset. The build does not establish production readiness. No deployment, GitHub push or blockchain write has been made.
+
+
+## Dependency build-script policy
+
+Normal installs use `pnpm install --frozen-lockfile`. The committed `allowBuilds` policy in `pnpm-workspace.yaml` approves only the reviewed esbuild installer versions and explicitly denies optional native builds for bufferutil, keccak and utf-8-validate. Their JavaScript fallbacks remain available. Unknown build scripts still fail installation because `strictDepBuilds` stays enabled. Review new script-bearing dependencies before extending the policy. CI runs the normal installer so Vercel-style `ERR_PNPM_IGNORED_BUILDS` failures are caught before merging.
