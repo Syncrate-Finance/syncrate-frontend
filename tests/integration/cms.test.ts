@@ -16,6 +16,7 @@ const body = { root: { type: 'root', children: [{ type: 'paragraph', children: [
 before(async () => {
   const config = (await import('../../payload.config')).default
   cms = await getPayload({ config })
+  if (process.env.DATABASE_SCHEMA === 'cms') await cms.db.pool.query('CREATE SCHEMA IF NOT EXISTS cms')
   await cms.db.migrate()
   const suffix = Date.now()
   admin = await cms.create({ collection: 'staff-users', context: { bootstrap: true }, data: { name: 'Test admin', email: 'admin-' + suffix + '@example.test', password: 'local-test-only-password-1234', role: 'admin', active: true } })

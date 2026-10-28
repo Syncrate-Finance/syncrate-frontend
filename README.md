@@ -45,3 +45,8 @@ See docs/phase2-status.md for verification and remaining work, docs/dependency-s
 ## Dependency build-script policy
 
 Normal installs use `pnpm install --frozen-lockfile`. The committed `allowBuilds` policy in `pnpm-workspace.yaml` approves only the reviewed esbuild installer versions and explicitly denies optional native builds for bufferutil, keccak and utf-8-validate. Their JavaScript fallbacks remain available. Unknown build scripts still fail installation because `strictDepBuilds` stays enabled. Review new script-bearing dependencies before extending the policy. CI runs the normal installer so Vercel-style `ERR_PNPM_IGNORED_BUILDS` failures are caught before merging.
+
+
+## Supabase staff preview
+
+See [Supabase staff setup](docs/supabase-staff-setup.md) for the private CMS schema, runtime/migration roles, provider configuration, invitation/MFA flow and preview verification. Public sign-up and automatic CMS staff creation must stay disabled. Production requires separate activation and approval.
