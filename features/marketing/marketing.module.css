@@ -146,7 +146,7 @@
   transition: background 0.2s;
 }
 .primaryButton:hover {
-  background: #002CD6;
+  background: #0E214A;
 }
 .businessButton {
   display: inline-flex;
@@ -248,7 +248,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #edf1ff;
+  background: #edf0f6;
   border: 1px solid #d7dece;
   border-radius: 3px;
   min-width: 0;
@@ -297,7 +297,7 @@
   margin-block: -15px 0;
 }
 .approach {
-  background: #0037FF;
+  background: #142D63;
   color: #f3f5eb;
   margin-top: 48px;
   padding-block: 74px 30px;
@@ -788,7 +788,7 @@
   margin-bottom: 20px !important;
 }
 .footer {
-  background: #0037FF;
+  background: #142D63;
   color: #e8ecde;
   padding-block: 56px 25px;
 }
@@ -818,7 +818,7 @@
   font-size: 11px;
 }
 .outlineButton:hover {
-  background: #002CD6;
+  background: #0E214A;
 }
 .socialLabel {
   display: block;

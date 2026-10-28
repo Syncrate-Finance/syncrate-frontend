@@ -100,10 +100,12 @@ export async function MarketingHomepage() {
                 >
                   Explore SGLD
                 </a>
-                <Link className={styles.learnmoreButton} href="/sgld">
+                <Link className={styles.textLink} href="/sgld">
                   Learn more about SGLD
                 </Link>
               </div>
+              <div className={styles.productTechnical}>
+                <a
                   href="https://basescan.org/token/0x10C5E0643bCc6C915Cad0335f70A96c1532766eb"
                   target="_blank"
                   rel="noopener noreferrer"
