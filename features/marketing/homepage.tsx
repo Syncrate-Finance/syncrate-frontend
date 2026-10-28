@@ -1,35 +1,25 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { GeistSans } from 'geist/font/sans'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import Image from "next/image";
+import Link from "next/link";
+import { GeistSans } from "geist/font/sans";
 import {
-  MarketingHeader,
-  MarketingMotion,
-  CinematicHero,
-  ProductShowcase,
-  TransparencyCarousel,
-  MarketingBrand,
-} from './interactions'
-import { listPublishedArticles } from '@/server/services/content'
-import styles from './marketing.module.css'
-const partners = [
-  'Alluca Gold',
-  'Chainlink',
-  'Amanat Vaults',
-  'Saffron',
-  'DWF Labs',
-  'Arrakis',
-  'RWA.xyz',
-  'Uniswap',
-  'Veritas',
-]
+  ArrowRight,
+  ArrowUpRight,
+  Shield,
+  CircleDot,
+  Layers3,
+  FileText,
+} from "lucide-react";
+import { MarketingHeader, MarketingBrand } from "./interactions";
+import { GoldIllustration } from "./gold-illustration";
+import { listPublishedArticles } from "@/server/services/content";
+import styles from "./marketing.module.css";
 export async function MarketingHomepage() {
-  let articles: Awaited<ReturnType<typeof listPublishedArticles>>['docs'] = []
-  let contentUnavailable = false
+  let articles: Awaited<ReturnType<typeof listPublishedArticles>>["docs"] = [];
+  let contentUnavailable = false;
   try {
-    articles = (await listPublishedArticles()).docs.slice(0, 3)
+    articles = (await listPublishedArticles()).docs.slice(0, 3);
   } catch {
-    contentUnavailable = true
+    contentUnavailable = true;
   }
   return (
     <div className={`${styles.marketing} ${GeistSans.variable}`}>
@@ -37,177 +27,433 @@ export async function MarketingHomepage() {
         Skip to content
       </a>
       <MarketingHeader />
-      <MarketingMotion>
-        <main id="main-content">
-          <CinematicHero />
-          <section
-            className={styles.partners}
-            aria-labelledby="partners-heading"
-            data-reveal
-          >
-            <span className={styles.eyebrow}>BUILDING WITH</span>
-            <h2 id="partners-heading">
-              Working With
-              <br />
-              <em>The Very Best</em>
-            </h2>
-            <div className={styles.partnerGrid}>
-              {partners.map((name) => (
-                <span key={name}>{name}</span>
-              ))}
-            </div>
-          </section>
-          <section id="products" className={styles.products} data-reveal>
-            <div className={styles.sectionIntro}>
-              <h2>
-                Physical Gold,
-                <br />
-                <em>Onchain</em>
-              </h2>
-              <div>
-                <span className={styles.eyebrow}>
-                  GOLD. INFRASTRUCTURE. CUSTODY.
-                </span>
-                <div className={styles.infrastructureNames}>
-                  <span>Alluca Gold</span>
-                  <span>Chainlink</span>
-                  <span>Amanat Vaults</span>
-                </div>
-              </div>
-            </div>
-            <ProductShowcase />
-          </section>
-          <section id="financing" className={styles.financing} data-reveal>
-            <span className={styles.eyebrow}>PRODUCTIVE GOLD</span>
-            <h2>
-              Gold Has Value.
-              <br />
-              <em>Give It Possibility.</em>
-            </h2>
-            <p>
-              Syncrate connects onchain capital with real-world gold financing.
-              sySGLD is designed around short-term financing arrangements with
-              bullion banks and refiners.
+      <main id="main-content">
+        <section
+          className={`${styles.container} ${styles.hero}`}
+          aria-labelledby="home-heading"
+        >
+          <div className={styles.heroCopy}>
+            <p className={styles.eyebrow}>
+              <span className={styles.smallLine} />
+              REAL-WORLD VALUE. ONCHAIN POSSIBILITY.
             </p>
-            <Link className={styles.outlineButton} href="/sysgld">
-              Explore sySGLD <ArrowUpRight size={13} />
-            </Link>
-            <div className={styles.financingFeature}>
-              <Image
-                src="/feature-1.PNG"
-                alt="Gold bullion bars"
-                fill
-                sizes="(min-width: 1360px) 1172px, (min-width: 810px) 768px, 100vw"
-              />
-              <div>
-                <span className={styles.eyebrow}>REAL-WORLD ASSETS</span>
-                <h3>
-                  From gold in a vault.
-                  <br />
-                  To gold in your wallet.
-                </h3>
-                <p>
-                  Explore SGLD and the infrastructure that brings physical gold
-                  to Base.
-                </p>
-                <Link href="/sgld">
-                  Discover SGLD <ArrowUpRight size={14} />
-                </Link>
-              </div>
+            <h1 id="home-heading">
+              Gold’s next
+              <br />
+              chapter is
+              <br />
+              <em>onchain.</em>
+            </h1>
+            <p className={styles.heroDescription}>
+              An enduring asset, built for a connected world. Syncrate brings
+              physical gold to Base through SGLD — and explores new
+              possibilities through gold financing.
+            </p>
+            <div className={styles.heroActions}>
+              <Link href="/dashboard" className={styles.primaryButton}>
+                Explore Syncrate <ArrowUpRight size={17} />
+              </Link>
+              <a href="#approach" className={styles.textLink}>
+                Understand the approach <ArrowRight size={16} />
+              </a>
             </div>
-          </section>
-          <section className={styles.values} data-reveal>
-            <h2>Our Design, Principles and Purpose</h2>
+            <div className={styles.heroFootnote}>
+              <span className={styles.baseMark} aria-hidden="true" />
+              SGLD is available on Base
+            </div>
+          </div>
+          <GoldIllustration />
+          <dl className={styles.assetFacts}>
             <div>
+              <dt>THE FOUNDATION</dt>
+              <dd>Physical gold</dd>
+            </div>
+            <div>
+              <dt>THE ASSET</dt>
+              <dd>SGLD</dd>
+            </div>
+            <div>
+              <dt>THE NETWORK</dt>
+              <dd>Base</dd>
+            </div>
+            <div>
+              <dt>THE POSSIBILITY</dt>
+              <dd>Onchain finance</dd>
+            </div>
+          </dl>
+        </section>
+        <section
+          id="approach"
+          className={styles.approach}
+          aria-labelledby="approach-heading"
+        >
+          <div className={styles.container}>
+            <div className={styles.approachIntro}>
+              <div>
+                <p className={styles.eyebrow}>01 / THE CONNECTION</p>
+                <h2 id="approach-heading">
+                  Real gold.
+                  <br />A connected system.
+                </h2>
+              </div>
+              <p>
+                Gold’s value begins in the physical world. Syncrate connects
+                that foundation to an onchain asset you can access through your
+                wallet.
+              </p>
+            </div>
+            <div className={styles.process}>
               {[
                 {
-                  number: '01',
-                  title: 'Real yield sources',
-                  copy: 'Gold financing activity drives the sySGLD strategy. Returns are variable and are not guaranteed.',
+                  number: "01",
+                  title: "Grounded in gold",
+                  copy: "Physical backing, sourcing and independent custody form the foundation. Start with the published documentation.",
+                  href: "#transparency",
+                  cta: "Review the documents",
+                  Icon: Shield,
                 },
                 {
-                  number: '02',
-                  title: 'Independent custody',
-                  copy: 'SGLD is backed by physical gold held in independent UAE vaults. Review the sourcing and custody documentation.',
+                  number: "02",
+                  title: "Represented by SGLD",
+                  copy: "Syncrate Gold brings gold exposure onto Base, connecting a real-world asset with onchain infrastructure.",
+                  href: "/sgld",
+                  cta: "Get to know SGLD",
+                  Icon: CircleDot,
                 },
                 {
-                  number: '03',
-                  title: 'Onchain access',
-                  copy: 'Bring gold exposure into decentralized finance on Base, with the information you need to understand the asset.',
+                  number: "03",
+                  title: "Ready for your wallet",
+                  copy: "Explore your SGLD balance and the product landscape in one overview. Buy through the existing mint application.",
+                  href: "/dashboard",
+                  cta: "Explore the overview",
+                  Icon: Layers3,
                 },
-              ].map((value) => (
-                <details key={value.number}>
-                  <summary>
-                    <span>{value.number}</span>
-                    <h3>{value.title}</h3>
-                    <ArrowUpRight size={20} />
-                  </summary>
-                  <p>{value.copy}</p>
-                </details>
+              ].map(({ number, title, copy, href, cta, Icon }) => (
+                <article key={number}>
+                  <span className={styles.processNumber}>{number}</span>
+                  <Icon
+                    className={styles.processIcon}
+                    size={28}
+                    strokeWidth={1.1}
+                  />
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
+                  <Link href={href}>
+                    {cta}
+                    <ArrowUpRight size={15} />
+                  </Link>
+                </article>
               ))}
             </div>
-          </section>
-          <div className={styles.sectionWidth} data-reveal>
-            <TransparencyCarousel />
+            <a className={styles.approachNote} href="https://docs.syncrate.org">
+              A clear view of the structure matters. Go deeper in our
+              documentation.
+              <ArrowUpRight size={17} />
+            </a>
           </div>
-          <section className={styles.news} data-reveal>
+        </section>
+        <section
+          id="products"
+          className={`${styles.container} ${styles.products}`}
+          aria-labelledby="products-heading"
+        >
+          <div className={styles.sectionHeading}>
             <div>
-              <span className={styles.eyebrow}>STAY IN THE KNOW</span>
-              <h2>The Latest From Syncrate</h2>
-              <div className={styles.newsList}>
-                {articles.map((article) => (
-                  <Link key={article.id} href={`/insights/${article.slug}`}>
-                    <span className={styles.eyebrow}>INSIGHT</span>
-                    <h3>{article.title}</h3>
-                    <ArrowUpRight size={19} />
-                  </Link>
-                ))}
-                {contentUnavailable && (
-                  <p className={styles.contentNotice}>
-                    Latest updates are temporarily unavailable. Explore our
-                    earlier articles below.
-                  </p>
-                )}
-                <Link href="/blog/sgld-is-live">
-                  <span className={styles.eyebrow}>
-                    23 JUL, 2026 · ANNOUNCEMENT
-                  </span>
-                  <h3>SGLD is Live: Gold, Built for DeFi</h3>
-                  <ArrowUpRight size={19} />
-                </Link>
-                <Link href="/blog/rethinking-the-gold-thesis">
-                  <span className={styles.eyebrow}>
-                    17 JUL, 2026 · PERSPECTIVE
-                  </span>
-                  <h3>The Opportunity Cost: Rethinking the Gold Thesis</h3>
-                  <ArrowUpRight size={19} />
+              <p className={styles.eyebrow}>02 / THE PRODUCT LANDSCAPE</p>
+              <h2 id="products-heading">
+                One foundation.
+                <br />
+                Different possibilities.
+              </h2>
+            </div>
+            <p>
+              Start with gold onchain.
+              <br />
+              Understand where it can go next.
+            </p>
+          </div>
+          <div className={styles.productGrid}>
+            <article className={styles.sgldProduct}>
+              <div className={styles.productTop}>
+                <span className={styles.productLabel}>
+                  <i />
+                  GOLD ON BASE
+                </span>
+                <span>01</span>
+              </div>
+              <div className={styles.sgldHeading}>
+                <Image src="/SGLD-icon.png" width={68} height={68} alt="" />
+                <h3>SGLD</h3>
+              </div>
+              <h4>
+                Physical gold.
+                <br />
+                Digital possibilities.
+              </h4>
+              <p>
+                Gold-backed exposure, accessible onchain. Learn about the
+                backing and custody structure, then explore SGLD through the
+                existing mint app.
+              </p>
+              <div className={styles.productLinks}>
+                <a
+                  className={styles.primaryButton}
+                  href="https://syncrate.org/app"
+                >
+                  Buy SGLD
+                  <ArrowUpRight size={16} />
+                </a>
+                <Link className={styles.textLink} href="/sgld">
+                  Explore the asset
+                  <ArrowRight size={16} />
                 </Link>
               </div>
-              <Link className={styles.textLink} href="/insights">
-                All insights <ArrowRight size={13} />
+              <div className={styles.productTechnical}>
+                <span>NETWORK / BASE</span>
+                <a
+                  href="https://basescan.org/token/0x10C5E0643bCc6C915Cad0335f70A96c1532766eb"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View token contract
+                  <ArrowUpRight size={12} />
+                </a>
+              </div>
+            </article>
+            <article id="financing" className={styles.yieldProduct}>
+              <div className={styles.productTop}>
+                <span className={styles.productLabel}>GOLD FINANCING</span>
+                <span>02</span>
+              </div>
+              <div className={styles.yieldSymbol} aria-hidden="true">
+                <Layers3 size={72} strokeWidth={0.8} />
+                <span />
+              </div>
+              <h3>sySGLD</h3>
+              <h4>
+                A different role
+                <br />
+                for gold.
+              </h4>
+              <p>
+                A separate strategy designed around short-term financing with
+                bullion banks and refiners. Understand the activity, structure
+                and risks behind it.
+              </p>
+              <Link href="/sysgld" className={styles.lightLink}>
+                Understand sySGLD
+                <ArrowUpRight size={17} />
               </Link>
+              <span className={styles.informationLabel}>
+                PRODUCT INFORMATION · RETURNS ARE NOT GUARANTEED
+              </span>
+            </article>
+          </div>
+          <div className={styles.primeRow}>
+            <div>
+              <span className={styles.eyebrow}>WHAT’S AHEAD</span>
+              <h3>Prime opportunities</h3>
+              <p>
+                Three planned staking terms. Rates and launch details have not
+                been announced.
+              </p>
             </div>
-            <aside>
-              <Image
-                src="/blog2.PNG"
-                alt="Syncrate Gold"
-                width={480}
-                height={270}
-                sizes="(max-width: 810px) 100vw, 360px"
-              />
-              <h3>Stay up to date</h3>
-              <a
-                className={styles.outlineButton}
-                href="https://x.com/syncratefinance"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Follow us on X <ArrowUpRight size={13} />
-              </a>
-            </aside>
-          </section>
-        </main>
-      </MarketingMotion>
+            <div className={styles.primeTerms}>
+              {[3, 6, 9].map((term) => (
+                <div key={term}>
+                  <strong>
+                    {term}
+                    <span>months</span>
+                  </strong>
+                  <span>Upcoming</span>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/dashboard"
+              className={styles.circleLink}
+              aria-label="View planned Prime opportunities"
+            >
+              <ArrowUpRight size={22} />
+            </Link>
+          </div>
+        </section>
+        <section
+          id="transparency"
+          className={styles.transparency}
+          aria-labelledby="transparency-heading"
+        >
+          <div className={`${styles.container} ${styles.documentGrid}`}>
+            <div className={styles.documentIntro}>
+              <p className={styles.eyebrow}>03 / LOOK BENEATH THE SURFACE</p>
+              <h2 id="transparency-heading">
+                Confidence starts
+                <br />
+                with context.
+              </h2>
+              <p>
+                Understand the structure before making a decision. Our document
+                library brings the sourcing, custody and product information
+                together.
+              </p>
+              <Link className={styles.textLink} href="/terms">
+                Read the terms & disclosures
+                <ArrowUpRight size={16} />
+              </Link>
+              <div className={styles.documentSeal}>
+                <FileText size={26} strokeWidth={1} />
+                <span>
+                  READ THE SOURCE.
+                  <br />
+                  UNDERSTAND THE ASSET.
+                </span>
+              </div>
+            </div>
+            <div className={styles.documentList}>
+              {[
+                {
+                  number: "01",
+                  title: "Gold custody & verification",
+                  detail: "Bureau Veritas report · June 2026",
+                  href: "/Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf",
+                  type: "PDF",
+                },
+                {
+                  number: "02",
+                  title: "Sourcing & procurement",
+                  detail: "Alluca Gold procurement documentation",
+                  href: "/Syncrate_Gold_Procurement_Alluca_Gold.pdf",
+                  type: "PDF",
+                },
+                {
+                  number: "03",
+                  title: "The Syncrate framework",
+                  detail: "Product structure and platform overview",
+                  href: "/whitepaper.pdf",
+                  type: "WHITEPAPER",
+                },
+              ].map((doc) => (
+                <a
+                  key={doc.number}
+                  href={doc.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className={styles.documentNumber}>{doc.number}</span>
+                  <div>
+                    <span className={styles.documentType}>{doc.type}</span>
+                    <h3>{doc.title}</h3>
+                    <p>{doc.detail}</p>
+                  </div>
+                  <ArrowUpRight size={22} strokeWidth={1.3} />
+                </a>
+              ))}
+              <p className={styles.documentNote}>
+                Documents reflect their stated dates and scope. The June 2026
+                report is not a live reserve attestation.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section
+          id="insights"
+          className={`${styles.container} ${styles.insights}`}
+          aria-labelledby="insights-heading"
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>04 / IDEAS & UPDATES</p>
+              <h2 id="insights-heading">The evolving gold story.</h2>
+            </div>
+            <Link className={styles.textLink} href="/insights">
+              All insights
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+          {contentUnavailable && (
+            <p className={styles.contentNotice}>
+              Latest updates are temporarily unavailable. Our earlier articles
+              are available below.
+            </p>
+          )}
+          <div className={styles.insightGrid}>
+            {[
+              ...articles.map((article) => ({
+                title: article.title,
+                href: `/insights/${article.slug}`,
+                label: "SYNCRATE INSIGHT",
+                summary:
+                  article.summary ??
+                  "Read the latest perspective from Syncrate.",
+              })),
+              {
+                title: "SGLD is live: gold, built for DeFi",
+                href: "/blog/sgld-is-live",
+                label: "ANNOUNCEMENT · JUL 2026",
+                summary:
+                  "Meet Syncrate Gold and the next step in bringing physical gold to onchain finance.",
+              },
+              {
+                title: "Rethinking the gold thesis",
+                href: "/blog/rethinking-the-gold-thesis",
+                label: "PERSPECTIVE · JUL 2026",
+                summary:
+                  "A closer look at gold’s role, its opportunity cost and what comes next.",
+              },
+            ]
+              .slice(0, 3)
+              .map((article, index) => (
+                <Link
+                  key={article.href}
+                  href={article.href}
+                  className={styles.insightCard}
+                >
+                  <span className={styles.eyebrow}>{article.label}</span>
+                  <h3>{article.title}</h3>
+                  <p>{article.summary}</p>
+                  <div>
+                    <span>Read the story</span>
+                    <ArrowUpRight size={20} strokeWidth={1.3} />
+                  </div>
+                  <span className={styles.articleNumber} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </Link>
+              ))}
+          </div>
+        </section>
+        <section
+          className={`${styles.container} ${styles.nextStep}`}
+          aria-labelledby="next-step-heading"
+        >
+          <div>
+            <span className={styles.eyebrow}>YOUR NEXT CHAPTER</span>
+            <h2 id="next-step-heading">
+              Meet gold.
+              <br />
+              <em>On your terms.</em>
+            </h2>
+          </div>
+          <div>
+            <p>
+              Explore the platform, understand the products and decide what
+              comes next.
+            </p>
+            <Link href="/dashboard" className={styles.primaryButton}>
+              Open the overview
+              <ArrowUpRight size={17} />
+            </Link>
+            <a href="https://docs.syncrate.org" className={styles.textLink}>
+              Read the documentation
+              <ArrowRight size={16} />
+            </a>
+          </div>
+          <span className={styles.nextStepMark} aria-hidden="true">
+            S
+          </span>
+        </section>
+      </main>
+
       <footer className={styles.footer}>
         <div className={styles.footerGrid}>
           <div>
@@ -281,7 +527,7 @@ export async function MarketingHomepage() {
             Returns from gold financing are variable and not guaranteed. Gold
             and financing activity carry custody, counterparty, operational and
             market risks, including potential loss. Availability depends on
-            eligibility and jurisdiction. Review the{' '}
+            eligibility and jurisdiction. Review the{" "}
             <Link href="/terms">terms and disclosures</Link>.
           </p>
         </div>
@@ -291,5 +537,5 @@ export async function MarketingHomepage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

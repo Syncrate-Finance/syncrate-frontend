@@ -1,3 +1,9 @@
+# Current homepage assets: October 28, 2026
+
+The owner now requests an independent Syncrate homepage composition. See [homepage redesign](homepage-redesign.md). The active hero uses an original code-native SVG in features/marketing/gold-illustration.tsx. The previous mining image is no longer rendered by the homepage. The illustration is conceptual, not a current reserve or balance display. No new raster images, font licenses or dependencies were added. Existing Syncrate logo, SGLD icon and document assets remain in use.
+
+The notes below record the earlier implementation's asset provenance, not the current visual direction.
+
 # Homepage visual assets
 
 The homepage is rebuilt around the composition at https://theo.xyz, reviewed October 27, 2026. Syncrate owns the branding and product copy in this implementation; Theo product data, partner claims, proprietary font files and video were not copied.

@@ -43,4 +43,7 @@ jobs:
       - run: pnpm test
       - run: pnpm db:migrate
       - run: pnpm test:integration
+      - run: pnpm test:integration
+        env:
+          DATABASE_SCHEMA: cms
       - run: pnpm build

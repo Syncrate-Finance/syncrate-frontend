@@ -27,3 +27,7 @@ This block is written and re-added by `next dev` â€” verify at `node_module
 
 
 - Normal dependency verification must run `pnpm install --frozen-lockfile`, with the explicit version-scoped `allowBuilds` policy in pnpm-workspace.yaml. Do not use --ignore-scripts to hide missing build approvals; unknown dependency build scripts must remain fatal. Vercel's reported install failure was ERR_PNPM_IGNORED_BUILDS after dependencies had downloaded successfully.
+
+
+- Supabase preview backend: see docs/supabase-staff-setup.md. CMS_AUTH_PROVIDER=supabase requires DATABASE_SCHEMA=cms, a hosted project origin and a publishable key. Use migrations/cms only for a fresh private schema. Public legacy migration history remains unchanged. Never grant the runtime role schema creation or general auth-table access. Reapply the owner-level Supabase access/RLS script after migrations. Production activation remains unapproved.
+- GitHub native PostgreSQL CI passed for the prior installer fix. New provider/MFA acceptance must be verified separately; do not infer it from local cryptographic tests.
