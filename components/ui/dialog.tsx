@@ -13,18 +13,18 @@ export const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof Primitive.Content>
 >(({ className, children, ...props }, ref) => (
   <Primitive.Portal>
-    <Primitive.Overlay className="fixed inset-0 z-50 bg-[#121627]/40 backdrop-blur-[2px]" />
+    <Primitive.Overlay className="fixed inset-0 z-50 bg-[#0037FF]/40 backdrop-blur-[2px]" />
     <Primitive.Content
       ref={ref}
       className={cn(
-        'fixed left-1/2 top-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-[#e1e3e8] bg-white p-7 text-[#21273d] shadow-xl outline-none',
+        'fixed left-1/2 top-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-[#e1e8e8] bg-white p-7 text-[#213b3d] shadow-xl outline-none',
         className,
       )}
       {...props}
     >
       {children}
       <Primitive.Close
-        className="absolute right-5 top-5 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#666a78] hover:bg-[#f0f1f4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0037FF]"
+        className="absolute right-5 top-5 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#667678] hover:bg-[#f0f1f4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087d87]"
         aria-label="Close dialog"
       >
         <X size={17} />
