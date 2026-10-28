@@ -63,24 +63,6 @@ export async function MarketingHomepage() {
             </div>
           </div>
           <GoldIllustration />
-          <dl className={styles.assetFacts}>
-            <div>
-              <dt>THE FOUNDATION</dt>
-              <dd>Physical gold</dd>
-            </div>
-            <div>
-              <dt>THE ASSET</dt>
-              <dd>SGLD</dd>
-            </div>
-            <div>
-              <dt>THE NETWORK</dt>
-              <dd>Base</dd>
-            </div>
-            <div>
-              <dt>THE POSSIBILITY</dt>
-              <dd>Onchain finance</dd>
-            </div>
-          </dl>
         </section>
         <section
           id="approach"
@@ -455,85 +437,87 @@ export async function MarketingHomepage() {
       </main>
 
       <footer className={styles.footer}>
-        <div className={styles.footerGrid}>
-          <div>
-            <MarketingBrand />
-            <h2>Need more information?</h2>
-            <a
-              className={styles.outlineButton}
-              href="https://docs.syncrate.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read our documentation <ArrowUpRight size={13} />
-            </a>
-            <span className={styles.socialLabel}>SOCIALS</span>
-            <div className={styles.socials}>
+        <div className={styles.container}>
+          <div className={styles.footerGrid}>
+            <div>
+              <MarketingBrand />
+              <h2>Need more information?</h2>
               <a
-                href="https://x.com/syncratefinance"
+                className={styles.outlineButton}
+                href="https://docs.syncrate.org"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                X
+                Read our documentation <ArrowUpRight size={13} />
               </a>
+              <span className={styles.socialLabel}>SOCIALS</span>
+              <div className={styles.socials}>
+                <a
+                  href="https://x.com/syncratefinance"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  X
+                </a>
+                <a
+                  href="https://t.me/syncratefi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Telegram
+                </a>
+                <a
+                  href="https://discord.gg/p5v4P8qEbj"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Discord
+                </a>
+              </div>
+            </div>
+            <div className={styles.footerLinks}>
+              <h3>PLATFORM</h3>
+              <Link href="/dashboard">Overview</Link>
+              <Link href="/sgld">SGLD</Link>
+              <Link href="/sysgld">sySGLD</Link>
+              <a href="https://syncrate.org/app">Buy SGLD</a>
+              <a href="/#transparency">Transparency</a>
+            </div>
+            <div className={styles.footerLinks}>
+              <h3>RESOURCES</h3>
+              <Link href="/insights">Insights</Link>
+              <a href="https://docs.syncrate.org">Documentation</a>
+              <a href="/whitepaper.pdf">Whitepaper</a>
+              <Link href="/terms">Terms & disclosures</Link>
+              <a href="mailto:team@syncrate.org">Contact</a>
               <a
-                href="https://t.me/syncratefi"
+                href="https://github.com/Syncrate-Finance"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Telegram
-              </a>
-              <a
-                href="https://discord.gg/p5v4P8qEbj"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Discord
+                GitHub
               </a>
             </div>
           </div>
-          <div className={styles.footerLinks}>
-            <h3>PLATFORM</h3>
-            <Link href="/dashboard">Overview</Link>
-            <Link href="/sgld">SGLD</Link>
-            <Link href="/sysgld">sySGLD</Link>
-            <a href="https://syncrate.org/app">Buy SGLD</a>
-            <a href="/#transparency">Transparency</a>
+          <div className={styles.disclosures}>
+            <p>
+              Syncrate is a technology platform. This website does not
+              constitute an offer to sell or a solicitation to buy investment
+              products. SGLD is not legal tender, is not deposit-insured, and is
+              not guaranteed by a bank or financial institution.
+            </p>
+            <p>
+              Returns from gold financing are variable and not guaranteed. Gold
+              and financing activity carry custody, counterparty, operational
+              and market risks, including potential loss. Availability depends
+              on eligibility and jurisdiction. Review the{" "}
+              <Link href="/terms">terms and disclosures</Link>.
+            </p>
           </div>
-          <div className={styles.footerLinks}>
-            <h3>RESOURCES</h3>
-            <Link href="/insights">Insights</Link>
-            <a href="https://docs.syncrate.org">Documentation</a>
-            <a href="/whitepaper.pdf">Whitepaper</a>
-            <Link href="/terms">Terms & disclosures</Link>
-            <a href="mailto:team@syncrate.org">Contact</a>
-            <a
-              href="https://github.com/Syncrate-Finance"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
+          <div className={styles.footerBottom}>
+            <span>SYNCRATE ©2026</span>
+            <span>MAKING GOLD USEFUL ONCHAIN</span>
           </div>
-        </div>
-        <div className={styles.disclosures}>
-          <p>
-            Syncrate is a technology platform. This website does not constitute
-            an offer to sell or a solicitation to buy investment products. SGLD
-            is not legal tender, is not deposit-insured, and is not guaranteed
-            by a bank or financial institution.
-          </p>
-          <p>
-            Returns from gold financing are variable and not guaranteed. Gold
-            and financing activity carry custody, counterparty, operational and
-            market risks, including potential loss. Availability depends on
-            eligibility and jurisdiction. Review the{" "}
-            <Link href="/terms">terms and disclosures</Link>.
-          </p>
-        </div>
-        <div className={styles.footerBottom}>
-          <span>SYNCRATE ©2026</span>
-          <span>MAKING GOLD USEFUL ONCHAIN</span>
         </div>
       </footer>
     </div>

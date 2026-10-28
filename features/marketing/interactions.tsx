@@ -14,7 +14,6 @@ export function MarketingBrand() {
   return (
     <Link href="/" className={styles.brand} aria-label="Syncrate home">
       <span aria-hidden="true" />
-      <span>syncrate</span>
     </Link>
   );
 }

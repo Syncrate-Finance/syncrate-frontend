@@ -4,7 +4,7 @@ Owner direction, October 28, 2026: rebuild only the public homepage so it has it
 
 ## Structure
 
-1. Asymmetric editorial hero: a gold-to-onchain story, original vector illustration and four asset facts. No cinematic background or motion dependency.
+1. Asymmetric editorial hero: a gold-to-onchain story, original vector illustration. No cinematic background or motion dependency.
 2. A dark, three-stage explanation: physical foundation, SGLD on Base, wallet access.
 3. Side-by-side SGLD and informational sySGLD stories, followed by the three planned Prime terms. No invented rates or staking actions.
 4. An open document library with dated custody/procurement references and the whitepaper, replacing carousel slides.
@@ -22,3 +22,10 @@ Automated visual review could not be completed because the computer-use tool sto
 Production deployment remains unapproved. Existing security, staff-MFA and operational release gates remain open. Dependency audit was attempted during this revision but the npm advisory endpoint was blocked by network access; the last known 1 high, 2 moderate and 1 low findings remain unresolved.
 
 Final local validation: optimized build including TypeScript passed. Rendered homepage returned 200 with one h1/main, unique IDs and valid section anchors. All eight checked product/app/legal/document destinations returned 200. Responsive/reduced-motion CSS is present; this is not a visual layout check. Dashboard/mint/backend source hashes remain unchanged.
+
+
+## Owner review refinements - October 28, 2026
+
+The owner completed visual review and accepted the independent homepage direction. Follow-up changes remove the large wordmark from both shared marketing/dashboard brand links, preserve the accessible link names and original logo, remove the entire asset-facts row, and put the footer grid/disclosures/bottom row inside the same centered responsive container used by the homepage. Footer columns use bounded tracks and top alignment. Existing legacy page headers already use the logo without a separate wordmark.
+
+The owner explicitly selected deployment to the existing preview, not syncrate.org. No production activation is authorized. Other product content, wallet behavior, transaction code, backend and schema remain unchanged.
