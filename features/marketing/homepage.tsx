@@ -66,25 +66,18 @@ export async function MarketingHomepage() {
         >
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.eyebrow}>02 / THE PRODUCT LANDSCAPE</p>
+              <p className={styles.eyebrow}>PRODUCT LANDSCAPE</p>
               <h2 id="products-heading">
                 One foundation.
                 <br />
                 Different possibilities.
               </h2>
             </div>
-            <p>
-              Start with gold onchain.
-              <br />
-              Understand where it can go next.
-            </p>
           </div>
           <div className={styles.productGrid}>
             <article className={styles.sgldProduct}>
               <div className={styles.productTop}>
                 <span className={styles.productLabel}>
-                  <i />
-                  GOLD ON BASE
                 </span>
                 <span>01</span>
               </div>
@@ -98,31 +91,24 @@ export async function MarketingHomepage() {
                 Digital possibilities.
               </h4>
               <p>
-                Gold-backed exposure, accessible onchain. Learn about the
-                backing and custody structure, then explore SGLD through the
-                existing mint app.
+                Each Syncrate Gold (SGLD) is backed 1:1 by LMBA-standard physical gold bars, held in secure vaults with reputable custodians in the United Arab Emirates. 
               </p>
               <div className={styles.productLinks}>
                 <a
                   className={styles.primaryButton}
                   href="https://syncrate.org/app"
                 >
-                  Buy SGLD
-                  <ArrowUpRight size={16} />
+                  Explore SGLD
                 </a>
-                <Link className={styles.textLink} href="/sgld">
-                  Explore the asset
-                  <ArrowRight size={16} />
+                <Link className={styles.learnmoreButton} href="/sgld">
+                  Learn more about SGLD
                 </Link>
               </div>
-              <div className={styles.productTechnical}>
-                <span>NETWORK / BASE</span>
-                <a
                   href="https://basescan.org/token/0x10C5E0643bCc6C915Cad0335f70A96c1532766eb"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View token contract
+                  View contracts
                   <ArrowUpRight size={12} />
                 </a>
               </div>
