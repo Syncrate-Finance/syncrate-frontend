@@ -17,7 +17,7 @@ Buy SGLD still opens https://syncrate.org/app. No dashboard, mint, other product
 
 24 unit tests and the five existing CMS authorization tests pass locally. The private-schema test is intentionally skipped in the public-schema local pass; the existing CI private-schema pass covers it. All 134 baseline files outside the homepage were verified unchanged before adding homepage documentation. Build and HTTP results are recorded in the final handoff.
 
-Automated visual review could not be completed because the computer-use tool stopped when it could not establish the active Windows browser URL confidently. Do not claim visual acceptance or pixel-perfect responsive behavior from source/HTTP checks. Navigation uses native details and links, Escape/outside-click dismissal, visible focus and reduced-motion styles.
+The initial automated visual review was blocked by Windows browser URL verification. The owner subsequently completed visual review and accepted the independent homepage. During the follow-up refinement, the managed in-app browser verified footer alignment at desktop, 390px and 320px widths, logo-only branding and mobile menu/Escape behavior. No horizontal page overflow was observed at those widths. Navigation retains native details/links, visible focus and reduced-motion styles.
 
 Production deployment remains unapproved. Existing security, staff-MFA and operational release gates remain open. Dependency audit was attempted during this revision but the npm advisory endpoint was blocked by network access; the last known 1 high, 2 moderate and 1 low findings remain unresolved.
 
