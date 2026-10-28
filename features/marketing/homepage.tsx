@@ -36,105 +36,32 @@ export async function MarketingHomepage() {
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>
               <span className={styles.smallLine} />
-              REAL-WORLD VALUE. ONCHAIN POSSIBILITY.
             </p>
             <h1 id="home-heading">
-              Gold’s next
+              Gold,
               <br />
-              chapter is
+              built for 
               <br />
-              <em>onchain.</em>
+              <em>DeFi.</em>
             </h1>
             <p className={styles.heroDescription}>
-              An enduring asset, built for a connected world. Syncrate brings
-              physical gold to Base through SGLD — and explores new
-              possibilities through gold financing.
+              Syncrate channels onchain capital into productive real-world assets, delivering transparent, gold-backed yield built on DeFi rails.
             </p>
             <div className={styles.heroActions}>
               <Link href="/dashboard" className={styles.primaryButton}>
-                Explore Syncrate <ArrowUpRight size={17} />
+                Explore SGLD <ArrowUpRight size={17} />
               </Link>
-              <a href="#approach" className={styles.textLink}>
-                Understand the approach <ArrowRight size={16} />
+              <a href="/business" className={styles.heroDescription}>
+                For Business <ArrowUpRight size={17} />
               </a>
             </div>
             <div className={styles.heroFootnote}>
               <span className={styles.baseMark} aria-hidden="true" />
-              SGLD is available on Base
+              Powered by Base
             </div>
           </div>
           <GoldIllustration />
-        </section>
-        <section
-          id="approach"
-          className={styles.approach}
-          aria-labelledby="approach-heading"
-        >
-          <div className={styles.container}>
-            <div className={styles.approachIntro}>
-              <div>
-                <p className={styles.eyebrow}>01 / THE CONNECTION</p>
-                <h2 id="approach-heading">
-                  Real gold.
-                  <br />A connected system.
-                </h2>
-              </div>
-              <p>
-                Gold’s value begins in the physical world. Syncrate connects
-                that foundation to an onchain asset you can access through your
-                wallet.
-              </p>
-            </div>
-            <div className={styles.process}>
-              {[
-                {
-                  number: "01",
-                  title: "Grounded in gold",
-                  copy: "Physical backing, sourcing and independent custody form the foundation. Start with the published documentation.",
-                  href: "#transparency",
-                  cta: "Review the documents",
-                  Icon: Shield,
-                },
-                {
-                  number: "02",
-                  title: "Represented by SGLD",
-                  copy: "Syncrate Gold brings gold exposure onto Base, connecting a real-world asset with onchain infrastructure.",
-                  href: "/sgld",
-                  cta: "Get to know SGLD",
-                  Icon: CircleDot,
-                },
-                {
-                  number: "03",
-                  title: "Ready for your wallet",
-                  copy: "Explore your SGLD balance and the product landscape in one overview. Buy through the existing mint application.",
-                  href: "/dashboard",
-                  cta: "Explore the overview",
-                  Icon: Layers3,
-                },
-              ].map(({ number, title, copy, href, cta, Icon }) => (
-                <article key={number}>
-                  <span className={styles.processNumber}>{number}</span>
-                  <Icon
-                    className={styles.processIcon}
-                    size={28}
-                    strokeWidth={1.1}
-                  />
-                  <h3>{title}</h3>
-                  <p>{copy}</p>
-                  <Link href={href}>
-                    {cta}
-                    <ArrowUpRight size={15} />
-                  </Link>
-                </article>
-              ))}
-            </div>
-            <a className={styles.approachNote} href="https://docs.syncrate.org">
-              A clear view of the structure matters. Go deeper in our
-              documentation.
-              <ArrowUpRight size={17} />
-            </a>
-          </div>
-        </section>
+ </section>
         <section
           id="products"
           className={`${styles.container} ${styles.products}`}
@@ -259,6 +186,76 @@ export async function MarketingHomepage() {
             >
               <ArrowUpRight size={22} />
             </Link>
+          </div>
+        </section>
+        <section
+          id="approach"
+          className={styles.approach}
+          aria-labelledby="approach-heading"
+        >
+          <div className={styles.container}>
+            <div className={styles.approachIntro}>
+              <div>
+                <p className={styles.eyebrow}>01 / THE CONNECTION</p>
+                <h2 id="approach-heading">
+                  Real gold.
+                  <br />A connected system.
+                </h2>
+              </div>
+              <p>
+                Gold’s value begins in the physical world. Syncrate connects
+                that foundation to an onchain asset you can access through your
+                wallet.
+              </p>
+            </div>
+            <div className={styles.process}>
+              {[
+                {
+                  number: "01",
+                  title: "Grounded in gold",
+                  copy: "Physical backing, sourcing and independent custody form the foundation. Start with the published documentation.",
+                  href: "#transparency",
+                  cta: "Review the documents",
+                  Icon: Shield,
+                },
+                {
+                  number: "02",
+                  title: "Represented by SGLD",
+                  copy: "Syncrate Gold brings gold exposure onto Base, connecting a real-world asset with onchain infrastructure.",
+                  href: "/sgld",
+                  cta: "Get to know SGLD",
+                  Icon: CircleDot,
+                },
+                {
+                  number: "03",
+                  title: "Ready for your wallet",
+                  copy: "Explore your SGLD balance and the product landscape in one overview. Buy through the existing mint application.",
+                  href: "/dashboard",
+                  cta: "Explore the overview",
+                  Icon: Layers3,
+                },
+              ].map(({ number, title, copy, href, cta, Icon }) => (
+                <article key={number}>
+                  <span className={styles.processNumber}>{number}</span>
+                  <Icon
+                    className={styles.processIcon}
+                    size={28}
+                    strokeWidth={1.1}
+                  />
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
+                  <Link href={href}>
+                    {cta}
+                    <ArrowUpRight size={15} />
+                  </Link>
+                </article>
+              ))}
+            </div>
+            <a className={styles.approachNote} href="https://docs.syncrate.org">
+              A clear view of the structure matters. Go deeper in our
+              documentation.
+              <ArrowUpRight size={17} />
+            </a>
           </div>
         </section>
         <section
