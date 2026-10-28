@@ -41,3 +41,5 @@ Partner follow-up validation: local optimized build/TypeScript, 24 unit tests, f
 ## Continuous logo loop refinement
 
 The follow-up removes the pause/resume button, hover pause and visible partner-name captions. The 90-second linear infinite loop retains equal duplicate groups for seamless wrapping. Logos retain accessible names; the cloned group is hidden from assistive technology. The reduced-motion static grid remains. No client state or event handlers are needed for this component.
+
+Follow-up verification: optimized build and strict TypeScript passed, along with 24 unit tests and five public-schema authorization tests. Browser checks confirmed no captions or buttons, loaded logos, active right-to-left motion, equal-width groups and no horizontal overflow at desktop, 390px and 320px. The dependency audit endpoint was inaccessible (EACCES); the previously recorded findings remain open. Native PostgreSQL CI and preview deployment are tracked in the handoff.
