@@ -1,7 +1,4 @@
-"use client";
-import { useState } from "react";
 import Image from "next/image";
-import { Pause, Play } from "lucide-react";
 import styles from "./marketing.module.css";
 
 // Retained from Syncrate's existing published partner catalogue and local assets.
@@ -18,7 +15,6 @@ const partners = [
 ];
 
 export function PartnerMarquee() {
-  const [paused, setPaused] = useState(false);
   return (
     <section
       className={`${styles.container} ${styles.partners}`}
@@ -26,27 +22,9 @@ export function PartnerMarquee() {
     >
       <div className={styles.partnersHeader}>
         <h2 id="partners-heading">Building With</h2>
-        <button
-          type="button"
-          className={styles.partnerMotionControl}
-          aria-controls="partner-logo-track"
-          aria-pressed={paused}
-          onClick={() => setPaused((value) => !value)}
-        >
-          {paused ? (
-            <Play size={13} aria-hidden="true" />
-          ) : (
-            <Pause size={13} aria-hidden="true" />
-          )}
-          {paused ? "Resume partner scrolling" : "Pause partner scrolling"}
-        </button>
       </div>
       <div className={styles.partnerWindow}>
-        <div
-          id="partner-logo-track"
-          className={styles.partnerTrack}
-          data-paused={paused}
-        >
+        <div id="partner-logo-track" className={styles.partnerTrack}>
           {[false, true].map((duplicate) => (
             <ul
               key={String(duplicate)}
@@ -58,14 +36,13 @@ export function PartnerMarquee() {
                 <li key={partner.name} className={styles.partnerItem}>
                   <Image
                     src={partner.image}
-                    alt=""
+                    alt={duplicate ? "" : partner.name}
                     loading="eager"
                     width={156}
                     height={64}
                     sizes="156px"
                     className={styles.partnerLogo}
                   />
-                  <span>{partner.name}</span>
                 </li>
               ))}
             </ul>
