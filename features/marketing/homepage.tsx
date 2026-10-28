@@ -34,9 +34,6 @@ export async function MarketingHomepage() {
           aria-labelledby="home-heading"
         >
           <div className={styles.heroCopy}>
-            <p className={styles.eyebrow}>
-              <span className={styles.smallLine} />
-            </p>
             <h1 id="home-heading">
               Gold,
               <br />
@@ -51,7 +48,7 @@ export async function MarketingHomepage() {
               <Link href="/dashboard" className={styles.primaryButton}>
                 Explore SGLD <ArrowUpRight size={17} />
               </Link>
-              <a href="/business" className={styles.heroDescription}>
+              <a href="/business" className={styles.businessButton}>
                 For Business <ArrowUpRight size={17} />
               </a>
             </div>

@@ -4,16 +4,16 @@ import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087d87] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0037FF] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'bg-[#17383b] text-white hover:bg-[#244d50]',
-        teal: 'bg-[#087b86] text-white hover:bg-[#066974]',
-        gold: 'bg-[#d8bc63] text-[#193234] hover:bg-[#cbb05b]',
+        default: 'bg-[#0037FF] text-white hover:bg-[#002CD6]',
+        teal: 'bg-[#0037FF] text-white hover:bg-[#002CD6]',
+        gold: 'bg-[#d8bc63] text-[#191f34] hover:bg-[#cbb05b]',
         outline:
-          'border border-[#dfe6e7] bg-white text-[#233c3e] hover:bg-[#f3f6f6]',
-        ghost: 'bg-transparent text-[#263e40] hover:bg-[#edf3f3]',
+          'border border-[#dfe1e7] bg-white text-[#23293e] hover:bg-[#f3f4f6]',
+        ghost: 'bg-transparent text-[#262c40] hover:bg-[#edeef3]',
       },
       size: {
         default: 'h-10 px-5',
