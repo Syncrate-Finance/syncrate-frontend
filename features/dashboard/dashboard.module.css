@@ -5,13 +5,17 @@
   font-family: var(--font-geist-sans), Arial, sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
+}
+.dashboard,
+.opportunityDialog,
+.navigationDialog {
   cursor: default;
   caret-color: transparent;
 }
-.dashboard :is(a, button, select, summary, [role="button"], [role="tab"]) {
+:is(.dashboard, .opportunityDialog, .navigationDialog) :is(a, button, select, summary, [role="button"], [role="tab"]) {
   cursor: pointer;
 }
-.dashboard :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
+:is(.dashboard, .opportunityDialog, .navigationDialog) :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
   cursor: text;
   caret-color: auto;
 }

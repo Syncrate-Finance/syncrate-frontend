@@ -6,7 +6,7 @@ Owner follow-up: remove the dashboard's Understand sySGLD information strip and 
 
 Further owner refinements remove the redundant Buy SGLD action beside All opportunities, leaving the actual swap panel available. Opportunity network labels and details say Base / Network, without Planned; the offers themselves remain Upcoming. View Points sits beside Total earned and opens the owner-specified `https://syncrate.org/points` in a separate tab. The Points Dashboard is future work; no points balance, wallet transfer, route or service is invented here.
 
-The dashboard shell now uses a default mouse cursor and transparent text caret for display text, with pointer cursors on actions and a normal text cursor/caret on inputs, textareas and editable content. This extends the existing homepage behavior to the app. Selection and keyboard focus are retained; browser caret-browsing preferences are not modified. The owner's screenshot suggests a browsing caret between static letters, rather than editable application content.
+The dashboard shell and application-owned dialogs now use a default mouse cursor and transparent text caret for display text, with pointer cursors on actions and a normal text cursor/caret on inputs, textareas and editable content. Dialogs need their own scope because Radix portals render outside the shell. This extends the existing homepage behavior to the app. Selection and keyboard focus are retained; browser caret-browsing preferences are not modified. The owner's screenshot suggests a browsing caret between static letters, rather than editable application content.
 
 ## Contracts and settlement
 

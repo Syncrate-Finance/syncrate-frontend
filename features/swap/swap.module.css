@@ -237,11 +237,20 @@
   margin-right: 12px;
 }
 .review {
+  cursor: default;
+  caret-color: transparent;
   font-family: var(--font-geist-sans), Arial, sans-serif;
   color: #223b3e;
   width: calc(100% - 32px);
   max-height: calc(100svh - 40px);
   overflow-y: auto;
+}
+.review :is(a, button, select, [role="button"]) {
+  cursor: pointer;
+}
+.review :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
+  cursor: text;
+  caret-color: auto;
 }
 .reviewDetails {
   margin: 10px 0;
