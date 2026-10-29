@@ -33,4 +33,7 @@ This block is written and re-added by `next dev` â€” verify at `node_module
 
 - Homepage structure now follows the owner's independent Syncrate design and latest main edits. Preserve wording, navy backgrounds and original foreground colors. Validate CSS-module references and local image paths when reviewing edits; TypeScript alone does not catch missing module classes or public assets.
 - DATABASE_CA_CERT supports a provider's public PEM CA without weakening TLS. Keep rejectUnauthorized and hostname verification enabled; connection URL SSL parameters must not override the explicit CA policy.
+
+- Homepage metrics/media owner decisions (October 29, 2026): keep reported bullion inventory fixed at 193 troy oz. SGLD market cap uses direct Base supply reads and the verified Chainlink XAU/USD feed; the owner selected this over BaseScan API setup for now. sySGLD has an unqueried zero-address placeholder until a real contract and valuation semantics are verified. Keep all three Prime terms on the dashboard; remove only their homepage row. See docs/homepage-metrics-media.md.
+- The owner will provide public/sySGLD-icon.png later; retain the image path and graceful missing-image handling. Hero media is a licensed local gold GIF with infinite looping and a reduced-motion still, without panel captions. Publishing still uses the existing preview unless separately authorized for Production.
 - GitHub native PostgreSQL CI passed for the prior installer fix. New provider/MFA acceptance must be verified separately; do not infer it from local cryptographic tests.

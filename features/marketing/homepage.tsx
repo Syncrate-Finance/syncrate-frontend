@@ -11,7 +11,8 @@ import {
 } from "lucide-react";
 import { MarketingHeader, MarketingBrand } from "./interactions";
 import { PartnerMarquee } from "./partners";
-import { GoldIllustration } from "./gold-illustration";
+import { SysgldIcon } from "./product-icon";
+import { HomepageNumbers } from "./numbers";
 import { listPublishedArticles } from "@/server/services/content";
 import styles from "./marketing.module.css";
 export async function MarketingHomepage() {
@@ -57,7 +58,12 @@ export async function MarketingHomepage() {
               Powered by Base
             </div>
           </div>
-          <GoldIllustration />
+          <div className={styles.heroMedia}>
+            <picture>
+              <source media="(prefers-reduced-motion: reduce)" srcSet="/images/gold-bullion-still.webp" />
+              <img src="/images/gold-bullion-loop.gif" width={480} height={480} alt="Gold bullion bars" fetchPriority="high" />
+            </picture>
+          </div>
  </section>
         <section
           id="products"
@@ -100,7 +106,7 @@ export async function MarketingHomepage() {
                 >
                   Explore SGLD
                 </a>
-                <Link className={styles.textLink} href="/sgld">
+                <Link className={styles.productInfoButton} href="/sgld">
                   Learn more about SGLD
                 </Link>
               </div>
@@ -121,7 +127,7 @@ export async function MarketingHomepage() {
                 <span></span>
               </div>
               <div className={styles.sgldHeading}>
-                <Layers3 size={68} strokeWidth={0.8} aria-hidden="true" />
+                <SysgldIcon />
                 <h3>sySGLD</h3>
                 </div>
               <h4>
@@ -132,39 +138,12 @@ export async function MarketingHomepage() {
               <p>
                 sySGLD is Syncrate's yield-bearing gold asset, generating yield from short term gold leasing with reputable gold resellers and bullion banks in the UAE.
               </p>
-              <Link href="/sysgld" className={styles.lightLink}>
+              <Link href="/sysgld" className={styles.productInfoButton}>
                 Understand sySGLD
               </Link>
             </article>
           </div>
-          <div className={styles.primeRow}>
-            <div>
-              <span className={styles.eyebrow}>WHAT’S AHEAD</span>
-              <h3>The Numbers</h3>
-              <p>
-                Three planned staking terms. Rates and launch details have not
-                been announced.
-              </p>
-            </div>
-            <div className={styles.primeTerms}>
-              {[3, 6, 9].map((term) => (
-                <div key={term}>
-                  <strong>
-                    {term}
-                    <span>months</span>
-                  </strong>
-                  <span>Upcoming</span>
-                </div>
-              ))}
-            </div>
-            <Link
-              href="/dashboard"
-              className={styles.circleLink}
-              aria-label="View planned Prime opportunities"
-            >
-              <ArrowUpRight size={22} />
-            </Link>
-          </div>
+          <HomepageNumbers />
         </section>
         <section
           id="approach"
