@@ -322,27 +322,27 @@ function OpportunitiesTable() {
               </span>
               <div>
                 <h3>
-                  Prime <span>· {offer.months} months</span>
+                  SGLD Staking <span>· {offer.months} months</span>
                 </h3>
-                <span>Syncrate</span>
+                <span></span>
               </div>
               <span className={styles.upcomingBadge}>Upcoming</span>
             </div>
             <dl>
               <div>
                 <dt>Deposit asset</dt>
-                <dd>Not announced</dd>
+                <dd>SGLD</dd>
               </div>
               <div>
                 <dt>APY</dt>
-                <dd>Not announced</dd>
+                <dd></dd>
               </div>
               <div>
                 <dt>Type</dt>
                 <dd>Staking</dd>
               </div>
               <div>
-                <dt>Planned network</dt>
+                <dt>Network</dt>
                 <dd>
                   <BaseIcon /> Base
                 </dd>
