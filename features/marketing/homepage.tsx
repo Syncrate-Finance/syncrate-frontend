@@ -4,13 +4,14 @@ import { GeistSans } from "geist/font/sans";
 import {
   ArrowRight,
   ArrowUpRight,
-  Shield,
-  CircleDot,
-  FileText,
+  Coins,
+  Vault,
+  ClipboardCheck,
 } from "lucide-react";
 import { MarketingHeader, MarketingBrand } from "./interactions";
 import { PartnerMarquee } from "./partners";
-import { GoldIllustration } from "./gold-illustration";
+import { SysgldIcon } from "./product-icon";
+import { HomepageNumbers } from "./numbers";
 import { listPublishedArticles } from "@/server/services/content";
 import styles from "./marketing.module.css";
 export async function MarketingHomepage() {
@@ -22,7 +23,7 @@ export async function MarketingHomepage() {
     contentUnavailable = true;
   }
   return (
-    <div className={`${styles.marketing} ${GeistSans.variable}`}>
+    <div className={`${styles.marketing} ${styles.homepage} ${GeistSans.variable}`}>
       <a href="#main-content" className={styles.skipLink}>
         Skip to content
       </a>
@@ -56,7 +57,12 @@ export async function MarketingHomepage() {
               Powered by Base
             </div>
           </div>
-          <GoldIllustration />
+          <div className={styles.heroMedia}>
+            <picture>
+              <source media="(prefers-reduced-motion: reduce)" srcSet="/images/gold-bullion-still.webp" />
+              <img src="/images/gold-bullion-loop.gif" width={480} height={480} alt="Gold bullion bars" fetchPriority="high" />
+            </picture>
+          </div>
  </section>
         <section
           id="products"
@@ -99,7 +105,7 @@ export async function MarketingHomepage() {
                 >
                   Explore SGLD
                 </a>
-                <Link className={styles.learnmoreButton} href="/sgld">
+                <Link className={styles.productInfoButton} href="/sgld">
                   Learn more about SGLD
                 </Link>
               </div>
@@ -120,7 +126,7 @@ export async function MarketingHomepage() {
                 <span></span>
               </div>
               <div className={styles.sgldHeading}>
-                <Image src="/sySGLD-icon.png" width={68} height={68} alt="" />
+                <SysgldIcon />
                 <h3>sySGLD</h3>
                 </div>
               <h4>
@@ -131,39 +137,12 @@ export async function MarketingHomepage() {
               <p>
                 sySGLD is Syncrate's yield-bearing gold asset, generating yield from short term gold leasing with reputable gold resellers and bullion banks in the UAE.
               </p>
-              <Link href="/sysgld" className={styles.sysgldButton}>
+              <Link href="/sysgld" className={styles.productInfoButton}>
                 Understand sySGLD
               </Link>
             </article>
           </div>
-          <div className={styles.primeRow}>
-            <div>
-              <span className={styles.eyebrow}>WHAT’S AHEAD</span>
-              <h3>The Numbers</h3>
-              <p>
-                Three planned staking terms. Rates and launch details have not
-                been announced.
-              </p>
-            </div>
-            <div className={styles.primeTerms}>
-              {[3, 6, 9].map((term) => (
-                <div key={term}>
-                  <strong>
-                    {term}
-                    <span>months</span>
-                  </strong>
-                  <span>Upcoming</span>
-                </div>
-              ))}
-            </div>
-            <Link
-              href="/dashboard"
-              className={styles.circleLink}
-              aria-label="View planned Prime opportunities"
-            >
-              <ArrowUpRight size={22} />
-            </Link>
-          </div>
+          <HomepageNumbers />
         </section>
         <section
           id="approach"
@@ -188,13 +167,13 @@ export async function MarketingHomepage() {
                   copy: "The underlying gold backing SGLD and sySGLD is sourced directly from Sharjah Refinery through a partnership with Alluca Gold, a DMCC-licensed gold trading company.",
                   href: "#transparency",
                   cta: "See asset statements",
-                  Icon: GoldBars,
+                  Icon: Coins,
                 },
                 {
                   number: "",
                   title: "Custody",
                   copy: "The underlying gold backing SGLD is held in secure custodial storage with Amanat Vaults, a leading custodian in the UAE.",
-                  href: "/transparency",
+                  href: "#transparency",
                   cta: "See custody reports",
                   Icon: Vault,
                 },
@@ -204,10 +183,10 @@ export async function MarketingHomepage() {
                   copy: "Syncrate conducts bi-annual inventory audit with Bureau Veritas, ensuring every circulating SGLD and sySGLD is always backed by physical gold bars.",
                   href: "/dashboard",
                   cta: "Read audit reports",
-                  Icon: Audit,
+                  Icon: ClipboardCheck,
                 },
               ].map(({ number, title, copy, href, cta, Icon }) => (
-                <article key={number}>
+                <article key={title}>
                   <span className={styles.processNumber}>{number}</span>
                   <Icon
                     className={styles.processIcon}
@@ -223,6 +202,7 @@ export async function MarketingHomepage() {
                 </article>
               ))}
             </div>
+          </div>
         </section>
         <section
           id="transparency"
@@ -242,7 +222,6 @@ export async function MarketingHomepage() {
                 library brings the sourcing, custody and product information
                 together.
               </p>
-              </div>
             </div>
             <div className={styles.documentList}>
               {[
@@ -263,7 +242,7 @@ export async function MarketingHomepage() {
                   number: "03",
                   title: "The sySGLD Framework",
                   detail: "Our gold financing arrangements",
-                  href: "/sySGLD",
+                  href: "/sysgld",
                 },
               ].map((doc) => (
                 <a

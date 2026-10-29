@@ -10,6 +10,7 @@ import { Pages, Articles } from "./collections/Content";
 import { Media } from "./collections/Media";
 import { AuditEvents } from "./collections/AuditEvents";
 import { readServerEnvironment, serverOrigins } from "./server/environment";
+import { databasePoolOptions } from "./server/database";
 
 loadEnvironment({ path: ".env.local", quiet: true });
 const directory = path.dirname(fileURLToPath(import.meta.url));
@@ -42,7 +43,7 @@ export default buildConfig({
     meta: { titleSuffix: " | Syncrate CMS" },
   },
   db: postgresAdapter({
-    pool: { connectionString: env.DATABASE_URL, max: 3 },
+    pool: databasePoolOptions(env),
     schemaName: env.DATABASE_SCHEMA === "cms" ? "cms" : undefined,
     push: false,
     migrationDir: path.join(

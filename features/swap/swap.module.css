@@ -1,0 +1,283 @@
+.panel {
+  background: #fff;
+  border: 1px solid #e3e9e9;
+  border-radius: 28px;
+  padding: 25px;
+  min-width: 0;
+  color: #223b3e;
+  scroll-margin-top: 75px;
+}
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+.heading h2 {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+}
+.heading > span {
+  padding: 5px 10px;
+  font-size: 10px;
+  background: #f0f2f7;
+  border-radius: 20px;
+}
+.modes {
+  display: flex;
+  padding: 4px;
+  border-radius: 12px;
+  background: #f3f5f7;
+  gap: 4px;
+  margin-bottom: 17px;
+}
+.modes button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 9px;
+  font-size: 12px;
+  color: #65777b;
+}
+.modes button[aria-pressed="true"] {
+  background: #fff;
+  color: #223b3e;
+  box-shadow: 0 1px 5px #172e4010;
+}
+.panel button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.panel :is(button, input, select):focus-visible {
+  outline: 2px solid #9a7535;
+  outline-offset: 3px;
+}
+.assetChoice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  margin-bottom: 12px;
+  color: #697a7e;
+}
+.assetChoice select {
+  background: #f4f5f8;
+  padding: 6px 10px;
+  border-radius: 7px;
+  color: #223b3e;
+  border: 1px solid #e5e9ed;
+}
+.amountBox {
+  background: #f5f6f8;
+  padding: 16px;
+  border: 1px solid #edf0f2;
+  border-radius: 16px;
+  min-width: 0;
+}
+.amountBox > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #708084;
+  font-size: 11px;
+}
+.token {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #223b3e;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.token img {
+  object-fit: contain;
+  border-radius: 50%;
+}
+.amountBox input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin-top: 11px;
+  background: transparent;
+  font-size: 27px;
+  line-height: 1.4;
+  outline: 0;
+  color: #223b3e;
+  font-variant-numeric: tabular-nums;
+}
+.amountBox input::placeholder {
+  color: #a3aeb1;
+}
+.balance {
+  font-size: 10px;
+  color: #7e8c8f;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.balance button {
+  color: #42635c;
+  padding: 3px 5px;
+}
+.direction {
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.direction svg {
+  box-sizing: content-box;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #edf0f2;
+  border-radius: 9px;
+}
+.output {
+  display: block;
+  font-size: 27px;
+  margin-top: 10px;
+  min-height: 38px;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.price {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 17px;
+  font-size: 10px;
+  color: #76858a;
+  flex-wrap: wrap;
+}
+.price strong {
+  font-weight: 500;
+  color: #4b6261;
+  margin-left: auto;
+}
+.price button {
+  padding: 3px;
+}
+.liveDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #648d75;
+}
+.note {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #77888a;
+  margin-top: 12px;
+}
+.error {
+  color: #9a4935;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 10px;
+  overflow-wrap: anywhere;
+}
+.error:empty {
+  margin-top: 0;
+}
+.action {
+  width: 100%;
+  margin-top: 15px;
+}
+.panel > button {
+  margin-top: 15px;
+}
+.message {
+  font-size: 11px;
+  color: #496859;
+  background: #f1f5f2;
+  padding: 12px;
+  margin-top: 14px;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+.txLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #536c67;
+  margin-top: 10px;
+  margin-right: 12px;
+}
+.queue {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #edf0f1;
+}
+.queue h3 {
+  font-size: 12px;
+  font-weight: 500;
+}
+.queue p {
+  font-size: 10px;
+  margin-top: 9px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: #738487;
+  flex-wrap: wrap;
+}
+.queue button {
+  margin-top: 10px;
+  font-size: 10px;
+  color: #42635c;
+  text-decoration: underline;
+  margin-right: 12px;
+}
+.review {
+  cursor: default;
+  caret-color: transparent;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  color: #223b3e;
+  width: calc(100% - 32px);
+  max-height: calc(100svh - 40px);
+  overflow-y: auto;
+}
+.review :is(a, button, select, [role="button"]) {
+  cursor: pointer;
+}
+.review :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
+  cursor: text;
+  caret-color: auto;
+}
+.reviewDetails {
+  margin: 10px 0;
+}
+.reviewDetails > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid #edf0f1;
+  padding: 12px 0;
+  font-size: 12px;
+}
+.reviewDetails dt {
+  color: #788a8c;
+}
+.reviewDetails dd {
+  text-align: right;
+  max-width: 70%;
+  overflow-wrap: anywhere;
+  margin: 0;
+}
+@media (max-width: 680px) {
+  .panel {
+    padding: 22px;
+    border-radius: 22px;
+  }
+  .amountBox {
+    padding: 14px;
+  }
+}

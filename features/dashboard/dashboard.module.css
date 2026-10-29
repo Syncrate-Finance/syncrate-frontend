@@ -6,6 +6,19 @@
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
 }
+.dashboard,
+.opportunityDialog,
+.navigationDialog {
+  cursor: default;
+  caret-color: transparent;
+}
+:is(.dashboard, .opportunityDialog, .navigationDialog) :is(a, button, select, summary, [role="button"], [role="tab"]) {
+  cursor: pointer;
+}
+:is(.dashboard, .opportunityDialog, .navigationDialog) :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
+  cursor: text;
+  caret-color: auto;
+}
 .dashboard a {
   text-decoration: none;
 }
@@ -110,11 +123,25 @@
 }
 .topGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.92fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 400px);
+  align-items: start;
   gap: 24px;
   margin-bottom: 24px;
 }
+.swapColumn {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-width: 0;
+}
+.topGrid > .opportunitiesCard { min-width: 0; }
+.topGrid .opportunitiesToolbar { flex-wrap: wrap; }
+.topGrid .opportunitiesActions { margin-left: auto; }
+@media (min-width: 841px) and (max-width: 1180px) {
+  .swapColumn { grid-row: 1; }
+  .topGrid > .opportunitiesCard { grid-column: 1 / -1; }
+}
 .portfolioCard {
+  align-self: start;
   min-height: 239px;
   background: #fff;
   border: 1px solid #f0f3f3;
@@ -198,6 +225,25 @@
   align-items: center;
   gap: 4px;
   white-space: nowrap;
+}
+.metrics > div:only-child { grid-column: 1 / -1; }
+.pointsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  min-height: 24px;
+  color: #223b3e;
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+.dashboard .pointsLink:hover {
+  text-decoration: underline;
+}
+.pointsLink:focus-visible {
+  outline: 2px solid #9a7535;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 .metrics dd {
   font-size: 27px;
@@ -444,12 +490,6 @@
   background: #fff;
   width: 10px;
   border-radius: 2px;
-}
-.plannedLabel {
-  display: block;
-  font-size: 9px;
-  color: #78878a;
-  margin-top: 2px;
 }
 .rateCell {
   display: flex;
@@ -919,9 +959,10 @@
     padding: 24px 20px 0;
   }
   .topGrid {
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
+  .swapColumn { grid-column: auto; grid-row: auto; }
   .portfolioCard,
   .buyCard {
     border-radius: 23px;

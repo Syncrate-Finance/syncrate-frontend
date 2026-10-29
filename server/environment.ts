@@ -1,3 +1,4 @@
+import { X509Certificate } from "node:crypto";
 import { z } from "zod";
 
 const optionalURL = z.preprocess(
@@ -28,6 +29,17 @@ const environmentSchema = z
       }
     }, "must be a PostgreSQL connection URL"),
     PAYLOAD_SECRET: z.string().min(48, "must contain at least 48 characters"),
+    DATABASE_CA_CERT: optionalString.refine((value) => {
+      if (!value) return true;
+      try {
+        return (
+          value.includes("-----BEGIN CERTIFICATE-----") &&
+          new X509Certificate(value).ca
+        );
+      } catch {
+        return false;
+      }
+    }, "must contain a valid PEM CA certificate"),
     BASE_RPC_URL: z.string().url().default("https://mainnet.base.org"),
     DATABASE_SCHEMA: z.enum(["public", "cms"]).default("public"),
     CMS_AUTH_PROVIDER: z.enum(["proxy", "supabase"]).default("proxy"),
