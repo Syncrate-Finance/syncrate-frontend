@@ -188,7 +188,7 @@ export async function MarketingHomepage() {
                   copy: "The underlying gold backing SGLD and sySGLD is sourced directly from Sharjah Refinery through a partnership with Alluca Gold, a DMCC-licensed gold trading company.",
                   href: "#transparency",
                   cta: "See asset statements",
-                  Icon: Gold Bars,
+                  Icon: GoldBars,
                 },
                 {
                   number: "",
