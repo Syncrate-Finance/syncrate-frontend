@@ -215,11 +215,11 @@ function OpportunityDetails({
           </div>
           <div>
             <dt>Deposit asset</dt>
-            <dd>Not announced</dd>
+            <dd>S</dd>
           </div>
           <div>
             <dt>APY</dt>
-            <dd>Not announced</dd>
+            <dd></dd>
           </div>
         </dl>
         <p className={styles.detailsNote}>
@@ -246,10 +246,6 @@ function OpportunitiesTable() {
     <>
       <div className={styles.tableScroll}>
         <table className={styles.opportunitiesTable}>
-          <caption className="sr-only">
-            Three upcoming Prime staking opportunities on Base. Rates and
-            deposit assets have not been announced.
-          </caption>
           <thead>
             <tr>
               <th scope="col">Opportunity</th>
@@ -274,10 +270,10 @@ function OpportunitiesTable() {
                       </span>
                       <span>
                         <span className={styles.offerTitle}>
-                          Prime <span>· {offer.months} months</span>
+                         SGLD Staking <span>· {offer.months} months</span>
                           <ChevronRight size={13} />
                         </span>
-                        <span className={styles.providerName}>Syncrate</span>
+                        <span className={styles.providerName}>powered by Syncrate Staking</span>
                       </span>
                     </button>
                   </OpportunityDetails>
@@ -296,8 +292,8 @@ function OpportunitiesTable() {
                 </td>
                 <td>
                   <span className={styles.rateCell}>
-                    <span className={styles.upcomingBadge}>Upcoming</span>
-                    <span>Not announced</span>
+                    <span className={styles.upcomingBadge}>Coming soon</span>
+                    <span></span>
                   </span>
                 </td>
               </tr>
