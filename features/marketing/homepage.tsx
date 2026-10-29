@@ -4,10 +4,9 @@ import { GeistSans } from "geist/font/sans";
 import {
   ArrowRight,
   ArrowUpRight,
-  Shield,
-  CircleDot,
-  Layers3,
-  FileText,
+  Coins,
+  Vault,
+  ClipboardCheck,
 } from "lucide-react";
 import { MarketingHeader, MarketingBrand } from "./interactions";
 import { PartnerMarquee } from "./partners";
@@ -24,7 +23,7 @@ export async function MarketingHomepage() {
     contentUnavailable = true;
   }
   return (
-    <div className={`${styles.marketing} ${GeistSans.variable}`}>
+    <div className={`${styles.marketing} ${styles.homepage} ${GeistSans.variable}`}>
       <a href="#main-content" className={styles.skipLink}>
         Skip to content
       </a>
@@ -153,46 +152,41 @@ export async function MarketingHomepage() {
           <div className={styles.container}>
             <div className={styles.approachIntro}>
               <div>
-                <p className={styles.eyebrow}>01 / THE CONNECTION</p>
+                <p className={styles.eyebrow}>Design</p>
                 <h2 id="approach-heading">
                   Real gold.
                   <br />A connected system.
                 </h2>
               </div>
-              <p>
-                Gold’s value begins in the physical world. Syncrate connects
-                that foundation to an onchain asset you can access through your
-                wallet.
-              </p>
             </div>
             <div className={styles.process}>
               {[
                 {
-                  number: "01",
-                  title: "Grounded in gold",
-                  copy: "Physical backing, sourcing and independent custody form the foundation. Start with the published documentation.",
+                  number: "",
+                  title: "Gold Sourcing",
+                  copy: "The underlying gold backing SGLD and sySGLD is sourced directly from Sharjah Refinery through a partnership with Alluca Gold, a DMCC-licensed gold trading company.",
                   href: "#transparency",
-                  cta: "Review the documents",
-                  Icon: Shield,
+                  cta: "See asset statements",
+                  Icon: Coins,
                 },
                 {
-                  number: "02",
-                  title: "Represented by SGLD",
-                  copy: "Syncrate Gold brings gold exposure onto Base, connecting a real-world asset with onchain infrastructure.",
-                  href: "/sgld",
-                  cta: "Get to know SGLD",
-                  Icon: CircleDot,
+                  number: "",
+                  title: "Custody",
+                  copy: "The underlying gold backing SGLD is held in secure custodial storage with Amanat Vaults, a leading custodian in the UAE.",
+                  href: "#transparency",
+                  cta: "See custody reports",
+                  Icon: Vault,
                 },
                 {
-                  number: "03",
-                  title: "Ready for your wallet",
-                  copy: "Explore your SGLD balance and the product landscape in one overview. Buy through the existing mint application.",
+                  number: "",
+                  title: "Transparency",
+                  copy: "Syncrate conducts bi-annual inventory audit with Bureau Veritas, ensuring every circulating SGLD and sySGLD is always backed by physical gold bars.",
                   href: "/dashboard",
-                  cta: "Explore the overview",
-                  Icon: Layers3,
+                  cta: "Read audit reports",
+                  Icon: ClipboardCheck,
                 },
               ].map(({ number, title, copy, href, cta, Icon }) => (
-                <article key={number}>
+                <article key={title}>
                   <span className={styles.processNumber}>{number}</span>
                   <Icon
                     className={styles.processIcon}
@@ -208,11 +202,6 @@ export async function MarketingHomepage() {
                 </article>
               ))}
             </div>
-            <a className={styles.approachNote} href="https://docs.syncrate.org">
-              A clear view of the structure matters. Go deeper in our
-              documentation.
-              <ArrowUpRight size={17} />
-            </a>
           </div>
         </section>
         <section
@@ -222,9 +211,9 @@ export async function MarketingHomepage() {
         >
           <div className={`${styles.container} ${styles.documentGrid}`}>
             <div className={styles.documentIntro}>
-              <p className={styles.eyebrow}>03 / LOOK BENEATH THE SURFACE</p>
+              <p className={styles.eyebrow}>TRANSPARENCY</p>
               <h2 id="transparency-heading">
-                Confidence starts
+                Trust starts
                 <br />
                 with context.
               </h2>
@@ -233,41 +222,27 @@ export async function MarketingHomepage() {
                 library brings the sourcing, custody and product information
                 together.
               </p>
-              <Link className={styles.textLink} href="/terms">
-                Read the terms & disclosures
-                <ArrowUpRight size={16} />
-              </Link>
-              <div className={styles.documentSeal}>
-                <FileText size={26} strokeWidth={1} />
-                <span>
-                  READ THE SOURCE.
-                  <br />
-                  UNDERSTAND THE ASSET.
-                </span>
-              </div>
             </div>
             <div className={styles.documentList}>
               {[
                 {
                   number: "01",
-                  title: "Gold custody & verification",
-                  detail: "Bureau Veritas report · June 2026",
+                  title: "Audit Reports",
+                  detail: "By Bureau Veritas · 2026",
                   href: "/Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf",
-                  type: "PDF",
                 },
                 {
                   number: "02",
-                  title: "Sourcing & procurement",
-                  detail: "Alluca Gold procurement documentation",
+                  title: "Asset Statements",
+                  detail: "By Alluca Gold",
                   href: "/Syncrate_Gold_Procurement_Alluca_Gold.pdf",
                   type: "PDF",
                 },
                 {
                   number: "03",
-                  title: "The Syncrate framework",
-                  detail: "Product structure and platform overview",
-                  href: "/whitepaper.pdf",
-                  type: "WHITEPAPER",
+                  title: "The sySGLD Framework",
+                  detail: "Our gold financing arrangements",
+                  href: "/sysgld",
                 },
               ].map((doc) => (
                 <a
@@ -286,8 +261,7 @@ export async function MarketingHomepage() {
                 </a>
               ))}
               <p className={styles.documentNote}>
-                Documents reflect their stated dates and scope. The June 2026
-                report is not a live reserve attestation.
+                Documents reflect their stated dates and scope and are subject to change.
               </p>
             </div>
           </div>
@@ -299,7 +273,7 @@ export async function MarketingHomepage() {
         >
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.eyebrow}>04 / IDEAS & UPDATES</p>
+              <p className={styles.eyebrow}>BLOG</p>
               <h2 id="insights-heading">The evolving gold story.</h2>
             </div>
             <Link className={styles.textLink} href="/insights">

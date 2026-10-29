@@ -12,6 +12,17 @@
     sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+.homepage {
+  cursor: default;
+  caret-color: transparent;
+}
+.homepage :is(a, button, summary, [role="button"]) {
+  cursor: pointer;
+}
+.homepage :is(input, textarea, [contenteditable="true"]) {
+  cursor: text;
+  caret-color: auto;
+}
 .marketing *,
 .marketing *::before,
 .marketing *::after {
