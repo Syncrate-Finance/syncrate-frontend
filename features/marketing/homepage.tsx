@@ -100,7 +100,7 @@ export async function MarketingHomepage() {
                 >
                   Explore SGLD
                 </a>
-                <Link className={styles.learnmoreButton} href="/sgld">
+                <Link className={styles.textLink} href="/sgld">
                   Learn more about SGLD
                 </Link>
               </div>
@@ -121,7 +121,7 @@ export async function MarketingHomepage() {
                 <span></span>
               </div>
               <div className={styles.sgldHeading}>
-                <Image src="/sySGLD-icon.png" width={68} height={68} alt="" />
+                <Layers3 size={68} strokeWidth={0.8} aria-hidden="true" />
                 <h3>sySGLD</h3>
                 </div>
               <h4>
@@ -132,7 +132,7 @@ export async function MarketingHomepage() {
               <p>
                 sySGLD is Syncrate's yield-bearing gold asset, generating yield from short term gold leasing with reputable gold resellers and bullion banks in the UAE.
               </p>
-              <Link href="/sysgld" className={styles.sysgldButton}>
+              <Link href="/sysgld" className={styles.lightLink}>
                 Understand sySGLD
               </Link>
             </article>

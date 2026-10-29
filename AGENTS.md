@@ -11,7 +11,7 @@ Architecture is approved. Preserve the existing Next.js project; see README.md a
 - Exactly three planned Prime offers: 3, 6 and 9 months, all Upcoming. No invented rates, staking actions or positions. sySGLD is informational only. No new financial transaction executor.
 - Phase 2 implements the Theo-style public homepage and /dashboard with read-only SGLD data. Buy SGLD links to https://syncrate.org/app. CMS public pages are /content/<slug>; articles are /insights/<slug>. See docs/phase2-status.md for current verification.
 - Phase 1 functional checks pass, but the dependency security gate and native PostgreSQL/real IdP verification remain open. Track them explicitly; do not mark production readiness or silently skip requirements.
-- Production deployments, DNS, production database changes and smart-contract writes require explicit user approval. No production approval has been given.
+- Production deployments, DNS, production database changes and smart-contract writes require explicit user approval. The owner approved dedicated Production database, CMS secrets and staff-auth setup on October 28, 2026; publishing and domain cutover still require separate approval. See docs/production-setup.md.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
@@ -29,5 +29,8 @@ This block is written and re-added by `next dev` â€” verify at `node_module
 - Normal dependency verification must run `pnpm install --frozen-lockfile`, with the explicit version-scoped `allowBuilds` policy in pnpm-workspace.yaml. Do not use --ignore-scripts to hide missing build approvals; unknown dependency build scripts must remain fatal. Vercel's reported install failure was ERR_PNPM_IGNORED_BUILDS after dependencies had downloaded successfully.
 
 
-- Supabase preview backend: see docs/supabase-staff-setup.md. CMS_AUTH_PROVIDER=supabase requires DATABASE_SCHEMA=cms, a hosted project origin and a publishable key. Use migrations/cms only for a fresh private schema. Public legacy migration history remains unchanged. Never grant the runtime role schema creation or general auth-table access. Reapply the owner-level Supabase access/RLS script after migrations. Production activation remains unapproved.
+- Supabase preview backend: see docs/supabase-staff-setup.md. CMS_AUTH_PROVIDER=supabase requires DATABASE_SCHEMA=cms, a hosted project origin and a publishable key. Use migrations/cms only for a fresh private schema. Public legacy migration history remains unchanged. Never grant the runtime role schema creation or general auth-table access. Reapply the owner-level Supabase access/RLS script after migrations. Production publishing remains unapproved.
+
+- Homepage structure now follows the owner's independent Syncrate design and latest main edits. Preserve wording, navy backgrounds and original foreground colors. Validate CSS-module references and local image paths when reviewing edits; TypeScript alone does not catch missing module classes or public assets.
+- DATABASE_CA_CERT supports a provider's public PEM CA without weakening TLS. Keep rejectUnauthorized and hostname verification enabled; connection URL SSL parameters must not override the explicit CA policy.
 - GitHub native PostgreSQL CI passed for the prior installer fix. New provider/MFA acceptance must be verified separately; do not infer it from local cryptographic tests.
