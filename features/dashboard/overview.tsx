@@ -91,7 +91,7 @@ function PortfolioCard() {
     >
       <div className={styles.portfolioHeading}>
         <h2 id="portfolio-heading">Your portfolio</h2>
-        <span>SGLD · Base</span>
+        <span></span>
       </div>
       <div
         className={styles.portfolioValue}
@@ -140,7 +140,7 @@ function PortfolioCard() {
             <span className={styles.liveDot} />
             {isFetching ? 'Updating balance…' : 'SGLD balance on Base'}
             <span className={styles.valueDivider}>·</span>
-            <span>USD valuation unavailable</span>
+            <span></span>
           </>
         )}
       </div>
@@ -463,36 +463,6 @@ export function DashboardOverview({
               </TabsContent>
             </Tabs>
             <div className={styles.catalogueNote}>
-              <Clock3 size={13} />
-              <span>
-                Prime is in development. Terms and rates will be announced
-                before launch.
-              </span>
-            </div>
-          </section>
-          <section
-            className={styles.informationStrip}
-            aria-labelledby="sysgld-overview"
-          >
-            <span className={styles.informationIcon}>
-              <ShieldCheck size={22} strokeWidth={1.3} />
-            </span>
-            <div>
-              <h2 id="sysgld-overview">Understand sySGLD</h2>
-              <p>
-                A separate gold-financing strategy. Explore how it differs from
-                holding SGLD.
-              </p>
-            </div>
-            <Link href="/sysgld">
-              Learn more <ArrowUpRight size={15} />
-            </Link>
-          </section>
-          <div className={styles.readOnlyNote}>
-            <Check size={12} /> Read-only overview <span>·</span>
-            <Link href="/terms">
-              Terms & disclosures <ArrowUpRight size={11} />
-            </Link>
           </div>
         </main>
       </DashboardShell>
