@@ -35,7 +35,7 @@ export async function MarketingHomepage() {
         >
           <div className={styles.heroCopy}>
             <h1 id="home-heading">
-              Gold,
+              Tokenized gold,
               <br />
               built for 
               <br />
@@ -46,10 +46,10 @@ export async function MarketingHomepage() {
             </p>
             <div className={styles.heroActions}>
               <Link href="/dashboard" className={styles.primaryButton}>
-                Explore SGLD <ArrowUpRight size={17} />
+                Explore SGLD
               </Link>
               <a href="/business" className={styles.businessButton}>
-                For Business <ArrowUpRight size={17} />
+                For Businesses
               </a>
             </div>
             <div className={styles.heroFootnote}>
@@ -66,7 +66,7 @@ export async function MarketingHomepage() {
         >
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.eyebrow}>PRODUCT LANDSCAPE</p>
+              <p className={styles.eyebrow}>PRODUCT</p>
               <h2 id="products-heading">
                 One foundation.
                 <br />
@@ -79,7 +79,7 @@ export async function MarketingHomepage() {
               <div className={styles.productTop}>
                 <span className={styles.productLabel}>
                 </span>
-                <span>01</span>
+                <span></span>
               </div>
               <div className={styles.sgldHeading}>
                 <Image src="/SGLD-icon.png" width={68} height={68} alt="" />
@@ -100,7 +100,7 @@ export async function MarketingHomepage() {
                 >
                   Explore SGLD
                 </a>
-                <Link className={styles.textLink} href="/sgld">
+                <Link className={styles.learnmoreButton} href="/sgld">
                   Learn more about SGLD
                 </Link>
               </div>
@@ -110,7 +110,7 @@ export async function MarketingHomepage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View contracts
+                  Basescan
                   <ArrowUpRight size={12} />
                 </a>
               </div>
@@ -118,36 +118,29 @@ export async function MarketingHomepage() {
             <article id="financing" className={styles.yieldProduct}>
               <div className={styles.productTop}>
                 <span className={styles.productLabel}>GOLD FINANCING</span>
-                <span>02</span>
+                <span></span>
               </div>
-              <div className={styles.yieldSymbol} aria-hidden="true">
-                <Layers3 size={72} strokeWidth={0.8} />
-                <span />
-              </div>
-              <h3>sySGLD</h3>
+              <div className={styles.sgldHeading}>
+                <Image src="/sySGLD-icon.png" width={68} height={68} alt="" />
+                <h3>sySGLD</h3>
+                </div>
               <h4>
-                A different role
+                Yield, funded by
                 <br />
-                for gold.
+                the gold market.
               </h4>
               <p>
-                A separate strategy designed around short-term financing with
-                bullion banks and refiners. Understand the activity, structure
-                and risks behind it.
+                sySGLD is Syncrate's yield-bearing gold asset, generating yield from short term gold leasing with reputable gold resellers and bullion banks in the UAE.
               </p>
-              <Link href="/sysgld" className={styles.lightLink}>
+              <Link href="/sysgld" className={styles.sysgldButton}>
                 Understand sySGLD
-                <ArrowUpRight size={17} />
               </Link>
-              <span className={styles.informationLabel}>
-                PRODUCT INFORMATION · RETURNS ARE NOT GUARANTEED
-              </span>
             </article>
           </div>
           <div className={styles.primeRow}>
             <div>
               <span className={styles.eyebrow}>WHAT’S AHEAD</span>
-              <h3>Prime opportunities</h3>
+              <h3>The Numbers</h3>
               <p>
                 Three planned staking terms. Rates and launch details have not
                 been announced.
