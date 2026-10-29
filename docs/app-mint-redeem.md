@@ -35,13 +35,13 @@ Redemption burns SGLD when the request confirms. If the selected stablecoin buff
 
 ## Positions
 
-The owner wants staking, lending and Uniswap liquidity positions for protocols eventually integrated into Earn with SGLD. No live contracts or adapters for those offers are currently supplied. The revised catalogue contains SGLD Staking for 30 days, SGLD Staking for 90 days, and Lend on Morpho as an upcoming credit-market integration. This replaces the original three Prime month terms. Both staking terms remain coming soon and Morpho remains upcoming, with no configured APY/action URL or invented credit-market asset/lock term. Your positions shows only the requested empty state. This is not an all-wallet DeFi indexer and must not be described as one. Add a verified, account/network-scoped reader with explicit availability/error states for each actual integration when its contracts and semantics are known.
+The owner wants positions for protocols actually integrated into Earn with SGLD. The catalogue now starts with LP on Uniswap via Saffron, followed by upcoming SGLD Staking for 30 and 90 days. The external LP pool link does not provide a position reader: Saffron vault contracts/position semantics have not been supplied. Your positions retains the requested empty state. Add a verified account/network-scoped reader with availability/error states for each integration before displaying positions.
 
 ## App origin and release
 
-The exact `app.syncrate.org` host root rewrites to /dashboard, preserving query state. Other host roots keep the marketing page. Dashboard tab changes preserve the current pathname. Dashboard metadata declares the intended canonical app origin and remains noindex.
+The exact app.syncrate.org root renders the app, with view query state preserved. Marketing hosts render the homepage. Old dashboard paths and /app redirect to the canonical app origin. Non-production loopback/Vercel hosts support /?preview=app for review; Production ignores that override. App metadata is canonical and noindex. See docs/saffron-and-app-release.md.
 
-Read-only Vercel inspection found app.syncrate.org unattached to this project and externally hosted Cloudflare DNS. The hostname did not resolve. No domain or DNS mutation has been made. Prepare the tested Preview first; attaching the hostname and publishing Production require the owner's separate release approval. Recheck Vercel's current domain instructions before any cutover. Do not repoint it to a Preview as a substitute for a reviewed Production release.
+The owner explicitly approved publishing live and activating app.syncrate.org on October 29, 2026. DNS must be updated in the active authoritative Cloudflare zone, without changing nameservers or unrelated records. Record actual domain/TLS/readiness checks separately; approval does not prove successful cutover.
 
 ## Verification and acceptance limits
 
@@ -49,4 +49,4 @@ Read-only Vercel inspection found app.syncrate.org unattached to this project an
 - `scripts/verify-swap-fork.ts` performs optional acceptance checks against a disposable Anvil Base fork at the hardcoded loopback address `http://127.0.0.1:8545`. It checks the Anvil client before local state overrides, uses local JSON-RPC accounts without private keys, restores its snapshot, and cannot target a public RPC. Both tokens passed mint, immediate redemption, queued redemption, approval consumption and queue receipt checks. No mainnet writes occurred.
 - Run it with the pinned Node and `pnpm exec tsx scripts/verify-swap-fork.ts` after starting a local Anvil Base fork on that port. Anvil is a developer verification tool, not an application dependency or Production service. Its upstream fork connection is read-only.
 - Production still needs controlled-wallet browser acceptance for real connect/switch/account-change, wallet rejection, confirmation/replacement/reload, mobile wallets and RPC outages. Local fork acceptance does not certify external wallet extensions or contract security.
-- Existing dependency findings, real staff/Zoho SMTP/MFA/recovery and broader release gates remain open. No production release, domain change or real blockchain write is part of this preview delivery.
+- Existing dependency findings, real staff/Zoho SMTP/MFA/recovery and broader release gates remain open. The live release is authorized, but no real blockchain write is authorized for the agent. Track remaining acceptance independently of deployment status.

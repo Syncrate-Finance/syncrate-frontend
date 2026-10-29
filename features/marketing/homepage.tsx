@@ -1,3 +1,4 @@
+import { APP_ORIGIN } from "@/config/site";
 import Image from "next/image";
 import Link from "next/link";
 import { GeistSans } from "geist/font/sans";
@@ -37,11 +38,10 @@ export async function MarketingHomepage() {
         >
           <div className={styles.heroCopy}>
             <h1 id="home-heading">
-              Tokenized gold,
-              <br />
-              built for
-              <br />
-              <em>DeFi.</em>
+              <span>Tokenized gold,</span>
+              <span>
+                built for <em>DeFi.</em>
+              </span>
             </h1>
             <p className={styles.heroDescription}>
               Syncrate channels onchain capital into productive real-world
@@ -49,7 +49,7 @@ export async function MarketingHomepage() {
               rails.
             </p>
             <div className={styles.heroActions}>
-              <Link href="/dashboard" className={styles.primaryButton}>
+              <Link href={APP_ORIGIN} className={styles.primaryButton}>
                 Explore SGLD
               </Link>
               <a href="/business" className={styles.businessButton}>
@@ -113,10 +113,7 @@ export async function MarketingHomepage() {
                 custodians in the United Arab Emirates.
               </p>
               <div className={styles.productLinks}>
-                <a
-                  className={styles.primaryButton}
-                  href="https://syncrate.org/app"
-                >
+                <a className={styles.primaryButton} href={APP_ORIGIN}>
                   Buy SGLD
                 </a>
                 <Link className={styles.productInfoButton} href="/sgld">
@@ -197,7 +194,7 @@ export async function MarketingHomepage() {
                   number: "",
                   title: "Transparency",
                   copy: "Syncrate conducts bi-annual inventory audit with Bureau Veritas, ensuring every circulating SGLD and sySGLD is always backed by physical gold bars.",
-                  href: "/dashboard",
+                  href: APP_ORIGIN,
                   cta: "Read audit reports",
                   Icon: ClipboardCheck,
                 },
@@ -397,7 +394,7 @@ export async function MarketingHomepage() {
               <h3>PRODUCT</h3>
               <Link href="/sgld">SGLD</Link>
               <Link href="/sysgld">sySGLD</Link>
-              <a href="https://syncrate.org/app">Buy SGLD</a>
+              <a href={APP_ORIGIN}>Buy SGLD</a>
               <a href="/#transparency">Transparency</a>
             </div>
             <div className={styles.footerLinks}>

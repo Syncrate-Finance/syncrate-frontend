@@ -1,6 +1,7 @@
 'use client'
 
 import { base } from 'wagmi/chains'
+import { APP_ORIGIN } from '@/config/site'
 import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import Image from 'next/image'
@@ -776,7 +777,7 @@ function PrimeVaultAppUI() {
               <p className="text-center text-xs text-[#666666] mt-1">
                 Don't hold SGLD yet?{' '}
                 <a
-                  href="https://syncrate.org/app"
+                  href={APP_ORIGIN}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#888888] hover:text-white underline transition-colors font-medium"

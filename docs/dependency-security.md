@@ -14,4 +14,10 @@ Open findings:
 
 References: [Zod advisory](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5), [uuid advisory](https://github.com/advisories/GHSA-w5hq-g745-h8pq), [esbuild advisory](https://github.com/advisories/GHSA-67mh-4wv8-2f99).
 
-Run pnpm audit:production to reproduce the release audit. It currently returns a nonzero result. The security release gate remains open; do not represent this phase as production-ready or deploy it. Dependency fixes do not validate the legacy onchain workflows or attest backing/reserves.
+Run pnpm audit:production to reproduce the release audit. It currently returns a nonzero result. The security release gate remains open; do not represent this phase as production-ready. Dependency fixes do not validate the legacy onchain workflows or attest backing/reserves.
+
+## October 29 release audit
+
+The latest registry scan reports **2 high, 2 moderate, 1 low**, with no critical findings. High findings are transitive Zod (GHSA-mrhx-c7xc-m3w5) and graphql-scalars (GHSA-x8rm-f576-gq67); moderate findings are uuid and migration-tool esbuild; the low finding is deepmerge (GHSA-gcqx-w48m-w2h4). Dependencies are unchanged by the Saffron/menu/domain update. No advisory is suppressed or treated as resolved.
+
+The owner explicitly authorized publishing live and activating app.syncrate.org on October 29, superseding the earlier preview-only deployment restriction. This authorization does not clear the dependency findings, controlled personal-wallet acceptance, or staff SMTP/MFA/recovery work. Keep those items visible in the release handoff.

@@ -12,10 +12,12 @@
   cursor: default;
   caret-color: transparent;
 }
-:is(.dashboard, .opportunityDialog, .navigationDialog) :is(a, button, select, summary, [role="button"], [role="tab"]) {
+:is(.dashboard, .opportunityDialog, .navigationDialog)
+  :is(a, button, select, summary, [role="button"], [role="tab"]) {
   cursor: pointer;
 }
-:is(.dashboard, .opportunityDialog, .navigationDialog) :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
+:is(.dashboard, .opportunityDialog, .navigationDialog)
+  :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
   cursor: text;
   caret-color: auto;
 }
@@ -31,7 +33,7 @@
   top: 8px;
   left: 8px;
   padding: 12px 18px;
-  background: #142D63;
+  background: #142d63;
   color: white;
   border-radius: 8px;
   transform: translateY(-160%);
@@ -62,7 +64,7 @@
   gap: 8px;
   color: #19383b;
   white-space: nowrap;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   line-height: 1;
   letter-spacing: -1.7px;
@@ -72,7 +74,7 @@
   width: 34px;
   height: 38px;
   background: currentColor;
-  mask-image: url('/logo.png');
+  mask-image: url("/logo.png");
   mask-position: center;
   mask-size: 172%;
   mask-repeat: no-repeat;
@@ -133,12 +135,22 @@
   grid-row: 1 / span 2;
   min-width: 0;
 }
-.topGrid > .opportunitiesCard { min-width: 0; }
-.topGrid .opportunitiesToolbar { flex-wrap: wrap; }
-.topGrid .opportunitiesActions { margin-left: auto; }
+.topGrid > .opportunitiesCard {
+  min-width: 0;
+}
+.topGrid .opportunitiesToolbar {
+  flex-wrap: wrap;
+}
+.topGrid .opportunitiesActions {
+  margin-left: auto;
+}
 @media (min-width: 841px) and (max-width: 1180px) {
-  .swapColumn { grid-row: 1; }
-  .topGrid > .opportunitiesCard { grid-column: 1 / -1; }
+  .swapColumn {
+    grid-row: 1;
+  }
+  .topGrid > .opportunitiesCard {
+    grid-column: 1 / -1;
+  }
 }
 .portfolioCard {
   align-self: start;
@@ -201,7 +213,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #142D63;
+  background: #142d63;
 }
 .retryButton {
   display: inline-flex;
@@ -226,7 +238,9 @@
   gap: 4px;
   white-space: nowrap;
 }
-.metrics > div:only-child { grid-column: 1 / -1; }
+.metrics > div:only-child {
+  grid-column: 1 / -1;
+}
 .pointsLink {
   display: inline-flex;
   align-items: center;
@@ -283,7 +297,7 @@
   gap: 11px;
 }
 .buyCardHeading h2 {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 32px;
   font-weight: 400;
   letter-spacing: -1.4px;
@@ -443,6 +457,23 @@
   justify-content: center;
   flex-shrink: 0;
 }
+.saffronLogo {
+  display: block;
+  border-radius: 7px;
+  object-fit: contain;
+}
+.aprValue {
+  color: #223b3e;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.assetSides {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  color: #718184;
+}
 .offerTitle {
   display: flex;
   flex-wrap: wrap;
@@ -518,7 +549,7 @@
   white-space: nowrap;
 }
 .upcomingBadge:before {
-  content: '';
+  content: "";
   height: 4px;
   width: 4px;
   background: #b8a04e;
@@ -693,7 +724,7 @@
   margin-bottom: 16px;
 }
 .emptyPositions h3 {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-weight: 400;
   font-size: 23px;
   letter-spacing: -0.6px;
@@ -737,7 +768,7 @@
   right: 28px;
 }
 .detailsTitle {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 31px;
   line-height: 1.3;
   letter-spacing: -1px;
@@ -786,7 +817,7 @@
   margin-top: 25px;
 }
 .dialogTitle {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 29px;
   letter-spacing: -0.7px;
 }
@@ -833,7 +864,7 @@
   margin-bottom: 22px;
 }
 .infoHero h1 {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-weight: 400;
   font-size: clamp(37px, 5vw, 58px);
   letter-spacing: -2px;
@@ -964,7 +995,10 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
-  .swapColumn { grid-column: auto; grid-row: auto; }
+  .swapColumn {
+    grid-column: auto;
+    grid-row: auto;
+  }
   .portfolioCard,
   .buyCard {
     border-radius: 23px;
@@ -1120,12 +1154,12 @@
   .opportunitiesActions {
     width: 100%;
   }
-  .opportunitiesActions > [role='tablist'] {
+  .opportunitiesActions > [role="tablist"] {
     width: 100%;
     display: grid;
     grid-template-columns: 1.2fr 1fr;
   }
-  .opportunitiesActions > [role='tablist'] > button {
+  .opportunitiesActions > [role="tablist"] > button {
     font-size: 12px;
     padding: 10px 12px;
   }

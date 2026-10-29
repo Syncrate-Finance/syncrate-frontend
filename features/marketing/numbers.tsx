@@ -39,60 +39,23 @@ export function HomepageNumbers() {
     <section className={styles.numbers} aria-labelledby="numbers-heading">
       <div className={styles.numbersHeading}>
         <h3 id="numbers-heading">The Numbers</h3>
-        <span role="status">
-          {isPending
-            ? "Updating valuation…"
-            : stale
-              ? "Valuation update unavailable"
-              : data?.sgldMarketCap.state === "ready"
-                ? null
-                : "Valuation unavailable"}
-        </span>
       </div>
-      <dl className={styles.numbersGrid}>
+      <dl className={styles.numbersGrid} aria-busy={isPending}>
         {metrics.map(({ label, metric }) => (
           <div key={label}>
             <dt>{label}</dt>
             <dd>
-              {metric?.value ?? "—"}
+              {label === "Total Bullion Inventory"
+                ? metric?.value
+                : !stale && metric?.state === "ready"
+                  ? metric.value
+                  : "—"}
               {label === "Total Bullion Inventory" &&
                 metric?.state === "ready" && <span> troy oz</span>}
-            </dd>
-            <dd className={styles.metricNote}>
-              {metric?.state === "unconfigured"
-                ? "Contract not configured"
-                : metric?.state === "unavailable" || (!metric && isError)
-                  ? "Temporarily unavailable"
-                  : null}
             </dd>
           </div>
         ))}
       </dl>
-      {data && (
-        <p className={styles.numbersTimestamp}>
-          Block {data.blockNumber} ·{" "}
-          <time dateTime={data.observedAt}>
-            {new Date(data.observedAt).toLocaleString("en-GB", {
-              timeZone: "UTC",
-              hour12: false,
-            })}{" "}
-            UTC
-          </time>
-          {data.priceUpdatedAt && (
-            <>
-              {" "}
-              · Gold quote{" "}
-              <time dateTime={data.priceUpdatedAt}>
-                {new Date(data.priceUpdatedAt).toLocaleString("en-GB", {
-                  timeZone: "UTC",
-                  hour12: false,
-                })}{" "}
-                UTC
-              </time>
-            </>
-          )}
-        </p>
-      )}
     </section>
   );
 }
