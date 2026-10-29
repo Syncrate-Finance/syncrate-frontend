@@ -103,7 +103,7 @@ export async function MarketingHomepage() {
                   className={styles.primaryButton}
                   href="https://syncrate.org/app"
                 >
-                  Explore SGLD
+                  Buy SGLD
                 </a>
                 <Link className={styles.productInfoButton} href="/sgld">
                   Learn more about SGLD
@@ -122,7 +122,7 @@ export async function MarketingHomepage() {
             </article>
             <article id="financing" className={styles.yieldProduct}>
               <div className={styles.productTop}>
-                <span className={styles.productLabel}>GOLD FINANCING</span>
+                <span className={styles.productLabel}></span>
                 <span></span>
               </div>
               <div className={styles.sgldHeading}>
@@ -152,7 +152,7 @@ export async function MarketingHomepage() {
           <div className={styles.container}>
             <div className={styles.approachIntro}>
               <div>
-                <p className={styles.eyebrow}>Design</p>
+                <p className={styles.eyebrow}>DESIGN</p>
                 <h2 id="approach-heading">
                   Real gold.
                   <br />A connected system.
@@ -218,9 +218,7 @@ export async function MarketingHomepage() {
                 with context.
               </h2>
               <p>
-                Understand the structure before making a decision. Our document
-                library brings the sourcing, custody and product information
-                together.
+                SGLD and sySGLD is built with transparency in mind. Our transparency dashboard brings the sourcing, custody and asset statement of Syncrate's gold bullion together.
               </p>
             </div>
             <div className={styles.documentList}>
@@ -229,7 +227,7 @@ export async function MarketingHomepage() {
                   number: "01",
                   title: "Audit Reports",
                   detail: "By Bureau Veritas · 2026",
-                  href: "/Syncrate_Gold_Bureau_Veritas_Audit_Jun_2026.pdf",
+                  href: "https://syncrate-1.gitbook.io/syncrate-docs/sgld/asset-verification",
                 },
                 {
                   number: "02",
@@ -341,14 +339,14 @@ export async function MarketingHomepage() {
           <div className={styles.footerGrid}>
             <div>
               <MarketingBrand />
-              <h2>Need more information?</h2>
+              <h2>Syncrate Finance</h2>
               <a
                 className={styles.outlineButton}
-                href="https://docs.syncrate.org"
+                href="https://syncrate-1.gitbook.io/syncrate-docs/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Read our documentation <ArrowUpRight size={13} />
+                Read our documentation>
               </a>
               <span className={styles.socialLabel}>SOCIALS</span>
               <div className={styles.socials}>
@@ -357,7 +355,7 @@ export async function MarketingHomepage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  X
+                  X (formerly Twitter)
                 </a>
                 <a
                   href="https://t.me/syncratefi"
@@ -376,8 +374,7 @@ export async function MarketingHomepage() {
               </div>
             </div>
             <div className={styles.footerLinks}>
-              <h3>PLATFORM</h3>
-              <Link href="/dashboard">Overview</Link>
+              <h3>PRODUCT</h3>
               <Link href="/sgld">SGLD</Link>
               <Link href="/sysgld">sySGLD</Link>
               <a href="https://syncrate.org/app">Buy SGLD</a>
@@ -386,7 +383,7 @@ export async function MarketingHomepage() {
             <div className={styles.footerLinks}>
               <h3>RESOURCES</h3>
               <Link href="/insights">Insights</Link>
-              <a href="https://docs.syncrate.org">Documentation</a>
+              <a href="https://syncrate-1.gitbook.io/syncrate-docs/">Documentation</a>
               <a href="/whitepaper.pdf">Whitepaper</a>
               <Link href="/terms">Terms & disclosures</Link>
               <a href="mailto:team@syncrate.org">Contact</a>
@@ -416,7 +413,7 @@ export async function MarketingHomepage() {
           </div>
           <div className={styles.footerBottom}>
             <span>SYNCRATE ©2026</span>
-            <span>MAKING GOLD USEFUL ONCHAIN</span>
+            <span></span>
           </div>
         </div>
       </footer>
