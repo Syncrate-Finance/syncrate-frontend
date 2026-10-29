@@ -25,17 +25,14 @@ export function HomepageNumbers() {
     {
       label: "Total Bullion Inventory",
       metric: { state: "ready", value: "193" },
-      note: "Reported inventory · fixed figure",
     },
     {
       label: "SGLD Marketcap",
       metric: data?.sgldMarketCap,
-      note: "USD · supply × gold oracle price",
     },
     {
       label: "sySGLD Marketcap",
       metric: data?.sysgldMarketCap ?? { state: "unconfigured", value: null },
-      note: "USD · underlying asset value",
     },
   ];
   return (
@@ -48,7 +45,6 @@ export function HomepageNumbers() {
             : stale
               ? "Valuation update unavailable"
               : data?.sgldMarketCap.state === "ready"
-                ? "Valuation updated"
                 : "Valuation unavailable"}
         </span>
       </div>
