@@ -4,6 +4,10 @@ Owner-authorized scope, October 29, 2026: embed the existing Base mint/redeem co
 
 Owner follow-up: remove the dashboard's Understand sySGLD information strip and the visible Chainlink quote/time line beneath Live gold price. The feed, price refresh, timestamp validation and stale-price protection remain active. The separate informational sySGLD page and footer link are preserved. Latest owner edits to portfolio labels, mobile offer content and the SGLD icon are carried forward; the deleted announcement and bottom note are omitted. Desktop offer names remain as edited in source; no live rates or staking actions are introduced.
 
+Further owner refinements remove the redundant Buy SGLD action beside All opportunities, leaving the actual swap panel available. Opportunity network labels and details say Base / Network, without Planned; the offers themselves remain Upcoming. View Points sits beside Total earned and opens the owner-specified `https://syncrate.org/points` in a separate tab. The Points Dashboard is future work; no points balance, wallet transfer, route or service is invented here.
+
+The dashboard shell now uses a default mouse cursor and transparent text caret for display text, with pointer cursors on actions and a normal text cursor/caret on inputs, textareas and editable content. This extends the existing homepage behavior to the app. Selection and keyboard focus are retained; browser caret-browsing preferences are not modified. The owner's screenshot suggests a browsing caret between static letters, rather than editable application content.
+
 ## Contracts and settlement
 
 Verified on Base (8453), block 53242826:

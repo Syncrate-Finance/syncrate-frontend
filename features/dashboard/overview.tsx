@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  ArrowRight,
   ArrowUpRight,
   ChevronRight,
   CircleHelp,
@@ -65,15 +64,6 @@ function SgldIcon({ size = 32 }: { size?: number }) {
     <span className={styles.tokenIcon} style={{ width: size, height: size }}>
       <Image src="/SGLD-icon.png" alt="" width={size} height={size} />
     </span>
-  );
-}
-function BuyButton({ teal = false }: { teal?: boolean }) {
-  return (
-    <Button asChild variant={teal ? "teal" : "default"} size="sm">
-      <a href="#buy-sgld">
-        Buy SGLD <ArrowRight size={14} />
-      </a>
-    </Button>
   );
 }
 function PortfolioCard() {
@@ -147,6 +137,15 @@ function PortfolioCard() {
               reward history are available. A token balance is not a record of
               earnings.
             </Help>
+            <a
+              href="https://syncrate.org/points"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.pointsLink}
+              aria-label="View Points (opens in a new tab)"
+            >
+              View Points <ArrowUpRight size={12} aria-hidden="true" />
+            </a>
           </dt>
           <dd>—</dd>
         </div>
@@ -182,7 +181,7 @@ function OpportunityDetails({
             <dd>{offer.months} months</dd>
           </div>
           <div>
-            <dt>Planned network</dt>
+            <dt>Network</dt>
             <dd>
               <BaseIcon /> Base
             </dd>
@@ -263,9 +262,7 @@ function OpportunitiesTable() {
                 <td>
                   <span className={styles.networkLabel}>
                     <BaseIcon />
-                    <span>
-                      Base<span className={styles.plannedLabel}>Planned</span>
-                    </span>
+                    <span>Base</span>
                   </span>
                 </td>
                 <td>
@@ -392,7 +389,6 @@ export function DashboardOverview({
                     )}
                   </div>
                   <div className={styles.opportunitiesActions}>
-                    {view === "all" && <BuyButton teal />}
                     <TabsList aria-label="Opportunity view">
                       <TabsTrigger value="all">All opportunities</TabsTrigger>
                       <TabsTrigger value="positions">My Positions</TabsTrigger>

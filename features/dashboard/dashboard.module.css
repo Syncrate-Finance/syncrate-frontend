@@ -5,6 +5,15 @@
   font-family: var(--font-geist-sans), Arial, sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
+  cursor: default;
+  caret-color: transparent;
+}
+.dashboard :is(a, button, select, summary, [role="button"], [role="tab"]) {
+  cursor: pointer;
+}
+.dashboard :is(input, textarea, [contenteditable]:not([contenteditable="false"])) {
+  cursor: text;
+  caret-color: auto;
 }
 .dashboard a {
   text-decoration: none;
@@ -214,6 +223,24 @@
   white-space: nowrap;
 }
 .metrics > div:only-child { grid-column: 1 / -1; }
+.pointsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  min-height: 24px;
+  color: #223b3e;
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+.dashboard .pointsLink:hover {
+  text-decoration: underline;
+}
+.pointsLink:focus-visible {
+  outline: 2px solid #9a7535;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 .metrics dd {
   font-size: 27px;
   line-height: 1.2;
@@ -459,12 +486,6 @@
   background: #fff;
   width: 10px;
   border-radius: 2px;
-}
-.plannedLabel {
-  display: block;
-  font-size: 9px;
-  color: #78878a;
-  margin-top: 2px;
 }
 .rateCell {
   display: flex;
