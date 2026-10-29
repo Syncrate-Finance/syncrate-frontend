@@ -1,37 +1,71 @@
-export const PRIME_OPPORTUNITIES = [
+type UpcomingBaseOpportunity = {
+  id: string;
+  name: string;
+  provider: string;
+  network: "Base";
+  status: "upcoming";
+  apy: null;
+  actionUrl: null;
+};
+export type StakingOpportunity = UpcomingBaseOpportunity & {
+  kind: "staking";
+  days: 30 | 90;
+  depositAsset: "SGLD";
+};
+export type CreditOpportunity = UpcomingBaseOpportunity & {
+  kind: "credit";
+  integration: "Morpho";
+  days: null;
+  depositAsset: null;
+};
+export type EarnOpportunity = StakingOpportunity | CreditOpportunity;
+
+export const EARN_OPPORTUNITIES = [
   {
-    id: 'prime-3',
-    name: 'Prime',
-    months: 3,
-    status: 'upcoming',
-    network: 'Base',
-    depositAsset: null,
+    id: "sgld-staking-30d",
+    kind: "staking",
+    name: "SGLD Staking",
+    provider: "powered by Syncrate Staking",
+    days: 30,
+    status: "upcoming",
+    network: "Base",
+    depositAsset: "SGLD",
     apy: null,
     actionUrl: null,
   },
   {
-    id: 'prime-6',
-    name: 'Prime',
-    months: 6,
-    status: 'upcoming',
-    network: 'Base',
-    depositAsset: null,
+    id: "sgld-staking-90d",
+    kind: "staking",
+    name: "SGLD Staking",
+    provider: "powered by Syncrate Staking",
+    days: 90,
+    status: "upcoming",
+    network: "Base",
+    depositAsset: "SGLD",
     apy: null,
     actionUrl: null,
   },
   {
-    id: 'prime-9',
-    name: 'Prime',
-    months: 9,
-    status: 'upcoming',
-    network: 'Base',
+    id: "morpho-credit-upcoming",
+    kind: "credit",
+    name: "Lend on Morpho",
+    provider: "Credit markets",
+    integration: "Morpho",
+    days: null,
+    status: "upcoming",
+    network: "Base",
     depositAsset: null,
     apy: null,
     actionUrl: null,
   },
-] as const
-export type PrimeOpportunity = (typeof PRIME_OPPORTUNITIES)[number]
-export type OpportunityView = 'all' | 'positions'
+] as const satisfies readonly EarnOpportunity[];
+
+export function opportunityLabel(offer: EarnOpportunity) {
+  return offer.kind === "staking"
+    ? `${offer.name} · ${offer.days} days`
+    : offer.name;
+}
+export type OpportunityView = "all" | "positions";
 export function getOpportunityView(value: unknown): OpportunityView {
-  return value === 'positions' ? 'positions' : 'all'
+  return value === "positions" ? "positions" : "all";
 }

@@ -445,15 +445,17 @@
 }
 .offerTitle {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.1px;
-  white-space: nowrap;
+  white-space: normal;
 }
 .offerTitle > span {
   font-weight: 400;
+  white-space: nowrap;
 }
 .offerTitle > svg {
   color: #91a0a2;

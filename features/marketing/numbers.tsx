@@ -45,11 +45,12 @@ export function HomepageNumbers() {
             : stale
               ? "Valuation update unavailable"
               : data?.sgldMarketCap.state === "ready"
+                ? null
                 : "Valuation unavailable"}
         </span>
       </div>
       <dl className={styles.numbersGrid}>
-        {metrics.map(({ label, metric, note }) => (
+        {metrics.map(({ label, metric }) => (
           <div key={label}>
             <dt>{label}</dt>
             <dd>
@@ -62,7 +63,7 @@ export function HomepageNumbers() {
                 ? "Contract not configured"
                 : metric?.state === "unavailable" || (!metric && isError)
                   ? "Temporarily unavailable"
-                  : note}
+                  : null}
             </dd>
           </div>
         ))}
