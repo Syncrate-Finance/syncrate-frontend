@@ -35,7 +35,7 @@ Redemption burns SGLD when the request confirms. If the selected stablecoin buff
 
 ## Positions
 
-The owner wants staking, lending and Uniswap liquidity positions for protocols eventually integrated into Earn with SGLD. No live contracts or adapters for those offers are currently supplied. The three Prime offers remain Upcoming; Your positions shows only the requested empty state. This is not an all-wallet DeFi indexer and must not be described as one. Add a verified, account/network-scoped reader with explicit availability/error states for each actual integration when its contracts and semantics are known.
+The owner wants staking, lending and Uniswap liquidity positions for protocols eventually integrated into Earn with SGLD. No live contracts or adapters for those offers are currently supplied. The revised catalogue contains SGLD Staking for 30 days, SGLD Staking for 90 days, and Lend on Morpho as an upcoming credit-market integration. This replaces the original three Prime month terms. Both staking terms remain coming soon and Morpho remains upcoming, with no configured APY/action URL or invented credit-market asset/lock term. Your positions shows only the requested empty state. This is not an all-wallet DeFi indexer and must not be described as one. Add a verified, account/network-scoped reader with explicit availability/error states for each actual integration when its contracts and semantics are known.
 
 ## App origin and release
 

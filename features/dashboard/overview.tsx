@@ -8,6 +8,7 @@ import {
   ChevronRight,
   CircleHelp,
   Layers3,
+  Landmark,
   RefreshCw,
 } from "lucide-react";
 import { formatUnits } from "viem";
@@ -28,8 +29,9 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import {
-  PRIME_OPPORTUNITIES,
-  type PrimeOpportunity,
+  EARN_OPPORTUNITIES,
+  opportunityLabel,
+  type EarnOpportunity,
   type OpportunityView,
 } from "@/features/opportunities/catalog";
 import { useSgldBalance } from "@/features/portfolio/use-sgld-balance";
@@ -153,11 +155,40 @@ function PortfolioCard() {
     </section>
   );
 }
+function OfferIcon({
+  offer,
+  size = 19,
+}: {
+  offer: EarnOpportunity;
+  size?: number;
+}) {
+  return offer.kind === "credit" ? (
+    <Landmark size={size} />
+  ) : (
+    <Layers3 size={size} />
+  );
+}
+function OfferTitle({ offer }: { offer: EarnOpportunity }) {
+  return (
+    <>
+      {offer.name}
+      {offer.kind === "staking" && (
+        <span>
+          {" · "}
+          {offer.days} days
+        </span>
+      )}
+    </>
+  );
+}
+function statusLabel(offer: EarnOpportunity) {
+  return offer.kind === "staking" ? "Coming soon" : "Upcoming";
+}
 function OpportunityDetails({
   offer,
   children,
 }: {
-  offer: PrimeOpportunity;
+  offer: EarnOpportunity;
   children: React.ReactNode;
 }) {
   return (
@@ -165,48 +196,54 @@ function OpportunityDetails({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className={styles.opportunityDialog}>
         <div className={styles.detailsIcon}>
-          <Layers3 size={23} />
+          <OfferIcon offer={offer} size={23} />
         </div>
-        <span className={styles.upcomingBadge}>Coming Soon</span>
+        <span className={styles.upcomingBadge}>{statusLabel(offer)}</span>
         <DialogTitle className={styles.detailsTitle}>
-          SGLD Staking <span>· {offer.months} months</span>
+          <OfferTitle offer={offer} />
         </DialogTitle>
         <DialogDescription className={styles.detailsDescription}>
-          Lock SGLD and earn more SGLD alongside Sync Points.  
+          {offer.kind === "staking"
+            ? "Lock SGLD and earn more SGLD alongside Sync Points. Coming soon; deposits are not open."
+            : "An upcoming credit-market integration. Lending access and market details will be announced before launch."}
         </DialogDescription>
         <dl className={styles.detailsGrid}>
           <div>
-            <dt>Timeframe</dt>
-            <dd>{offer.months} months</dd>
+            <dt>{offer.kind === "staking" ? "Timeframe" : "Integration"}</dt>
+            <dd>
+              {offer.kind === "staking"
+                ? `${offer.days} days`
+                : offer.integration}
+            </dd>
           </div>
           <div>
             <dt>Network</dt>
             <dd>
-              <BaseIcon /> Base
+              <BaseIcon /> {offer.network}
             </dd>
           </div>
           <div>
             <dt>Deposit asset</dt>
-            <dd>SGLD</dd>
+            <dd>{offer.depositAsset ?? "Not announced"}</dd>
           </div>
           <div>
             <dt>APY</dt>
-            <dd></dd>
+            <dd>Not announced</dd>
           </div>
         </dl>
         <p className={styles.detailsNote}>
-          Rates, eligibility and participation terms will be published when
-          approved. No staking contract or deposit action is available for this
-          offer.
+          {offer.kind === "staking"
+            ? "Rates, eligibility and participation terms will be published when approved. No staking contract or deposit action is available for this offer."
+            : "This integration is upcoming. No market, rate or lending action is configured yet."}
         </p>
         <div className={styles.detailsActions}>
           <DialogClose asChild>
             <Button variant="outline">Close</Button>
           </DialogClose>
-          <Button asChild>
-            <Link href="/staking">
-              Explore SGLD Staking <ArrowUpRight size={14} />
-            </Link>
+          <Button disabled>
+            {offer.kind === "staking"
+              ? "Explore SGLD Staking"
+              : "Lending coming soon"}
           </Button>
         </div>
       </DialogContent>
@@ -218,6 +255,10 @@ function OpportunitiesTable() {
     <>
       <div className={styles.tableScroll}>
         <table className={styles.opportunitiesTable}>
+          <caption className="sr-only">
+            Two upcoming SGLD staking terms, 30 and 90 days, and an upcoming
+            Morpho credit-market integration on Base. Rates are not announced.
+          </caption>
           <thead>
             <tr>
               <th scope="col">Opportunity</th>
@@ -228,42 +269,48 @@ function OpportunitiesTable() {
             </tr>
           </thead>
           <tbody>
-            {PRIME_OPPORTUNITIES.map((offer) => (
+            {EARN_OPPORTUNITIES.map((offer) => (
               <tr key={offer.id}>
                 <td>
                   <OpportunityDetails offer={offer}>
                     <button
                       type="button"
                       className={styles.opportunityName}
-                      aria-label={`View Prime ${offer.months} month details`}
+                      aria-label={`View ${opportunityLabel(offer)} details`}
                     >
                       <span className={styles.primeIcon}>
-                        <Layers3 size={19} />
+                        <OfferIcon offer={offer} />
                       </span>
                       <span>
                         <span className={styles.offerTitle}>
-                         SGLD Staking <span>· {offer.months} months</span>
+                          <OfferTitle offer={offer} />
                           <ChevronRight size={13} />
                         </span>
-                        <span className={styles.providerName}>powered by Syncrate Staking</span>
+                        <span className={styles.providerName}>
+                          {offer.provider}
+                        </span>
                       </span>
                     </button>
                   </OpportunityDetails>
                 </td>
                 <td>
-                  <span className={styles.unannounced}>Not announced</span>
+                  <span className={styles.unannounced}>
+                    {offer.depositAsset ?? "Not announced"}
+                  </span>
                 </td>
-                <td>Staking</td>
+                <td>{offer.kind === "staking" ? "Staking" : "Lending"}</td>
                 <td>
                   <span className={styles.networkLabel}>
                     <BaseIcon />
-                    <span>Base</span>
+                    <span>{offer.network}</span>
                   </span>
                 </td>
                 <td>
                   <span className={styles.rateCell}>
-                    <span className={styles.upcomingBadge}>Coming soon</span>
-                    <span></span>
+                    <span className={styles.upcomingBadge}>
+                      {statusLabel(offer)}
+                    </span>
+                    <span className="sr-only">APY not announced</span>
                   </span>
                 </td>
               </tr>
@@ -274,9 +321,9 @@ function OpportunitiesTable() {
       <div
         className={styles.mobileOffers}
         role="list"
-        aria-label="Upcoming Prime opportunities"
+        aria-label="Earn opportunities"
       >
-        {PRIME_OPPORTUNITIES.map((offer) => (
+        {EARN_OPPORTUNITIES.map((offer) => (
           <article
             className={styles.mobileOffer}
             role="listitem"
@@ -284,32 +331,32 @@ function OpportunitiesTable() {
           >
             <div className={styles.mobileOfferHeading}>
               <span className={styles.primeIcon}>
-                <Layers3 size={19} />
+                <OfferIcon offer={offer} />
               </span>
               <div>
                 <h3>
-                  SGLD Staking <span>· {offer.months} months</span>
+                  <OfferTitle offer={offer} />
                 </h3>
               </div>
-              <span className={styles.upcomingBadge}>Upcoming</span>
+              <span className={styles.upcomingBadge}>{statusLabel(offer)}</span>
             </div>
             <dl>
               <div>
                 <dt>Deposit asset</dt>
-                <dd>SGLD</dd>
+                <dd>{offer.depositAsset ?? "Not announced"}</dd>
               </div>
               <div>
                 <dt>APY</dt>
-                <dd></dd>
+                <dd aria-label="APY not announced">—</dd>
               </div>
               <div>
                 <dt>Type</dt>
-                <dd>Staking</dd>
+                <dd>{offer.kind === "staking" ? "Staking" : "Lending"}</dd>
               </div>
               <div>
                 <dt>Network</dt>
                 <dd>
-                  <BaseIcon /> Base
+                  <BaseIcon /> {offer.network}
                 </dd>
               </div>
             </dl>
@@ -318,7 +365,7 @@ function OpportunitiesTable() {
                 variant="outline"
                 size="sm"
                 className={styles.mobileDetails}
-                aria-label={`View Prime ${offer.months} month details`}
+                aria-label={`View ${opportunityLabel(offer)} details`}
               >
                 View details <ArrowUpRight size={14} />
               </Button>

@@ -23,7 +23,9 @@ export async function MarketingHomepage() {
     contentUnavailable = true;
   }
   return (
-    <div className={`${styles.marketing} ${styles.homepage} ${GeistSans.variable}`}>
+    <div
+      className={`${styles.marketing} ${styles.homepage} ${GeistSans.variable}`}
+    >
       <a href="#main-content" className={styles.skipLink}>
         Skip to content
       </a>
@@ -37,12 +39,14 @@ export async function MarketingHomepage() {
             <h1 id="home-heading">
               Tokenized gold,
               <br />
-              built for 
+              built for
               <br />
               <em>DeFi.</em>
             </h1>
             <p className={styles.heroDescription}>
-              Syncrate channels onchain capital into productive real-world assets, delivering transparent, gold-backed yield built on DeFi rails.
+              Syncrate channels onchain capital into productive real-world
+              assets, delivering transparent, gold-backed yield built on DeFi
+              rails.
             </p>
             <div className={styles.heroActions}>
               <Link href="/dashboard" className={styles.primaryButton}>
@@ -59,11 +63,20 @@ export async function MarketingHomepage() {
           </div>
           <div className={styles.heroMedia}>
             <picture>
-              <source media="(prefers-reduced-motion: reduce)" srcSet="/images/gold-bullion-still.webp" />
-              <img src="/images/gold-bullion-loop.gif" width={480} height={480} alt="Gold bullion bars" fetchPriority="high" />
+              <source
+                media="(prefers-reduced-motion: reduce)"
+                srcSet="/images/gold-bullion-still.webp"
+              />
+              <img
+                src="/images/gold-bullion-loop.gif"
+                width={480}
+                height={480}
+                alt="Gold bullion bars"
+                fetchPriority="high"
+              />
             </picture>
           </div>
- </section>
+        </section>
         <section
           id="products"
           className={`${styles.container} ${styles.products}`}
@@ -82,8 +95,7 @@ export async function MarketingHomepage() {
           <div className={styles.productGrid}>
             <article className={styles.sgldProduct}>
               <div className={styles.productTop}>
-                <span className={styles.productLabel}>
-                </span>
+                <span className={styles.productLabel}></span>
                 <span></span>
               </div>
               <div className={styles.sgldHeading}>
@@ -96,7 +108,9 @@ export async function MarketingHomepage() {
                 Digital possibilities.
               </h4>
               <p>
-                Each Syncrate Gold (SGLD) is backed 1:1 by LMBA-standard physical gold bars, held in secure vaults with reputable custodians in the United Arab Emirates. 
+                Each Syncrate Gold (SGLD) is backed 1:1 by LMBA-standard
+                physical gold bars, held in secure vaults with reputable
+                custodians in the United Arab Emirates.
               </p>
               <div className={styles.productLinks}>
                 <a
@@ -128,14 +142,16 @@ export async function MarketingHomepage() {
               <div className={styles.sgldHeading}>
                 <SysgldIcon />
                 <h3>sySGLD</h3>
-                </div>
+              </div>
               <h4>
                 Yield, funded by
                 <br />
                 the gold market.
               </h4>
               <p>
-                sySGLD is Syncrate's yield-bearing gold asset, generating yield from short term gold leasing with reputable gold resellers and bullion banks in the UAE.
+                sySGLD is Syncrate's yield-bearing gold asset, generating yield
+                from short term gold leasing with reputable gold resellers and
+                bullion banks in the UAE.
               </p>
               <Link href="/sysgld" className={styles.productInfoButton}>
                 Understand sySGLD
@@ -218,7 +234,9 @@ export async function MarketingHomepage() {
                 with context.
               </h2>
               <p>
-                SGLD and sySGLD is built with transparency in mind. Our transparency dashboard brings the sourcing, custody and asset statement of Syncrate's gold bullion together.
+                SGLD and sySGLD is built with transparency in mind. Our
+                transparency dashboard brings the sourcing, custody and asset
+                statement of Syncrate's gold bullion together.
               </p>
             </div>
             <div className={styles.documentList}>
@@ -259,7 +277,8 @@ export async function MarketingHomepage() {
                 </a>
               ))}
               <p className={styles.documentNote}>
-                Documents reflect their stated dates and scope and are subject to change.
+                Documents reflect their stated dates and scope and are subject
+                to change.
               </p>
             </div>
           </div>
@@ -346,7 +365,8 @@ export async function MarketingHomepage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Read our documentation>
+                Read our documentation{" "}
+                <ArrowUpRight size={13} aria-hidden="true" />
               </a>
               <span className={styles.socialLabel}>SOCIALS</span>
               <div className={styles.socials}>
@@ -383,7 +403,9 @@ export async function MarketingHomepage() {
             <div className={styles.footerLinks}>
               <h3>RESOURCES</h3>
               <Link href="/insights">Insights</Link>
-              <a href="https://syncrate-1.gitbook.io/syncrate-docs/">Documentation</a>
+              <a href="https://syncrate-1.gitbook.io/syncrate-docs/">
+                Documentation
+              </a>
               <a href="/whitepaper.pdf">Whitepaper</a>
               <Link href="/terms">Terms & disclosures</Link>
               <a href="mailto:team@syncrate.org">Contact</a>
