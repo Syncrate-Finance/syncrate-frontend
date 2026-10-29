@@ -167,13 +167,12 @@ function OpportunityDetails({
         <div className={styles.detailsIcon}>
           <Layers3 size={23} />
         </div>
-        <span className={styles.upcomingBadge}>Upcoming</span>
+        <span className={styles.upcomingBadge}>Coming Soon</span>
         <DialogTitle className={styles.detailsTitle}>
-          Prime <span>· {offer.months} months</span>
+          SGLD Staking <span>· {offer.months} months</span>
         </DialogTitle>
         <DialogDescription className={styles.detailsDescription}>
-          A planned staking opportunity from Syncrate. It is not open for
-          deposits.
+          Lock SGLD and earn more SGLD alongside Sync Points.  
         </DialogDescription>
         <dl className={styles.detailsGrid}>
           <div>
@@ -188,7 +187,7 @@ function OpportunityDetails({
           </div>
           <div>
             <dt>Deposit asset</dt>
-            <dd>S</dd>
+            <dd>SGLD</dd>
           </div>
           <div>
             <dt>APY</dt>
@@ -205,8 +204,8 @@ function OpportunityDetails({
             <Button variant="outline">Close</Button>
           </DialogClose>
           <Button asChild>
-            <Link href="/sgld">
-              Explore SGLD <ArrowUpRight size={14} />
+            <Link href="/staking">
+              Explore SGLD Staking <ArrowUpRight size={14} />
             </Link>
           </Button>
         </div>
