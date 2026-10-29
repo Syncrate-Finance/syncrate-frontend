@@ -6,13 +6,10 @@ import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   ArrowUpRight,
-  Check,
   ChevronRight,
   CircleHelp,
-  Clock3,
   Layers3,
   RefreshCw,
-  ShieldCheck,
 } from "lucide-react";
 import { formatUnits } from "viem";
 import { Button } from "@/components/ui/button";
@@ -91,7 +88,6 @@ function PortfolioCard() {
     >
       <div className={styles.portfolioHeading}>
         <h2 id="portfolio-heading">Your portfolio</h2>
-        <span>SGLD · Base</span>
       </div>
       <div
         className={styles.portfolioValue}
@@ -139,8 +135,6 @@ function PortfolioCard() {
           <>
             <span className={styles.liveDot} />
             {isFetching ? "Updating balance…" : "SGLD balance on Base"}
-            <span className={styles.valueDivider}>·</span>
-            <span>USD valuation unavailable</span>
           </>
         )}
       </div>
@@ -302,27 +296,26 @@ function OpportunitiesTable() {
               </span>
               <div>
                 <h3>
-                  Prime <span>· {offer.months} months</span>
+                  SGLD Staking <span>· {offer.months} months</span>
                 </h3>
-                <span>Syncrate</span>
               </div>
               <span className={styles.upcomingBadge}>Upcoming</span>
             </div>
             <dl>
               <div>
                 <dt>Deposit asset</dt>
-                <dd>Not announced</dd>
+                <dd>SGLD</dd>
               </div>
               <div>
                 <dt>APY</dt>
-                <dd>Not announced</dd>
+                <dd></dd>
               </div>
               <div>
                 <dt>Type</dt>
                 <dd>Staking</dd>
               </div>
               <div>
-                <dt>Planned network</dt>
+                <dt>Network</dt>
                 <dd>
                   <BaseIcon /> Base
                 </dd>
@@ -413,40 +406,7 @@ export function DashboardOverview({
                   <Positions />
                 </TabsContent>
               </Tabs>
-              {view === "all" && (
-                <div className={styles.catalogueNote}>
-                  <Clock3 size={13} />
-                  <span>
-                    Prime is in development. Terms and rates will be announced
-                    before launch.
-                  </span>
-                </div>
-              )}
             </section>
-          </div>
-          <section
-            className={styles.informationStrip}
-            aria-labelledby="sysgld-overview"
-          >
-            <span className={styles.informationIcon}>
-              <ShieldCheck size={22} strokeWidth={1.3} />
-            </span>
-            <div>
-              <h2 id="sysgld-overview">Understand sySGLD</h2>
-              <p>
-                A separate gold-financing strategy. Explore how it differs from
-                holding SGLD.
-              </p>
-            </div>
-            <Link href="/sysgld">
-              Learn more <ArrowUpRight size={15} />
-            </Link>
-          </section>
-          <div className={styles.readOnlyNote}>
-            <Check size={12} /> Base network <span>·</span>
-            <Link href="/terms">
-              Terms & disclosures <ArrowUpRight size={11} />
-            </Link>
           </div>
         </main>
       </DashboardShell>

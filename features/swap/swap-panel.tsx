@@ -564,22 +564,6 @@ export function SwapPanel() {
           <RefreshCw size={12} />
         </button>
       </div>
-      {data && (
-        <p className={styles.quoteTime}>
-          Chainlink · Quote{" "}
-          <time
-            dateTime={new Date(
-              Number(data.priceUpdatedAt) * 1000,
-            ).toISOString()}
-          >
-            {new Date(Number(data.priceUpdatedAt) * 1000).toLocaleTimeString(
-              "en-GB",
-              { timeZone: "UTC", hour12: false },
-            )}{" "}
-            UTC
-          </time>
-        </p>
-      )}
       {mode === "redeem" && (
         <p className={styles.note}>
           Redemption fee: {data ? formatUnits(data.feeBps, 2) + "%" : "—"}.

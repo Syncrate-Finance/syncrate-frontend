@@ -2,6 +2,8 @@
 
 Owner-authorized scope, October 29, 2026: embed the existing Base mint/redeem contracts in the app, remove Net APY and estimated monthly yield, and show “Your positions will appear here”. The public homepage, old /app route, CMS and informational sySGLD are preserved. No new financial backend, router or contracts are introduced.
 
+Owner follow-up: remove the dashboard's Understand sySGLD information strip and the visible Chainlink quote/time line beneath Live gold price. The feed, price refresh, timestamp validation and stale-price protection remain active. The separate informational sySGLD page and footer link are preserved. Latest owner edits to portfolio labels, mobile offer content and the SGLD icon are carried forward; the deleted announcement and bottom note are omitted. Desktop offer names remain as edited in source; no live rates or staking actions are introduced.
+
 ## Contracts and settlement
 
 Verified on Base (8453), block 53242826:
