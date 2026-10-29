@@ -55,7 +55,7 @@ export function MarketingHeader() {
           ))}
         </nav>
         <Link className={styles.headerLaunch} href="/dashboard">
-          Open app <ArrowUpRight size={15} />
+          >
         </Link>
         <details ref={menu} className={styles.mobileMenu}>
           <summary aria-label="Toggle navigation">
