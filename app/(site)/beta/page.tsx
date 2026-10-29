@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { APP_ORIGIN } from '@/config/site'
 
 interface FormData {
   name: string
@@ -192,7 +193,7 @@ export default function PrimeBetaOnboardingPage() {
               <p className="text-[11px] text-[#666666] leading-normal mt-0.5">
                 Applicants should already hold SGLD. If you haven’t minted yet, you can do so on the{' '}
                 <a
-                  href="https://syncrate.org/app"
+                  href={APP_ORIGIN}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white underline underline-offset-2 hover:text-[#0037FF] transition-colors"

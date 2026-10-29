@@ -18,6 +18,7 @@ import {
 import {
   getOpportunityView,
   EARN_OPPORTUNITIES,
+  SAFFRON_POOL_URL,
 } from "../../features/opportunities/catalog";
 const wallet = "0x1111111111111111111111111111111111111111" as Address;
 function fixture(
@@ -139,28 +140,44 @@ test("display formatting preserves large integer precision and distinguishes dus
   );
   assert.throws(() => formatSgldBalance(-1n));
 });
-test("Earn has exactly 30/90 day staking tiers and a separate upcoming credit integration", () => {
+test("Earn lists the supplied Saffron LP first and keeps 30/90 day staking unavailable", () => {
   const staking = EARN_OPPORTUNITIES.filter(
     (offer) => offer.kind === "staking",
   );
-  const credit = EARN_OPPORTUNITIES.filter((offer) => offer.kind === "credit");
+  const liquidity = EARN_OPPORTUNITIES.filter(
+    (offer) => offer.kind === "liquidity",
+  );
   assert.deepEqual(
     staking.map((offer) => offer.days),
     [30, 90],
   );
   assert.ok(staking.every((offer) => offer.depositAsset === "SGLD"));
-  assert.equal(credit.length, 1);
-  assert.equal(credit[0].name, "Lend on Morpho");
-  assert.equal(credit[0].days, null);
-  assert.equal(credit[0].depositAsset, null);
+  assert.equal(liquidity.length, 1);
+  assert.equal(EARN_OPPORTUNITIES[0], liquidity[0]);
+  assert.equal(liquidity[0].name, "LP on Uniswap");
+  assert.equal(liquidity[0].integration, "Saffron");
+  assert.equal(liquidity[0].days, 14);
+  assert.equal(liquidity[0].depositAsset, "SGLD/USDC");
+  assert.equal(liquidity[0].apr, 300);
+  assert.equal(liquidity[0].actionUrl, SAFFRON_POOL_URL);
+  const pool = new URL(liquidity[0].actionUrl);
+  assert.equal(pool.origin, "https://app.uniswap.org");
+  assert.equal(
+    pool.pathname,
+    "/explore/pools/base/0xC5963Bd6d6Cf713F0994fFd867D4d639AD45EC6E",
+  );
+  assert.ok(
+    staking.every(
+      (offer) =>
+        offer.status === "upcoming" &&
+        offer.apr === null &&
+        offer.actionUrl === null,
+    ),
+  );
   assert.equal(new Set(EARN_OPPORTUNITIES.map((offer) => offer.id)).size, 3);
   assert.ok(
     EARN_OPPORTUNITIES.every(
-      (offer) =>
-        offer.status === "upcoming" &&
-        offer.network === "Base" &&
-        offer.apy === null &&
-        offer.actionUrl === null,
+      (offer) => offer.network === "Base" && offer.apy === null,
     ),
   );
 });

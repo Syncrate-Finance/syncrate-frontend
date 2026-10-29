@@ -1,9 +1,10 @@
-'use client'
-import Link from 'next/link'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { ArrowUpRight, ChevronDown, Menu } from 'lucide-react'
-import { GeistSans } from 'geist/font/sans'
-import { Button } from '@/components/ui/button'
+"use client";
+import { APP_ORIGIN, WEBSITE_ORIGIN } from "@/config/site";
+import Link from "next/link";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ArrowUpRight, ChevronDown, Menu } from "lucide-react";
+import { GeistSans } from "geist/font/sans";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogTrigger,
@@ -11,31 +12,31 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
-} from '@/components/ui/dialog'
-import styles from './dashboard.module.css'
+} from "@/components/ui/dialog";
+import styles from "./dashboard.module.css";
 const navigation = [
-  { href: '/dashboard', label: 'Overview' },
-  { href: '/sgld', label: 'SGLD' },
-  { href: '/sgld#transparency', label: 'Transparency' },
-  { href: 'https://docs.syncrate.org', label: 'Docs', external: true },
-]
+  { href: APP_ORIGIN, label: "Overview" },
+  { href: WEBSITE_ORIGIN + "/sgld", label: "SGLD" },
+  { href: WEBSITE_ORIGIN + "/sgld#transparency", label: "Transparency" },
+  { href: "https://docs.syncrate.org", label: "Docs", external: true },
+];
 export function BaseIcon() {
   return (
     <span className={styles.baseIcon} aria-hidden="true">
       <span />
     </span>
-  )
+  );
 }
 export function Brand({ footer = false }: { footer?: boolean }) {
   return (
     <Link
-      href={footer ? '/' : '/dashboard'}
+      href={footer ? WEBSITE_ORIGIN : APP_ORIGIN}
       className={styles.brand}
-      aria-label={footer ? 'Syncrate home' : 'Syncrate overview'}
+      aria-label={footer ? "Syncrate home" : "Syncrate overview"}
     >
       <span className={styles.brandMark} aria-hidden="true" />
     </Link>
-  )
+  );
 }
 export function WalletControl({ compact = false }: { compact?: boolean }) {
   return (
@@ -48,12 +49,12 @@ export function WalletControl({ compact = false }: { compact?: boolean }) {
         openConnectModal,
         mounted,
       }) => {
-        const wrongNetwork = account && chain?.id !== 8453
+        const wrongNetwork = account && chain?.id !== 8453;
         return (
           <Button
             type="button"
             variant="gold"
-            size={compact ? 'default' : 'sm'}
+            size={compact ? "default" : "sm"}
             disabled={!mounted}
             className={styles.walletButton}
             onClick={
@@ -66,30 +67,30 @@ export function WalletControl({ compact = false }: { compact?: boolean }) {
             aria-label={
               account
                 ? wrongNetwork
-                  ? 'Switch wallet to Base'
-                  : 'Open connected wallet'
-                : 'Connect wallet'
+                  ? "Switch wallet to Base"
+                  : "Open connected wallet"
+                : "Connect wallet"
             }
           >
             {account ? (
               <>
                 <BaseIcon />
-                {wrongNetwork ? 'Switch to Base' : account.displayName}
+                {wrongNetwork ? "Switch to Base" : account.displayName}
                 <ChevronDown size={13} />
               </>
             ) : (
-              'Connect Wallet'
+              "Connect Wallet"
             )}
           </Button>
-        )
+        );
       }}
     </ConnectButton.Custom>
-  )
+  );
 }
 export function DashboardHeader({
-  active = 'overview',
+  active = "overview",
 }: {
-  active?: 'overview' | 'information'
+  active?: "overview" | "information";
 }) {
   return (
     <header className={styles.header}>
@@ -101,16 +102,16 @@ export function DashboardHeader({
               key={item.label}
               href={item.href}
               {...(item.external
-                ? { target: '_blank', rel: 'noopener noreferrer' }
+                ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
               className={
-                active === 'overview' && item.label === 'Overview'
+                active === "overview" && item.label === "Overview"
                   ? styles.activeNavigation
                   : undefined
               }
               aria-current={
-                active === 'overview' && item.label === 'Overview'
-                  ? 'page'
+                active === "overview" && item.label === "Overview"
+                  ? "page"
                   : undefined
               }
             >
@@ -148,7 +149,7 @@ export function DashboardHeader({
                     <Link
                       href={item.href}
                       {...(item.external
-                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
                     >
                       {item.label}
@@ -162,7 +163,7 @@ export function DashboardHeader({
         </div>
       </div>
     </header>
-  )
+  );
 }
 export function DashboardFooter() {
   return (
@@ -182,14 +183,14 @@ export function DashboardFooter() {
         </div>
         <div className={styles.footerLinks}>
           <h2>Products</h2>
-          <Link href="/sgld">SGLD</Link>
-          <Link href="/sysgld">sySGLD</Link>
-          <Link href="/dashboard">Overview</Link>
+          <Link href={WEBSITE_ORIGIN + "/sgld"}>SGLD</Link>
+          <Link href={WEBSITE_ORIGIN + "/sysgld"}>sySGLD</Link>
+          <Link href={APP_ORIGIN}>Overview</Link>
         </div>
         <div className={styles.footerLinks}>
           <h2>Resources</h2>
-          <Link href="/insights">Insights</Link>
-          <Link href="/terms">Terms & disclosures</Link>
+          <Link href={WEBSITE_ORIGIN + "/insights"}>Insights</Link>
+          <Link href={WEBSITE_ORIGIN + "/terms"}>Terms & disclosures</Link>
           <a
             href="https://github.com/Syncrate-Finance"
             target="_blank"
@@ -206,14 +207,14 @@ export function DashboardFooter() {
         </span>
       </div>
     </footer>
-  )
+  );
 }
 export function DashboardShell({
   children,
-  active = 'overview',
+  active = "overview",
 }: {
-  children: React.ReactNode
-  active?: 'overview' | 'information'
+  children: React.ReactNode;
+  active?: "overview" | "information";
 }) {
   return (
     <div className={`${styles.dashboard} ${GeistSans.variable}`}>
@@ -224,5 +225,5 @@ export function DashboardShell({
       {children}
       <DashboardFooter />
     </div>
-  )
+  );
 }

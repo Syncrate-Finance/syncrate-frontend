@@ -1,14 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
   ChevronRight,
   CircleHelp,
   Layers3,
-  Landmark,
   RefreshCw,
 } from "lucide-react";
 import { formatUnits } from "viem";
@@ -162,8 +160,14 @@ function OfferIcon({
   offer: EarnOpportunity;
   size?: number;
 }) {
-  return offer.kind === "credit" ? (
-    <Landmark size={size} />
+  return offer.kind === "liquidity" ? (
+    <Image
+      src={offer.logo}
+      width={size + 12}
+      height={size + 12}
+      alt=""
+      className={styles.saffronLogo}
+    />
   ) : (
     <Layers3 size={size} />
   );
@@ -182,7 +186,7 @@ function OfferTitle({ offer }: { offer: EarnOpportunity }) {
   );
 }
 function statusLabel(offer: EarnOpportunity) {
-  return offer.kind === "staking" ? "Coming soon" : "Upcoming";
+  return offer.kind === "staking" ? "Coming soon" : `${offer.apr}% APR`;
 }
 function OpportunityDetails({
   offer,
@@ -205,7 +209,7 @@ function OpportunityDetails({
         <DialogDescription className={styles.detailsDescription}>
           {offer.kind === "staking"
             ? "Lock SGLD and earn more SGLD alongside Sync Points. Coming soon; deposits are not open."
-            : "An upcoming credit-market integration. Lending access and market details will be announced before launch."}
+            : "Provide both SGLD and USDC liquidity on Uniswap, via Saffron on Base."}
         </DialogDescription>
         <dl className={styles.detailsGrid}>
           <div>
@@ -216,6 +220,12 @@ function OpportunityDetails({
                 : offer.integration}
             </dd>
           </div>
+          {offer.kind === "liquidity" && (
+            <div>
+              <dt>Duration</dt>
+              <dd>2 weeks</dd>
+            </div>
+          )}
           <div>
             <dt>Network</dt>
             <dd>
@@ -224,27 +234,44 @@ function OpportunityDetails({
           </div>
           <div>
             <dt>Deposit asset</dt>
-            <dd>{offer.depositAsset ?? "Not announced"}</dd>
+            <dd>
+              <span>
+                {offer.depositAsset}
+                {offer.kind === "liquidity" && (
+                  <span className={styles.assetSides}>
+                    Both sides of liquidity
+                  </span>
+                )}
+              </span>
+            </dd>
           </div>
           <div>
-            <dt>APY</dt>
-            <dd>Not announced</dd>
+            <dt>APR</dt>
+            <dd>{offer.apr === null ? "Not announced" : `${offer.apr}%`}</dd>
           </div>
         </dl>
         <p className={styles.detailsNote}>
           {offer.kind === "staking"
             ? "Rates, eligibility and participation terms will be published when approved. No staking contract or deposit action is available for this offer."
-            : "This integration is upcoming. No market, rate or lending action is configured yet."}
+            : "Stated annual rate (APR): 300%. Program duration: 2 weeks. The pool opens on Uniswap."}
         </p>
         <div className={styles.detailsActions}>
           <DialogClose asChild>
             <Button variant="outline">Close</Button>
           </DialogClose>
-          <Button disabled>
-            {offer.kind === "staking"
-              ? "Explore SGLD Staking"
-              : "Lending coming soon"}
-          </Button>
+          {offer.kind === "staking" ? (
+            <Button disabled>Explore SGLD Staking</Button>
+          ) : (
+            <Button asChild>
+              <a
+                href={offer.actionUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Uniswap pool <ArrowUpRight size={14} />
+              </a>
+            </Button>
+          )}
         </div>
       </DialogContent>
     </Dialog>
@@ -256,8 +283,8 @@ function OpportunitiesTable() {
       <div className={styles.tableScroll}>
         <table className={styles.opportunitiesTable}>
           <caption className="sr-only">
-            Two upcoming SGLD staking terms, 30 and 90 days, and an upcoming
-            Morpho credit-market integration on Base. Rates are not announced.
+            LP on Uniswap via Saffron on Base, stated APR 300% for a two-week
+            program, followed by upcoming SGLD staking terms of 30 and 90 days.
           </caption>
           <thead>
             <tr>
@@ -265,7 +292,7 @@ function OpportunitiesTable() {
               <th scope="col">Deposit asset</th>
               <th scope="col">Type</th>
               <th scope="col">Network</th>
-              <th scope="col">APY</th>
+              <th scope="col">APR</th>
             </tr>
           </thead>
           <tbody>
@@ -298,7 +325,9 @@ function OpportunitiesTable() {
                     {offer.depositAsset ?? "Not announced"}
                   </span>
                 </td>
-                <td>{offer.kind === "staking" ? "Staking" : "Lending"}</td>
+                <td>
+                  {offer.kind === "staking" ? "Staking" : "Liquidity Provision"}
+                </td>
                 <td>
                   <span className={styles.networkLabel}>
                     <BaseIcon />
@@ -307,10 +336,20 @@ function OpportunitiesTable() {
                 </td>
                 <td>
                   <span className={styles.rateCell}>
-                    <span className={styles.upcomingBadge}>
+                    <span
+                      className={
+                        offer.kind === "liquidity"
+                          ? styles.aprValue
+                          : styles.upcomingBadge
+                      }
+                    >
                       {statusLabel(offer)}
                     </span>
-                    <span className="sr-only">APY not announced</span>
+                    {offer.kind === "liquidity" ? (
+                      <span>2 weeks</span>
+                    ) : (
+                      <span className="sr-only">APR not announced</span>
+                    )}
                   </span>
                 </td>
               </tr>
@@ -337,6 +376,7 @@ function OpportunitiesTable() {
                 <h3>
                   <OfferTitle offer={offer} />
                 </h3>
+                <span className={styles.providerName}>{offer.provider}</span>
               </div>
               <span className={styles.upcomingBadge}>{statusLabel(offer)}</span>
             </div>
@@ -346,12 +386,20 @@ function OpportunitiesTable() {
                 <dd>{offer.depositAsset ?? "Not announced"}</dd>
               </div>
               <div>
-                <dt>APY</dt>
-                <dd aria-label="APY not announced">—</dd>
+                <dt>APR</dt>
+                <dd
+                  aria-label={
+                    offer.apr === null ? "APR not announced" : undefined
+                  }
+                >
+                  {offer.apr === null ? "—" : `${offer.apr}%`}
+                </dd>
               </div>
               <div>
                 <dt>Type</dt>
-                <dd>{offer.kind === "staking" ? "Staking" : "Lending"}</dd>
+                <dd>
+                  {offer.kind === "staking" ? "Staking" : "Liquidity Provision"}
+                </dd>
               </div>
               <div>
                 <dt>Network</dt>
@@ -359,6 +407,12 @@ function OpportunitiesTable() {
                   <BaseIcon /> {offer.network}
                 </dd>
               </div>
+              {offer.kind === "liquidity" && (
+                <div>
+                  <dt>Duration</dt>
+                  <dd>2 weeks</dd>
+                </div>
+              )}
             </dl>
             <OpportunityDetails offer={offer}>
               <Button
@@ -394,11 +448,12 @@ export function DashboardOverview({
   function changeView(next: string) {
     const selected = next === "positions" ? "positions" : "all";
     setView(selected);
-    router.replace(
-      window.location.pathname +
-        (selected === "positions" ? "?view=positions" : ""),
-      { scroll: false },
-    );
+    const query = new URLSearchParams(window.location.search);
+    if (selected === "positions") query.set("view", "positions");
+    else query.delete("view");
+    router.replace("/" + (query.size ? "?" + query.toString() : ""), {
+      scroll: false,
+    });
   }
   return (
     <TooltipProvider delayDuration={250}>

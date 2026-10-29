@@ -1,26 +1,49 @@
-type UpcomingBaseOpportunity = {
+type BaseOpportunity = {
   id: string;
   name: string;
   provider: string;
   network: "Base";
-  status: "upcoming";
   apy: null;
-  actionUrl: null;
 };
-export type StakingOpportunity = UpcomingBaseOpportunity & {
+export type StakingOpportunity = BaseOpportunity & {
   kind: "staking";
   days: 30 | 90;
   depositAsset: "SGLD";
+  status: "upcoming";
+  apr: null;
+  actionUrl: null;
 };
-export type CreditOpportunity = UpcomingBaseOpportunity & {
-  kind: "credit";
-  integration: "Morpho";
-  days: null;
-  depositAsset: null;
+export type LiquidityOpportunity = BaseOpportunity & {
+  kind: "liquidity";
+  integration: "Saffron";
+  days: 14;
+  depositAsset: "SGLD/USDC";
+  apr: 300;
+  status: "external";
+  actionUrl: typeof SAFFRON_POOL_URL;
+  logo: "/saffron-logo.jpg";
 };
-export type EarnOpportunity = StakingOpportunity | CreditOpportunity;
+export type EarnOpportunity = StakingOpportunity | LiquidityOpportunity;
+
+export const SAFFRON_POOL_URL =
+  "https://app.uniswap.org/explore/pools/base/0xC5963Bd6d6Cf713F0994fFd867D4d639AD45EC6E";
 
 export const EARN_OPPORTUNITIES = [
+  {
+    id: "saffron-uniswap-sgld-usdc",
+    kind: "liquidity",
+    name: "LP on Uniswap",
+    provider: "via Saffron",
+    integration: "Saffron",
+    days: 14,
+    status: "external",
+    network: "Base",
+    depositAsset: "SGLD/USDC",
+    apr: 300,
+    apy: null,
+    actionUrl: SAFFRON_POOL_URL,
+    logo: "/saffron-logo.jpg",
+  },
   {
     id: "sgld-staking-30d",
     kind: "staking",
@@ -31,6 +54,7 @@ export const EARN_OPPORTUNITIES = [
     network: "Base",
     depositAsset: "SGLD",
     apy: null,
+    apr: null,
     actionUrl: null,
   },
   {
@@ -43,19 +67,7 @@ export const EARN_OPPORTUNITIES = [
     network: "Base",
     depositAsset: "SGLD",
     apy: null,
-    actionUrl: null,
-  },
-  {
-    id: "morpho-credit-upcoming",
-    kind: "credit",
-    name: "Lend on Morpho",
-    provider: "Credit markets",
-    integration: "Morpho",
-    days: null,
-    status: "upcoming",
-    network: "Base",
-    depositAsset: null,
-    apy: null,
+    apr: null,
     actionUrl: null,
   },
 ] as const satisfies readonly EarnOpportunity[];

@@ -1,6 +1,6 @@
 # Syncrate frontend
 
-Next.js, React, TypeScript, Tailwind, Wagmi/RainbowKit, Payload CMS and PostgreSQL. This is local development work from the owner-provided archive. No production deployment is authorized.
+Next.js, React, TypeScript, Tailwind, Wagmi/RainbowKit, Payload CMS and PostgreSQL. This is local development work from the owner-provided archive. The owner approved live publishing and app.syncrate.org activation on October 29, 2026; see docs/saffron-and-app-release.md for release scope and acceptance limits.
 
 ## Requirements
 
@@ -11,7 +11,7 @@ Node 24.22.1 and pnpm 11.25.0; a local PostgreSQL database. Keep separate databa
 1. Copy .env.example to .env.local; set an independent random PAYLOAD_SECRET and a local DATABASE_URL. Do not overwrite an existing environment file blindly.
 2. Run pnpm db:migrate, pnpm cms:types and pnpm cms:importmap.
 3. To create the first LOCAL administrator only, set CMS_BOOTSTRAP_EMAIL and CMS_BOOTSTRAP_PASSWORD (at least 16 characters) in your shell environment, then run pnpm cms:bootstrap. Do not pass credentials as command arguments. Public staff registration is disabled.
-4. Run pnpm dev. The CMS is at /cms; the existing onchain /admin and /app routes keep their URLs.
+4. Run pnpm dev. The CMS is at /cms; the existing onchain /admin retains its URL; legacy /app redirects to https://app.syncrate.org.
 
 Run pnpm typecheck and pnpm test. Integration tests require APP_ENV=test and a disposable local DATABASE_URL whose database name ends in _test. Run pnpm db:migrate then pnpm test:integration. The test database may be modified; never use customer or production data.
 
@@ -29,17 +29,17 @@ Editors can draft, publishers can publish, administrators manage accounts. Draft
 
 ## Scope boundaries
 
-The public homepage and /dashboard now use the Theo-inspired composition. /dashboard reads real SGLD balances on Base and Buy SGLD links to https://syncrate.org/app. No new transaction executor is included. Prime 3/6/9-month offers remain Upcoming; sySGLD is informational only. See docs/repository-review.md for baseline findings and the external approved architecture specification for full scope.
+The independent Syncrate homepage remains on the marketing origin. https://app.syncrate.org renders the portfolio and existing wallet-based SGLD mint/redeem interface. No backend transaction executor is included. The external Saffron SGLD/USDC pool is first in Earn, followed by upcoming 30/90-day SGLD staking; sySGLD is informational only. See docs/repository-review.md for baseline findings and the external approved architecture specification for full scope.
 
 ## Public site and CMS publishing
 
-The rebuilt homepage is `/`; the read-only portfolio is `/dashboard`. `/dashboard?view=positions` opens My Positions. `/sysgld` is informational only. The existing `/app` mint route is preserved.
+The marketing homepage is `/` on syncrate.org. The app root is https://app.syncrate.org; `?view=positions` opens My Positions. Legacy app paths redirect to that origin. Non-production local/Vercel review uses `/?preview=app` (and optionally `&view=positions`). `/sysgld` remains informational only.
 
 Publish Pages through the CMS to make them available at `/content/<slug>`. Publish Articles to expose them at `/insights/<slug>` and the paginated `/insights` index; the newest articles also appear on the homepage. These routes enforce anonymous published-only access, read the database on each request, and immediately reflect unpublishing. Drafts return 404. This phase does not add public draft previews. SEO titles and descriptions come from the CMS's SEO fields. Private uploads are intentionally omitted from public rich text until storage/publication access is configured. Older static articles retain their existing URLs.
 
-Read-only wallet queries use the public Base transport provided by Wagmi. Wallet addresses are sent to the selected public RPC provider; they are not stored in the CMS. The new overview requests no signature or transaction. USD valuations and earnings/APY remain unavailable until verified data integrations exist. Prime's 3/6/9-month terms are upcoming with no actions or invented rates. An account change selects a separate cache key; a network mismatch or read failure hides the balance. Displayed token amounts use BigInt rather than floating-point arithmetic.
+Read-only wallet queries use the public Base transport provided by Wagmi. Wallet addresses are sent to the selected public RPC provider; they are not stored in the CMS. Portfolio reads request no signature; mint/redeem actions require separate wallet approval and confirmation. Earnings remain unavailable until verified position/reward integrations exist. Staking remains coming soon; the Saffron external offer uses the owner-stated 300% APR and two-week duration. An account change selects a separate cache key; a network mismatch or read failure hides the balance. Displayed token amounts use BigInt rather than floating-point arithmetic.
 
-See docs/phase2-status.md for verification and remaining work, docs/dependency-security.md for release blockers, and docs/homepage-assets.md for the original visual asset. The build does not establish production readiness. No deployment, GitHub push or blockchain write has been made.
+See docs/phase2-status.md for verification and remaining work, docs/dependency-security.md for release blockers, and docs/homepage-assets.md for the original visual asset. The build does not establish production readiness. See the latest release handoff for GitHub/deployment evidence. No agent-submitted mainnet blockchain write has been made.
 
 
 ## Dependency build-script policy

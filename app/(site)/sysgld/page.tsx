@@ -1,21 +1,22 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { ArrowLeft, ArrowUpRight, Landmark, Layers3 } from 'lucide-react'
-import { DashboardShell } from '@/features/dashboard/shell'
-import { Button } from '@/components/ui/button'
-import styles from '@/features/dashboard/dashboard.module.css'
+import { APP_ORIGIN } from "@/config/site";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft, ArrowUpRight, Landmark, Layers3 } from "lucide-react";
+import { DashboardShell } from "@/features/dashboard/shell";
+import { Button } from "@/components/ui/button";
+import styles from "@/features/dashboard/dashboard.module.css";
 export const metadata: Metadata = {
-  title: 'sySGLD | Syncrate',
+  title: "sySGLD | Syncrate",
   description:
-    'Understand sySGLD and how a gold-financing strategy differs from holding SGLD.',
-  alternates: { canonical: '/sysgld' },
-}
-export const viewport = { themeColor: '#f5f7f8' }
+    "Understand sySGLD and how a gold-financing strategy differs from holding SGLD.",
+  alternates: { canonical: "/sysgld" },
+};
+export const viewport = { themeColor: "#f5f7f8" };
 export default function SySGLDPage() {
   return (
     <DashboardShell active="information">
       <main className={styles.infoMain} id="main-content">
-        <Link className={styles.backLink} href="/dashboard">
+        <Link className={styles.backLink} href={APP_ORIGIN}>
           <ArrowLeft size={13} /> Back to overview
         </Link>
         <section className={styles.infoHero}>
@@ -61,11 +62,11 @@ export default function SySGLDPage() {
         <p className={styles.infoRisk}>
           Returns are variable and not guaranteed. Gold financing introduces
           counterparty, custody, operational and market risks, including
-          potential loss. Review the{' '}
+          potential loss. Review the{" "}
           <Link href="/terms">terms and disclosures</Link> before considering
           any product.
         </p>
       </main>
     </DashboardShell>
-  )
+  );
 }

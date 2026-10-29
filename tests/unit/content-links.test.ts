@@ -17,8 +17,8 @@ test('published links reject active schemes, credentials, controls and ambiguous
   ])
     assert.equal(safeContentHref(value), null, String(value))
   assert.equal(
-    safeContentHref('/dashboard?view=positions'),
-    '/dashboard?view=positions',
+    safeContentHref('https://app.syncrate.org?view=positions'),
+    'https://app.syncrate.org/?view=positions',
   )
   assert.equal(
     safeContentHref('https://docs.syncrate.org'),

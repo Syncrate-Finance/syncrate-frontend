@@ -1,31 +1,32 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { ArrowLeft, ArrowUpRight } from 'lucide-react'
-import { notFound } from 'next/navigation'
-import { listPublishedArticles } from '@/server/services/content'
-import { DashboardShell } from '@/features/dashboard/shell'
-import styles from '@/features/content/content.module.css'
-export const dynamic = 'force-dynamic'
-export const viewport = { themeColor: '#f5f7f8' }
+import { APP_ORIGIN } from "@/config/site";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { notFound } from "next/navigation";
+import { listPublishedArticles } from "@/server/services/content";
+import { DashboardShell } from "@/features/dashboard/shell";
+import styles from "@/features/content/content.module.css";
+export const dynamic = "force-dynamic";
+export const viewport = { themeColor: "#f5f7f8" };
 export const metadata: Metadata = {
-  title: 'Insights | Syncrate',
-  description: 'Product updates and insights from Syncrate.',
-  alternates: { canonical: '/insights' },
-}
+  title: "Insights | Syncrate",
+  description: "Product updates and insights from Syncrate.",
+  alternates: { canonical: "/insights" },
+};
 export default async function Insights({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const { page: value } = await searchParams
-  if (value && !/^[1-9][0-9]{0,3}$/.test(value)) notFound()
-  const page = Number(value || 1)
-  const result = await listPublishedArticles(page)
-  if (page > 1 && page > result.totalPages) notFound()
+  const { page: value } = await searchParams;
+  if (value && !/^[1-9][0-9]{0,3}$/.test(value)) notFound();
+  const page = Number(value || 1);
+  const result = await listPublishedArticles(page);
+  if (page > 1 && page > result.totalPages) notFound();
   return (
     <DashboardShell active="information">
       <main className={styles.main} id="main-content">
-        <Link className={styles.back} href="/dashboard">
+        <Link className={styles.back} href={APP_ORIGIN}>
           <ArrowLeft size={14} /> Back to overview
         </Link>
         <header className={styles.indexHeading}>
@@ -70,12 +71,12 @@ export default async function Insights({
               SGLD is Live: Gold Built for DeFi <ArrowUpRight size={16} />
             </Link>
             <Link href="/blog/rethinking-the-gold-thesis">
-              The Opportunity Cost: Rethinking the Gold Thesis{' '}
+              The Opportunity Cost: Rethinking the Gold Thesis{" "}
               <ArrowUpRight size={16} />
             </Link>
           </section>
         )}
       </main>
     </DashboardShell>
-  )
+  );
 }
