@@ -110,11 +110,25 @@
 }
 .topGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.92fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 400px);
+  align-items: start;
   gap: 24px;
   margin-bottom: 24px;
 }
+.swapColumn {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-width: 0;
+}
+.topGrid > .opportunitiesCard { min-width: 0; }
+.topGrid .opportunitiesToolbar { flex-wrap: wrap; }
+.topGrid .opportunitiesActions { margin-left: auto; }
+@media (min-width: 841px) and (max-width: 1180px) {
+  .swapColumn { grid-row: 1; }
+  .topGrid > .opportunitiesCard { grid-column: 1 / -1; }
+}
 .portfolioCard {
+  align-self: start;
   min-height: 239px;
   background: #fff;
   border: 1px solid #f0f3f3;
@@ -199,6 +213,7 @@
   gap: 4px;
   white-space: nowrap;
 }
+.metrics > div:only-child { grid-column: 1 / -1; }
 .metrics dd {
   font-size: 27px;
   line-height: 1.2;
@@ -919,9 +934,10 @@
     padding: 24px 20px 0;
   }
   .topGrid {
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
+  .swapColumn { grid-column: auto; grid-row: auto; }
   .portfolioCard,
   .buyCard {
     border-radius: 23px;

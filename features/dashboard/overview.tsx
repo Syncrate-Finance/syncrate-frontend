@@ -1,8 +1,8 @@
-'use client'
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+"use client";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -13,17 +13,16 @@ import {
   Layers3,
   RefreshCw,
   ShieldCheck,
-  Wallet,
-} from 'lucide-react'
-import { formatUnits } from 'viem'
-import { Button } from '@/components/ui/button'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+} from "lucide-react";
+import { formatUnits } from "viem";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,
-} from '@/components/ui/tooltip'
+} from "@/components/ui/tooltip";
 import {
   Dialog,
   DialogTrigger,
@@ -31,22 +30,23 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import {
   PRIME_OPPORTUNITIES,
   type PrimeOpportunity,
   type OpportunityView,
-} from '@/features/opportunities/catalog'
-import { useSgldBalance } from '@/features/portfolio/use-sgld-balance'
-import { formatSgldBalance } from '@/features/portfolio/sgld-read'
-import { BaseIcon, DashboardShell, WalletControl } from './shell'
-import styles from './dashboard.module.css'
+} from "@/features/opportunities/catalog";
+import { useSgldBalance } from "@/features/portfolio/use-sgld-balance";
+import { formatSgldBalance } from "@/features/portfolio/sgld-read";
+import { BaseIcon, DashboardShell } from "./shell";
+import { SwapPanel } from "@/features/swap/swap-panel";
+import styles from "./dashboard.module.css";
 function Help({
   label,
   children,
 }: {
-  label: string
-  children: React.ReactNode
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <Tooltip>
@@ -61,29 +61,29 @@ function Help({
       </TooltipTrigger>
       <TooltipContent>{children}</TooltipContent>
     </Tooltip>
-  )
+  );
 }
 function SgldIcon({ size = 32 }: { size?: number }) {
   return (
     <span className={styles.tokenIcon} style={{ width: size, height: size }}>
       <Image src="/SGLD-icon.png" alt="" width={size} height={size} />
     </span>
-  )
+  );
 }
 function BuyButton({ teal = false }: { teal?: boolean }) {
   return (
-    <Button asChild variant={teal ? 'teal' : 'default'} size="sm">
-      <a href="https://syncrate.org/app">
+    <Button asChild variant={teal ? "teal" : "default"} size="sm">
+      <a href="#buy-sgld">
         Buy SGLD <ArrowRight size={14} />
       </a>
     </Button>
-  )
+  );
 }
 function PortfolioCard() {
-  const { phase, snapshot, isFetching, refetch } = useSgldBalance()
+  const { phase, snapshot, isFetching, refetch } = useSgldBalance();
   const balance = snapshot
     ? formatSgldBalance(snapshot.balance, snapshot.decimals)
-    : '—'
+    : "—";
   return (
     <section
       className={styles.portfolioCard}
@@ -111,18 +111,18 @@ function PortfolioCard() {
         {snapshot && <span className={styles.balanceUnit}>SGLD</span>}
         <Help label="portfolio balance">
           {snapshot
-            ? `Your SGLD balance on Base, read at block ${snapshot.blockNumber.toLocaleString('en-US')}. Dollar valuation is not available yet.`
-            : 'Connect a wallet on Base to read its SGLD balance. This overview never requests a signature or executes a transaction.'}
+            ? `Your SGLD balance on Base, read at block ${snapshot.blockNumber.toLocaleString("en-US")}. Dollar valuation is not available yet.`
+            : "Connect a wallet on Base to read its SGLD balance. Portfolio reads require no signature. Minting and redemption require separate wallet confirmations."}
         </Help>
       </div>
       <div className={styles.portfolioStatus} role="status">
-        {phase === 'disconnected' &&
-          'Connect your wallet to view your holdings.'}
-        {phase === 'connecting' && 'Connecting to your wallet…'}
-        {phase === 'wrong-network' &&
-          'Switch your wallet to Base to view SGLD.'}
-        {phase === 'loading' && 'Reading your SGLD balance…'}
-        {phase === 'error' && (
+        {phase === "disconnected" &&
+          "Connect your wallet to view your holdings."}
+        {phase === "connecting" && "Connecting to your wallet…"}
+        {phase === "wrong-network" &&
+          "Switch your wallet to Base to view SGLD."}
+        {phase === "loading" && "Reading your SGLD balance…"}
+        {phase === "error" && (
           <>
             <span>Balance unavailable.</span>
             <button
@@ -131,14 +131,14 @@ function PortfolioCard() {
               disabled={isFetching}
               className={styles.retryButton}
             >
-              <RefreshCw size={12} /> {isFetching ? 'Retrying…' : 'Try again'}
+              <RefreshCw size={12} /> {isFetching ? "Retrying…" : "Try again"}
             </button>
           </>
         )}
-        {phase === 'ready' && (
+        {phase === "ready" && (
           <>
             <span className={styles.liveDot} />
-            {isFetching ? 'Updating balance…' : 'SGLD balance on Base'}
+            {isFetching ? "Updating balance…" : "SGLD balance on Base"}
             <span className={styles.valueDivider}>·</span>
             <span>USD valuation unavailable</span>
           </>
@@ -147,27 +147,7 @@ function PortfolioCard() {
       <dl className={styles.metrics}>
         <div>
           <dt>
-            Net APY{' '}
-            <Help label="net APY">
-              SGLD itself does not generate yield. Prime staking opportunities
-              are upcoming, so no portfolio yield rate is available.
-            </Help>
-          </dt>
-          <dd className={styles.tealDash}>—</dd>
-        </div>
-        <div>
-          <dt>
-            Est. monthly yield{' '}
-            <Help label="estimated monthly yield">
-              There are no live Prime positions to calculate a yield estimate
-              from. No rate or monthly payout is assumed.
-            </Help>
-          </dt>
-          <dd>—</dd>
-        </div>
-        <div>
-          <dt>
-            Total earned{' '}
+            Total earned{" "}
             <Help label="total earned">
               Earnings will be shown only when supported positions and verified
               reward history are available. A token balance is not a record of
@@ -178,14 +158,14 @@ function PortfolioCard() {
         </div>
       </dl>
     </section>
-  )
+  );
 }
 function OpportunityDetails({
   offer,
   children,
 }: {
-  offer: PrimeOpportunity
-  children: React.ReactNode
+  offer: PrimeOpportunity;
+  children: React.ReactNode;
 }) {
   return (
     <Dialog>
@@ -239,7 +219,7 @@ function OpportunityDetails({
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 function OpportunitiesTable() {
   return (
@@ -362,51 +342,31 @@ function OpportunitiesTable() {
         ))}
       </div>
     </>
-  )
+  );
 }
 function Positions() {
-  const { isConnected } = useSgldBalance()
   return (
     <div className={styles.emptyPositions}>
-      <span className={styles.emptyIcon}>
-        {isConnected ? (
-          <Layers3 size={28} strokeWidth={1.3} />
-        ) : (
-          <Wallet size={28} strokeWidth={1.3} />
-        )}
-      </span>
-      <h3>
-        {isConnected
-          ? 'Prime is on the way'
-          : 'Your positions, all in one place'}
-      </h3>
-      <p>
-        {isConnected
-          ? 'Prime staking is upcoming. There are no live Prime positions to display here yet.'
-          : 'Connect your wallet to explore your portfolio. Prime staking opportunities are coming soon.'}
-      </p>
-      {!isConnected && <WalletControl compact />}
-      <span className={styles.emptyNote}>
-        Your SGLD holdings are shown in Your portfolio.
-      </span>
+      <p>Your positions will appear here</p>
     </div>
-  )
+  );
 }
 export function DashboardOverview({
   initialView,
 }: {
-  initialView: OpportunityView
+  initialView: OpportunityView;
 }) {
-  const [view, setView] = useState<OpportunityView>(initialView)
-  const router = useRouter()
-  useEffect(() => setView(initialView), [initialView])
+  const [view, setView] = useState<OpportunityView>(initialView);
+  const router = useRouter();
+  useEffect(() => setView(initialView), [initialView]);
   function changeView(next: string) {
-    const selected = next === 'positions' ? 'positions' : 'all'
-    setView(selected)
+    const selected = next === "positions" ? "positions" : "all";
+    setView(selected);
     router.replace(
-      selected === 'positions' ? '/dashboard?view=positions' : '/dashboard',
+      window.location.pathname +
+        (selected === "positions" ? "?view=positions" : ""),
       { scroll: false },
-    )
+    );
   }
   return (
     <TooltipProvider delayDuration={250}>
@@ -415,61 +375,55 @@ export function DashboardOverview({
           <h1 className="sr-only">Syncrate overview</h1>
           <div className={styles.topGrid}>
             <PortfolioCard />
+            <div className={styles.swapColumn}>
+              <SwapPanel />
+            </div>
             <section
-              className={styles.buyCard}
-              aria-labelledby="buy-sgld-heading"
+              className={styles.opportunitiesCard}
+              aria-labelledby="opportunities-heading"
             >
-              <div className={styles.buyCardHeading}>
-                <SgldIcon size={34} />
-                <h2 id="buy-sgld-heading">SGLD</h2>
-              </div>
-              <p>Gold-backed exposure, built for onchain finance.</p>
-              <BuyButton />
+              <Tabs value={view} onValueChange={changeView}>
+                <div className={styles.opportunitiesToolbar}>
+                  <div className={styles.opportunitiesHeading}>
+                    <h2 id="opportunities-heading">
+                      {view === "positions" ? "Your positions" : "Earn with"}
+                    </h2>
+                    {view === "all" ? (
+                      <span className={styles.assetPill}>
+                        <SgldIcon size={24} /> SGLD
+                      </span>
+                    ) : (
+                      <span className={styles.positionsSubtitle}>
+                        Staking · Liquidity · Lending
+                      </span>
+                    )}
+                  </div>
+                  <div className={styles.opportunitiesActions}>
+                    {view === "all" && <BuyButton teal />}
+                    <TabsList aria-label="Opportunity view">
+                      <TabsTrigger value="all">All opportunities</TabsTrigger>
+                      <TabsTrigger value="positions">My Positions</TabsTrigger>
+                    </TabsList>
+                  </div>
+                </div>
+                <TabsContent value="all">
+                  <OpportunitiesTable />
+                </TabsContent>
+                <TabsContent value="positions">
+                  <Positions />
+                </TabsContent>
+              </Tabs>
+              {view === "all" && (
+                <div className={styles.catalogueNote}>
+                  <Clock3 size={13} />
+                  <span>
+                    Prime is in development. Terms and rates will be announced
+                    before launch.
+                  </span>
+                </div>
+              )}
             </section>
           </div>
-          <section
-            className={styles.opportunitiesCard}
-            aria-labelledby="opportunities-heading"
-          >
-            <Tabs value={view} onValueChange={changeView}>
-              <div className={styles.opportunitiesToolbar}>
-                <div className={styles.opportunitiesHeading}>
-                  <h2 id="opportunities-heading">
-                    {view === 'positions' ? 'Your positions' : 'Earn with'}
-                  </h2>
-                  {view === 'all' ? (
-                    <span className={styles.assetPill}>
-                      <SgldIcon size={24} /> SGLD
-                    </span>
-                  ) : (
-                    <span className={styles.positionsSubtitle}>
-                      Prime · Base
-                    </span>
-                  )}
-                </div>
-                <div className={styles.opportunitiesActions}>
-                  {view === 'all' && <BuyButton teal />}
-                  <TabsList aria-label="Opportunity view">
-                    <TabsTrigger value="all">All opportunities</TabsTrigger>
-                    <TabsTrigger value="positions">My Positions</TabsTrigger>
-                  </TabsList>
-                </div>
-              </div>
-              <TabsContent value="all">
-                <OpportunitiesTable />
-              </TabsContent>
-              <TabsContent value="positions">
-                <Positions />
-              </TabsContent>
-            </Tabs>
-            <div className={styles.catalogueNote}>
-              <Clock3 size={13} />
-              <span>
-                Prime is in development. Terms and rates will be announced
-                before launch.
-              </span>
-            </div>
-          </section>
           <section
             className={styles.informationStrip}
             aria-labelledby="sysgld-overview"
@@ -489,7 +443,7 @@ export function DashboardOverview({
             </Link>
           </section>
           <div className={styles.readOnlyNote}>
-            <Check size={12} /> Read-only overview <span>·</span>
+            <Check size={12} /> Base network <span>·</span>
             <Link href="/terms">
               Terms & disclosures <ArrowUpRight size={11} />
             </Link>
@@ -497,5 +451,5 @@ export function DashboardOverview({
         </main>
       </DashboardShell>
     </TooltipProvider>
-  )
+  );
 }
