@@ -70,7 +70,7 @@ function PortfolioCard() {
   const { phase, snapshot, isFetching, refetch } = useSgldBalance();
   const balance = snapshot
     ? formatSgldBalance(snapshot.balance, snapshot.decimals)
-    : "—";
+    : "–";
   return (
     <section
       className={styles.portfolioCard}
@@ -142,7 +142,7 @@ function PortfolioCard() {
               Earn SYNC Points <ArrowUpRight size={12} aria-hidden="true" />
             </a>
           </dt>
-          <dd>—</dd>
+          <dd>–</dd>
         </div>
       </dl>
     </section>
@@ -393,7 +393,7 @@ function OpportunitiesTable() {
                     offer.apr === null ? "APR not announced" : undefined
                   }
                 >
-                  {offer.apr === null ? "—" : `${offer.apr}%`}
+                  {offer.apr === null ? "–" : `${offer.apr}%`}
                 </dd>
               </div>
               <div>
