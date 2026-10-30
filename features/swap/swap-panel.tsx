@@ -519,7 +519,7 @@ export function SwapPanel() {
           Balance:{" "}
           {account && balance !== undefined
             ? displayAmount(balance, mode === "mint" ? 6 : 18)
-            : "—"}{" "}
+            : "–"}{" "}
           <button
             type="button"
             disabled={
@@ -542,7 +542,7 @@ export function SwapPanel() {
           <Token symbol={to} />
         </div>
         <output aria-live="polite" className={styles.output}>
-          {quote ? displayAmount(quote.output, mode === "mint" ? 18 : 6) : "—"}
+          {quote ? displayAmount(quote.output, mode === "mint" ? 18 : 6) : "–"}
         </output>
       </div>
       <div className={styles.price}>
@@ -566,7 +566,7 @@ export function SwapPanel() {
       </div>
       {mode === "redeem" && (
         <p className={styles.note}>
-          Redemption fee: {data ? formatUnits(data.feeBps, 2) + "%" : "—"}.
+          Redemption fee: {data ? formatUnits(data.feeBps, 2) + "%" : "–"}.
           Redemptions can queue; SGLD is burned when the request confirms.
         </p>
       )}
