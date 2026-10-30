@@ -411,7 +411,8 @@
 .finalCta .actions {
   margin: 0 0 0 auto;
 }
-.riskNote {
+.product .riskNote {
+  margin-inline: auto;
   font-size: 10px;
   line-height: 1.8;
   color: #818b7b;
