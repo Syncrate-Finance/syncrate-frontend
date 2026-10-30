@@ -363,7 +363,7 @@ export async function MarketingHomepage() {
                 rel="noopener noreferrer"
               >
                 Read our documentation{" "}
-                <ArrowUpRight size={13} aria-hidden="true" />
+                <aria-hidden="true" />
               </a>
               <span className={styles.socialLabel}>SOCIALS</span>
               <div className={styles.socials}>
@@ -400,9 +400,6 @@ export async function MarketingHomepage() {
             <div className={styles.footerLinks}>
               <h3>RESOURCES</h3>
               <Link href="/insights">Insights</Link>
-              <a href="https://syncrate-1.gitbook.io/syncrate-docs/">
-                Documentation
-              </a>
               <a href="/whitepaper.pdf">Whitepaper</a>
               <Link href="/terms">Terms & disclosures</Link>
               <a href="mailto:team@syncrate.org">Contact</a>
