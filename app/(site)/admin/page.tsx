@@ -5,7 +5,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseUnits, formatUnits, keccak256, stringToBytes } from 'viem'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { WalletButton as ConnectButton } from '@/features/wallet/button'
 
 // Base Mainnet Contract Address
 const SYNCRATE_ENGINE_ADDRESS = '0x37c0078D297243A22ac247cd93f1cafed9Dbe461' 
@@ -109,7 +109,7 @@ export default function AdminDashboard() {
                 {address?.slice(0, 6)}...{address?.slice(-4)} does not have RESERVE_MANAGER_ROLE.
               </p>
             </div>
-            <ConnectButton showBalance={false} />
+            <ConnectButton />
           </div>
         ) : (
           /* Authorized Manager Input Form */

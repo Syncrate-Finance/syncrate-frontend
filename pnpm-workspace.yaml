@@ -25,3 +25,5 @@ allowBuilds:
   'bufferutil@4.1.0': false
   'keccak@3.0.4': false
   'utf-8-validate@5.0.10': false
+  # Reviewed manifest-only check that direct AppKit package versions agree.
+  '@reown/appkit@1.8.24': true

@@ -302,6 +302,10 @@ By accessing or using the Services, you acknowledge that you understand these ri
         {/* Footer */}
         <footer className="mt-20 pt-8 border-t border-neutral-900 text-xs text-neutral-600 text-center">
           © 2026 Syncrate Protocol. All rights reserved.
+          <p className="mt-3">
+            Wallet interface: Portions © 2025 Reown, Inc. All Rights Reserved.{' '}
+            <a href="/notices/reown-appkit-LICENSE.txt" className="underline hover:text-neutral-400">Reown AppKit license</a>
+          </p>
         </footer>
 
       </main>
