@@ -16,6 +16,7 @@ import {
 import styles from "./dashboard.module.css";
 const navigation = [
   { href: APP_ORIGIN, label: "Overview" },
+  { href: APP_ORIGIN + "/points", label: "Points" },
   { href: WEBSITE_ORIGIN + "/sgld", label: "SGLD" },
   { href: WEBSITE_ORIGIN + "/sgld#transparency", label: "Transparency" },
   { href: "https://docs.syncrate.org", label: "Docs", external: true },
@@ -90,7 +91,7 @@ export function WalletControl({ compact = false }: { compact?: boolean }) {
 export function DashboardHeader({
   active = "overview",
 }: {
-  active?: "overview" | "information";
+  active?: "overview" | "information" | "points";
 }) {
   return (
     <header className={styles.header}>
@@ -105,12 +106,14 @@ export function DashboardHeader({
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
               className={
-                active === "overview" && item.label === "Overview"
+                (active === "overview" && item.label === "Overview") ||
+                (active === "points" && item.label === "Points")
                   ? styles.activeNavigation
                   : undefined
               }
               aria-current={
-                active === "overview" && item.label === "Overview"
+                (active === "overview" && item.label === "Overview") ||
+                (active === "points" && item.label === "Points")
                   ? "page"
                   : undefined
               }
@@ -186,6 +189,7 @@ export function DashboardFooter() {
           <Link href={WEBSITE_ORIGIN + "/sgld"}>SGLD</Link>
           <Link href={WEBSITE_ORIGIN + "/sysgld"}>sySGLD</Link>
           <Link href={APP_ORIGIN}>Overview</Link>
+          <Link href={APP_ORIGIN + "/points"}>Points</Link>
         </div>
         <div className={styles.footerLinks}>
           <h2>Resources</h2>
@@ -214,7 +218,7 @@ export function DashboardShell({
   active = "overview",
 }: {
   children: React.ReactNode;
-  active?: "overview" | "information";
+  active?: "overview" | "information" | "points";
 }) {
   return (
     <div className={`${styles.dashboard} ${GeistSans.variable}`}>

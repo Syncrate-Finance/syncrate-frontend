@@ -2,18 +2,34 @@ name: Weekly Sync Points
 
 on:
   schedule:
-    - cron: '30 0 * * 0'
+    - cron: "30 0,2,6,12,18 * * 0"
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate completed weeks without publishing
+        type: boolean
+        default: true
+      verify_current:
+        description: Reconcile the current partial week without awarding points
+        type: boolean
+        default: false
+
+concurrency:
+  group: weekly-sync-points
+  cancel-in-progress: false
 
 jobs:
   calculate-points:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
-      contents: write   # <-- add this
+      contents: write
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: pnpm/action-setup@v4
         with:
@@ -22,7 +38,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24.22.1'
+          node-version: "24.22.1"
           cache: pnpm
 
       - name: Install dependencies
@@ -31,13 +47,25 @@ jobs:
       - name: Run points calculation
         env:
           BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
-        run: node scripts/calculate-week.cjs
+          POINTS_RPC_URL: ${{ secrets.POINTS_RPC_URL }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          VERIFY_CURRENT: ${{ inputs.verify_current }}
+        run: |
+          args=()
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          if [ "$VERIFY_CURRENT" = "true" ]; then args+=(--verify-current); fi
+          node scripts/calculate-week.cjs "${args[@]}"
+
+      - name: Verify rewards and ledger before publishing
+        run: pnpm test
 
       - name: Commit and push updated leaderboard
+        if: github.event_name == 'schedule' || (inputs.dry_run == false && inputs.verify_current == false)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/points/latest.json public/points/week-*.json || true
-          git diff --staged --quiet || git commit -m "points: weekly update $(date -u +%Y-%m-%d)"
-          git push
-
+          git add data/points
+          if ! git diff --staged --quiet; then
+            git commit -m "points: weekly holdings distribution $(date -u +%Y-%m-%d)"
+            git push origin HEAD:main
+          fi

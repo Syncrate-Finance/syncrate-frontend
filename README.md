@@ -42,6 +42,12 @@ Read-only wallet queries use the public Base transport provided by Wagmi. Wallet
 See docs/phase2-status.md for verification and remaining work, docs/dependency-security.md for release blockers, and docs/homepage-assets.md for the original visual asset. The build does not establish production readiness. See the latest release handoff for GitHub/deployment evidence. No agent-submitted mainnet blockchain write has been made.
 
 
+## Sync Points
+
+The wallet-specific dashboard lives at `https://app.syncrate.org/points`. Existing points are preserved. New rewards allocate 10 million points per Sunday 00:00 UTC interval using time-weighted SGLD holdings: 1× in wallets, 3× for SGLD principal in directly owned eligible Uniswap positions. Prime deposits no longer earn new program points. The community leaderboard starts collapsed.
+
+See [points rules and operations](docs/points-program.md) for the immutable ledger, preserved legacy balances, full-history verification, free archive-provider setup and weekly job. Keep the operator command `node scripts/calculate-week.cjs`; use `--verify-current` for read-only reconciliation or `--dry-run` to validate completed intervals without publication. The repository Actions secret `POINTS_RPC_URL` must support historical Base reads. It is separate from ordinary app `BASE_RPC_URL`. A paid plan is not required; documented free Chainnodes Core and Infura Core plans are candidates that must pass full reconciliation before rewards acceptance.
+
 ## Dependency build-script policy
 
 Normal installs use `pnpm install --frozen-lockfile`. The committed `allowBuilds` policy in `pnpm-workspace.yaml` approves only the reviewed esbuild installer versions and explicitly denies optional native builds for bufferutil, keccak and utf-8-validate. Their JavaScript fallbacks remain available. Unknown build scripts still fail installation because `strictDepBuilds` stays enabled. Review new script-bearing dependencies before extending the policy. CI runs the normal installer so Vercel-style `ERR_PNPM_IGNORED_BUILDS` failures are caught before merging.

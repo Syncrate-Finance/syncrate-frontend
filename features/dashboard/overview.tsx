@@ -9,6 +9,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { formatUnits } from "viem";
+import { APP_ORIGIN } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -137,7 +138,7 @@ function PortfolioCard() {
               earnings.
             </Help>
             <a
-              href="https://syncrate.org/points"
+              href={APP_ORIGIN + "/points"}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.pointsLink}

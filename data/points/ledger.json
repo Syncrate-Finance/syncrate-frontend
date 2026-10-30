@@ -1,0 +1,85 @@
+{
+  "version": "sgld-holdings-v2",
+  "chainId": 8453,
+  "pool": "0xc5963bd6d6cf713f0994ffd867d4d639ad45ec6e",
+  "start": "2026-10-25T00:00:00.000Z",
+  "baseline": {
+    "cutoff": "2026-10-25T00:00:00.000Z",
+    "sourceSha256": "d31ed10b8384861bcf774478bacec856d168b840c982f12a67fdc93f62ff59f7",
+    "balances": [
+      {
+        "address": "0x081ea225fb53925331f1c87f1b64daf960837799",
+        "points": "65791"
+      },
+      {
+        "address": "0x11c17f25e958e4637dd26ca362adeae12e24ed5b",
+        "points": "66794"
+      },
+      {
+        "address": "0x41e635d81635964b1c957b35607cbb18b2cb3fba",
+        "points": "160498"
+      },
+      {
+        "address": "0x46eafae9f77c91d6b77b7b88aaa3469f7caa0cef",
+        "points": "51116"
+      },
+      {
+        "address": "0x550a71ba8b0e8fcf9441933828a5f34e6a26cc03",
+        "points": "6579"
+      },
+      {
+        "address": "0x69e8e23eb2e61bc8449e02ced7075186dafbcfc1",
+        "points": "65791"
+      },
+      {
+        "address": "0x6b29377777593010940020f64a7ba0df80da29f0",
+        "points": "773459"
+      },
+      {
+        "address": "0x6f87732cdf87852d578fcb00517c2c8a98e85b78",
+        "points": "396825"
+      },
+      {
+        "address": "0x7333b0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c093e9",
+        "points": "1201058"
+      },
+      {
+        "address": "0x99497671106ba424be13008ba427573c11431a89",
+        "points": "63493"
+      },
+      {
+        "address": "0x9a3377327cd77f734251a94647f5af55bf15c0e6",
+        "points": "2542780"
+      },
+      {
+        "address": "0x9cd6d512e3f0aac19ebaf67acceea598614d6756",
+        "points": "3053650"
+      },
+      {
+        "address": "0xaad3f4fb91776e36a42b68530de2ed49f6a8883b",
+        "points": "8008502"
+      },
+      {
+        "address": "0xb4570cba336d525818da9614e20419bbba0004ca",
+        "points": "52"
+      },
+      {
+        "address": "0xec82fa0b5956f0fe2c4ab4dd12b4514127787350",
+        "points": "140988"
+      },
+      {
+        "address": "0xedff74285b1aad50915e0687f645d38329080873",
+        "points": "330557"
+      },
+      {
+        "address": "0xf1e73f7d7656b9b00d970b58aab3bb19b5518060",
+        "points": "6614"
+      },
+      {
+        "address": "0xf9177859d5c06a30503ea03f7f4aaa7616e4d28d",
+        "points": "65791"
+      }
+    ]
+  },
+  "epochs": []
+}

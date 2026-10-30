@@ -15,7 +15,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: syncrate_test
-        ports: ['5432:5432']
+        ports: ["5432:5432"]
         options: >-
           --health-cmd "pg_isready -U postgres"
           --health-interval 5s
@@ -26,7 +26,7 @@ jobs:
       SERVER_URL: http://localhost:3000
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/syncrate_test
       PAYLOAD_SECRET: ci-only-disposable-test-secret-never-use-for-production-123456789
-      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -41,6 +41,17 @@ jobs:
       - run: pnpm cms:importmap
       - run: pnpm typecheck
       - run: pnpm test
+      - name: Verify historical holdings when archive RPC is configured
+        if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
+        timeout-minutes: 60
+        env:
+          POINTS_RPC_URL: ${{ secrets.POINTS_RPC_URL }}
+        run: |
+          if [ -z "$POINTS_RPC_URL" ]; then
+            echo '::notice::POINTS_RPC_URL is not configured. Live historical holdings and LP acceptance remain pending.'
+          else
+            node scripts/calculate-week.cjs --verify-current
+          fi
       - run: pnpm db:migrate
       - run: pnpm test:integration
       - run: pnpm test:integration
