@@ -1,19 +1,15 @@
-import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-
+import { getPoints } from "@/server/points/service";
+export const dynamic = "force-dynamic";
+// Preserve the old operator/API URL while serving the current, paginated program.
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'results', 'latest.json')
-    
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json(null)
-    }
-
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-    return NextResponse.json(data)
-  } catch (error) {
-    console.error(error)
-    return NextResponse.json(null)
+    return Response.json(getPoints(null, 0), {
+      headers: { "Cache-Control": "no-store" },
+    });
+  } catch {
+    return Response.json(
+      { error: "Points are temporarily unavailable." },
+      { status: 503 },
+    );
   }
 }

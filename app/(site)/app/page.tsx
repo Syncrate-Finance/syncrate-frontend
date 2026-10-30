@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { APP_ORIGIN } from '@/config/site'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
@@ -89,111 +90,7 @@ const MINT_CONTROLLER_ABI = [
   ], name: 'redeem', outputs: [], stateMutability: 'nonpayable', type: 'function' },
 ] as const;
 
-// ==========================================
-// POINTS LEADERBOARD
-// ==========================================
-interface LeaderboardEntry {
-  address: string
-  netMinted: string
-  minterPoints: number
-  primePoints: number
-  totalPoints: number
-}
 
-interface WeekData {
-  weekStart: string
-  weekEnd: string
-  leaderboard: LeaderboardEntry[]
-}
-
-function PointsLeaderboard() {
-  const { address } = useAccount()
-  const [data, setData] = useState<WeekData | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetch('/points/latest.json')
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch(() => setData(null))
-      .finally(() => setLoading(false))
-  }, [])
-
-  const shortAddress = (addr: string) =>
-    `${addr.slice(0, 6)}...${addr.slice(-4)}`
-
-  if (loading) {
-    return (
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 flex justify-center">
-        <span className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin" />
-      </div>
-    )
-  }
-
-  if (!data) {
-    return (
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 text-center">
-        <p className="text-xs text-[#666666]">Leaderboard coming soon</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 sm:p-6 flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-white">Points Leaderboard</h3>
-          <p className="text-[10px] font-mono text-[#666666] mt-0.5">
-            Week of {data.weekStart}
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-[10px] font-mono text-[#666666] uppercase">Pool</p>
-          <p className="text-xs font-medium text-white">10M</p>
-        </div>
-      </div>
-
-      {/* Header */}
-<div className="grid grid-cols-[28px_1fr_90px] gap-2 text-[10px] font-mono text-[#555555] uppercase px-1">
-  <span>#</span>
-  <span>Address</span>
-  <span className="text-right">Points</span>
-</div>
-
-{/* Rows */}
-<div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto">
-  {data.leaderboard.slice(0, 30).map((entry, i) => {
-    const isYou = address && entry.address.toLowerCase() === address.toLowerCase()
-    return (
-      <div
-        key={entry.address}
-        className={`grid grid-cols-[28px_1fr_90px] gap-2 items-center py-2 px-2 rounded-lg text-xs ${
-          isYou ? 'bg-[#0037FF]/10 border border-[#0037FF]/20' : ''
-        }`}
-      >
-        <span className="text-[#666666] font-mono">{i + 1}</span>
-        <span className={`font-mono truncate ${isYou ? 'text-[#0037FF]' : 'text-white'}`}>
-          {shortAddress(entry.address)}
-          {isYou && <span className="ml-1 text-[9px]">YOU</span>}
-        </span>
-        <span className="text-right font-mono text-white">
-          {Math.round(entry.totalPoints).toLocaleString()}
-        </span>
-      </div>
-    )
-  })}
-</div>
-
-      <p className="text-[10px] text-[#444444] border-t border-[#111111] pt-3">
-        7M points to net SGLD minters · 3M to sySGLD depositors · Calculated every Sunday
-      </p>
-    </div>
-  )
-}
-
-// ==========================================
-// COMPONENT B: THE ACTIVE DAPP (MINTING)
-// ==========================================
 function MintingAppUI() {
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => setIsMounted(true), [])
@@ -607,8 +504,7 @@ function MintingAppUI() {
 
         {renderDashboard()}
 
-{/* Points Leaderboard */}
-<PointsLeaderboard />
+<Link href={APP_ORIGIN + "/points"}>View Sync Points</Link>
       </main>
     </div>
   )

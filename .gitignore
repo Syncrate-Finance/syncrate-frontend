@@ -9,3 +9,5 @@ media/
 coverage/
 *.log
 .DS_Store
+data/points/.settlement.lock
+data/points/*.tmp

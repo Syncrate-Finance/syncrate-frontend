@@ -2,6 +2,8 @@
 
 Architecture is approved. Preserve the existing Next.js project; see README.md and docs/repository-review.md. This checkout came from a ZIP and does not carry the original Git commit/history.
 
+- Sync Points owner rules (October 30, 2026): `/points` renders only on the canonical app surface. Keep all 18 legacy balances / 17,000,338 points. New rules accrue from the last October 25 cutoff; first Sunday closes November 1, 2026 at 00:00 UTC. Share 10 million weekly by time-weighted SGLD: wallet 1× and directly owned eligible Uniswap SGLD principal 3×, without pool double counting. No new Prime deposit points. See docs/points-program.md for full scope, immutable ledger and incomplete live acceptance. Historical verification needs server-only Actions secret POINTS_RPC_URL; a paid plan is not required. Never skip failed historical ranges, publish an unfinished week, fabricate awards or log credential-bearing provider URLs. Preserve the existing operator command and old snapshots. Run full historical reconciliation before claiming the weekly program operational.
+
 - Node 24.22.1, pnpm 11.25.0. Use the committed/included lockfile. No broad dependency upgrades or unsupported peer overrides to conceal audit findings.
 - Existing site routes live under app/(site), preserving their URLs. Payload CMS has a separate app/(cms) root and lives at /cms and /cms-api. /admin remains the legacy onchain reserve manager panel.
 - CMS collections and PostgreSQL schema are owned by Payload migrations. Automatic schema push is disabled. Explicitly set overrideAccess:false in public/server content reads. Bootstrap is local-only; never reopen public first-user registration.
