@@ -62,7 +62,7 @@ export function MarketingHeader() {
                 >
                   <span aria-hidden="true" />
                 </a>
-                <span>EXPLORE SYNCRATE</span>
+                <span></span>
                 <Dialog.Close
                   className={styles.menuDismiss}
                   aria-label="Close navigation"
@@ -72,16 +72,12 @@ export function MarketingHeader() {
               </div>
               <div className={styles.menuBody}>
                 <div className={styles.menuIntro}>
-                  <span>GOLD. CONNECTED.</span>
+                  <span></span>
                   <h2>
                     A new way
                     <br />
-                    to hold value.
+                    to store value.
                   </h2>
-                  <p>
-                    Discover the assets, the structure and the opportunities
-                    behind Syncrate.
-                  </p>
                 </div>
                 <nav
                   className={styles.menuLinks}
@@ -94,10 +90,10 @@ export function MarketingHeader() {
                     </summary>
                     <div className={styles.menuChildren}>
                       <a href={WEBSITE_ORIGIN + "/sgld"} onClick={close}>
-                        SGLD<span>Tokenized gold</span>
+                        SGLD<span>Syncrate's tokenized gold asset</span>
                       </a>
                       <a href={WEBSITE_ORIGIN + "/sysgld"} onClick={close}>
-                        sySGLD<span>Gold financing</span>
+                        sySGLD<span>Syncrate's yield bearing gold asset</span>
                       </a>
                     </div>
                   </details>
