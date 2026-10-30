@@ -75,13 +75,11 @@ export default function SySgldPage() {
               <em>Let’s move yours.</em>
             </h1>
             <p>
-              Syncrate connects onchain capital with short-term physical gold
-              leasing. A financing approach designed around established gold
-              businesses and the inventory that keeps them moving.
+              Syncrate leases a portion of it's physical gold inventory to established and vetted counterparties who pay a financing spread that flows back as yield to sySGLD holders.
             </p>
             <div className={styles.actions}>
               <a href="#get-in-touch" className={styles.primary}>
-                Discuss financing <ArrowUpRight size={17} />
+                Talk to our team />
               </a>
               <a href="#built-for" className={styles.secondary}>
                 Who it’s built for <ChevronDown size={15} />
@@ -105,17 +103,6 @@ export default function SySgldPage() {
               <span />
               <span />
             </div>
-            <ol className={styles.flowLabels}>
-              <li>
-                <span>01</span>Onchain capital
-              </li>
-              <li>
-                <span>02</span>Gold financing
-              </li>
-              <li>
-                <span>03</span>Gold businesses
-              </li>
-            </ol>
           </div>
         </section>
         <section
@@ -125,21 +112,14 @@ export default function SySgldPage() {
           <div>
             <span className={styles.eyebrow}>A REAL ECONOMY CONNECTION</span>
             <h2 id="purpose-title">
-              The value of gold.
+              Gold-backed yield.
               <br />
-              <em>The work of business.</em>
+              <em>Sourced from the gold market.</em>
             </h2>
           </div>
           <div>
             <p>
-              For a gold business, inventory is more than a store of value. It
-              is what you manufacture, display and deliver.
-            </p>
-            <p>
-              Syncrate’s gold-financing framework connects that real-world
-              activity with onchain capital. sySGLD is the separate financing
-              product in this system; it should not be confused with simply
-              holding SGLD.
+Built for accredited invesors, Syncrate leases it's gold bullion to established gold resellers, refiners etc. 
             </p>
             <a
               className={styles.textLink}
@@ -147,7 +127,7 @@ export default function SySgldPage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Explore the framework <ArrowUpRight size={16} />
+              Read our documentation <ArrowUpRight size={16} />
             </a>
           </div>
         </section>
