@@ -56,27 +56,27 @@ export default function SgldPage() {
           aria-labelledby="sgld-title"
         >
           <div className={styles.heroCopy}>
-            <span className={styles.eyebrow}>SGLD · SYNCRATE GOLD</span>
+            <span className={styles.eyebrow}></span>
             <h1 id="sgld-title">
               Physical gold.
               <br />
-              <em>Onchain possibility.</em>
+              <em>Brought onchain.</em>
             </h1>
             <p>
-              Own gold with the freedom to move it. Each SGLD represents one
+              Own gold with the freedom to move it. Each SGLD token represents a direct ownership to one
               troy ounce of 99.99% pure physical gold, held in secure custodial
               storage in the UAE.
             </p>
             <div className={styles.actions}>
               <a href={APP_ORIGIN} className={styles.primary}>
-                Mint SGLD <ArrowUpRight size={17} />
+                Buy SGLD>
               </a>
               <a href="#how-it-works" className={styles.secondary}>
                 How it works <ChevronDown size={15} />
               </a>
             </div>
             <span className={styles.network}>
-              <i aria-hidden="true" /> Available on Base
+              <i aria-hidden="true" /> powered by Base
             </span>
           </div>
           <div className={styles.goldVisual}>
@@ -92,10 +92,10 @@ export default function SgldPage() {
               <Image src="/SGLD-icon.png" alt="" width={50} height={50} />
               <div>
                 <strong>SGLD</strong>
-                <span>One token. One troy ounce.</span>
+                <span>Tokenized gold, built for DeFi.</span>
               </div>
             </div>
-            <span className={styles.visualLabel}>THE ASSET, REIMAGINED</span>
+            <span className={styles.visualLabel}></span>
           </div>
         </section>
         <div className={styles.container}>
@@ -114,7 +114,7 @@ export default function SgldPage() {
             </h2>
             <p>
               Physical gold sits at the centre. Digital ownership makes it
-              easier to hold, transfer and use across supported onchain markets.
+              easier to hold, transfer and use across DeFi.
             </p>
           </div>
           <div className={styles.featureGrid}>
@@ -122,17 +122,17 @@ export default function SgldPage() {
               {
                 Icon: Coins,
                 title: "Bullion quality",
-                text: "LBMA-standard physical bars sourced through Alluca Gold. SGLD brings that gold exposure into a token you can hold in your own wallet.",
+                text: "Each SGLD token is backed by 99.99% pure LBMA-certified gold bars sourced from Sharjah refiners through Alluca Gold. SGLD brings that gold exposure into a transferrable ERC-20 token.",
               },
               {
                 Icon: Vault,
                 title: "Custodial storage",
-                text: "The underlying gold is held with Amanat Vaults in the UAE. Published statements provide the context for Syncrate’s reported inventory.",
+                text: "The underlying gold bars backing SGLD is held in secure vaults with Amanat Vaults in the UAE. Periodic asset statements are published in our transparency dashboard",
               },
               {
                 Icon: ShieldCheck,
-                title: "Open verification",
-                text: "Review the token contract on BaseScan and the published asset verification materials, including their dates and scope.",
+                title: "Accessible everywhere",
+                text: "SGLD is accessible across different decentralized and centralized exchanges for seamless ownership",
               },
             ].map(({ Icon, title, text }) => (
               <article className={styles.featureCard} key={title}>
@@ -150,15 +150,14 @@ export default function SgldPage() {
         >
           <div className={styles.container}>
             <div className={styles.navyHeader}>
-              <span className={styles.eyebrow}>FROM STABLECOINS TO GOLD</span>
+              <span className={styles.eyebrow}>HOW IT WORKS</span>
               <h2 id="steps-title">
                 Your gold.
                 <br />
                 <em>Your next move.</em>
               </h2>
               <p>
-                The existing Syncrate app brings minting and redemption into a
-                single wallet-based interface.
+                A quick glance on how SGLD Minting and Redemption works
               </p>
             </div>
             <ol className={styles.steps}>
@@ -169,11 +168,11 @@ export default function SgldPage() {
                 ],
                 [
                   "Review and mint",
-                  "See the live gold quote, enter an amount and review the estimate. Approvals and minting are separate wallet confirmations.",
+                  "See the live gold quote, enter an amount and sign the transaction in your wallet.",
                 ],
                 [
                   "Hold, transfer or put it to work",
-                  "Keep SGLD in your wallet, explore supported liquidity opportunities, or request a stablecoin redemption in the app.",
+                  "Explore our ecosystem of DeFi integrations and use SGLD across the broader DeFi ecosystem.",
                 ],
               ].map(([title, text], i) => (
                 <li key={title}>
@@ -183,9 +182,6 @@ export default function SgldPage() {
                 </li>
               ))}
             </ol>
-            <a href={APP_ORIGIN} className={styles.lightButton}>
-              Open the Syncrate app <ArrowUpRight size={17} />
-            </a>
           </div>
         </section>
         <section
@@ -194,15 +190,14 @@ export default function SgldPage() {
           aria-labelledby="transparency-title"
         >
           <div>
-            <span className={styles.eyebrow}>LOOK CLOSER</span>
+            <span className={styles.eyebrow}>TRANSPARENCY</span>
             <h2 id="transparency-title">
-              Confidence starts
+              Trust starts
               <br />
               with <em>visibility.</em>
             </h2>
             <p>
-              Understand the asset behind the token. Explore the reported
-              physical inventory, supporting documents and public contract.
+              Understand how SGLD Z
             </p>
           </div>
           <div className={styles.resourceList}>
@@ -214,7 +209,7 @@ export default function SgldPage() {
               <span>01</span>
               <div>
                 <h3>Asset statements</h3>
-                <p>Published gold procurement materials</p>
+                <p>published bi-annually by Alluca Gold</p>
               </div>
               <ArrowUpRight size={20} />
             </a>
@@ -225,8 +220,8 @@ export default function SgldPage() {
             >
               <span>02</span>
               <div>
-                <h3>Asset verification</h3>
-                <p>Review the supporting documentation</p>
+                <h3>Audits</h3>
+                <p>conducted by Bureau Veritas, published quaterly</p>
               </div>
               <ArrowUpRight size={20} />
             </a>
@@ -235,13 +230,6 @@ export default function SgldPage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>03</span>
-              <div>
-                <h3>SGLD on BaseScan</h3>
-                <p>Token contract and onchain supply</p>
-              </div>
-              <ArrowUpRight size={20} />
-            </a>
           </div>
         </section>
         <section
@@ -249,7 +237,7 @@ export default function SgldPage() {
           aria-labelledby="faq-title"
         >
           <div>
-            <span className={styles.eyebrow}>THE DETAILS</span>
+            <span className={styles.eyebrow}>FAQs</span>
             <h2 id="faq-title">
               A few good
               <br />
@@ -272,27 +260,9 @@ export default function SgldPage() {
               </details>
             ))}
           </div>
-        </section>
-        <section className={`${styles.container} ${styles.finalCta}`}>
-          <Layers3 size={30} strokeWidth={1.2} />
-          <div>
-            <h2>Gold has more places to go.</h2>
-            <p>
-              Explore the app or learn how sySGLD connects gold with financing.
-            </p>
-          </div>
-          <div className={styles.actions}>
-            <a href={APP_ORIGIN} className={styles.primary}>
-              Explore SGLD <ArrowUpRight size={16} />
-            </a>
-            <Link href="/sysgld" className={styles.secondary}>
-              Discover sySGLD
-            </Link>
-          </div>
-        </section>
         <p className={`${styles.container} ${styles.riskNote}`}>
-          Gold ownership involves custody, operational and market risks. SGLD is
-          not a bank deposit and is not deposit-insured. Read the{" "}
+          Trading SGLD involves custody, operational and smart contract risks. SGLD is
+          not a securities or legal tender and is not deposit-insured. Read the{" "}
           <Link href="/terms">terms and disclosures</Link>.
         </p>
       </div>
