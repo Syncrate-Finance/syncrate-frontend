@@ -77,6 +77,8 @@ test("public valuation uses verified token supply and gold quote at one Base blo
   const data = await readPublicMetrics(client);
   assert.equal(data.sgldMarketCap.value, "$8,000.00");
   assert.equal(data.inventory.value, "193");
+  assert.equal(data.sgldSupply.value, "2.0000");
+  assert.equal(data.unallocatedBullion.value, "191.0000");
   assert.equal(data.sysgldMarketCap.state, "unconfigured");
   assert.ok(calls.every((call) => call.blockNumber === 123n));
   assert.ok(
@@ -99,6 +101,24 @@ test("zero supply is a real zero market cap rather than a missing value", async 
   const data = await readPublicMetrics(fixture({ supply: 0n }).client);
   assert.equal(data.sgldMarketCap.state, "ready");
   assert.equal(data.sgldMarketCap.value, "$0.00");
+  assert.equal(data.sgldSupply.value, "0.0000");
+  assert.equal(data.unallocatedBullion.value, "193.0000");
+});
+
+test("supply and unallocated bullion remain available if the oracle fails", async () => {
+  const data = await readPublicMetrics(
+    fixture({ failPrice: true, supply: 1234567890123456789n }).client,
+  );
+  assert.equal(data.sgldMarketCap.state, "unavailable");
+  assert.equal(data.sgldSupply.value, "1.2346");
+  assert.equal(data.unallocatedBullion.value, "191.7654");
+});
+test("inventory shortfall never fabricates a negative or zero unallocated amount", async () => {
+  const data = await readPublicMetrics(
+    fixture({ supply: 194n * 10n ** 18n }).client,
+  );
+  assert.equal(data.unallocatedBullion.state, "unavailable");
+  assert.equal(data.unallocatedBullion.value, null);
 });
 
 test("wrong network and unexpected token identity cannot produce a valuation", async () => {

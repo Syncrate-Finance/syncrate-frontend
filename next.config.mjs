@@ -5,6 +5,7 @@ export default withPayload({
   serverExternalPackages: ["@coinbase/cdp-sdk"],
   async redirects() {
     return [
+      { source: "/business", destination: "/sysgld", permanent: true },
       {
         source: "/dashboard/:path*",
         destination: "https://app.syncrate.org",

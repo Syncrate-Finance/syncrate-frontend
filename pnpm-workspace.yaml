@@ -6,6 +6,7 @@ minimumReleaseAgeExclude:
   - postcss@8.5.32
   - viem@2.57.12
   - lucide-react@1.62.0
+  - nodemailer@10.3.1
 
 overrides:
   use-sync-external-store@1.2.0: 1.4.0

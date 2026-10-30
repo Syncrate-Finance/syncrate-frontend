@@ -21,7 +21,9 @@ const vaultAbi = parseAbi([
 type ReadClient = Pick<
   PublicClient,
   "getChainId" | "getBlockNumber" | "getBytecode" | "readContract"
-> & { getBlock: (args: { blockNumber: bigint }) => Promise<{ timestamp: bigint }> };
+> & {
+  getBlock: (args: { blockNumber: bigint }) => Promise<{ timestamp: bigint }>;
+};
 const unavailable = () => ({ state: "unavailable" as const, value: null });
 const MAX_UINT256 = (1n << 256n) - 1n;
 // Indicative display only. Permit a closed-market weekend, never silently use an older quote.
@@ -172,6 +174,20 @@ export async function readPublicMetrics(
         : null,
     // Owner-reported fixed inventory. This is deliberately not represented as a live reserve read.
     inventory: { state: "ready", value: "193" },
+    sgldSupply:
+      sgld.status === "fulfilled"
+        ? {
+            state: "ready",
+            value: formatFixed(sgld.value.supply, sgld.value.decimals, 4),
+          }
+        : unavailable(),
+    unallocatedBullion:
+      sgld.status === "fulfilled" && sgld.value.supply <= 193n * 10n ** 18n
+        ? {
+            state: "ready",
+            value: formatFixed(193n * 10n ** 18n - sgld.value.supply, 18, 4),
+          }
+        : unavailable(),
     sgldMarketCap:
       sgld.status === "fulfilled" && oracle.status === "fulfilled"
         ? {

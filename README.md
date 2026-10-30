@@ -33,7 +33,7 @@ The independent Syncrate homepage remains on the marketing origin. https://app.s
 
 ## Public site and CMS publishing
 
-The marketing homepage is `/` on syncrate.org. The app root is https://app.syncrate.org; `?view=positions` opens My Positions. Legacy app paths redirect to that origin. Non-production local/Vercel review uses `/?preview=app` (and optionally `&view=positions`). `/sysgld` remains informational only.
+The marketing homepage is `/` on syncrate.org. The app root is https://app.syncrate.org; `?view=positions` opens My Positions. Legacy app paths redirect to that origin. Non-production local/Vercel review uses `/?preview=app` (and optionally `&view=positions`). `/sgld` is the descriptive asset page with four metrics. `/sysgld` is the informational business page with Built For and the Zoho inquiry form; `/sySGLD` and `/business` redirect there. See [product pages and inquiries](docs/product-pages-and-inquiries.md) for server-only SMTP configuration, required firewall provisioning and delivery limits.
 
 Publish Pages through the CMS to make them available at `/content/<slug>`. Publish Articles to expose them at `/insights/<slug>` and the paginated `/insights` index; the newest articles also appear on the homepage. These routes enforce anonymous published-only access, read the database on each request, and immediately reflect unpublishing. Drafts return 404. This phase does not add public draft previews. SEO titles and descriptions come from the CMS's SEO fields. Private uploads are intentionally omitted from public rich text until storage/publication access is configured. Older static articles retain their existing URLs.
 
