@@ -135,8 +135,10 @@ export async function scanLogs<T>(
     await range(a, mid);
     await range(mid + 1n, b);
   }
-  for (let a = from; a <= to; a += 50000n)
-    await range(a, a + 49999n > to ? to : a + 49999n);
+  // Chainnodes documents a 20,000-block ceiling; narrower provider/result
+  // limits are handled by complete binary splitting below that ceiling.
+  for (let a = from; a <= to; a += 20000n)
+    await range(a, a + 19999n > to ? to : a + 19999n);
   return output;
 }
 async function mapLimit<T, R>(

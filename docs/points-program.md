@@ -29,14 +29,16 @@ The old `/app/api/points/leaderboard` URL now returns the same paginated program
 
 The existing public Base endpoint remains suitable for ordinary app reads. The full-history calculator needs an independently configured endpoint: the tested public endpoints rejected/throttled historical requests. A paid subscription is not a requirement.
 
-OnFinality's current [Developer plan](https://onfinality.io/en/pricing) is free, includes archive access and 400,000 response units daily. Its [Base API](https://documentation.onfinality.io/support/base) documents archive reads, logs and receipt methods. These are published limits, not proof that Syncrate's full calculation has passed.
+The owner encountered OnFinality's "failed to load workspace data" error and requested alternatives. [Chainnodes Core](https://www.chainnodes.org/pricing) is a free candidate with 12.5 million requests/month and 25 requests/second. Its [network documentation](https://www.chainnodes.org/docs/about) includes Base and archive access; its [limits](https://www.chainnodes.org/docs/FAQs/rate_limits) allow a 20,000-block log range. The reader starts with at most 20,000 blocks per request and narrows failed ranges while preserving full coverage.
 
-1. Sign up at `https://app.onfinality.io/` and remain on the free Developer plan. Do not provision a paid dedicated node or enable an upgrade.
-2. Follow [API Service setup](https://documentation.onfinality.io/support/the-enhanced-api-service): create an API app called Syncrate Points, select Base Mainnet, and copy its HTTPS integration endpoint.
+1. Sign up at `https://www.chainnodes.org/` and remain on the free Core plan. Do not enable a paid upgrade.
+2. Select Base Mainnet in the provider dashboard and copy its HTTPS endpoint.
 3. Save it as repository Actions secret `POINTS_RPC_URL` in Syncrate-Finance/syncrate-frontend. Never commit or paste the key-bearing URL into chat, logs or issue bodies. This secret is used only by the historical verification and settlement steps, not the browser or Vercel frontend.
 4. Run the read-only verification below before enabling publication. The calculator paces requests at one start per second by default; adjust `POINTS_RPC_MIN_INTERVAL_MS` only within the provider's permitted limits. Provider caps/range restrictions can still fail a run.
 
 There is no silent public-provider fallback or purchase. Ordinary `BASE_RPC_URL` is left unchanged. dRPC Free excludes archive access; Alchemy's current free Base log range is ten blocks, making a complete backfill impractical for this worker. Reassess documented free limits before changing providers.
+
+[Infura Core](https://www.infura.io/pricing) is another free candidate: published full archive access, 3 million daily credits and [Base support](https://www.infura.io/networks/ethereum/base). Method credits and result limits apply. OnFinality's [Developer plan](https://onfinality.io/en/pricing) also documents free archive access, 400,000 daily response units and a [Base API](https://documentation.onfinality.io/support/base), but the owner's dashboard setup is currently blocked. These are published capabilities, not proof that Syncrate's full calculation has passed with any provider.
 
 ## Operation and verification
 
