@@ -132,19 +132,14 @@ function PortfolioCard() {
         <div>
           <dt>
             Total earned{" "}
-            <Help label="total earned">
-              Earnings will be shown only when supported positions and verified
-              reward history are available. A token balance is not a record of
-              earnings.
-            </Help>
             <a
               href={APP_ORIGIN + "/points"}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.pointsLink}
-              aria-label="View Points (opens in a new tab)"
+              aria-label="Earn Points (opens in a new tab)"
             >
-              View Points <ArrowUpRight size={12} aria-hidden="true" />
+              Earn SYNC Points <ArrowUpRight size={12} aria-hidden="true" />
             </a>
           </dt>
           <dd>—</dd>
