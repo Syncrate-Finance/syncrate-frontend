@@ -8,6 +8,8 @@ export type PublicMetrics = {
   observedAt: string;
   priceUpdatedAt: string | null;
   inventory: PublicMetric;
+  sgldSupply: PublicMetric;
+  unallocatedBullion: PublicMetric;
   sgldMarketCap: PublicMetric;
   sysgldMarketCap: PublicMetric;
 };

@@ -1,0 +1,208 @@
+.form,
+.success {
+  border: 1px solid #dce2d3;
+  border-radius: 18px;
+  padding: 36px;
+  background: #fcfcf7;
+  position: relative;
+}
+.formHeading {
+  padding-bottom: 26px;
+  margin-bottom: 27px;
+  border-bottom: 1px solid #e3e8db;
+}
+.formHeading > span {
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  color: #7f8b77;
+}
+.formHeading > h3 {
+  font:
+    400 28px/1.2 Georgia,
+    serif;
+  letter-spacing: -0.6px;
+  margin-top: 13px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 20px;
+  margin-bottom: 24px;
+}
+.form label {
+  display: block;
+  color: #365444;
+  font-size: 10px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.form label > span:not(:last-child) {
+  color: #95865c;
+}
+.form label > small {
+  font-size: 9px;
+  font-weight: 400;
+  margin-left: 4px;
+  color: #8c967f;
+}
+.form :is(input:not([type="checkbox"]), select, textarea) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dce2d4;
+  border-radius: 6px;
+  background: #f3f4eb;
+  color: #173c34;
+  font:
+    400 12px/1.5 var(--font-geist-sans),
+    Arial,
+    sans-serif;
+  padding: 12px;
+  margin-top: 8px;
+  caret-color: auto;
+  cursor: text;
+  outline: none;
+}
+.form :is(input, select, textarea):focus-visible {
+  border-color: #a0ac8d;
+  outline: 2px solid #a9b69d;
+  outline-offset: 2px;
+}
+.form :is(input, textarea)::placeholder {
+  color: #8d9685;
+  font-size: 10px;
+}
+.form select {
+  height: 44px;
+  cursor: pointer;
+}
+.form textarea {
+  min-height: 115px;
+  resize: vertical;
+}
+.form .consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 23px;
+  font-size: 10px;
+  font-weight: 400;
+  color: #7c8873;
+  line-height: 1.8;
+}
+.consent input {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: #142d63;
+}
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 47px;
+  background: #142d63;
+  color: #fff;
+  border: 1px solid #142d63;
+  border-radius: 6px;
+  padding: 12px 17px;
+  font-size: 12px;
+  margin-top: 26px;
+}
+.submit:hover {
+  background: #0e214a;
+}
+.submit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.note {
+  font-size: 9px;
+  color: #8a957e;
+  line-height: 1.8;
+  margin-top: 14px !important;
+}
+.error {
+  font-size: 12px;
+  color: #96382b;
+  line-height: 1.8;
+  padding: 14px;
+  border: 1px solid #d9bbb2;
+  border-radius: 6px;
+  background: #fbf0ea;
+  margin-top: 20px !important;
+}
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.success {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 400px;
+}
+.success > span {
+  display: grid;
+  place-items: center;
+  color: #f9f9f0;
+  background: #142d63;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  margin-bottom: 25px;
+}
+.success h3 {
+  font:
+    400 34px/1.2 Georgia,
+    serif;
+  letter-spacing: -0.8px;
+}
+.success p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #6a7b68;
+  margin-top: 20px;
+}
+.success button {
+  font-size: 11px;
+  border: 1px solid #d7dece;
+  padding: 11px 15px;
+  border-radius: 6px;
+  margin-top: 30px;
+  background: #eeefe5;
+}
+@media (max-width: 1000px) {
+  .form,
+  .success {
+    padding: 28px;
+  }
+  .grid {
+    gap: 21px 15px;
+  }
+}
+@media (max-width: 480px) {
+  .form,
+  .success {
+    padding: 25px 20px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+  .formHeading > h3 {
+    font-size: 26px;
+  }
+  .form :is(input:not([type="checkbox"]), select, textarea) {
+    font-size: 16px;
+  }
+  .form :is(input, textarea)::placeholder {
+    font-size: 11px;
+  }
+}

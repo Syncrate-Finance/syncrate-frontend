@@ -128,7 +128,7 @@ export function MarketingHeader() {
                     <ArrowUpRight size={22} />
                   </a>
                   <a
-                    href={WEBSITE_ORIGIN + "/sySGLD"}
+                    href={WEBSITE_ORIGIN + "/sysgld#get-in-touch"}
                     onClick={close}
                     className={styles.menuRow}
                   >

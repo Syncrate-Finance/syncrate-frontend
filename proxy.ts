@@ -11,6 +11,13 @@ import {
 } from "./server/cms/supabase-session";
 
 export async function proxy(request: NextRequest) {
+  // Next config redirects match case-insensitively; normalize here to avoid a loop.
+  if (request.nextUrl.pathname.toLowerCase() === "/sysgld") {
+    if (request.nextUrl.pathname === "/sysgld") return NextResponse.next();
+    const canonical = request.nextUrl.clone();
+    canonical.pathname = "/sysgld";
+    return NextResponse.redirect(canonical, 308);
+  }
   const env = readServerEnvironment();
   if (env.CMS_AUTH_PROVIDER !== "supabase") return NextResponse.next();
   // Keep host-only staff cookies and Payload's configured API origin together.
@@ -68,5 +75,5 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 export const config = {
-  matcher: ["/cms/:path*", "/cms-api/:path*", "/staff/:path*"],
+  matcher: ["/sySGLD", "/sysgld", "/cms/:path*", "/cms-api/:path*", "/staff/:path*"],
 };
