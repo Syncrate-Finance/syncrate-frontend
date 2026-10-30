@@ -25,38 +25,25 @@ const segments = [
   {
     Icon: Gem,
     title: "Jewelers",
-    description:
-      "Gold for your craft, with a financing conversation shaped around your production cycle.",
   },
   {
     Icon: Store,
     title: "Gold retailers",
-    description:
-      "Explore inventory financing for the stock your customers come to you to find.",
   },
   {
     Icon: Coins,
     title: "Bullion dealers",
-    description:
-      "Discuss the working inventory behind your physical bullion business.",
   },
   {
     Icon: Boxes,
     title: "Wholesalers",
-    description:
-      "Connect your sourcing and distribution needs with a considered financing structure.",
   },
   {
     Icon: Hammer,
-    title: "Manufacturers",
-    description:
-      "Bring your raw material requirements and production timetable into the conversation.",
   },
   {
     Icon: Factory,
     title: "Refiners",
-    description:
-      "Explore whether your operating model and gold requirements fit Syncrate’s framework.",
   },
 ];
 export default function SySgldPage() {
@@ -159,13 +146,8 @@ Built for accredited invesors, Syncrate leases it's gold bullion to established 
                 </article>
               ))}
             </div>
-            <div className={styles.sectionBottom}>
-              <p>
-                Participation is subject to business verification, eligibility
-                and agreed terms.
-              </p>
               <a href="#get-in-touch" className={styles.lightButton}>
-                Start a conversation <ArrowUpRight size={17} />
+                Talk to our team />
               </a>
             </div>
           </div>
@@ -175,9 +157,9 @@ Built for accredited invesors, Syncrate leases it's gold bullion to established 
           aria-labelledby="process-title"
         >
           <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>A CONSIDERED PROCESS</span>
+            <span className={styles.eyebrow}>HOW IT WORKS</span>
             <h2 id="process-title">
-              First, understand the business.
+              First, we understand the business.
               <br />
               <em>Then, find the fit.</em>
             </h2>
@@ -190,7 +172,7 @@ Built for accredited invesors, Syncrate leases it's gold bullion to established 
               ],
               [
                 "Review the requirements",
-                "The team discusses your business, performs the required checks and explores whether a facility is suitable.",
+                "Our team evaluates your business, performs the required legal checks and explores whether a facility is suitable.",
               ],
               [
                 "Agree the structure",
@@ -204,47 +186,6 @@ Built for accredited invesors, Syncrate leases it's gold bullion to established 
               </li>
             ))}
           </ol>
-        </section>
-        <section
-          className={`${styles.container} ${styles.productDifference}`}
-          aria-labelledby="difference-title"
-        >
-          <div>
-            <span className={styles.eyebrow}>TWO DISTINCT PRODUCTS</span>
-            <h2 id="difference-title">
-              Know what
-              <br />
-              <em>you’re exploring.</em>
-            </h2>
-          </div>
-          <div className={styles.differenceCard}>
-            <span>SGLD</span>
-            <h3>Gold-backed exposure.</h3>
-            <p>
-              One troy ounce of physical gold per token. Holding SGLD does not
-              itself generate yield.
-            </p>
-            <Link href="/sgld" className={styles.textLink}>
-              Understand SGLD <ArrowUpRight size={15} />
-            </Link>
-          </div>
-          <div className={styles.differenceCard}>
-            <span>sySGLD</span>
-            <h3>A gold-financing product.</h3>
-            <p>
-              Designed around short-term gold leasing. Returns are variable,
-              with additional financing and counterparty risks.
-            </p>
-            <a
-              href="https://syncrate-1.gitbook.io/syncrate-docs/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.textLink}
-            >
-              Read the documentation <ArrowUpRight size={15} />
-            </a>
-          </div>
-        </section>
         <section
           className={`${styles.container} ${styles.contactSection}`}
           id="get-in-touch"
@@ -258,25 +199,11 @@ Built for accredited invesors, Syncrate leases it's gold bullion to established 
               <em>worth its weight.</em>
             </h2>
             <p>
-              Tell us about your business. We’ll review your inquiry and discuss
-              whether Syncrate’s gold-financing framework is a fit.
+              Tell us about your business. We’ll review your inquiry and discuss a lease arrangement suitable for your business.
             </p>
-            <a href="mailto:team@syncrate.org" className={styles.contactEmail}>
-              team@syncrate.org <ArrowUpRight size={16} />
-            </a>
-            <span className={styles.contactNote}>
-              This is a business inquiry, not an application for an investment
-              or a commitment to provide financing.
-            </span>
           </div>
           <InquiryForm />
         </section>
-        <p className={`${styles.container} ${styles.riskNote}`}>
-          Gold financing carries counterparty, custody, operational and market
-          risks, including potential loss. Returns are not guaranteed.
-          Availability depends on eligibility and product terms. Read the{" "}
-          <Link href="/terms">terms and disclosures</Link>.
-        </p>
       </div>
     </ProductShell>
   );
