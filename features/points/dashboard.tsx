@@ -310,8 +310,7 @@ function DistributionHistory({
                 </div>
               )}
             </>
-          ) : (
-          )}
+          ) : null}
           <div className={styles.openingBalance}>
             <span>
               Previously earned points
