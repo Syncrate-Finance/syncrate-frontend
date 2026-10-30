@@ -627,9 +627,7 @@ export function SwapPanel() {
         </div>
       )}
       {mode === "redeem" && account && <QueuedPayouts account={account} />}
-      <p className={styles.note}>
-        Estimates can change before confirmation.
-      </p>
+      <p className={styles.note}>Estimates can change before confirmation.</p>
       <Dialog
         open={Boolean(review)}
         onOpenChange={(open) => {
@@ -693,8 +691,7 @@ export function SwapPanel() {
                     {review.mode === "mint" ? "SGLD" : review.stablecoin}
                   </dd>
                 </div>
-
-              )}
+              </dl>
               {review.mode === "redeem" && review.action === "swap" && (
                 <p className={styles.note}>
                   Redemption fee: {displayAmount(review.quote.fee, 6)}{" "}
