@@ -156,7 +156,7 @@ export function InquiryForm() {
           name="message"
           rows={4}
           maxLength={2000}
-          placeholder="Your business, financing needs or a question for the team"
+          placeholder="Your business or any question for our team"
         />
       </label>
       <div className={styles.honeypot} aria-hidden="true">
@@ -191,10 +191,6 @@ export function InquiryForm() {
         {state === "sending" ? "Sending inquiry…" : "Send inquiry"}
         <ArrowUpRight size={16} />
       </button>
-      <p className={styles.note}>
-        Required fields are marked *. Details are sent privately to the Syncrate
-        team.
-      </p>
     </form>
   );
 }
