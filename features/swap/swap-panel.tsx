@@ -547,7 +547,7 @@ export function SwapPanel() {
       </div>
       <div className={styles.price}>
         <span className={styles.liveDot} />
-        <span>Live gold price</span>
+        <span>Live SGLD price</span>
         <strong>
           {data && !query.isError
             ? "$" + displayAmount(data.price, 8, 2) + " / oz"
@@ -628,7 +628,7 @@ export function SwapPanel() {
       )}
       {mode === "redeem" && account && <QueuedPayouts account={account} />}
       <p className={styles.note}>
-        Estimates can change before confirmation. Network fees are paid in ETH.
+        Estimates can change before confirmation.
       </p>
       <Dialog
         open={Boolean(review)}
