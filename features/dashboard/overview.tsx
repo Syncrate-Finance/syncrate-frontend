@@ -6,7 +6,6 @@ import {
   ArrowUpRight,
   ChevronRight,
   CircleHelp,
-  Layers3,
   RefreshCw,
 } from "lucide-react";
 import { formatUnits } from "viem";
@@ -169,7 +168,13 @@ function OfferIcon({
       className={styles.saffronLogo}
     />
   ) : (
-    <Layers3 size={size} />
+    <Image
+      src="/logo.png"
+      width={size + 12}
+      height={size + 12}
+      alt=""
+      className={styles.stakingLogo}
+    />
   );
 }
 function OfferTitle({ offer }: { offer: EarnOpportunity }) {

@@ -255,7 +255,7 @@
   text-decoration: underline;
 }
 .pointsLink:focus-visible {
-  outline: 2px solid #9a7535;
+  outline: 2px solid #142d63;
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -461,6 +461,13 @@
   display: block;
   border-radius: 7px;
   object-fit: contain;
+}
+.stakingLogo {
+  display: block;
+  border-radius: 7px;
+  background: #142d63;
+  object-fit: contain;
+  padding: 1px;
 }
 .aprValue {
   color: #223b3e;

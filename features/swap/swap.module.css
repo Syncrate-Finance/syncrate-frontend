@@ -50,7 +50,7 @@
   cursor: default;
 }
 .panel :is(button, input, select):focus-visible {
-  outline: 2px solid #9a7535;
+  outline: 2px solid #142d63;
   outline-offset: 3px;
 }
 .assetChoice {

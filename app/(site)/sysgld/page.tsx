@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
   ArrowUpRight,
   Gem,
   Store,
   Coins,
   Boxes,
-  Hammer,
   Factory,
   ChevronDown,
 } from "lucide-react";
@@ -39,9 +37,6 @@ const segments = [
     title: "Wholesalers",
   },
   {
-    Icon: Hammer,
-  },
-  {
     Icon: Factory,
     title: "Refiners",
   },
@@ -66,7 +61,7 @@ export default function SySgldPage() {
             </p>
             <div className={styles.actions}>
               <a href="#get-in-touch" className={styles.primary}>
-                Talk to our team />
+                Talk to our team
               </a>
               <a href="#built-for" className={styles.secondary}>
                 Who it’s built for <ChevronDown size={15} />
@@ -138,18 +133,16 @@ Built for accredited invesors, Syncrate leases it's gold bullion to established 
               </p>
             </div>
             <div className={styles.segmentGrid}>
-              {segments.map(({ Icon, title, description }) => (
+              {segments.map(({ Icon, title }) => (
                 <article key={title}>
                   <Icon size={29} strokeWidth={1.2} />
                   <h3>{title}</h3>
-                  <p>{description}</p>
                 </article>
               ))}
             </div>
               <a href="#get-in-touch" className={styles.lightButton}>
-                Talk to our team />
+                Talk to our team
               </a>
-            </div>
           </div>
         </section>
         <section
@@ -186,6 +179,7 @@ Built for accredited invesors, Syncrate leases it's gold bullion to established 
               </li>
             ))}
           </ol>
+        </section>
         <section
           className={`${styles.container} ${styles.contactSection}`}
           id="get-in-touch"
