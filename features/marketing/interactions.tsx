@@ -107,7 +107,7 @@ export function MarketingHeader() {
                         href={WEBSITE_ORIGIN + "/#transparency"}
                         onClick={close}
                       >
-                        Transparency<span>Assets and reports</span>
+                        Transparency<span></span>
                       </a>
                       <a
                         href="https://syncrate-1.gitbook.io/syncrate-docs/"
@@ -115,24 +115,24 @@ export function MarketingHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Documentation<span>Explore the details</span>
+                        Documentation<span></span>
                       </a>
                     </div>
                   </details>
                   <a
-                    href={WEBSITE_ORIGIN + "/#approach"}
+                    href={WEBSITE_ORIGIN + "/#insights"}
                     onClick={close}
                     className={styles.menuRow}
                   >
-                    <span className={styles.menuNumber}>03</span>The approach
+                    <span className={styles.menuNumber}>03</span>Insights
                     <ArrowUpRight size={22} />
                   </a>
                   <a
-                    href={WEBSITE_ORIGIN + "/insights"}
+                    href={WEBSITE_ORIGIN + "/sySGLD"}
                     onClick={close}
                     className={styles.menuRow}
                   >
-                    <span className={styles.menuNumber}>04</span>Insights
+                    <span className={styles.menuNumber}>04</span>Get in touch
                     <ArrowUpRight size={22} />
                   </a>
                 </nav>
