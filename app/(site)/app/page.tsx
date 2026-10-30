@@ -6,7 +6,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { WalletButton as ConnectButton } from '@/features/wallet/button'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { parseUnits, formatUnits, maxUint256 } from 'viem'
 

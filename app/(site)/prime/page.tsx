@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { WalletButton as ConnectButton } from '@/features/wallet/button'
 import {
   useAccount,
   useBalance,

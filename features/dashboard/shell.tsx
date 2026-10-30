@@ -1,7 +1,7 @@
 "use client";
 import { APP_ORIGIN, WEBSITE_ORIGIN } from "@/config/site";
 import Link from "next/link";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { WalletButton as ConnectButton } from "@/features/wallet/button";
 import { ArrowUpRight, ChevronDown, Menu } from "lucide-react";
 import { GeistSans } from "geist/font/sans";
 import { Button } from "@/components/ui/button";
