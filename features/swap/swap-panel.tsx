@@ -693,18 +693,7 @@ export function SwapPanel() {
                     {review.mode === "mint" ? "SGLD" : review.stablecoin}
                   </dd>
                 </div>
-              </dl>
-              {review.action !== "swap" && (
-                <p className={styles.note}>
-                  Spender:{" "}
-                  <a
-                    href={`https://basescan.org/address/${CONTRACT_ADDRESSES.SYNCRATE_ENGINE}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    SyncrateEngine ↗
-                  </a>
-                </p>
+
               )}
               {review.mode === "redeem" && review.action === "swap" && (
                 <p className={styles.note}>
