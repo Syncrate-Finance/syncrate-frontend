@@ -109,7 +109,7 @@ function CommunityLeaderboard() {
           <Trophy size={20} />
         </span>
         <span>
-          <strong>Community leaderboard</strong>
+          <strong>Points leaderboard</strong>
           <small>Every wallet. All settled points.</small>
         </span>
         <span className={styles.expandLabel}>View rankings</span>
@@ -311,16 +311,6 @@ function DistributionHistory({
               )}
             </>
           ) : (
-            <div className={styles.empty}>
-              <span className={styles.emptyIcon}>
-                <CalendarDays size={22} />
-              </span>
-              <h3>Your next chapter is accruing.</h3>
-              <p>
-                The first holding-based distribution closes November 1, 2026 at
-                00:00 UTC. Your previous points stay with you.
-              </p>
-            </div>
           )}
           <div className={styles.openingBalance}>
             <span>
@@ -331,10 +321,6 @@ function DistributionHistory({
           </div>
         </>
       )}
-      <div className={styles.ledgerFoot}>
-        Points reflect time held during the week. Weekly processing can finish
-        after the 00:00 UTC cutoff.
-      </div>
     </section>
   );
 }
@@ -370,42 +356,27 @@ export function PointsDashboard() {
       <main id="main-content" className={styles.container}>
         <div className={styles.topGrid}>
           <section className={styles.hero} aria-labelledby="points-title">
-            <span className={styles.heroEyebrow}>
-              <Star size={16} />
-              SYNCRATE REWARDS
-            </span>
             <h1 id="points-title">
-              Hold gold.
+              Hold & Trade SGLD.
               <br />
-              <em>Grow your points.</em>
+              <em>Earn points.</em>
             </h1>
             <p>
-              SGLD in your wallet earns Sync Points. Put its SGLD liquidity to
-              work on Uniswap for 3× weighting.
+              10 million SYNC points are distributed each week with up to 10x multiplier.
             </p>
-            <div className={styles.heroPills}>
-              <span>
-                <Star size={12} />
-                10 million points each week
-              </span>
-              <span>
-                <CalendarDays size={12} />
-                Sundays · 00:00 UTC
-              </span>
-            </div>
           </section>
           <section className={styles.summary} aria-labelledby="summary-title">
             <span className={styles.summaryIcon}>
               <Star size={20} />
             </span>
-            <h2 id="summary-title">Your Sync Points</h2>
+            <h2 id="summary-title">Your Points</h2>
             {wallet.status === "connecting" ||
             wallet.status === "reconnecting" ? (
               <p role="status">Connecting to your wallet…</p>
             ) : !connected ? (
               <div className={styles.connectPrompt}>
                 <p>
-                  A record that follows your wallet.
+                  Tracks all positions across all ecosystem protocols.
                   <br />
                   Connect to see your points and weekly distributions.
                 </p>
@@ -505,15 +476,14 @@ export function PointsDashboard() {
               <strong className={styles.multiplier}>1×</strong>
             </div>
             <div className={styles.venue}>
-              <span className={styles.lpIcon}>
-                <Layers3 size={23} />
+              <span className={styles.coin}>
+                <Image src="/uniswap-pool-icon.png" width={35} height={35} alt="" />
               </span>
               <div>
                 <h3>Uniswap liquidity</h3>
                 <span className={styles.via}>SGLD / USDC · via Saffron</span>
                 <p>
-                  3× weighting for the SGLD principal in directly owned
-                  positions in the eligible pool.
+                  Supply both sides of liquidity on Uniswap, earn a 3x boost on SYNC points.
                 </p>
               </div>
               <strong className={`${styles.multiplier} ${styles.boost}`}>
@@ -526,62 +496,12 @@ export function PointsDashboard() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Explore the Uniswap pool
+              Open Uniswap
               <ArrowUpRight size={15} />
             </a>
-            <p className={styles.venueNote}>
-              Only direct LP ownership is attributed to your wallet. USDC and
-              uncollected fees do not receive the LP boost. Moving SGLD into
-              this pool does not count it twice.
-            </p>
           </aside>
         </div>
         <CommunityLeaderboard />
-        <section className={styles.how} aria-labelledby="how-points-work">
-          <div>
-            <span className={styles.smallLabel}>AUTOMATIC BY DESIGN</span>
-            <h2 id="how-points-work">
-              A little more gold.
-              <br />A little more possibility.
-            </h2>
-            <a href={APP_ORIGIN + "#buy-sgld"}>
-              Get SGLD
-              <ArrowUpRight size={14} />
-            </a>
-          </div>
-          <ol>
-            <li>
-              <span>01</span>
-              <div>
-                <h3>Hold throughout the week</h3>
-                <p>
-                  Your balance is weighted by how long you hold it, including
-                  transfers during the week.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>02</span>
-              <div>
-                <h3>Boost eligible liquidity</h3>
-                <p>
-                  The SGLD portion of directly owned Uniswap positions receives
-                  three times the weight.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>03</span>
-              <div>
-                <h3>See your Sunday distribution</h3>
-                <p>
-                  The 10 million weekly pool is shared proportionally. Your
-                  settled points appear here after processing.
-                </p>
-              </div>
-            </li>
-          </ol>
-        </section>
       </main>
     </DashboardShell>
   );
