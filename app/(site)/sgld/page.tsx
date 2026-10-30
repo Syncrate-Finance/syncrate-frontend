@@ -6,11 +6,9 @@ import {
   Coins,
   Vault,
   ShieldCheck,
-  Layers3,
   ChevronDown,
 } from "lucide-react";
 import { APP_ORIGIN, WEBSITE_ORIGIN } from "@/config/site";
-import { CONTRACT_ADDRESSES } from "@/config/contracts";
 import { ProductShell } from "@/features/products/shell";
 import { SgldMetrics } from "@/features/products/sgld-metrics";
 import styles from "@/features/products/products.module.css";
@@ -69,7 +67,7 @@ export default function SgldPage() {
             </p>
             <div className={styles.actions}>
               <a href={APP_ORIGIN} className={styles.primary}>
-                Buy SGLD>
+                Buy SGLD&gt;
               </a>
               <a href="#how-it-works" className={styles.secondary}>
                 How it works <ChevronDown size={15} />
@@ -225,11 +223,6 @@ export default function SgldPage() {
               </div>
               <ArrowUpRight size={20} />
             </a>
-            <a
-              href={`https://basescan.org/token/${CONTRACT_ADDRESSES.SGLD_TOKEN}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
           </div>
         </section>
         <section
@@ -260,6 +253,7 @@ export default function SgldPage() {
               </details>
             ))}
           </div>
+        </section>
         <p className={`${styles.container} ${styles.riskNote}`}>
           Trading SGLD involves custody, operational and smart contract risks. SGLD is
           not a securities or legal tender and is not deposit-insured. Read the{" "}
