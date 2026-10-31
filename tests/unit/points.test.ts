@@ -84,6 +84,24 @@ test("same-block flash holdings and end-cutoff transfers cannot earn time", () =
   assert.equal(state.weights.has(B), false);
   assert.equal(state.weights.has(C), false);
 });
+
+test("retired Prime custody earns no new holding or deposit points", () => {
+  const prime = "0xba93aa354a3b47a936d713b8fb90126d4d35546b";
+  const state = integrateHoldings(
+    [
+      transfer(0, 1n, ZERO, A, 100n),
+      transfer(10, 2n, A, prime, 100n),
+    ],
+    0,
+    70,
+  );
+  assert.equal(state.weights.get(A)?.wallet, 1000n);
+  assert.equal(state.weights.has(prime), false);
+  const result = allocatePoints(state.weights, 700n);
+  assert.deepEqual(result.awards.map((row) => row.address), [A]);
+  assert.equal(result.awards[0].walletPoints, "700");
+  assert.equal(result.awards[0].lpPoints, "0");
+});
 test("LP ownership transfers split the weight and changing pool price updates only SGLD principal", () => {
   const l = 10n ** 18n,
     principal = sgldInLiquidity(l, -60, 60, Q96);

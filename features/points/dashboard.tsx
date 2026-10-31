@@ -356,12 +356,14 @@ export function PointsDashboard() {
         <div className={styles.topGrid}>
           <section className={styles.hero} aria-labelledby="points-title">
             <h1 id="points-title">
-              Hold & Trade SGLD.
+              Hold SGLD.
               <br />
               <em>Earn points.</em>
             </h1>
             <p>
-              10 million SYNC points are distributed each week with up to 10x multiplier.
+              Share 10 million SYNC points each Sunday, based on how much SGLD
+              you hold throughout the week. Eligible Uniswap liquidity receives
+              3× weighting.
             </p>
           </section>
           <section className={styles.summary} aria-labelledby="summary-title">
@@ -375,7 +377,7 @@ export function PointsDashboard() {
             ) : !connected ? (
               <div className={styles.connectPrompt}>
                 <p>
-                  Tracks all positions across all ecosystem protocols.
+                  Tracks wallet-held SGLD and eligible Uniswap liquidity.
                   <br />
                   Connect to see your points and weekly distributions.
                 </p>
@@ -480,9 +482,11 @@ export function PointsDashboard() {
               </span>
               <div>
                 <h3>Uniswap liquidity</h3>
-                <span className={styles.via}>SGLD / USDC · via Saffron</span>
+                <span className={styles.via}>SGLD / USDC · Base</span>
                 <p>
-                  Supply both sides of liquidity on Uniswap, earn a 3x boost on SYNC points.
+                  The SGLD portion of directly owned positions in the eligible
+                  pool receives 3× time-weighted points. USDC and uncollected
+                  fees do not count.
                 </p>
               </div>
               <strong className={`${styles.multiplier} ${styles.boost}`}>

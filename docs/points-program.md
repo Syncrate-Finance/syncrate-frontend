@@ -23,7 +23,9 @@ Ledger validation rejects duplicate wallets, invalid/future publications, noncon
 
 `GET /api/v1/points` validates wallet addresses and pagination. Personalized responses contain only the requested wallet. The public leaderboard is requested separately, 20 entries per page. Responses are `no-store`; account-specific query keys and address matching prevent displaying a previous wallet's cached totals. A disconnected wallet has a connection prompt, not a fabricated zero. No current-week reward estimate is invented. Overdue unpublished cutoffs remain marked processing.
 
-The old `/app/api/points/leaderboard` URL now returns the same paginated program projection. The legacy mint page links to the canonical points page instead of rendering its retired mint/Prime widget. Keep `node scripts/calculate-week.cjs` as the operator entry point.
+The old `/app/api/points/leaderboard` URL now returns the same paginated program projection. The legacy mint page links to the canonical points page instead of rendering its retired mint/Prime widget. The legacy `/prime` page no longer contains a deposit tab, deposit/approval methods or its obsolete snapshot leaderboard; existing sySGLD holders retain the same redemption contract and arguments. Its points link opens the current app dashboard. Keep `node scripts/calculate-week.cjs` as the operator entry point.
+
+The points dashboard describes only the implemented rules: wallet-held SGLD at 1× and directly owned eligible Uniswap SGLD principal at 3×. Trading volume, a 10× multiplier, all-protocol positions and deposits through Saffron or Prime are not reward criteria. Existing historical totals remain intact.
 
 ## Zero-cost provider setup
 
