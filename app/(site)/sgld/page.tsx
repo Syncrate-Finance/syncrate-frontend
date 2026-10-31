@@ -62,15 +62,14 @@ export default function SgldPage() {
             </h1>
             <p>
               Own gold with the freedom to move it. Each SGLD token represents a direct ownership to one
-              troy ounce of 99.99% pure physical gold, held in secure custodial
-              storage in the UAE.
+              troy ounce of 99.99% pure physical gold, held in secure custody in the UAE.
             </p>
             <div className={styles.actions}>
               <a href={APP_ORIGIN} className={styles.primary}>
-                Buy SGLD&gt;
+                Buy SGLD;
               </a>
               <a href="#how-it-works" className={styles.secondary}>
-                How it works <ChevronDown size={15} />
+                How it works>
               </a>
             </div>
             <span className={styles.network}>
