@@ -47,29 +47,6 @@ const aggregatorV3Abi = [
   },
 ] as const
 
-const erc20Abi = [
-  {
-    type: 'function',
-    name: 'approve',
-    inputs: [
-      { name: 'spender', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    outputs: [{ type: 'bool' }],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    name: 'allowance',
-    inputs: [
-      { name: 'owner', type: 'address' },
-      { name: 'spender', type: 'address' },
-    ],
-    outputs: [{ type: 'uint256' }],
-    stateMutability: 'view',
-  },
-] as const
-
 const vaultAbi = [
   {
     type: 'function',
@@ -77,16 +54,6 @@ const vaultAbi = [
     inputs: [],
     outputs: [{ type: 'uint256' }],
     stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    name: 'deposit',
-    inputs: [
-      { name: 'assets', type: 'uint256' },
-      { name: 'receiver', type: 'address' },
-    ],
-    outputs: [{ name: 'shares', type: 'uint256' }],
-    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
@@ -98,13 +65,6 @@ const vaultAbi = [
     ],
     outputs: [{ name: 'assets', type: 'uint256' }],
     stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    name: 'previewDeposit',
-    inputs: [{ name: 'assets', type: 'uint256' }],
-    outputs: [{ type: 'uint256' }],
-    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -134,132 +94,18 @@ export default function AppPortal() {
 }
 
 // ==========================================
-// POINTS LEADERBOARD
-// ==========================================
-interface LeaderboardEntry {
-  address: string
-  netMinted: string
-  minterPoints: number
-  primePoints: number
-  totalPoints: number
-}
-
-interface WeekData {
-  weekStart: string
-  weekEnd: string
-  leaderboard: LeaderboardEntry[]
-}
-
-function PointsLeaderboard() {
-  const { address } = useAccount()
-  const [data, setData] = useState<WeekData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [showAll, setShowAll] = useState(false)
-
-  useEffect(() => {
-    fetch('/points/latest.json')
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch(() => setData(null))
-      .finally(() => setLoading(false))
-  }, [])
-
-  const shortAddress = (addr: string) =>
-    `${addr.slice(0, 6)}...${addr.slice(-4)}`
-
-  if (loading) {
-    return (
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 flex justify-center">
-        <span className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin" />
-      </div>
-    )
-  }
-
-  if (!data || !data.leaderboard) {
-    return (
-      <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-6 text-center">
-        <p className="text-xs text-[#666666]">Leaderboard coming soon</p>
-      </div>
-    )
-  }
-
-  const displayedLeaderboard = showAll
-    ? data.leaderboard
-    : data.leaderboard.slice(0, 10)
-
-  return (
-    <div className="w-full max-w-md bg-[#0A0A0A] border border-[#111111] rounded-2xl p-5 sm:p-6 flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-white">Points Leaderboard</h3>
-          <p className="text-[10px] font-mono text-[#666666] mt-0.5">
-            Week of {data.weekStart}
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-[10px] font-mono text-[#666666] uppercase">Pool</p>
-          <p className="text-xs font-medium text-white">10M</p>
-        </div>
-      </div>
-
-      {/* Header */}
-      <div className="grid grid-cols-[28px_1fr_90px] gap-2 text-[10px] font-mono text-[#555555] uppercase px-1">
-        <span>#</span>
-        <span>Address</span>
-        <span className="text-right">Points</span>
-      </div>
-
-      {/* Rows */}
-      <div className="flex flex-col gap-1 max-h-[320px] overflow-y-auto">
-        {displayedLeaderboard.map((entry, i) => {
-          const isYou = address && entry.address.toLowerCase() === address.toLowerCase()
-          return (
-            <div
-              key={entry.address}
-              className={`grid grid-cols-[28px_1fr_90px] gap-2 items-center py-2 px-2 rounded-lg text-xs ${
-                isYou ? 'bg-[#0037FF]/10 border border-[#0037FF]/20' : ''
-              }`}
-            >
-              <span className="text-[#666666] font-mono">{i + 1}</span>
-              <span className={`font-mono truncate ${isYou ? 'text-[#0037FF]' : 'text-white'}`}>
-                {shortAddress(entry.address)}
-                {isYou && <span className="ml-1 text-[9px]">YOU</span>}
-              </span>
-              <span className="text-right font-mono text-white">
-                {Math.round(entry.totalPoints).toLocaleString()}
-              </span>
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Show More / Show Less Toggle Button */}
-      {data.leaderboard.length > 10 && (
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="w-full py-2.5 mt-1 bg-[#111111] hover:bg-[#1a1a1a] border border-[#222222] rounded-lg text-xs font-medium text-[#AAAAAA] hover:text-white transition-all"
-        >
-          {showAll ? 'Show less' : `Show more (${data.leaderboard.length - 10} more)`}
-        </button>
-      )}
-    </div>
-  )
-}
-
-// ==========================================
 // COMPONENT: ACTIVE VAULT DAPP
 // ==========================================
 function PrimeVaultAppUI() {
   const { isConnected, address } = useAccount()
 
-  const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit')
   const [inputAmount, setInputAmount] = useState('')
   const [txStatus, setTxStatus] = useState<
-    'idle' | 'approving' | 'approved' | 'processing' | 'success'
+    'idle' | 'processing' | 'success'
   >('idle')
 
   // Balances
-  const { data: sgldData, refetch: refetchSgld } = useBalance({
+  const { refetch: refetchSgld } = useBalance({
     address,
     token: SGLD_ADDRESS,
   })
@@ -268,17 +114,7 @@ function PrimeVaultAppUI() {
     token: PRIME_VAULT_ADDRESS,
   })
 
-  const sgldBalance = sgldData ? parseFloat(sgldData.formatted) : 0.0
   const sySgldBalance = sySgldData ? parseFloat(sySgldData.formatted) : 0.0
-
-  // Allowance
-  const { data: currentAllowance, refetch: refetchAllowance } = useReadContract({
-    address: SGLD_ADDRESS,
-    abi: erc20Abi,
-    functionName: 'allowance',
-    args: address ? [address, PRIME_VAULT_ADDRESS] : undefined,
-    query: { enabled: !!address },
-  })
 
   // ── DYNAMIC TVL & LIVE GOLD PRICE FETCHING ──
   const { data: totalAssetsData } = useReadContract({
@@ -316,28 +152,10 @@ function PrimeVaultAppUI() {
   const sharePrice = 1.0 + (vaultApy / 100) * (daysElapsed / 365)
   const vaultSupply = sharePrice > 0 ? totalAssetsNum / sharePrice : 0
 
-  // Preview: deposit → shares out
-  let depositAssetsWei: bigint | undefined
-  try {
-    if (activeTab === 'deposit' && inputAmount && Number(inputAmount) > 0) {
-      depositAssetsWei = parseUnits(inputAmount, sgldData?.decimals ?? 18)
-    }
-  } catch {
-    depositAssetsWei = undefined
-  }
-
-  const { data: previewShares } = useReadContract({
-    address: PRIME_VAULT_ADDRESS,
-    abi: vaultAbi,
-    functionName: 'previewDeposit',
-    args: depositAssetsWei !== undefined ? [depositAssetsWei] : undefined,
-    query: { enabled: depositAssetsWei !== undefined && activeTab === 'deposit' },
-  })
-
   // Preview: redeem → net SGLD out (after 0.1% fee)
   let redeemSharesWei: bigint | undefined
   try {
-    if (activeTab === 'withdraw' && inputAmount && Number(inputAmount) > 0) {
+    if (inputAmount && Number(inputAmount) > 0) {
       redeemSharesWei = parseUnits(inputAmount, sySgldData?.decimals ?? 21)
     }
   } catch {
@@ -350,14 +168,10 @@ function PrimeVaultAppUI() {
     functionName: 'previewRedeemNet',
     args: redeemSharesWei !== undefined ? [redeemSharesWei] : undefined,
     query: {
-      enabled: redeemSharesWei !== undefined && activeTab === 'withdraw',
+      enabled: redeemSharesWei !== undefined,
     },
   })
 
-  const previewSharesFmt =
-    previewShares !== undefined
-      ? parseFloat(formatUnits(previewShares as bigint, 21)).toFixed(4)
-      : null
   const previewNetAssetsFmt =
     previewNetAssets !== undefined
       ? parseFloat(formatUnits(previewNetAssets as bigint, 18)).toFixed(4)
@@ -380,28 +194,13 @@ function PrimeVaultAppUI() {
 
   // Transactions
   const {
-    data: approveTxHash,
-    writeContract: writeApprove,
-    isPending: isApprovePending,
-  } = useWriteContract()
-  const {
     data: processTxHash,
     writeContract: writeProcess,
     isPending: isProcessPending,
   } = useWriteContract()
 
-  const { isLoading: isApproveConfirming, isSuccess: isApproveSuccess } =
-    useWaitForTransactionReceipt({ hash: approveTxHash })
   const { isLoading: isProcessConfirming, isSuccess: isProcessSuccess } =
     useWaitForTransactionReceipt({ hash: processTxHash })
-
-  useEffect(() => {
-    if (isApprovePending || isApproveConfirming) setTxStatus('approving')
-    if (isApproveSuccess) {
-      setTxStatus('approved')
-      refetchAllowance()
-    }
-  }, [isApprovePending, isApproveConfirming, isApproveSuccess, refetchAllowance])
 
   useEffect(() => {
     if (isProcessPending || isProcessConfirming) setTxStatus('processing')
@@ -418,78 +217,26 @@ function PrimeVaultAppUI() {
     refetchSySgld,
   ])
 
-  // Smart allowance check
-  useEffect(() => {
-    if (!inputAmount || isNaN(Number(inputAmount)) || Number(inputAmount) <= 0)
-      return
-
-    if (activeTab === 'withdraw') {
-      if (txStatus === 'idle') setTxStatus('approved')
-      return
-    }
-
-    const decimals = sgldData?.decimals ?? 18
-    let inputUnits = BigInt(0)
-    try {
-      inputUnits = parseUnits(inputAmount, decimals)
-    } catch {
-      return
-    }
-
-    const allowed = currentAllowance ? (currentAllowance as bigint) : BigInt(0)
-
-    if (allowed >= inputUnits) {
-      if (txStatus === 'idle') setTxStatus('approved')
-    } else {
-      if (txStatus === 'approved') setTxStatus('idle')
-    }
-  }, [inputAmount, activeTab, currentAllowance, sgldData, txStatus])
-
   const handleMaxBalance = () => {
-    if (activeTab === 'deposit') setInputAmount(sgldBalance.toString())
-    else setInputAmount(sySgldBalance.toString())
+    setInputAmount(sySgldBalance.toString())
   }
 
-  const handleApprove = () => {
-    if (!sgldData || !inputAmount || !address) return
-    const amountToApprove = parseUnits(inputAmount, sgldData.decimals)
-    writeApprove({
-      address: SGLD_ADDRESS,
-      abi: erc20Abi,
-      functionName: 'approve',
-      args: [PRIME_VAULT_ADDRESS, amountToApprove],
+  const handleProcess = () => {
+    if (!address || !inputAmount || !sySgldData) return
+    const sharesToRedeem = parseUnits(inputAmount, sySgldData.decimals)
+    writeProcess({
+      address: PRIME_VAULT_ADDRESS,
+      abi: vaultAbi,
+      functionName: 'redeem',
+      args: [sharesToRedeem, address, address],
       account: address,
       chain: base,
     })
   }
 
-  const handleProcess = () => {
-    if (!address || !inputAmount) return
-
-    if (activeTab === 'deposit') {
-      return // Deposits disabled
-    } else {
-      if (!sySgldData) return
-      const sharesToRedeem = parseUnits(inputAmount, sySgldData.decimals)
-      writeProcess({
-        address: PRIME_VAULT_ADDRESS,
-        abi: vaultAbi,
-        functionName: 'redeem',
-        args: [sharesToRedeem, address, address],
-        account: address,
-        chain: base,
-      })
-    }
-  }
-
   const resetFlow = () => {
     setInputAmount('')
     setTxStatus('idle')
-  }
-
-  const handleTabSwitch = (tab: 'deposit' | 'withdraw') => {
-    setActiveTab(tab)
-    resetFlow()
   }
 
   return (
@@ -655,43 +402,23 @@ function PrimeVaultAppUI() {
             </div>
           ) : (
             <div className="flex flex-col gap-4">
-              <div className="grid grid-cols-2 bg-[#030303] border border-[#111111] rounded-xl p-1">
-                <button
-                  type="button"
-                  onClick={() => handleTabSwitch('deposit')}
-                  className={`py-2 text-xs font-medium rounded-lg transition-all ${
-                    activeTab === 'deposit'
-                      ? 'bg-[#1a1a1a] text-white'
-                      : 'text-[#666666] hover:text-[#999999]'
-                  }`}
-                >
-                  Deposit
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleTabSwitch('withdraw')}
-                  className={`py-2 text-xs font-medium rounded-lg transition-all ${
-                    activeTab === 'withdraw'
-                      ? 'bg-[#1a1a1a] text-white'
-                      : 'text-[#666666] hover:text-[#999999]'
-                  }`}
-                >
-                  Withdraw
-                </button>
+              <div>
+                <h2 className="text-sm font-medium text-white">Withdraw sySGLD</h2>
+                <p className="mt-2 text-xs text-[#888888]">
+                  Deposits are discontinued. Existing sySGLD holders can withdraw.
+                </p>
               </div>
 
               <div className="bg-[#030303] border border-[#222222] rounded-xl p-4 flex flex-col gap-2 relative mt-1">
                 <div className="flex items-center justify-between text-[10px] font-mono tracking-wider text-[#666666] uppercase">
                   <span>
-                    Amount ({activeTab === 'deposit' ? 'SGLD' : 'sySGLD'})
+                    Amount (sySGLD)
                   </span>
                   <div className="flex items-center gap-1.5">
                     <span>
                       Balance:{' '}
                       {isConnected
-                        ? activeTab === 'deposit'
-                          ? sgldBalance.toFixed(4)
-                          : sySgldBalance.toFixed(4)
+                        ? sySgldBalance.toFixed(4)
                         : '0.00'}
                     </span>
                     {isConnected && (
@@ -712,11 +439,11 @@ function PrimeVaultAppUI() {
                     placeholder="0.00"
                     value={inputAmount}
                     onChange={(e) => setInputAmount(e.target.value)}
-                    disabled={activeTab === 'deposit' || (txStatus !== 'idle' && txStatus !== 'approved')}
+                    disabled={txStatus !== 'idle'}
                     className="bg-transparent text-xl md:text-2xl text-white placeholder-[#333333] focus:outline-none font-sans w-full disabled:opacity-50 min-w-0"
                   />
                   <span className="text-sm font-medium text-[#888]">
-                    {activeTab === 'deposit' ? 'SGLD' : 'sySGLD'}
+                    sySGLD
                   </span>
                 </div>
               </div>
@@ -724,9 +451,9 @@ function PrimeVaultAppUI() {
               {/* Preview line */}
               {inputAmount &&
                 Number(inputAmount) > 0 &&
-                (previewSharesFmt || previewNetAssetsFmt) && (
+                previewNetAssetsFmt && (
                   <div className="text-xs text-[#888888] px-1">
-                    {activeTab === 'withdraw' && previewNetAssetsFmt && (
+                    {previewNetAssetsFmt && (
                       <span>
                         You receive ≈ {previewNetAssetsFmt} SGLD{' '}
                         <span className="text-[#666666]">(after 0.1% fee)</span>
@@ -736,13 +463,7 @@ function PrimeVaultAppUI() {
                 )}
 
               <div className="mt-2">
-                {activeTab === 'deposit' ? (
-                  <div className="w-full py-4 px-4 bg-[#111111] border border-[#222222] rounded-lg text-center">
-                    <p className="text-xs text-[#888888] leading-relaxed">
-                      We're working to make sySGLD better and safer, SGLD deposits is currently unavailable. sySGLD holders can redeem at anytime
-                    </p>
-                  </div>
-                ) : !isConnected ? (
+                {!isConnected ? (
                   <div className="w-full flex justify-center custom-rainbow-btn">
                     <ConnectButton.Custom>
                       {({ openConnectModal }) => (
@@ -789,8 +510,9 @@ function PrimeVaultAppUI() {
           )}
         </div>
 
-        {/* POINTS LEADERBOARD (COMPACTED) */}
-        <PointsLeaderboard />
+        <a href={`${APP_ORIGIN}/points`} className="text-sm text-white underline">
+          View Sync Points
+        </a>
       </main>
     </div>
   )

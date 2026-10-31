@@ -69,7 +69,7 @@ export default function SgldPage() {
                 Buy SGLD;
               </a>
               <a href="#how-it-works" className={styles.secondary}>
-                How it works>
+                How it works&gt;
               </a>
             </div>
             <span className={styles.network}>
