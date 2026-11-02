@@ -2,7 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { isAddress } from "viem";
 import legacy from "../../public/points/latest.json";
-import baseline from "../../data/points/ledger.json";
+import publishedLedger from "../../data/points/ledger.json";
+import firstEpoch from "../../data/points/epochs/2026-10-25.json";
+const baseline = { ...publishedLedger, epochs: [] };
 import {
   PROGRAM_START,
   PROGRAM_VERSION,
@@ -26,6 +28,8 @@ import {
   projectPoints,
 } from "../../server/points/ledger";
 import { scanLogs } from "../../server/points/chain";
+import { diagnosePointsFailure } from "../../server/points/diagnostics";
+import { pointsTransport, assertLogBlockHash } from "../../server/points/rpc";
 import {
   POINTS_POOL,
   POSITION_MANAGER,
@@ -49,6 +53,54 @@ const A = "0x1111111111111111111111111111111111111111",
   B = "0x2222222222222222222222222222222222222222",
   C = "0x3333333333333333333333333333333333333333";
 const Q96 = 1n << 96n;
+test("block metadata uses verified Base while logs and contract state stay on the archive endpoint", async () => {
+  const calls: Array<{ host: string; method: string }> = [];
+  const fakeFetch: typeof fetch = async (input, init) => {
+    const host = new URL(String(input)).hostname;
+    const body = JSON.parse(String(init?.body));
+    calls.push({ host, method: body.method });
+    const result = body.method === "eth_chainId" ? "0x2105" : body.method === "eth_getLogs" ? [] : "0x";
+    return Response.json({ jsonrpc: "2.0", id: body.id, result });
+  };
+  const transport = pointsTransport("https://archive.invalid/key", "https://headers.invalid", { fetchFn: fakeFetch, intervalMs: 0 })({});
+  await transport.request({ method: "eth_getBlockByNumber", params: ["0x100", false] });
+  await transport.request({ method: "eth_getLogs", params: [{}] });
+  await transport.request({ method: "eth_getCode", params: [A, "0x100"] });
+  await transport.request({ method: "eth_call", params: [{ to: A, data: "0x18160ddd" }, "0x100"] });
+  assert.deepEqual(calls, [
+    { host: "headers.invalid", method: "eth_chainId" },
+    { host: "headers.invalid", method: "eth_getBlockByNumber" },
+    { host: "archive.invalid", method: "eth_getLogs" },
+    { host: "headers.invalid", method: "eth_getCode" },
+    { host: "archive.invalid", method: "eth_call" },
+  ]);
+});
+test("mismatched header networks and log hashes fail before rewards can be published", async () => {
+  const transport = pointsTransport("https://archive.invalid", "https://headers.invalid", {
+    intervalMs: 0,
+    fetchFn: async (_input, init) => Response.json({ jsonrpc: "2.0", id: JSON.parse(String(init?.body)).id, result: "0x1" }),
+  })({});
+  await assert.rejects(transport.request({ method: "eth_getBlockByNumber", params: ["0x100", false] }), /Wrong points header network/);
+  assert.doesNotThrow(() => assertLogBlockHash("0xabc", "0xabc"));
+  assert.throws(() => assertLogBlockHash("0xabc", "0xdef"), /block hash mismatch/);
+  assert.throws(() => assertLogBlockHash(null, undefined), /block hash mismatch/);
+});
+test("RPC diagnostics identify failures without exposing provider URLs or keys", () => {
+  const secret = "never-log-this-provider-key";
+  const output = diagnosePointsFailure({
+    message: `Request failed for https://provider.invalid/${secret}`,
+    cause: { status: 429, code: -32005, message: `quota exceeded: ${secret}` },
+  });
+  assert.deepEqual(output, {
+    category: "provider-rate-limit", httpStatus: 429, rpcCode: -32005,
+  });
+  assert.ok(!JSON.stringify(output).includes(secret));
+  assert.equal(diagnosePointsFailure(new Error("missing trie node; archive state unavailable")).category,
+    "historical-state-unavailable");
+  assert.equal(diagnosePointsFailure(new Error("Points RPC network must be Base Mainnet (8453)")).category,
+    "wrong-network");
+  assert.deepEqual(diagnosePointsFailure(new Error(`Unexpected ${secret}`)), { category: "unclassified" });
+});
 const transfer = (
   time: number,
   block: bigint,
@@ -290,6 +342,14 @@ test("all 18 previous wallets and 17,000,338 points carry forward unchanged", ()
   assert.equal(result.nextCutoff, "2026-11-01T00:00:00.000Z");
   assert.equal(projectPoints(ledger, B, null).account?.total, "0");
   assert.equal(projectPoints(ledger, null, 0).account, null);
+});
+
+test("the published first settlement matches its immutable epoch and conserves ten million points", () => {
+  const ledger = validateLedger(publishedLedger);
+  assert.deepEqual(ledger.epochs[0], firstEpoch);
+  assert.equal(firstEpoch.distributed, "10000000");
+  assert.equal(firstEpoch.unallocated, "0");
+  assert.equal(firstEpoch.awards.filter(r => BigInt(r.walletPoints) + BigInt(r.lpPoints) > 0n).length, 12);
 });
 test("weekly settlements are consecutive, immutable, conserved and idempotent", () => {
   const epoch: PointsEpoch = {
