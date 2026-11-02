@@ -129,8 +129,11 @@ export async function scanLogs<T>(
       }
     }
     // Provider range/result limits vary. Binary splitting remains complete.
-    if (b - a < 1000n)
-      throw Error("Blockchain log range unavailable", { cause: last });
+    if (b - a < 1000n) {
+      const error = Error("Blockchain log range unavailable", { cause: last });
+      Object.assign(error, { pointsFromBlock: a.toString(), pointsToBlock: b.toString() });
+      throw error;
+    }
     const mid = (a + b) / 2n;
     await range(a, mid);
     await range(mid + 1n, b);
@@ -298,6 +301,7 @@ export async function calculateHoldingsWeek(
     deploymentBlock(client, pool, endBlock),
   ]);
   progress("Verified Base contracts and finalized weekly block boundaries.");
+  progress(`Historical boundaries: token ${tokenCreated}, pool ${poolCreated}, reward blocks ${startBlock} through ${endBlock}.`);
   let ranges = 0;
   const report = () => {
     ranges++;

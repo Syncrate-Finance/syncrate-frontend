@@ -5,10 +5,13 @@ export function diagnosePointsFailure(error: unknown) {
   let current = error;
   let httpStatus: number | undefined;
   let rpcCode: number | undefined;
+  let fromBlock: string | undefined, toBlock: string | undefined;
   for (let depth = 0; depth < 10 && current && !seen.has(current); depth++) {
     seen.add(current);
     if (typeof current !== "object") break;
     const item = current as Record<string, unknown>;
+    if (typeof item.pointsFromBlock === "string" && /^\d{1,12}$/.test(item.pointsFromBlock)) fromBlock = item.pointsFromBlock;
+    if (typeof item.pointsToBlock === "string" && /^\d{1,12}$/.test(item.pointsToBlock)) toBlock = item.pointsToBlock;
     for (const key of ["name", "message", "shortMessage", "details"]) {
       if (typeof item[key] === "string") messages.push(item[key] as string);
     }
@@ -37,5 +40,5 @@ export function diagnosePointsFailure(error: unknown) {
                   : /incomplete|reconcil|ledger|allocation|nonconsecutive|unverified|canonical/.test(text)
                     ? "reconciliation-or-validation"
                     : "unclassified";
-  return { category, ...(httpStatus ? { httpStatus } : {}), ...(rpcCode ? { rpcCode } : {}) };
+  return { category, ...(httpStatus ? { httpStatus } : {}), ...(rpcCode ? { rpcCode } : {}), ...(fromBlock && toBlock ? { fromBlock, toBlock } : {}) };
 }

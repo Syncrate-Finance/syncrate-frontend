@@ -50,6 +50,7 @@ jobs:
           if [ -z "$POINTS_RPC_URL" ]; then
             echo '::notice::POINTS_RPC_URL is not configured. Live historical holdings and LP acceptance remain pending.'
           else
+            node --import tsx scripts/probe-points-history.ts
             node scripts/calculate-week.cjs --verify-current
           fi
       - run: pnpm db:migrate
