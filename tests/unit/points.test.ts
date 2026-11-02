@@ -51,7 +51,7 @@ const A = "0x1111111111111111111111111111111111111111",
   B = "0x2222222222222222222222222222222222222222",
   C = "0x3333333333333333333333333333333333333333";
 const Q96 = 1n << 96n;
-test("headers use the verified Base endpoint while logs/state stay on the archive endpoint", async () => {
+test("block metadata uses verified Base while logs and contract state stay on the archive endpoint", async () => {
   const calls: Array<{ host: string; method: string }> = [];
   const fakeFetch: typeof fetch = async (input, init) => {
     const host = new URL(String(input)).hostname;
@@ -64,11 +64,13 @@ test("headers use the verified Base endpoint while logs/state stay on the archiv
   await transport.request({ method: "eth_getBlockByNumber", params: ["0x100", false] });
   await transport.request({ method: "eth_getLogs", params: [{}] });
   await transport.request({ method: "eth_getCode", params: [A, "0x100"] });
+  await transport.request({ method: "eth_call", params: [{ to: A, data: "0x18160ddd" }, "0x100"] });
   assert.deepEqual(calls, [
     { host: "headers.invalid", method: "eth_chainId" },
     { host: "headers.invalid", method: "eth_getBlockByNumber" },
     { host: "archive.invalid", method: "eth_getLogs" },
-    { host: "archive.invalid", method: "eth_getCode" },
+    { host: "headers.invalid", method: "eth_getCode" },
+    { host: "archive.invalid", method: "eth_call" },
   ]);
 });
 test("mismatched header networks and log hashes fail before rewards can be published", async () => {

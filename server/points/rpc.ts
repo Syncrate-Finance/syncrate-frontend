@@ -1,9 +1,9 @@
 import { custom, http } from "viem";
 import { base } from "viem/chains";
 
-const headerMethods = new Set(["eth_getBlockByNumber", "eth_getBlockByHash"]);
+const metadataMethods = new Set(["eth_getBlockByNumber", "eth_getBlockByHash", "eth_getCode"]);
 
-/** Route headers explicitly; never replace failed archive logs/state with current data. */
+/** Route block metadata explicitly; never replace failed archive logs/state with current data. */
 export function pointsTransport(
   archiveUrl: string,
   headerUrl: string,
@@ -31,7 +31,7 @@ export function pointsTransport(
   let headerNetwork: Promise<void> | undefined;
   return custom({
     async request(args: Parameters<typeof archive.request>[0]) {
-      if (headerMethods.has(args.method)) {
+      if (metadataMethods.has(args.method)) {
         headerNetwork ??= headers.request({ method: "eth_chainId" }).then((id) => {
           if (typeof id !== "string" || !/^0x[0-9a-f]+$/i.test(id) || BigInt(id) !== BigInt(base.id))
             throw Error("Wrong points header network");
