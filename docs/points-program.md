@@ -46,7 +46,7 @@ There is no silent public-provider fallback or purchase. Ordinary `BASE_RPC_URL`
 
 ## Operation and verification
 
-- `node scripts/calculate-week.cjs --verify-current`: read-only reconciliation of the unsettled interval through finalized history. Prints fixed progress/counts and block evidence; writes no awards.
+- `node scripts/calculate-week.cjs --verify-current`: read-only reconciliation of the oldest unsettled interval, capped at its next Sunday cutoff or finalized history if the week is unfinished. An overdue completed week is verified on its exact reward boundaries. Prints fixed progress/counts and block evidence; writes no awards.
 - `node scripts/calculate-week.cjs --dry-run`: validate all completed, unsettled weekly intervals without publishing. Before the first cutoff, exits successfully with no changes and needs no RPC.
 - `node scripts/calculate-week.cjs`: settle completed intervals only; never writes an unfinished week.
 - Existing Weekly Sync Points Actions workflow keeps manual dispatch. Manual runs default to dry-run. `verify_current=true` is always read-only, regardless of the other input.

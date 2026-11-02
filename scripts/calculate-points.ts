@@ -58,7 +58,8 @@ async function main() {
         throw Error("Points RPC network must be Base Mainnet (8453)");
       console.log("Connected to Base Mainnet for historical verification.");
       const finalized = await client.getBlock({ blockTag: "finalized" });
-      const end = Number(finalized.timestamp);
+      // Verify one actual reward interval, including an overdue completed week.
+      const end = Math.min(Number(finalized.timestamp), start + WEEK_SECONDS);
       if (end <= start) throw Error("No finalized current interval");
       const report = await calculateHoldingsWeek(
         client,
