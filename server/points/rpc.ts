@@ -33,7 +33,8 @@ export function pointsTransport(
     async request(args: Parameters<typeof archive.request>[0]) {
       if (headerMethods.has(args.method)) {
         headerNetwork ??= headers.request({ method: "eth_chainId" }).then((id) => {
-          if (BigInt(id) !== BigInt(base.id)) throw Error("Wrong points header network");
+          if (typeof id !== "string" || !/^0x[0-9a-f]+$/i.test(id) || BigInt(id) !== BigInt(base.id))
+            throw Error("Wrong points header network");
         });
         await headerNetwork;
         return headers.request(args);
