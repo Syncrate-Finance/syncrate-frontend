@@ -1,6 +1,5 @@
 import {
   createPublicClient,
-  http,
   parseAbi,
   decodeEventLog,
   encodePacked,
@@ -9,6 +8,7 @@ import {
   type Address,
 } from "viem";
 import { base } from "viem/chains";
+import { pointsTransport, assertLogBlockHash } from "./rpc";
 import { CONTRACT_ADDRESSES } from "@/config/contracts";
 import {
   POINTS_POOL,
@@ -162,36 +162,18 @@ async function mapLimit<T, R>(
 export function pointsClient(rpcUrl = process.env.POINTS_RPC_URL) {
   if (!rpcUrl)
     throw Error("POINTS_RPC_URL is required for historical rewards reads");
-  if (new URL(rpcUrl).protocol !== "https:")
-    throw Error("Points RPC must use HTTPS");
   const configured = Number(process.env.POINTS_RPC_MIN_INTERVAL_MS ?? "1000");
   const interval =
     Number.isFinite(configured) && configured >= 0 && configured <= 10000
       ? configured
       : 1000;
-  let gate = Promise.resolve();
-  let nextStart = 0;
-  const pacedFetch: typeof fetch = async (input, init) => {
-    const turn = gate.then(async () => {
-      const delay = Math.max(0, nextStart - Date.now());
-      if (delay)
-        await new Promise<void>((resolve) => setTimeout(resolve, delay));
-      nextStart = Date.now() + interval;
-    });
-    gate = turn.catch(() => {});
-    await turn;
-    return fetch(input, init);
-  };
-  const transport = (url: string) =>
-    http(url, {
-      timeout: 30000,
-      retryCount: 2,
-      retryDelay: 2000,
-      fetchFn: pacedFetch,
-    });
   return createPublicClient({
     chain: base,
-    transport: transport(rpcUrl),
+    transport: pointsTransport(
+      rpcUrl,
+      process.env.POINTS_BLOCK_RPC_URL || "https://mainnet.base.org",
+      { intervalMs: interval },
+    ),
   });
 }
 type Client = ReturnType<typeof pointsClient>;
@@ -437,6 +419,7 @@ export async function calculateHoldingsWeek(
   }
   const allLogs: ChainLog[] = [...transfers, ...poolRaw, ...managerLogs];
   const timestamps = new Map<string, number>();
+  const blockHashes = new Map<string, string>();
   const weeklyBlocks = [
     ...new Set(
       allLogs
@@ -448,6 +431,7 @@ export async function calculateHoldingsWeek(
     const block = await client.getBlock({ blockNumber: BigInt(key) });
     if (!block.hash) throw Error("Missing historical block");
     timestamps.set(key, Number(block.timestamp));
+    blockHashes.set(key, block.hash);
   });
   const context = (log: ChainLog) => {
     if (
@@ -462,6 +446,8 @@ export async function calculateHoldingsWeek(
         ? start
         : timestamps.get(log.blockNumber.toString());
     if (time === undefined) throw Error("Missing event timestamp");
+    if (log.blockNumber >= startBlock)
+      assertLogBlockHash(log.blockHash, blockHashes.get(log.blockNumber.toString()));
     return { block: log.blockNumber, index: log.logIndex, time };
   };
   const events: RewardEvent[] = [];

@@ -27,6 +27,7 @@ import {
 } from "../../server/points/ledger";
 import { scanLogs } from "../../server/points/chain";
 import { diagnosePointsFailure } from "../../server/points/diagnostics";
+import { pointsTransport, assertLogBlockHash } from "../../server/points/rpc";
 import {
   POINTS_POOL,
   POSITION_MANAGER,
@@ -50,6 +51,36 @@ const A = "0x1111111111111111111111111111111111111111",
   B = "0x2222222222222222222222222222222222222222",
   C = "0x3333333333333333333333333333333333333333";
 const Q96 = 1n << 96n;
+test("headers use the verified Base endpoint while logs/state stay on the archive endpoint", async () => {
+  const calls: Array<{ host: string; method: string }> = [];
+  const fakeFetch: typeof fetch = async (input, init) => {
+    const host = new URL(String(input)).hostname;
+    const body = JSON.parse(String(init?.body));
+    calls.push({ host, method: body.method });
+    const result = body.method === "eth_chainId" ? "0x2105" : body.method === "eth_getLogs" ? [] : "0x";
+    return Response.json({ jsonrpc: "2.0", id: body.id, result });
+  };
+  const transport = pointsTransport("https://archive.invalid/key", "https://headers.invalid", { fetchFn: fakeFetch, intervalMs: 0 })({});
+  await transport.request({ method: "eth_getBlockByNumber", params: ["0x100", false] });
+  await transport.request({ method: "eth_getLogs", params: [{}] });
+  await transport.request({ method: "eth_getCode", params: [A, "0x100"] });
+  assert.deepEqual(calls, [
+    { host: "headers.invalid", method: "eth_chainId" },
+    { host: "headers.invalid", method: "eth_getBlockByNumber" },
+    { host: "archive.invalid", method: "eth_getLogs" },
+    { host: "archive.invalid", method: "eth_getCode" },
+  ]);
+});
+test("mismatched header networks and log hashes fail before rewards can be published", async () => {
+  const transport = pointsTransport("https://archive.invalid", "https://headers.invalid", {
+    intervalMs: 0,
+    fetchFn: async (_input, init) => Response.json({ jsonrpc: "2.0", id: JSON.parse(String(init?.body)).id, result: "0x1" }),
+  })({});
+  await assert.rejects(transport.request({ method: "eth_getBlockByNumber", params: ["0x100", false] }), /Wrong points header network/);
+  assert.doesNotThrow(() => assertLogBlockHash("0xabc", "0xabc"));
+  assert.throws(() => assertLogBlockHash("0xabc", "0xdef"), /block hash mismatch/);
+  assert.throws(() => assertLogBlockHash(null, undefined), /block hash mismatch/);
+});
 test("RPC diagnostics identify failures without exposing provider URLs or keys", () => {
   const secret = "never-log-this-provider-key";
   const output = diagnosePointsFailure({
