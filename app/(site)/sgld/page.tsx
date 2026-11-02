@@ -66,10 +66,10 @@ export default function SgldPage() {
             </p>
             <div className={styles.actions}>
               <a href={APP_ORIGIN} className={styles.primary}>
-                Buy SGLD;
+                Buy SGLD
               </a>
               <a href="#how-it-works" className={styles.secondary}>
-                How it works&gt;
+                How it works;
               </a>
             </div>
             <span className={styles.network}>
