@@ -14,6 +14,7 @@ import {
 } from "../features/points/model";
 import { validateLedger, appendEpoch } from "../server/points/ledger";
 import { calculateHoldingsWeek, pointsClient } from "../server/points/chain";
+import { diagnosePointsFailure } from "../server/points/diagnostics";
 
 const root = path.resolve("data/points");
 const ledgerPath = path.join(root, "ledger.json");
@@ -53,6 +54,9 @@ async function main() {
     );
     if (args.has("--verify-current")) {
       const client = pointsClient();
+      if ((await client.getChainId()) !== 8453)
+        throw Error("Points RPC network must be Base Mainnet (8453)");
+      console.log("Connected to Base Mainnet for historical verification.");
       const finalized = await client.getBlock({ blockTag: "finalized" });
       const end = Number(finalized.timestamp);
       if (end <= start) throw Error("No finalized current interval");
@@ -124,7 +128,7 @@ async function main() {
     await unlink(lock);
   }
 }
-main().catch(() => {
+main().catch((error: unknown) => {
   if (!process.env.POINTS_RPC_URL) {
     console.error(
       "Configure the repository Actions secret POINTS_RPC_URL with an archive-enabled Base HTTPS endpoint. Existing points are unchanged.",
@@ -135,5 +139,6 @@ main().catch(() => {
   console.error(
     "Points calculation failed. Incomplete ranges are never published; inspect RPC availability, archive support and ledger validation.",
   );
+  console.error(JSON.stringify(diagnosePointsFailure(error)));
   process.exitCode = 1;
 });

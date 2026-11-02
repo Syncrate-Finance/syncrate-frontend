@@ -26,6 +26,7 @@ import {
   projectPoints,
 } from "../../server/points/ledger";
 import { scanLogs } from "../../server/points/chain";
+import { diagnosePointsFailure } from "../../server/points/diagnostics";
 import {
   POINTS_POOL,
   POSITION_MANAGER,
@@ -49,6 +50,22 @@ const A = "0x1111111111111111111111111111111111111111",
   B = "0x2222222222222222222222222222222222222222",
   C = "0x3333333333333333333333333333333333333333";
 const Q96 = 1n << 96n;
+test("RPC diagnostics identify failures without exposing provider URLs or keys", () => {
+  const secret = "never-log-this-provider-key";
+  const output = diagnosePointsFailure({
+    message: `Request failed for https://provider.invalid/${secret}`,
+    cause: { status: 429, code: -32005, message: `quota exceeded: ${secret}` },
+  });
+  assert.deepEqual(output, {
+    category: "provider-rate-limit", httpStatus: 429, rpcCode: -32005,
+  });
+  assert.ok(!JSON.stringify(output).includes(secret));
+  assert.equal(diagnosePointsFailure(new Error("missing trie node; archive state unavailable")).category,
+    "historical-state-unavailable");
+  assert.equal(diagnosePointsFailure(new Error("Points RPC network must be Base Mainnet (8453)")).category,
+    "wrong-network");
+  assert.deepEqual(diagnosePointsFailure(new Error(`Unexpected ${secret}`)), { category: "unclassified" });
+});
 const transfer = (
   time: number,
   block: bigint,
