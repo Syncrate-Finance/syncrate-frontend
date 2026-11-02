@@ -2,7 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { isAddress } from "viem";
 import legacy from "../../public/points/latest.json";
-import baseline from "../../data/points/ledger.json";
+import publishedLedger from "../../data/points/ledger.json";
+import firstEpoch from "../../data/points/epochs/2026-10-25.json";
+const baseline = { ...publishedLedger, epochs: [] };
 import {
   PROGRAM_START,
   PROGRAM_VERSION,
@@ -340,6 +342,14 @@ test("all 18 previous wallets and 17,000,338 points carry forward unchanged", ()
   assert.equal(result.nextCutoff, "2026-11-01T00:00:00.000Z");
   assert.equal(projectPoints(ledger, B, null).account?.total, "0");
   assert.equal(projectPoints(ledger, null, 0).account, null);
+});
+
+test("the published first settlement matches its immutable epoch and conserves ten million points", () => {
+  const ledger = validateLedger(publishedLedger);
+  assert.deepEqual(ledger.epochs[0], firstEpoch);
+  assert.equal(firstEpoch.distributed, "10000000");
+  assert.equal(firstEpoch.unallocated, "0");
+  assert.equal(firstEpoch.awards.filter(r => BigInt(r.walletPoints) + BigInt(r.lpPoints) > 0n).length, 12);
 });
 test("weekly settlements are consecutive, immutable, conserved and idempotent", () => {
   const epoch: PointsEpoch = {

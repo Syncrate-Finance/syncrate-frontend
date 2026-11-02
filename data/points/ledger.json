@@ -81,5 +81,145 @@
       }
     ]
   },
-  "epochs": []
+  "epochs": [
+    {
+      "version": "sgld-holdings-v2",
+      "start": "2026-10-25T00:00:00.000Z",
+      "end": "2026-11-01T00:00:00.000Z",
+      "calculatedAt": "2026-11-02T08:49:58.943Z",
+      "startBlock": "53048527",
+      "endBlock": "53350926",
+      "endBlockHash": "0x9397222fd778d5e05f91b9e93f850bbed4dd25ef41ad3be9a49f1bcabb0fefa1",
+      "distributed": "10000000",
+      "unallocated": "0",
+      "awards": [
+        {
+          "address": "0x030db6a6404c3092960f101a8479ac8766968dca",
+          "walletSeconds": "6048000",
+          "lpSeconds": "0",
+          "walletPoints": "0",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x36de117d125c2a8ae0dca198a66186acda97be7d",
+          "walletSeconds": "868789813651200",
+          "lpSeconds": "0",
+          "walletPoints": "0",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x3b785fadffe5600305b2d851a0671bb0848d6627",
+          "walletSeconds": "1814400",
+          "lpSeconds": "0",
+          "walletPoints": "0",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x42f0e74872c77939422f3c6ceb9d62984bae5b69",
+          "walletSeconds": "73851043928647708800",
+          "lpSeconds": "0",
+          "walletPoints": "462",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x46bf5b6010239afbe5d2b8884aca14b3ef663d9f",
+          "walletSeconds": "9187571836800",
+          "lpSeconds": "0",
+          "walletPoints": "0",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x46eafae9f77c91d6b77b7b88aaa3469f7caa0cef",
+          "walletSeconds": "14493149542559967148800",
+          "lpSeconds": "0",
+          "walletPoints": "90720",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x498581ff718922c3f8e6a244956af099b2652b2b",
+          "walletSeconds": "1209600",
+          "lpSeconds": "0",
+          "walletPoints": "0",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x4b81a2f5c2f5b70637c142cf46a0cf4872b2d643",
+          "walletSeconds": "9710196210745430400",
+          "lpSeconds": "0",
+          "walletPoints": "61",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x6b29377777593010940020f64a7ba0df80da29f0",
+          "walletSeconds": "121616938351560427004470",
+          "lpSeconds": "62757377707806364186050",
+          "walletPoints": "761264",
+          "lpPoints": "1178493"
+        },
+        {
+          "address": "0x6f87732cdf87852d578fcb00517c2c8a98e85b78",
+          "walletSeconds": "4549031801793339436800",
+          "lpSeconds": "0",
+          "walletPoints": "28475",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x7333574fcb4811ea9cc46610d344785af61393e9",
+          "walletSeconds": "13747501048451530550400",
+          "lpSeconds": "0",
+          "walletPoints": "86053",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x99497671106ba424be13008ba427573c11431a89",
+          "walletSeconds": "708508051749770832000",
+          "lpSeconds": "0",
+          "walletPoints": "4435",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x9a3377327cd77f734251a94647f5af55bf15c0e6",
+          "walletSeconds": "234334702363002717563300",
+          "lpSeconds": "0",
+          "walletPoints": "1466823",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0x9cd6d512e3f0aac19ebaf67acceea598614d6756",
+          "walletSeconds": "865819346629528587945600",
+          "lpSeconds": "0",
+          "walletPoints": "5419615",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0xa568a959aa287f9004dbe9c5402b581083a0dc6f",
+          "walletSeconds": "7258442127148800",
+          "lpSeconds": "0",
+          "walletPoints": "0",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0xaad3f4fb91776e36a42b68530de2ed49f6a8883b",
+          "walletSeconds": "149952701512959844867200",
+          "lpSeconds": "0",
+          "walletPoints": "938632",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0xb4570cba336d525818da9614e20419bbba0004ca",
+          "walletSeconds": "508397359006252800",
+          "lpSeconds": "0",
+          "walletPoints": "3",
+          "lpPoints": "0"
+        },
+        {
+          "address": "0xec82fa0b5956f0fe2c4ab4dd12b4514127787350",
+          "walletSeconds": "3988171197809122464000",
+          "lpSeconds": "0",
+          "walletPoints": "24964",
+          "lpPoints": "0"
+        }
+      ]
+    }
+  ]
 }

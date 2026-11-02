@@ -1,5 +1,6 @@
 import { custom, http } from "viem";
 import { base } from "viem/chains";
+import { withPointsHistory, type PointsHistory } from "./history-cache";
 
 const metadataMethods = new Set(["eth_getBlockByNumber", "eth_getBlockByHash", "eth_getCode"]);
 
@@ -7,7 +8,7 @@ const metadataMethods = new Set(["eth_getBlockByNumber", "eth_getBlockByHash", "
 export function pointsTransport(
   archiveUrl: string,
   headerUrl: string,
-  options: { fetchFn?: typeof fetch; intervalMs?: number } = {},
+  options: { fetchFn?: typeof fetch; intervalMs?: number; history?: PointsHistory } = {},
 ) {
   for (const url of [archiveUrl, headerUrl])
     if (new URL(url).protocol !== "https:") throw Error("Points RPC must use HTTPS");
@@ -29,8 +30,7 @@ export function pointsTransport(
   })({ chain: base });
   const archive = endpoint(archiveUrl), headers = endpoint(headerUrl);
   let headerNetwork: Promise<void> | undefined;
-  return custom({
-    async request(args: Parameters<typeof archive.request>[0]) {
+  const request = async (args: Parameters<typeof archive.request>[0]) => {
       if (metadataMethods.has(args.method)) {
         headerNetwork ??= headers.request({ method: "eth_chainId" }).then((id) => {
           if (typeof id !== "string" || !/^0x[0-9a-f]+$/i.test(id) || BigInt(id) !== BigInt(base.id))
@@ -40,8 +40,9 @@ export function pointsTransport(
         return headers.request(args);
       }
       return archive.request(args);
-    },
-  }, { retryCount: 0, name: "Points archive and verified Base headers" });
+  };
+  const cached = options.history ? withPointsHistory(options.history, request, (block) => request({method:"eth_getBlockByNumber",params:[block,false]})) : request;
+  return custom({request: cached}, { retryCount: 0, name: "Points archive and verified Base history" });
 }
 
 export function assertLogBlockHash(logHash: string | null, headerHash: string | undefined) {

@@ -9,6 +9,7 @@ import {
 } from "viem";
 import { base } from "viem/chains";
 import { pointsTransport, assertLogBlockHash } from "./rpc";
+import history from "@/data/points/history/base-through-53350926.json";
 import { CONTRACT_ADDRESSES } from "@/config/contracts";
 import {
   POINTS_POOL,
@@ -175,7 +176,7 @@ export function pointsClient(rpcUrl = process.env.POINTS_RPC_URL) {
     transport: pointsTransport(
       rpcUrl,
       process.env.POINTS_BLOCK_RPC_URL || "https://mainnet.base.org",
-      { intervalMs: interval },
+      { intervalMs: interval, history },
     ),
   });
 }
