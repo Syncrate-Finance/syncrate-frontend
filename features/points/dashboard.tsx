@@ -484,9 +484,7 @@ export function PointsDashboard() {
                 <h3>Uniswap liquidity</h3>
                 <span className={styles.via}>SGLD / USDC · Base</span>
                 <p>
-                  The SGLD portion of directly owned positions in the eligible
-                  pool receives 3× time-weighted points. USDC and uncollected
-                  fees do not count.
+                  Supply both sides of SGLD/USDC liquidity on Uniswap for a 3x points boost.
                 </p>
               </div>
               <strong className={`${styles.multiplier} ${styles.boost}`}>
