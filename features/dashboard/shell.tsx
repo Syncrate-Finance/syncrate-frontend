@@ -16,6 +16,7 @@ import {
 import styles from "./dashboard.module.css";
 const navigation = [
   { href: APP_ORIGIN, label: "Overview" },
+  { href: APP_ORIGIN + "/stake", label: "Stake" },
   { href: APP_ORIGIN + "/points", label: "Points" },
   { href: WEBSITE_ORIGIN + "/sgld", label: "SGLD" },
   { href: WEBSITE_ORIGIN + "/sgld#transparency", label: "Transparency" },
@@ -91,7 +92,7 @@ export function WalletControl({ compact = false }: { compact?: boolean }) {
 export function DashboardHeader({
   active = "overview",
 }: {
-  active?: "overview" | "information" | "points";
+  active?: "overview" | "information" | "points" | "stake";
 }) {
   return (
     <header className={styles.header}>
@@ -107,12 +108,14 @@ export function DashboardHeader({
                 : {})}
               className={
                 (active === "overview" && item.label === "Overview") ||
+                (active === "stake" && item.label === "Stake") ||
                 (active === "points" && item.label === "Points")
                   ? styles.activeNavigation
                   : undefined
               }
               aria-current={
                 (active === "overview" && item.label === "Overview") ||
+                (active === "stake" && item.label === "Stake") ||
                 (active === "points" && item.label === "Points")
                   ? "page"
                   : undefined
@@ -189,6 +192,7 @@ export function DashboardFooter() {
           <Link href={WEBSITE_ORIGIN + "/sgld"}>SGLD</Link>
           <Link href={WEBSITE_ORIGIN + "/sysgld"}>sySGLD</Link>
           <Link href={APP_ORIGIN}>Overview</Link>
+          <Link href={APP_ORIGIN + "/stake"}>Stake SGLD</Link>
           <Link href={APP_ORIGIN + "/points"}>Points</Link>
         </div>
         <div className={styles.footerLinks}>
@@ -218,7 +222,7 @@ export function DashboardShell({
   active = "overview",
 }: {
   children: React.ReactNode;
-  active?: "overview" | "information" | "points";
+  active?: "overview" | "information" | "points" | "stake";
 }) {
   return (
     <div className={`${styles.dashboard} ${GeistSans.variable}`}>

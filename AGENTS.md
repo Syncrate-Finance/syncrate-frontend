@@ -1,5 +1,7 @@
 # Syncrate project instructions
 
+Latest owner scope, November 11, 2026: build the frontend-only `/stake` app page with 30/90-day selection, SGLD input and the shared mint-page portfolio card. Earn staking rows now navigate there; financial participation remains Coming soon. The owner's gold-leasing description governs sySGLD content on this page. This supersedes the prior no-staking-interface restriction only for this explicitly inactive frontend; no staking backend, new contracts, signing or financial executor is authorized. Keep yield/conversion quantities unquoted until verified and preserve all existing points rules. See docs/staking-page.md.
+
 Architecture is approved. Preserve the existing Next.js project; see README.md and docs/repository-review.md. This checkout came from a ZIP and does not carry the original Git commit/history.
 
 - Reown AppKit is the owner-requested shared wallet interface. See docs/wallet-connection.md. Preserve the existing Base Wagmi state and all mint/redeem handlers/guards. Mobile pairing requires a real public NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID for the target build and correct origin permissions; no injected-only fallback or unconfigured preview establishes mobile acceptance. Do not add email/social/embedded-wallet login, signing, swaps or on-ramp features. Keep vendor license/branding and version-scoped build policy. Do not print pairing URIs or wallet session credentials; native mobile handoff and personal-wallet acceptance need separate evidence.
