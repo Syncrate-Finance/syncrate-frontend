@@ -24,3 +24,13 @@ The shared portfolio component remains in `features/portfolio/card.tsx`; staking
 ## Activation prerequisites
 
 Before enabling deposits, verify the actual staking and sySGLD contracts/ABIs, fixed-term accounting, rate and share semantics, redemption/withdrawal behavior, deployed bytecode, account/network guards, exact approvals, simulation, transaction lifecycle and authoritative position reads. These are future implementation requirements, not part of this frontend release. Existing points rules and ledgers are unchanged.
+
+## Verification checkpoint
+
+Local TypeScript and all 82 existing unit tests pass. The local test run uses a scratch TypeScript loader because Windows Application Control blocks native esbuild. Clean Linux CI also passed normal installation, TypeScript and all 82 tests, then stopped at the existing points historical RPC gate (`unsupported-rpc-method`, code -32603); migrations/integration/build were not reached in that job. No gate was disabled or failed history skipped.
+
+The actual Next.js development page rendered using same-version official WebAssembly compiler/CSS fallbacks kept outside application source. Browser checks at 1280px, 900px, 390px and 320px found no horizontal overflow or broken images. Term selection updates the URL and preserves the exact entered amount; a nineteenth decimal produces an inline error; Enter does not submit. The coming-soon deposit control and disconnected Max remain disabled. Input carets stay visible and static text retains a transparent caret. Mobile navigation includes Stake. Eight HTTP checks passed for term selection, invalid/duplicate query defaults, exact app-host rendering and marketing/spoofed-host redirects.
+
+Full local production compilation remains blocked by Windows Application Control on Sharp's existing CMS image processing. Local integration execution is likewise blocked by native esbuild. The audit reports one high, two moderate and one low existing dependency finding; dependencies were not changed. These are explicit validation limits, not successful checks.
+
+PR #22 contains the implementation for review. Vercel rejected its Preview because the project is on the Hobby plan with a private organization repository. No plan, repository visibility, billing, provider secrets, main branch or Production deployment was changed. A successful full build and approved release remain necessary before claiming that the new route is live.
