@@ -136,7 +136,7 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
             </button>
           )}
         </div>
-        <p className={styles.minimumStake} id="stake-minimum">Minimum stake: 1 SGLD</p>
+        <p className={styles.minimumStake} id="stake-minimum">Minimum stake amount: 1 SGLD</p>
         {amountError && (
           <p
             id="stake-amount-error"
@@ -168,7 +168,7 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
             className={styles.receiptValue}
             aria-label="Receipt amount not yet quoted"
           >
-            —
+            –
           </div>
           <p>Your yield-bearing gold asset.</p>
         </div>
@@ -178,15 +178,14 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
             <dd>{term} days</dd>
           </div>
           <div>
-            <dt>Yield rate</dt>
-            <dd>To be announced</dd>
+            <dt>APY</dt>
+            <dd>–</dd>
           </div>
         </dl>
         <div className={styles.availability} id="staking-availability">
           <LockKeyhole size={15} aria-hidden="true" />
           <p>
-            Staking is coming soon. Deposits are not yet open. Rates and
-            conversion details will be published before launch.
+            Staking is coming soon.Deposits are not yet open.
           </p>
         </div>
         <Button type="submit" disabled className={styles.stakeButton}>
