@@ -37,6 +37,7 @@
 }
 .layout {
   display: grid;
+  grid-template-rows: min-content 1fr;
   grid-template-columns: minmax(0, 1fr) minmax(340px, 440px);
   gap: 24px;
   align-items: start;
@@ -44,6 +45,10 @@
 .portfolio {
   grid-column: 1;
   min-width: 0;
+}
+.portfolio > section {
+  min-height: 0;
+  padding-bottom: 20px;
 }
 .formColumn {
   grid-column: 2;
@@ -413,6 +418,7 @@
 }
 @media (max-width: 840px) {
   .layout {
+    grid-template-rows: none;
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;
   }
