@@ -339,11 +339,20 @@
   line-height: 1.9;
   max-width: 610px;
 }
-.metricsGrid {
+.metricsPanel {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
   gap: 24px;
-  margin: 30px 0 0;
+  min-width: 0;
+  padding: 22px 24px;
+  border: 1px solid #edf0f3;
+  border-radius: 28px;
+  background: #fff;
+}
+.metricsGrid {
+  min-width: 0;
+  margin: 0;
 }
 .metricsGrid > div {
   min-width: 0;
@@ -362,18 +371,57 @@
   overflow-wrap: anywhere;
   font-variant-numeric: tabular-nums;
 }
-.metricsGrid p,
+.metricsGrid dd > span,
 .minimumStake {
   color: #758487;
   font-size: 11px;
   line-height: 1.6;
 }
+.metricsGrid dd > span {
+  display: block;
+  margin-top: 8px;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+.apyChart {
+  min-width: 0;
+  margin: 0;
+}
+.apyChart figcaption {
+  color: #718186;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.chartPlot {
+  display: grid;
+  place-items: center;
+  height: 78px;
+  margin-top: 10px;
+  border-bottom: 1px solid #e7ebf0;
+  background: repeating-linear-gradient(to top, transparent 0, transparent 25px, #edf0f3 25px, #edf0f3 26px);
+}
+.chartPlot > span {
+  padding: 4px 8px;
+  background: #fff;
+  color: #8a989e;
+  font-size: 11px;
+  text-align: center;
+}
+.chartAxis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  color: #8a989e;
+  font-size: 10px;
+}
 .minimumStake {
   margin: 9px 0 0;
 }
 @media (max-width: 480px) {
-  .metricsGrid {
+  .metricsPanel {
     grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
   }
 }
 .steps {

@@ -24,20 +24,29 @@ export function StakingMetrics() {
     : null;
 
   return (
-    <section className={styles.explainer} aria-labelledby="sysgld-metrics-heading">
-      <h2 id="sysgld-metrics-heading">sySGLD metrics</h2>
+    <section className={styles.metricsPanel} aria-label="sySGLD performance">
       <dl className={styles.metricsGrid} aria-busy={isPending}>
         <div>
           <dt>Market cap</dt>
-          <dd>{marketCap ?? "—"}</dd>
-          <p>{marketCap ? "Updated every minute" : isPending ? "Loading" : "Not available yet"}</p>
-        </div>
-        <div>
-          <dt>Historical APY · 30 days</dt>
-          <dd>—</dd>
-          <p>Not available yet</p>
+          <dd>
+            {marketCap ?? "—"}
+            <span>{marketCap ? "Updated every minute" : isPending ? "Loading" : "Not available yet"}</span>
+          </dd>
         </div>
       </dl>
+      <figure className={styles.apyChart}>
+        <figcaption>Historical APY · 30 days</figcaption>
+        <div
+          className={styles.chartPlot}
+          role="img"
+          aria-label="Historical APY chart for the past 30 days. No APY history is available yet."
+        >
+          <span>No APY history yet</span>
+        </div>
+        <div className={styles.chartAxis} aria-hidden="true">
+          <span>30 days ago</span><span>Today</span>
+        </div>
+      </figure>
     </section>
   );
 }
