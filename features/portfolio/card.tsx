@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { ArrowUpRight, CircleHelp, RefreshCw } from "lucide-react";
 import { formatUnits } from "viem";
 import { APP_ORIGIN } from "@/config/site";
@@ -128,18 +127,21 @@ export function PortfolioCard({
 }) {
   if (asset === "sysgld") {
     return (
-      <section className={styles.portfolioCard} aria-labelledby="portfolio-heading">
-        <div className={styles.portfolioHeading}>
-          <h2 id="portfolio-heading">Your portfolio</h2>
-        </div>
-        <div className={styles.portfolioValue}>
-          <Image src="/sySGLD-icon.png" alt="" width={24} height={24} unoptimized />
-          <span className={styles.balanceUnit}>sySGLD balance</span>
-        </div>
-        <div className={styles.portfolioStatus} role="status">
-          Balance available when staking launches.
-        </div>
-      </section>
+      <TooltipProvider delayDuration={250}>
+        <section className={styles.portfolioCard} aria-labelledby="portfolio-heading">
+          <div className={styles.portfolioHeading}>
+            <h2 id="portfolio-heading">Your portfolio</h2>
+          </div>
+          <div className={styles.portfolioValue} aria-live="polite" aria-atomic="true">
+            <span className={styles.balance}>–</span>
+            <span className={styles.balanceUnit}>sySGLD</span>
+            <Help label="portfolio balance">Your sySGLD holdings on Base.</Help>
+          </div>
+          <div className={styles.portfolioStatus} role="status">
+            sySGLD balance on Base
+          </div>
+        </section>
+      </TooltipProvider>
     );
   }
   return (
