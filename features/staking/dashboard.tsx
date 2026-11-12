@@ -211,7 +211,7 @@ export function StakingDashboard({
       <main className={styles.main} id="main-content">
         <header className={styles.pageHeading}>
           <div>
-            <h1>Stake your gold.</h1>
+            <h1>Earn on your Gold</h1>
           </div>
         </header>
         <div className={styles.layout}>
