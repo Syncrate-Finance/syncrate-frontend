@@ -210,7 +210,7 @@ function OpportunitiesTable() {
         <table className={styles.opportunitiesTable}>
           <caption className="sr-only">
             LP on Uniswap via Saffron on Base, stated APR 300% for a two-week
-            program, followed by upcoming SGLD staking terms of 30 and 90 days.
+            program.
           </caption>
           <thead>
             <tr>

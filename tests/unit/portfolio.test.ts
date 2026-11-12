@@ -140,18 +140,14 @@ test("display formatting preserves large integer precision and distinguishes dus
   );
   assert.throws(() => formatSgldBalance(-1n));
 });
-test("Earn lists the supplied Saffron LP first and keeps 30/90 day staking unavailable", () => {
+test("Earn lists only the supplied Saffron LP; staking has its own page", () => {
   const staking = EARN_OPPORTUNITIES.filter(
     (offer) => offer.kind === "staking",
   );
   const liquidity = EARN_OPPORTUNITIES.filter(
     (offer) => offer.kind === "liquidity",
   );
-  assert.deepEqual(
-    staking.map((offer) => offer.days),
-    [30, 90],
-  );
-  assert.ok(staking.every((offer) => offer.depositAsset === "SGLD"));
+  assert.equal(staking.length, 0);
   assert.equal(liquidity.length, 1);
   assert.equal(EARN_OPPORTUNITIES[0], liquidity[0]);
   assert.equal(liquidity[0].name, "LP on Uniswap");
@@ -166,15 +162,8 @@ test("Earn lists the supplied Saffron LP first and keeps 30/90 day staking unava
     pool.pathname,
     "/explore/pools/base/0xC5963Bd6d6Cf713F0994fFd867D4d639AD45EC6E",
   );
-  assert.ok(
-    staking.every(
-      (offer) =>
-        offer.status === "upcoming" &&
-        offer.apr === null &&
-        offer.actionUrl === null,
-    ),
-  );
-  assert.equal(new Set(EARN_OPPORTUNITIES.map((offer) => offer.id)).size, 3);
+  assert.equal(EARN_OPPORTUNITIES.length, 1);
+  assert.equal(new Set(EARN_OPPORTUNITIES.map((offer) => offer.id)).size, 1);
   assert.ok(
     EARN_OPPORTUNITIES.every(
       (offer) => offer.network === "Base" && offer.apy === null,
