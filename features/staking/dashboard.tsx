@@ -170,7 +170,7 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
           >
             –
           </div>
-          <p>Your yield-bearing gold asset.</p>
+          <p></p>
         </div>
         <dl className={styles.summary}>
           <div>
