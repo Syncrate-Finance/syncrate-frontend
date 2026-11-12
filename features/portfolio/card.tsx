@@ -33,7 +33,7 @@ function Help({
     </Tooltip>
   );
 }
-function PortfolioBalanceCard() {
+function PortfolioBalanceCard({ showEarnings }: { showEarnings: boolean }) {
   const { phase, snapshot, isFetching, refetch } = useSgldBalance();
   const balance = snapshot
     ? formatSgldBalance(snapshot.balance, snapshot.decimals)
@@ -95,31 +95,37 @@ function PortfolioBalanceCard() {
           </>
         )}
       </div>
-      <dl className={styles.metrics}>
-        <div>
-          <dt>
-            Total earned{" "}
-            <a
-              href={APP_ORIGIN + "/points"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.pointsLink}
-              aria-label="Earn Points (opens in a new tab)"
-            >
-              Earn SYNC Points <ArrowUpRight size={12} aria-hidden="true" />
-            </a>
-          </dt>
-          <dd>–</dd>
-        </div>
-      </dl>
+      {showEarnings && (
+        <dl className={styles.metrics}>
+          <div>
+            <dt>
+              Total earned{" "}
+              <a
+                href={APP_ORIGIN + "/points"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.pointsLink}
+                aria-label="Earn Points (opens in a new tab)"
+              >
+                Earn SYNC Points <ArrowUpRight size={12} aria-hidden="true" />
+              </a>
+            </dt>
+            <dd>–</dd>
+          </div>
+        </dl>
+      )}
     </section>
   );
 }
 
-export function PortfolioCard() {
+export function PortfolioCard({
+  showEarnings = true,
+}: {
+  showEarnings?: boolean;
+}) {
   return (
     <TooltipProvider delayDuration={250}>
-      <PortfolioBalanceCard />
+      <PortfolioBalanceCard showEarnings={showEarnings} />
     </TooltipProvider>
   );
 }

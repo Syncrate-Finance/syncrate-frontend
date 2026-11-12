@@ -249,15 +249,15 @@
   border-radius: 20px;
   background: #f5f6f8;
 }
-.receiptPanel > span {
+.receiptPanel .amountHeading > span:first-child {
   color: #758487;
   font-size: 12px;
 }
-.receiptPanel strong {
+.receiptValue {
   display: block;
-  margin: 10px 0 5px;
+  margin: 22px 0 12px;
   color: #223b3e;
-  font-size: 25px;
+  font-size: 34px;
   font-weight: 450;
   letter-spacing: -0.6px;
 }

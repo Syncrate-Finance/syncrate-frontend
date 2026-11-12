@@ -151,18 +151,31 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
           <ArrowDown size={17} />
         </div>
         <div className={styles.receiptPanel}>
-          <span>You receive</span>
-          <strong>sySGLD</strong>
+          <div className={styles.amountHeading}>
+            <span>You receive</span>
+            <span className={styles.asset}>
+              <Image
+                src="/sySGLD-icon.png"
+                width={24}
+                height={24}
+                alt=""
+                unoptimized
+              />{" "}
+              sySGLD
+            </span>
+          </div>
+          <div
+            className={styles.receiptValue}
+            aria-label="Receipt amount not yet quoted"
+          >
+            —
+          </div>
           <p>Your yield-bearing gold asset.</p>
         </div>
         <dl className={styles.summary}>
           <div>
             <dt>Staking term</dt>
             <dd>{term} days</dd>
-          </div>
-          <div>
-            <dt>Yield source</dt>
-            <dd>Gold leasing</dd>
           </div>
           <div>
             <dt>Yield rate</dt>
@@ -202,11 +215,10 @@ export function StakingDashboard({
             <span className={styles.eyebrow}>SGLD → sySGLD</span>
             <h1>Stake your gold.</h1>
           </div>
-          <span className={styles.comingSoon}>Coming soon</span>
         </header>
         <div className={styles.layout}>
           <div className={styles.portfolio}>
-            <PortfolioCard />
+            <PortfolioCard showEarnings={false} />
           </div>
           <div className={styles.formColumn}>
             <StakeForm initialTerm={initialTerm} />
