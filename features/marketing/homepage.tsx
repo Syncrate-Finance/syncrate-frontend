@@ -151,9 +151,14 @@ export async function MarketingHomepage() {
                 from short term gold leasing with reputable gold resellers and
                 bullion banks in the UAE.
               </p>
-              <Link href="/sysgld" className={styles.productInfoButton}>
-                Understand sySGLD
-              </Link>
+              <div className={styles.productLinks}>
+                <a className={styles.primaryButton} href={APP_ORIGIN + "/stake"}>
+                  Explore sySGLD
+                </a>
+                <Link href="/sysgld" className={styles.productInfoButton}>
+                  Understand sySGLD
+                </Link>
+              </div>
             </article>
           </div>
           <HomepageNumbers />
