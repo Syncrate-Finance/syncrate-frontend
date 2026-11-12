@@ -80,9 +80,6 @@ export function AccountSummary({ account }: { account: PointsAccount }) {
           <strong>+{formatPoints(account.lastAward)}</strong>
         </div>
       </div>
-      <p className={styles.accountNote}>
-        Includes {formatPoints(account.carriedOver)} previously earned points.
-      </p>
     </>
   );
 }
@@ -486,20 +483,20 @@ export function PointsDashboard() {
                 <p>
                   Supply both sides of SGLD/USDC liquidity on Uniswap for a 3x points boost.
                 </p>
+                <a
+                  className={styles.poolLink}
+                  href={SAFFRON_POOL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open Uniswap
+                  <ArrowUpRight size={15} />
+                </a>
               </div>
               <strong className={`${styles.multiplier} ${styles.boost}`}>
                 3×
               </strong>
             </div>
-            <a
-              className={styles.poolLink}
-              href={SAFFRON_POOL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open Uniswap
-              <ArrowUpRight size={15} />
-            </a>
           </aside>
         </div>
         <CommunityLeaderboard />
