@@ -218,7 +218,7 @@ export function StakingDashboard({
         </header>
         <div className={styles.layout}>
           <div className={styles.portfolio}>
-            <PortfolioCard showEarnings={false} />
+            <PortfolioCard asset="sysgld" showEarnings={false} />
           </div>
           <div className={styles.formColumn}>
             <StakeForm initialTerm={initialTerm} />
