@@ -339,6 +339,43 @@
   line-height: 1.9;
   max-width: 610px;
 }
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 30px 0 0;
+}
+.metricsGrid > div {
+  min-width: 0;
+}
+.metricsGrid dt {
+  color: #718186;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.metricsGrid dd {
+  margin: 12px 0 8px;
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.metricsGrid p,
+.minimumStake {
+  color: #758487;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.minimumStake {
+  margin: 9px 0 0;
+}
+@media (max-width: 480px) {
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}
 .steps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

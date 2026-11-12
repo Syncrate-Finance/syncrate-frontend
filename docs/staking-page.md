@@ -34,3 +34,11 @@ The actual Next.js development page rendered using same-version official WebAsse
 Full local production compilation remains blocked by Windows Application Control on Sharp's existing CMS image processing. Local integration execution is likewise blocked by native esbuild. The audit reports one high, two moderate and one low existing dependency finding; dependencies were not changed. These are explicit validation limits, not successful checks.
 
 PR #22 contains the implementation for review. Vercel rejected its Preview because the project is on the Hobby plan with a private organization repository. No plan, repository visibility, billing, provider secrets, main branch or Production deployment was changed. A successful full build and approved release remain necessary before claiming that the new route is live.
+
+## Metrics and minimum stake - November 12, 2026
+
+The owner replaced the Gold with a Purpose explainer with bold sySGLD metrics and removed the SGLD-to-sySGLD eyebrow. Market cap uses the existing /api/v1/metrics source, polls every minute while active, and rejects errors or snapshots older than two minutes. The existing sySGLD adapter is still unconfigured until actual deployed contracts and share semantics are verified. No zero address is queried or fabricated market cap displayed.
+
+Historical APY is defined by the owner as trailing 30-day APY. There is no authoritative yield-history source yet, so this metric explicitly remains unavailable; its backend calculation and dynamic feed remain future contract/data integration work. No projected rate substitutes for realized APY.
+
+The form displays a minimum stake of 1 SGLD and validates the exact 18-decimal token amount before checking wallet balance. Deposits remain disabled until the staking backend is built. This is frontend validation only; the future backend/contracts must enforce the same minimum independently.

@@ -5,16 +5,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowDown,
-  ArrowUpRight,
-  Building2,
   CalendarDays,
-  Coins,
   LockKeyhole,
   RefreshCw,
 } from "lucide-react";
 import { formatUnits } from "viem";
 import { Button } from "@/components/ui/button";
-import { WEBSITE_ORIGIN } from "@/config/site";
 import {
   BaseIcon,
   DashboardShell,
@@ -24,6 +20,7 @@ import { PortfolioCard } from "@/features/portfolio/card";
 import { useSgldBalance } from "@/features/portfolio/use-sgld-balance";
 import { formatSgldBalance } from "@/features/portfolio/sgld-read";
 import { STAKING_TERMS, stakingAmountError, type StakingTerm } from "./model";
+import { StakingMetrics } from "./metrics";
 import styles from "./staking.module.css";
 
 function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
@@ -100,7 +97,9 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
             onChange={(event) => setAmount(event.target.value)}
             aria-invalid={Boolean(amountError)}
             aria-describedby={
-              amountError ? "stake-amount-error stake-balance" : "stake-balance"
+              amountError
+                ? "stake-amount-error stake-balance stake-minimum"
+                : "stake-balance stake-minimum"
             }
           />
           <div className={styles.balanceRow}>
@@ -137,6 +136,7 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
             </button>
           )}
         </div>
+        <p className={styles.minimumStake} id="stake-minimum">Minimum stake: 1 SGLD</p>
         {amountError && (
           <p
             id="stake-amount-error"
@@ -212,7 +212,6 @@ export function StakingDashboard({
       <main className={styles.main} id="main-content">
         <header className={styles.pageHeading}>
           <div>
-            <span className={styles.eyebrow}>SGLD → sySGLD</span>
             <h1>Stake your gold.</h1>
           </div>
         </header>
@@ -224,56 +223,7 @@ export function StakingDashboard({
             <StakeForm initialTerm={initialTerm} />
           </div>
           <div className={styles.information}>
-            <section
-              className={styles.explainer}
-              aria-labelledby="how-staking-works"
-            >
-              <span className={styles.eyebrow}>GOLD WITH A PURPOSE</span>
-              <h2 id="how-staking-works">Real gold. Productive by design.</h2>
-              <p>
-                sySGLD is Syncrate’s yield-bearing gold asset. Its underlying
-                yield comes from direct gold leasing with vetted bullion banks
-                and established counterparties.
-              </p>
-              <ol className={styles.steps}>
-                <li>
-                  <span className={styles.stepIcon}>
-                    <CalendarDays size={20} aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h3>Choose 30 or 90 days</h3>
-                    <p>Stake your SGLD for a fixed term and receive sySGLD.</p>
-                  </div>
-                </li>
-                <li>
-                  <span className={styles.stepIcon}>
-                    <Building2 size={20} aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h3>Your gold gets to work</h3>
-                    <p>
-                      The gold bars backing your staked SGLD are leased to
-                      vetted, established counterparties.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <span className={styles.stepIcon}>
-                    <Coins size={20} aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h3>Lease interest becomes yield</h3>
-                    <p>
-                      The interest paid by these counterparties flows back as
-                      yield to sySGLD holders.
-                    </p>
-                  </div>
-                </li>
-              </ol>
-              <a className={styles.learnLink} href={WEBSITE_ORIGIN + "/sysgld"}>
-                Learn about sySGLD <ArrowUpRight size={15} aria-hidden="true" />
-              </a>
-            </section>
+            <StakingMetrics />
             <section
               className={styles.positions}
               aria-labelledby="staking-positions-heading"
