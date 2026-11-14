@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  ChevronDown,
-  Clock3,
-  Coins,
-  LockKeyhole,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { APP_ORIGIN, WEBSITE_ORIGIN } from "@/config/site";
 import { ProductShell } from "@/features/products/shell";
-import { SysgldIcon } from "@/features/marketing/product-icon";
+import { SysgldMetrics } from "@/features/products/sysgld-metrics";
 import styles from "@/features/products/products.module.css";
 import yieldStyles from "@/features/products/sysgld.module.css";
 
@@ -56,7 +50,7 @@ export default function SySgldPage() {
     <ProductShell>
       <div className={styles.product}>
         <section
-          className={`${styles.container} ${styles.hero}`}
+          className={`${styles.container} ${styles.hero} ${yieldStyles.hero}`}
           aria-labelledby="sysgld-title"
         >
           <div className={styles.heroCopy}>
@@ -83,116 +77,11 @@ export default function SySgldPage() {
               <i aria-hidden="true" /> Built on Base · Staking is not open yet
             </span>
           </div>
-          <div className={yieldStyles.receiptVisual}>
-            <div className={yieldStyles.receiptHeading}>
-              <SysgldIcon />
-              <span>
-                YOUR STAKED GOLD<strong>sySGLD</strong>
-              </span>
-            </div>
-            <p className={yieldStyles.receiptStatement}>
-              Gold at the centre.
-              <br />
-              <em>Yield from the real economy.</em>
-            </p>
-            <ol className={yieldStyles.receiptFlow}>
-              <li>
-                <span>01</span>
-                <div>
-                  <strong>Stake SGLD</strong>
-                  <p>Choose a 30- or 90-day term.</p>
-                </div>
-              </li>
-              <li>
-                <span>02</span>
-                <div>
-                  <strong>Receive sySGLD</strong>
-                  <p>A receipt for your net staked principal.</p>
-                </div>
-              </li>
-              <li>
-                <span>03</span>
-                <div>
-                  <strong>Claim SGLD yield</strong>
-                  <p>Your share of actual funded lease interest.</p>
-                </div>
-              </li>
-            </ol>
-          </div>
         </section>
-        <section
-          className={`${styles.container} ${styles.metricSection}`}
-          aria-label="Staking terms at a glance"
-        >
-          <dl className={styles.metricGrid}>
-            <div>
-              <dt>Staking terms</dt>
-              <dd>
-                30 / 90 days<span>Fixed term per position</span>
-              </dd>
-            </div>
-            <div>
-              <dt>Minimum deposit</dt>
-              <dd>
-                1 SGLD<span>Before the deposit fee</span>
-              </dd>
-            </div>
-            <div>
-              <dt>Rewards paid in</dt>
-              <dd>
-                SGLD<span>Actual funded yield</span>
-              </dd>
-            </div>
-            <div>
-              <dt>Your receipt</dt>
-              <dd>
-                sySGLD<span>Initially non-transferable</span>
-              </dd>
-            </div>
-          </dl>
-        </section>
-        <section
-          className={`${styles.container} ${styles.section}`}
-          aria-labelledby="foundation-title"
-        >
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>THE FOUNDATION</span>
-            <h2 id="foundation-title">
-              The gold you hold.
-              <br />
-              <em>A different way to use it.</em>
-            </h2>
-            <p>
-              sySGLD connects a fixed-term SGLD stake to income from physical
-              gold leasing.
-            </p>
-          </div>
-          <div className={styles.featureGrid}>
-            {[
-              {
-                Icon: Coins,
-                title: "Rooted in physical gold",
-                text: "The gold backing staked SGLD is leased to vetted bullion banks and established counterparties. Lease interest is the underlying source of yield.",
-              },
-              {
-                Icon: Clock3,
-                title: "A term you choose",
-                text: "Commit SGLD for 30 or 90 days. Your net principal and the time it remains eligible determine your share of funded rewards.",
-              },
-              {
-                Icon: LockKeyhole,
-                title: "A receipt for your stake",
-                text: "Receive one sySGLD for each SGLD of principal after the deposit fee. The receipt stays in your wallet until it is burned on redemption or rolled into a new term.",
-              },
-            ].map(({ Icon, title, text }) => (
-              <article className={styles.featureCard} key={title}>
-                <Icon size={29} strokeWidth={1.3} />
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+        <div className={styles.container}>
+          <SysgldMetrics />
+        </div>
+
         <section
           className={styles.navySection}
           id="how-it-works"
@@ -235,106 +124,7 @@ export default function SySgldPage() {
             </ol>
           </div>
         </section>
-        <section
-          className={`${styles.container} ${styles.splitSection}`}
-          aria-labelledby="yield-title"
-        >
-          <div>
-            <span className={styles.eyebrow}>WHERE THE YIELD COMES FROM</span>
-            <h2 id="yield-title">
-              Physical gold.
-              <br />
-              <em>Real lease income.</em>
-            </h2>
-            <p>
-              Counterparties pay lease interest in cash. That cash does not
-              automatically become an onchain reward: treasury converts it into
-              backed SGLD and funds the staking contract.
-            </p>
-            <a
-              className={styles.textLink}
-              href={`${documentation}/yield-and-risks`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read about yield and risks <ArrowUpRight size={16} />
-            </a>
-          </div>
-          <div className={yieldStyles.yieldDetails}>
-            <article>
-              <span>01 / FUNDING</span>
-              <h3>Interest becomes SGLD rewards</h3>
-              <p>
-                Treasury assigns funded SGLD to a completed earning period.
-                Rewards depend on actual funding, rather than a promised APY or
-                newly minted, unbacked rewards.
-              </p>
-            </article>
-            <article>
-              <span>02 / ALLOCATION</span>
-              <h3>Your stake × your time</h3>
-              <p>
-                Each position receives a share based on net principal multiplied
-                by its eligible time in that period, relative to all eligible
-                positions. Earning stops at maturity.
-              </p>
-            </article>
-            <article>
-              <span>03 / CLAIMS</span>
-              <h3>Late interest still belongs to you</h3>
-              <p>
-                Withdrawing principal does not erase historical eligibility. You
-                can claim rewards funded later for periods when your position
-                was active.
-              </p>
-            </article>
-          </div>
-        </section>
-        <section
-          className={`${styles.container} ${yieldStyles.feesSection}`}
-          aria-labelledby="fees-title"
-        >
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>FEES, MADE CLEAR</span>
-            <h2 id="fees-title">
-              Know what goes in.
-              <br />
-              <em>And what comes back.</em>
-            </h2>
-          </div>
-          <div className={yieldStyles.feeGrid}>
-            <article>
-              <h3>Deposit</h3>
-              <strong>0.25%</strong>
-              <p>
-                Charged on the amount deposited. sySGLD is minted against the
-                remaining principal.
-              </p>
-            </article>
-            <article>
-              <h3>Redemption</h3>
-              <strong>0.50%</strong>
-              <p>
-                Charged only on the position’s principal when it leaves the
-                vault.
-              </p>
-            </article>
-            <article>
-              <h3>Claims & direct restaking</h3>
-              <strong>No fee</strong>
-              <p>
-                Yield claims and direct principal restaking carry no additional
-                protocol fee. Base network fees still apply.
-              </p>
-            </article>
-          </div>
-          <p className={yieldStyles.feeExample}>
-            <strong>For example:</strong> a 100 SGLD deposit creates 99.75
-            sySGLD. Redeeming that principal after maturity returns 99.25125
-            SGLD, plus any claimable yield. Both fees are paid in SGLD to
-            Syncrate’s treasury.
-          </p>
-        </section>
+
         <section
           className={`${styles.container} ${styles.faqSection}`}
           aria-labelledby="faq-title"

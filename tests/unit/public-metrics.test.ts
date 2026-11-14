@@ -80,6 +80,10 @@ test("public valuation uses verified token supply and gold quote at one Base blo
   assert.equal(data.sgldSupply.value, "2.0000");
   assert.equal(data.unallocatedBullion.value, "191.0000");
   assert.equal(data.sysgldMarketCap.state, "unconfigured");
+  assert.deepEqual(data.sysgldYieldPaidUsd, {
+    state: "unconfigured",
+    value: null,
+  });
   assert.ok(calls.every((call) => call.blockNumber === 123n));
   assert.ok(
     calls.every((call) => call.address !== CONTRACT_ADDRESSES.SYSGLD_TOKEN),

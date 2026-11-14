@@ -12,4 +12,5 @@ export type PublicMetrics = {
   unallocatedBullion: PublicMetric;
   sgldMarketCap: PublicMetric;
   sysgldMarketCap: PublicMetric;
+  sysgldYieldPaidUsd: PublicMetric;
 };

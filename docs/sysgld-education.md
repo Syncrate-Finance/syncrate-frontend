@@ -15,3 +15,9 @@ The owner requested replacing the institution-oriented sySGLD page with a holder
 ## Verification
 
 Record final local checks, deployment and browser results in the release handoff. Windows Application Control blocks the native esbuild test runner; the existing TypeScript loader can run the same unit files without bypassing host security. Native CI remains the standard installation/build verification.
+
+## Owner simplification — November 14, 2026
+
+Removed the entire hero receipt visual, The Foundation, Where the yield comes from and Fees made clear sections. Kept the hero, how-it-works, FAQs and final links. The four staking facts are replaced by a two-value public metrics reader, refreshed every minute: sySGLD market cap and yield paid since inception in USD. Missing, stale or failed data shows a dash and Not available yet, never zero.
+
+The existing market-cap API field is reused without activating the legacy ERC-4626 adapter. Added sysgldYieldPaidUsd as an explicitly unconfigured/null field; no rewards, cumulative paid amount or USD history is fabricated. After deployment, receipt valuation must be reviewed against the actual staking ABI (the existing provisional adapter assumes ERC-4626). Lifetime paid USD requires verified holder claim history, complete inception coverage and historical USD valuations at payment; treasury funding is not a holder payout. These sources are not connected yet. The public UI is wired for API updates but cannot show verified live values until this deployment integration is complete.

@@ -200,6 +200,9 @@ export async function readPublicMetrics(
             ),
           }
         : unavailable(),
+    // Lifetime paid yield needs verified claim history and historical USD valuation.
+    // Funding a reward reserve is not a payment to a holder. No source is connected yet.
+    sysgldYieldPaidUsd: { state: "unconfigured", value: null },
     sysgldMarketCap: sysgldAddress
       ? unavailable()
       : { state: "unconfigured", value: null },
