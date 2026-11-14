@@ -1,0 +1,126 @@
+.receiptVisual {
+  padding: 32px;
+  border: 1px solid #d5dceb;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #edf0f6, #e0e6f2);
+}
+.receiptHeading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.receiptHeading > span {
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: #5c7065;
+}
+.receiptHeading strong {
+  display: block;
+  margin-top: 5px;
+  color: #173c34;
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+.receiptVisual .receiptStatement {
+  margin-block: 30px;
+  font:
+    400 clamp(26px, 2.7vw, 35px)/1.2 Georgia,
+    serif;
+  letter-spacing: -0.8px;
+}
+.receiptFlow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.receiptFlow li {
+  display: flex;
+  gap: 20px;
+  padding-block: 17px;
+  border-top: 1px solid #142d6325;
+}
+.receiptFlow li > span {
+  color: #64728b;
+  font-size: 10px;
+  padding-top: 3px;
+}
+.receiptFlow strong {
+  font-size: 13px;
+  font-weight: 500;
+}
+.receiptFlow p {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #5c7065;
+  line-height: 1.7;
+}
+.yieldDetails {
+  border-top: 1px solid #d5ddce;
+}
+.yieldDetails article {
+  padding-block: 23px;
+  border-bottom: 1px solid #d5ddce;
+}
+.yieldDetails article > span {
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: #6c7e6e;
+}
+.yieldDetails h3 {
+  font:
+    400 25px/1.2 Georgia,
+    serif;
+  margin-top: 12px;
+  letter-spacing: -0.4px;
+}
+.yieldDetails p,
+.feeGrid p,
+.feeExample {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #6c7e6e;
+  margin-top: 14px;
+}
+.feesSection {
+  padding-block: 15px 70px;
+}
+.feeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.feeGrid article {
+  padding: 27px;
+  border: 1px solid #d5ddce;
+  border-radius: 14px;
+}
+.feeGrid h3 {
+  font-size: 12px;
+}
+.feeGrid strong {
+  display: block;
+  font:
+    400 36px/1.3 Georgia,
+    serif;
+  margin-top: 20px;
+  letter-spacing: -1px;
+}
+.feeExample {
+  padding: 22px 0;
+  max-width: 800px;
+}
+@media (max-width: 760px) {
+  .feeGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .feesSection {
+    padding-block: 0 40px;
+  }
+}
+@media (max-width: 480px) {
+  .receiptVisual {
+    padding: 24px;
+  }
+}
