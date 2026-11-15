@@ -17,19 +17,15 @@ const documentation = "https://syncrate-1.gitbook.io/syncrate-docs/sysgld";
 const faqs = [
   [
     "How is sySGLD different from SGLD?",
-    "SGLD represents physical gold and can be held or transferred on Base. Holding SGLD alone does not earn gold-leasing yield. sySGLD is a non-transferable receipt for SGLD committed to a fixed staking term, with additional leasing, counterparty and smart contract risks.",
-  ],
-  [
-    "Is the yield fixed or guaranteed?",
-    "No. Rewards depend on actual lease interest received and the SGLD treasury funds into the contract for the relevant earning period. A 90-day term does not automatically offer a higher rate than a 30-day term. Both use the same time-weighted share of funded yield.",
+    "SGLD represents a direct exposure to physically vaulted gold. Holding SGLD alone is not yield-bearing. sySGLD is a non-transferable receipt token for SGLD staked to a fixed term, earning yield powered by gold financing.",
   ],
   [
     "Can I withdraw early or transfer sySGLD?",
-    "Principal can only be withdrawn after the selected 30- or 90-day term matures. Initially, sySGLD cannot be transferred, traded, supplied to a liquidity pool or used as transferable lending collateral. Redemption closes the whole position and burns its receipts.",
+    "Principal can only be withdrawn after the selected 30- or 90-day term matures. sySGLD cannot be transferred, traded, supplied to a liquidity pool or used as transferable lending collateral",
   ],
   [
     "What happens when my term ends?",
-    "Your position stops earning at maturity. You can redeem its principal, less the redemption fee, or explicitly restake the principal for another 30- or 90-day term without an additional fee. There is no automatic renewal or yield compounding. Time between maturity and restaking earns no yield.",
+    "Your position stops earning at maturity. You can redeem its principal, less the redemption fee, or explicitly restake the principal for another 30- or 90-day term without an additional fee. There is no automatic renewal or yield compounding.",
   ],
   [
     "What if lease interest arrives after I withdraw?",
@@ -38,10 +34,6 @@ const faqs = [
   [
     "Does my sySGLD balance grow as rewards arrive?",
     "No. Your receipt balance represents net staked principal. Rewards are accounted for separately and paid in SGLD when claimed; funding rewards does not mint additional sySGLD or automatically increase your principal.",
-  ],
-  [
-    "Is staking available now?",
-    "Not yet. The staking interface is available to explore, but contracts and frontend integration have not been activated for deposits. Review the published mechanics and launch status before participating.",
   ],
 ];
 
@@ -61,20 +53,18 @@ export default function SySgldPage() {
               <em>your gold.</em>
             </h1>
             <p>
-              Put your SGLD to work for 30 or 90 days. sySGLD represents your
-              staked gold, with yield sourced from direct gold leasing to vetted
-              bullion banks and established counterparties.
+              sySGLD is Syncrate's yield-bearing gold asset powered by gold financing, with the underlying yield sourced from direct gold leasing to vetted bullion banks and established counterparties.
             </p>
             <div className={styles.actions}>
               <a href={`${APP_ORIGIN}/stake`} className={styles.primary}>
-                Explore staking
+                Open App
               </a>
               <a href="#how-it-works" className={styles.secondary}>
                 How it works <ChevronDown size={15} />
               </a>
             </div>
             <span className={styles.network}>
-              <i aria-hidden="true" /> Built on Base · Staking is not open yet
+              <i aria-hidden="true" /> Built on Base
             </span>
           </div>
         </section>
@@ -89,30 +79,25 @@ export default function SySgldPage() {
         >
           <div className={styles.container}>
             <div className={styles.navyHeader}>
-              <span className={styles.eyebrow}>HOW IT WORKS</span>
               <h2 id="steps-title">
-                From your stake.
+                How it works.
                 <br />
-                <em>Back to your wallet.</em>
+                <em></em>
               </h2>
-              <p>
-                Principal and rewards are tracked separately, so you can
-                understand what you own and what you earn.
-              </p>
             </div>
             <ol className={styles.steps}>
               {[
                 [
                   "Choose your term",
-                  "Deposit at least 1 SGLD and select 30 or 90 days. After the 0.25% deposit fee, the remaining SGLD becomes your staked principal and you receive the same number of sySGLD receipts.",
+                  "Stake at least 1 SGLD for up to 30 or 90 days and are minted sySGLD, representing their staked position.",
                 ],
                 [
                   "Share in funded yield",
-                  "Your eligible principal is weighted by how long it was staked during each earning period. Treasury funds received lease interest in SGLD, which is allocated using those recorded weights.",
+                  "The underlying gold bars backing the staked SGLD is leased to institutional counterparties who pays a finacing spread that flows back to users as yield at the end of the staking epoch.",
                 ],
                 [
-                  "Redeem or restake",
-                  "At maturity, redeem your principal with a 0.50% principal redemption fee, or restake directly without an additional fee. Claim available SGLD rewards separately, including eligible interest funded later.",
+                  "Redeem",
+                  "At maturity, users redeemes their principal with a 0.50% principal redemption fee, or restake directly without an additional fee.",
                 ],
               ].map(([title, text], i) => (
                 <li key={title}>
@@ -132,9 +117,9 @@ export default function SySgldPage() {
           <div>
             <span className={styles.eyebrow}>FAQs</span>
             <h2 id="faq-title">
-              Before you
+              FAQs
               <br />
-              <em>put gold to work.</em>
+              <em>.</em>
             </h2>
           </div>
           <div className={styles.faqList}>
