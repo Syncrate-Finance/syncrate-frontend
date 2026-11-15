@@ -10,7 +10,7 @@ import yieldStyles from "@/features/products/sysgld.module.css";
 export const metadata: Metadata = {
   title: "sySGLD | Earn on your gold",
   description:
-    "Understand sySGLD: stake SGLD for 30 or 90 days, receive non-transferable receipts and share in funded gold-leasing yield. Explore fees, maturity and rewards.",
+    "Understand sySGLD: Syncrate's yield-bearing gold asset, powered by gold financing.",
   alternates: { canonical: WEBSITE_ORIGIN + "/sysgld" },
 };
 const documentation = "https://syncrate-1.gitbook.io/syncrate-docs/sysgld";
@@ -115,11 +115,11 @@ export default function SySgldPage() {
           aria-labelledby="faq-title"
         >
           <div>
-            <span className={styles.eyebrow}>FAQs</span>
+            <span className={styles.eyebrow}></span>
             <h2 id="faq-title">
               FAQs
               <br />
-              <em>.</em>
+              <em></em>
             </h2>
           </div>
           <div className={styles.faqList}>
@@ -139,19 +139,15 @@ export default function SySgldPage() {
           aria-labelledby="explore-title"
         >
           <div>
-            <h2 id="explore-title">Get to know your gold.</h2>
+            <h2 id="explore-title">Get in touch.</h2>
             <p>
-              Explore the staking interface or start with the asset behind
-              sySGLD.
+              For businesses looking to lease Syncrate's bullion inventory.
             </p>
           </div>
           <div className={styles.actions}>
-            <a href={`${APP_ORIGIN}/stake`} className={styles.primary}>
-              Explore staking
+            <a href=mailto:team.syncrate.org className={styles.primary}>
+              Talk to our team
             </a>
-            <Link href="/sgld" className={styles.secondary}>
-              Understand SGLD
-            </Link>
           </div>
         </section>
         <p className={`${styles.container} ${styles.riskNote}`}>
