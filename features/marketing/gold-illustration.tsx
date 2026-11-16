@@ -193,7 +193,6 @@ export function GoldIllustration() {
           <i />
           Physical gold. Onchain access.
         </span>
-        <span>BUILT ON BASE ↗</span>
       </div>
     </div>
   );
