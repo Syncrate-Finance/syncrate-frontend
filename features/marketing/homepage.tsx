@@ -57,10 +57,6 @@ export async function MarketingHomepage() {
                 For Businesses
               </a>
             </div>
-            <div className={styles.heroFootnote}>
-              <span className={styles.baseMark} aria-hidden="true" />
-              Powered by Base
-            </div>
           </div>
           <div className={styles.heroMedia}>
             <picture>
