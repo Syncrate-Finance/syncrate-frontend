@@ -222,6 +222,8 @@ export function useStakingTransactions() {
           args: [action.id, action.epochs],
           account,
         });
+        if (simulation.result === 0n)
+          throw Error("No rewards are available in these periods.");
         guard(account);
         hash = await writeContractAsync({
           ...simulation.request,
@@ -240,7 +242,7 @@ export function useStakingTransactions() {
           : submitted
             ? "Confirmation is pending. Check the transaction before submitting again."
             : e instanceof Error &&
-                /^(Wallet changed|Add ETH|Unlock staking|Deposits are|Refresh your|Approve this|Choose up)/.test(
+                /^(Wallet changed|Add ETH|Unlock staking|Deposits are|Refresh your|Approve this|Choose up|No rewards)/.test(
                   e.message,
                 )
               ? e.message

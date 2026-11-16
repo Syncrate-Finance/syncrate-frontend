@@ -76,7 +76,12 @@ function Rewards({
       </p>
       <div className={styles.positionActions}>
         <Button
-          disabled={busy || !rewards.data?.ids.length}
+          disabled={
+            busy ||
+            rewards.isError ||
+            rewards.isFetching ||
+            !rewards.data?.ids.length
+          }
           onClick={() =>
             request({ kind: "claim", id, term: 30, epochs: rewards.data!.ids })
           }
