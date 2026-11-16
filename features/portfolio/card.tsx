@@ -9,6 +9,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { useSgldBalance } from "./use-sgld-balance";
+import { useStakingSnapshot } from "@/features/staking/hooks";
 import { formatSgldBalance } from "./sgld-read";
 import styles from "@/features/dashboard/dashboard.module.css";
 function Help({
@@ -126,27 +127,49 @@ export function PortfolioCard({
   asset?: "sgld" | "sysgld";
 }) {
   if (asset === "sysgld") {
-    return (
-      <TooltipProvider delayDuration={250}>
-        <section className={styles.portfolioCard} aria-labelledby="portfolio-heading">
-          <div className={styles.portfolioHeading}>
-            <h2 id="portfolio-heading">Your portfolio</h2>
-          </div>
-          <div className={styles.portfolioValue} aria-live="polite" aria-atomic="true">
-            <span className={styles.balance}>–</span>
-            <span className={styles.balanceUnit}>sySGLD</span>
-            <Help label="portfolio balance">Your sySGLD holdings on Base.</Help>
-          </div>
-          <div className={styles.portfolioStatus} role="status">
-            sySGLD balance on Base
-          </div>
-        </section>
-      </TooltipProvider>
-    );
+    return <SysgldPortfolioCard />;
   }
   return (
     <TooltipProvider delayDuration={250}>
       <PortfolioBalanceCard showEarnings={showEarnings} />
+    </TooltipProvider>
+  );
+}
+
+function SysgldPortfolioCard() {
+  const { wallet, snapshot, query } = useStakingSnapshot();
+  return (
+    <TooltipProvider delayDuration={250}>
+      <section
+        className={styles.portfolioCard}
+        aria-labelledby="portfolio-heading"
+      >
+        <div className={styles.portfolioHeading}>
+          <h2 id="portfolio-heading">Your portfolio</h2>
+        </div>
+        <div
+          className={styles.portfolioValue}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span className={styles.balance}>
+            {snapshot && !query.isError
+              ? formatSgldBalance(snapshot.receipts, 18)
+              : "–"}
+          </span>
+          <span className={styles.balanceUnit}>sySGLD</span>
+          <Help label="portfolio balance">Your sySGLD holdings on Base.</Help>
+        </div>
+        <div className={styles.portfolioStatus} role="status">
+          {!wallet.isConnected
+            ? "Connect to view your balance"
+            : wallet.chainId !== 8453
+              ? "Switch to Base"
+              : query.isError
+                ? "Balance unavailable"
+                : "sySGLD balance on Base"}
+        </div>
+      </section>
     </TooltipProvider>
   );
 }

@@ -8,6 +8,12 @@ import {
 } from "viem";
 import { CHAIN_ID, CONTRACT_ADDRESSES } from "@/config/contracts";
 import type { PublicMetrics } from "./types";
+import {
+  STAKING_ADDRESS,
+  STAKING_CODE_HASH,
+} from "@/features/staking/deployment";
+import { stakingAbi } from "@/features/staking/abi";
+import { keccak256 } from "viem";
 
 const oracleAbi = parseAbi([
   "function description() view returns (string)",
@@ -214,25 +220,49 @@ export async function readPublicMetrics(
   ) {
     try {
       const sy = await token(sysgldAddress, "sySGLD");
-      const underlying = await client.readContract({
-        address: sysgldAddress,
-        abi: vaultAbi,
-        functionName: "asset",
-        blockNumber,
-      });
-      if (
-        underlying.toLowerCase() !== CONTRACT_ADDRESSES.SGLD_TOKEN.toLowerCase()
-      )
-        throw new Error("Unverified vault asset");
-      const assets = uint(
-        await client.readContract({
+      let assets: bigint;
+      if (sysgldAddress.toLowerCase() === STAKING_ADDRESS.toLowerCase()) {
+        const code = await client.getBytecode({
+          address: sysgldAddress,
+          blockNumber,
+        });
+        if (!code || keccak256(code) !== STAKING_CODE_HASH)
+          throw Error("Unverified staking receipt");
+        const underlying = await client.readContract({
+          address: sysgldAddress,
+          abi: stakingAbi,
+          functionName: "sgld",
+          blockNumber,
+        });
+        if (
+          underlying.toLowerCase() !==
+          CONTRACT_ADDRESSES.SGLD_TOKEN.toLowerCase()
+        )
+          throw Error("Unverified receipt asset");
+        // This deployed non-ERC4626 receipt represents net principal 1:1; rewards are separate.
+        assets = sy.supply;
+      } else {
+        const underlying = await client.readContract({
           address: sysgldAddress,
           abi: vaultAbi,
-          functionName: "convertToAssets",
-          args: [sy.supply],
+          functionName: "asset",
           blockNumber,
-        }),
-      );
+        });
+        if (
+          underlying.toLowerCase() !==
+          CONTRACT_ADDRESSES.SGLD_TOKEN.toLowerCase()
+        )
+          throw Error("Unverified vault asset");
+        assets = uint(
+          await client.readContract({
+            address: sysgldAddress,
+            abi: vaultAbi,
+            functionName: "convertToAssets",
+            args: [sy.supply],
+            blockNumber,
+          }),
+        );
+      }
       result.sysgldMarketCap = {
         state: "ready",
         value: usdMarketCap(

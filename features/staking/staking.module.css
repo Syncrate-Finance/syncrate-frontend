@@ -398,7 +398,13 @@
   height: 78px;
   margin-top: 10px;
   border-bottom: 1px solid #e7ebf0;
-  background: repeating-linear-gradient(to top, transparent 0, transparent 25px, #edf0f3 25px, #edf0f3 26px);
+  background: repeating-linear-gradient(
+    to top,
+    transparent 0,
+    transparent 25px,
+    #edf0f3 25px,
+    #edf0f3 26px
+  );
 }
 .chartPlot > span {
   padding: 4px 8px;
@@ -580,4 +586,46 @@
   .amountPanel input {
     font-size: 30px;
   }
+}
+.inviteInput {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #dfe5ed;
+  border-radius: 12px;
+  background: #f5f6f8;
+  color: #173c34;
+  padding: 12px;
+  margin: 12px 0 20px;
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+textarea.inviteInput {
+  min-height: 105px;
+  resize: vertical;
+}
+.positionRow {
+  border-top: 1px solid #edf0f3;
+  padding-top: 20px;
+  margin-top: 22px;
+}
+.positionRow p,
+.reviewDetails p {
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.positionActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-block: 15px;
+}
+.rewardBlock {
+  border-top: 1px solid #edf0f3;
+  margin-top: 20px;
+  padding-top: 16px;
+}
+.receiptValue {
+  overflow-wrap: anywhere;
 }

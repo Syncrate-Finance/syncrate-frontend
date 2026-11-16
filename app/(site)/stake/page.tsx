@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Stake SGLD | Syncrate",
   description:
-    "Explore 30-day and 90-day SGLD staking and sySGLD, Syncrate's yield-bearing gold asset. Staking is coming soon.",
+    "Explore 30-day and 90-day SGLD staking and sySGLD, Syncrate's yield-bearing gold asset. Website deposits require a wallet-specific invitation.",
   alternates: { canonical: APP_ORIGIN + "/stake" },
   robots: { index: false, follow: true },
 };

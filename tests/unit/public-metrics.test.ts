@@ -86,7 +86,9 @@ test("public valuation uses verified token supply and gold quote at one Base blo
   });
   assert.ok(calls.every((call) => call.blockNumber === 123n));
   assert.ok(
-    calls.every((call) => call.address !== CONTRACT_ADDRESSES.SYSGLD_TOKEN),
+    calls.every(
+      (call) => call.address !== "0x0000000000000000000000000000000000000000",
+    ),
   );
   assert.ok(
     calls.every((call) => call.address !== CONTRACT_ADDRESSES.SYNCRATE_ENGINE),
@@ -162,6 +164,10 @@ test("sySGLD address placeholders stay unconfigured and invalid values are rejec
   assert.equal(configuredSysgldAddress(), undefined);
   assert.equal(
     configuredSysgldAddress(CONTRACT_ADDRESSES.SYSGLD_TOKEN),
+    CONTRACT_ADDRESSES.SYSGLD_TOKEN,
+  );
+  assert.equal(
+    configuredSysgldAddress("0x0000000000000000000000000000000000000000"),
     undefined,
   );
   assert.throws(() => configuredSysgldAddress("placeholder"), /Invalid sySGLD/);

@@ -3,12 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import {
-  ArrowDown,
-  CalendarDays,
-  LockKeyhole,
-  RefreshCw,
-} from "lucide-react";
+import { ArrowDown, CalendarDays, LockKeyhole, RefreshCw } from "lucide-react";
 import { formatUnits } from "viem";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,16 +12,54 @@ import {
   WalletControl,
 } from "@/features/dashboard/shell";
 import { PortfolioCard } from "@/features/portfolio/card";
-import { useSgldBalance } from "@/features/portfolio/use-sgld-balance";
+import { useStakingSnapshot } from "./hooks";
+import { InviteGate, InviteIssuer, useStakingAccess } from "./access";
+import { useStakingTransactions } from "./use-transactions";
+import { StakingTransactionStatus } from "./transaction-status";
+import { StakingPositions } from "./positions";
+import { depositQuote, type StakeAction } from "./transactions";
+import { parseAmount } from "@/features/swap/model";
 import { formatSgldBalance } from "@/features/portfolio/sgld-read";
 import { STAKING_TERMS, stakingAmountError, type StakingTerm } from "./model";
 import { StakingMetrics } from "./metrics";
 import styles from "./staking.module.css";
 
-function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
+function StakeForm({
+  initialTerm,
+  request,
+  busy,
+}: {
+  initialTerm: StakingTerm;
+  request: (a: StakeAction) => void;
+  busy: boolean;
+}) {
   const [term, setTerm] = useState(initialTerm);
   const [amount, setAmount] = useState("");
-  const { phase, snapshot, isFetching, refetch } = useSgldBalance();
+  const { wallet, snapshot, query } = useStakingSnapshot();
+  const isFetching = query.isFetching;
+  const refetch = query.refetch;
+  const phase = !wallet.isConnected
+    ? "disconnected"
+    : wallet.chainId !== 8453
+      ? "wrong-network"
+      : query.isError
+        ? "error"
+        : snapshot
+          ? "ready"
+          : "loading";
+  let parsed: bigint | undefined;
+  try {
+    if (amount) parsed = parseAmount(amount, 18);
+  } catch {
+    /* Validation below explains invalid amounts. */
+  }
+  const quote = parsed ? depositQuote(parsed) : undefined;
+  const nextAction =
+    snapshot && parsed && snapshot.allowance < parsed
+      ? snapshot.allowance > 0n
+        ? "reset"
+        : "approve"
+      : "stake";
   const router = useRouter();
   const amountError = stakingAmountError(amount, snapshot?.balance);
   useEffect(() => setTerm(initialTerm), [initialTerm]);
@@ -50,7 +83,11 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
         Choose your term. Put your gold to work.
       </p>
       <form
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (parsed && snapshot && !snapshot.paused && !amountError)
+            request({ kind: nextAction, amount: parsed, term });
+        }}
         aria-describedby="staking-availability"
       >
         <fieldset className={styles.terms}>
@@ -105,7 +142,7 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
           <div className={styles.balanceRow}>
             <span id="stake-balance" role="status">
               {phase === "ready" && snapshot
-                ? `Available: ${formatSgldBalance(snapshot.balance, snapshot.decimals)} SGLD`
+                ? `Available: ${formatSgldBalance(snapshot.balance, 18)} SGLD`
                 : phase === "disconnected"
                   ? "Connect to view your balance"
                   : phase === "wrong-network"
@@ -118,8 +155,7 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
               type="button"
               disabled={!snapshot || isFetching}
               onClick={() =>
-                snapshot &&
-                setAmount(formatUnits(snapshot.balance, snapshot.decimals))
+                snapshot && setAmount(formatUnits(snapshot.balance, 18))
               }
             >
               Max
@@ -136,7 +172,9 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
             </button>
           )}
         </div>
-        <p className={styles.minimumStake} id="stake-minimum">Minimum stake amount: 1 SGLD</p>
+        <p className={styles.minimumStake} id="stake-minimum">
+          Minimum stake: 1 SGLD
+        </p>
         {amountError && (
           <p
             id="stake-amount-error"
@@ -166,11 +204,11 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
           </div>
           <div
             className={styles.receiptValue}
-            aria-label="Receipt amount not yet quoted"
+            aria-label="sySGLD receipt amount after deposit fee"
           >
-            –
+            {quote ? formatUnits(quote.principal, 18) : "—"}
           </div>
-          <p></p>
+          <p>Your yield-bearing gold asset.</p>
         </div>
         <dl className={styles.summary}>
           <div>
@@ -178,18 +216,46 @@ function StakeForm({ initialTerm }: { initialTerm: StakingTerm }) {
             <dd>{term} days</dd>
           </div>
           <div>
-            <dt>APY</dt>
-            <dd>–</dd>
+            <dt>Yield rate</dt>
+            <dd>Variable · Funded lease income</dd>
+          </div>
+          <div>
+            <dt>Deposit fee (0.25%)</dt>
+            <dd>{quote ? formatUnits(quote.fee, 18) + " SGLD" : "—"}</dd>
+          </div>
+          <div>
+            <dt>Redemption fee</dt>
+            <dd>0.50% of principal</dd>
           </div>
         </dl>
         <div className={styles.availability} id="staking-availability">
           <LockKeyhole size={15} aria-hidden="true" />
           <p>
-            Staking is coming soon.Deposits are not yet open.
+            {snapshot?.paused
+              ? "Deposits are currently paused."
+              : "Principal is locked until maturity. sySGLD cannot be transferred. Rewards depend on actual funded lease income."}
           </p>
         </div>
-        <Button type="submit" disabled className={styles.stakeButton}>
-          Staking coming soon
+        <Button
+          type="submit"
+          disabled={
+            busy ||
+            phase !== "ready" ||
+            !parsed ||
+            !!amountError ||
+            snapshot?.paused
+          }
+          className={styles.stakeButton}
+        >
+          {busy
+            ? "Waiting for confirmation…"
+            : snapshot?.paused
+              ? "Deposits paused"
+              : nextAction === "reset"
+                ? "Reset SGLD allowance"
+                : nextAction === "approve"
+                  ? "Approve SGLD"
+                  : "Review stake"}
         </Button>
         {(phase === "disconnected" || phase === "wrong-network") && (
           <div className={styles.connect}>
@@ -206,6 +272,9 @@ export function StakingDashboard({
 }: {
   initialTerm: StakingTerm;
 }) {
+  const access = useStakingAccess();
+  const tx = useStakingTransactions();
+  const locked = tx.busy || !!tx.pending;
   return (
     <DashboardShell active="stake">
       <main className={styles.main} id="main-content">
@@ -219,20 +288,25 @@ export function StakingDashboard({
             <PortfolioCard asset="sysgld" showEarnings={false} />
           </div>
           <div className={styles.formColumn}>
-            <StakeForm initialTerm={initialTerm} />
+            {access.data?.allowed ? (
+              <StakeForm
+                initialTerm={initialTerm}
+                request={tx.request}
+                busy={locked}
+              />
+            ) : (
+              <InviteGate />
+            )}
           </div>
           <div className={styles.information}>
             <StakingMetrics />
-            <section
-              className={styles.positions}
-              aria-labelledby="staking-positions-heading"
-            >
-              <h2 id="staking-positions-heading">Your staking positions</h2>
-              <div className={styles.emptyPositions}>
-                <LockKeyhole size={20} aria-hidden="true" />
-                <p>Your staking positions will appear here.</p>
-              </div>
-            </section>
+            <StakingTransactionStatus tx={tx} />
+            <StakingPositions
+              request={tx.request}
+              busy={locked}
+              allowed={!!access.data?.allowed}
+            />
+            {access.data?.admin && <InviteIssuer admin={access.data.admin} />}
           </div>
         </div>
       </main>
