@@ -145,7 +145,7 @@ export default function SySgldPage() {
             </p>
           </div>
           <div className={styles.actions}>
-            <a href=mailto:team.syncrate.org className={styles.primary}>
+            <a href="mailto:team@syncrate.org" className={styles.primary}>
               Talk to our team
             </a>
           </div>
