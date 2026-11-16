@@ -235,14 +235,16 @@ export function useStakingTransactions() {
       await finish(value);
     } catch (e) {
       setError(
-        submitted
-          ? "Confirmation is pending. Check the transaction before submitting again."
-          : e instanceof Error &&
-              /^(Wallet changed|Add ETH|Unlock staking|Deposits are|Refresh your|Approve this|Choose up)/.test(
-                e.message,
-              )
-            ? e.message
-            : "Request not completed. Check your wallet and retry.",
+        e instanceof Error && e.message.startsWith("Transaction reverted")
+          ? e.message
+          : submitted
+            ? "Confirmation is pending. Check the transaction before submitting again."
+            : e instanceof Error &&
+                /^(Wallet changed|Add ETH|Unlock staking|Deposits are|Refresh your|Approve this|Choose up)/.test(
+                  e.message,
+                )
+              ? e.message
+              : "Request not completed. Check your wallet and retry.",
       );
     } finally {
       active.current = false;
@@ -274,8 +276,12 @@ export function useStakingTransactions() {
       try {
         await finish(pending);
         setError("");
-      } catch {
-        setError("Confirmation still pending. Check BaseScan before retrying.");
+      } catch (e) {
+        setError(
+          e instanceof Error && e.message.startsWith("Transaction reverted")
+            ? e.message
+            : "Confirmation still pending. Check BaseScan before retrying.",
+        );
       } finally {
         setBusy(false);
       }

@@ -629,3 +629,6 @@ textarea.inviteInput {
 .receiptValue {
   overflow-wrap: anywhere;
 }
+.positions p {
+  overflow-wrap: anywhere;
+}
