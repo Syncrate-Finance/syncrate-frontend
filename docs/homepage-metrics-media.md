@@ -4,9 +4,11 @@ Owner decisions, October 29, 2026: update the homepage only, keep the latest wor
 
 ## The Numbers
 
+November 18, 2026 update: the displayed SGLD market cap on the homepage and `/sgld` is the owner's reported $1,000,000 institutional tokenization before onchain launch plus the current onchain supply multiplied by the Chainlink gold price. Both pages use the shared public metrics endpoint, with no visible breakdown. The fixed addition is applied only to SGLD market cap, using integer USD cents. Supply, bullion inventory, sySGLD valuation and transaction pricing are unchanged. Invalid or unavailable chain/oracle data still makes the metric unavailable.
+
 The owner explicitly chose a fixed reported bullion inventory of **193 troy oz**, overriding the initial proposal to read reserveCap. The interface labels it as a fixed reported figure. It is not a real-time physical reserve attestation.
 
-The owner chose **direct Base contract reads for now**, after reviewing the API-key requirement for BaseScan. SGLD market cap is token totalSupply multiplied by Chainlink XAU/USD. Token identity, deployed bytecode, chain ID, block freshness, price description/decimals, positive price and round timestamp are checked. All reads use one block. Integer arithmetic preserves token precision and rounds only the final USD display to cents.
+The owner chose **direct Base contract reads for now**, after reviewing the API-key requirement for BaseScan. The onchain component of SGLD market cap is token totalSupply multiplied by Chainlink XAU/USD. Token identity, deployed bytecode, chain ID, block freshness, price description/decimals, positive price and round timestamp are checked. All reads use one block. Integer arithmetic preserves token precision and rounds only the final USD display to cents.
 
 - SGLD: `0x10C5E0643bCc6C915Cad0335f70A96c1532766eb`, symbol SGLD, 18 decimals.
 - XAU/USD: `0x5213eBB69743b85644dbB6E25cdF994aFBb8cF31`, verified live on Base as XAU / USD, 8 decimals. The prior unused shared constant pointed to an invalid/undeployed address; the constant now matches the existing mint page's verified feed.
