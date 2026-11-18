@@ -24,12 +24,6 @@ export function SgldMetrics() {
       metric: { state: "ready", value: "193" },
       unit: "troy oz",
     },
-    { label: "Circulating Supply", metric: data?.sgldSupply, unit: "SGLD" },
-    {
-      label: "Unallocated Bullion",
-      metric: data?.unallocatedBullion,
-      unit: "troy oz",
-    },
   ];
   return (
     <section className={styles.metricSection} aria-label="SGLD metrics">
