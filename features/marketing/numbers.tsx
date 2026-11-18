@@ -30,10 +30,6 @@ export function HomepageNumbers() {
       label: "SGLD Marketcap",
       metric: data?.sgldMarketCap,
     },
-    {
-      label: "sySGLD Marketcap",
-      metric: data?.sysgldMarketCap ?? { state: "unconfigured", value: null },
-    },
   ];
   return (
     <section className={styles.numbers} aria-labelledby="numbers-heading">
