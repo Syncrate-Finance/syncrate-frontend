@@ -29,15 +29,15 @@ export function BaseIcon() {
     </span>
   );
 }
-export function Brand({ footer = false }: { footer?: boolean }) {
+export function Brand(_props: { footer?: boolean } = {}) {
   return (
-    <Link
-      href={footer ? WEBSITE_ORIGIN : APP_ORIGIN}
+    <a
+      href={WEBSITE_ORIGIN + "/"}
       className={styles.brand}
-      aria-label={footer ? "Syncrate home" : "Syncrate overview"}
+      aria-label="Syncrate home"
     >
       <span className={styles.brandMark} aria-hidden="true" />
-    </Link>
+    </a>
   );
 }
 export function WalletControl({ compact = false }: { compact?: boolean }) {

@@ -37,7 +37,7 @@ export async function MarketingHomepage() {
           className={`${styles.container} ${styles.hero}`}
           aria-labelledby="home-heading"
         >
-          <div className={styles.heroCopy}>
+          <div className={styles.heroCopy} style={{ gridColumn: "1 / -1" }}>
             <h1 id="home-heading">
               <span>Tokenized gold,</span>
               <span>
@@ -53,29 +53,14 @@ export async function MarketingHomepage() {
               <Link href={APP_ORIGIN} className={styles.primaryButton}>
                 Explore SGLD
               </Link>
-              <a href="/sysgld" className={styles.businessButton}>
-                For Businesses
+              <a href="mailto:team@syncrate.org" className={styles.businessButton}>
+                Talk to our team
               </a>
             </div>
             <div className={styles.heroFootnote}>
               <span className={styles.baseMark} aria-hidden="true" />
               Powered by Base
             </div>
-          </div>
-          <div className={styles.heroMedia}>
-            <picture>
-              <source
-                media="(prefers-reduced-motion: reduce)"
-                srcSet="/images/gold-bullion-still.webp"
-              />
-              <img
-                src="/images/gold-bullion-loop.gif"
-                width={480}
-                height={480}
-                alt="Gold bullion bars"
-                fetchPriority="high"
-              />
-            </picture>
           </div>
         </section>
         <section
@@ -161,6 +146,35 @@ export async function MarketingHomepage() {
               </div>
             </article>
           </div>
+        </section>
+        <section
+          id="audits"
+          className={`${styles.container} ${styles.insights}`}
+          aria-labelledby="audits-heading"
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>SMART CONTRACT SECURITY</p>
+              <h2 id="audits-heading">Audits</h2>
+            </div>
+          </div>
+          <div className={styles.documentList}>
+            <a
+              href="https://github.com/Syncrate-Finance/audits/blob/main/AstraSec-AuditReport-Syncrate-SGLD.pdf.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className={styles.documentNumber}>01</span>
+              <div>
+                <span className={styles.documentType}>SMART CONTRACT AUDIT</span>
+                <h3>AstraSec · SGLD</h3>
+                <p>Read the audit report on GitHub</p>
+              </div>
+              <ArrowUpRight size={22} strokeWidth={1.3} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+        <section className={styles.container} aria-label="Syncrate numbers">
           <HomepageNumbers />
         </section>
         <section
@@ -351,33 +365,6 @@ export async function MarketingHomepage() {
                   </span>
                 </Link>
               ))}
-          </div>
-        </section>
-        <section
-          id="audits"
-          className={`${styles.container} ${styles.insights}`}
-          aria-labelledby="audits-heading"
-        >
-          <div className={styles.sectionHeading}>
-            <div>
-              <p className={styles.eyebrow}>SMART CONTRACT SECURITY</p>
-              <h2 id="audits-heading">Audits</h2>
-            </div>
-          </div>
-          <div className={styles.documentList}>
-            <a
-              href="https://github.com/Syncrate-Finance/audits/blob/main/AstraSec-AuditReport-Syncrate-SGLD.pdf.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className={styles.documentNumber}>01</span>
-              <div>
-                <span className={styles.documentType}>SMART CONTRACT AUDIT</span>
-                <h3>AstraSec · SGLD</h3>
-                <p>Read the audit report on GitHub</p>
-              </div>
-              <ArrowUpRight size={22} strokeWidth={1.3} aria-hidden="true" />
-            </a>
           </div>
         </section>
         <PartnerMarquee />
