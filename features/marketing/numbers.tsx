@@ -23,7 +23,7 @@ export function HomepageNumbers() {
     isError || (data && Date.now() - Date.parse(data.observedAt) > 120_000);
   const metrics = [
     {
-      label: "Total Bullion Inventory",
+      label: "Bullion Inventory",
       metric: { state: "ready", value: "193" },
     },
     {
