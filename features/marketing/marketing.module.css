@@ -1897,3 +1897,17 @@
     transition: none !important;
   }
 }
+
+/* Compact the text-only homepage hero after removing its media column. */
+.homepage .hero {
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding-top: clamp(24px, 3vw, 40px);
+  padding-bottom: 16px;
+}
+.homepage .heroCopy {
+  padding-block: 0;
+}
+.homepage .hero + .products {
+  padding-top: 32px;
+}
