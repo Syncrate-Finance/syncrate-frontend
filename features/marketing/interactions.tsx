@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import { ArrowUpRight, Menu, X, Plus } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { GeistSans } from "geist/font/sans";
@@ -15,9 +14,9 @@ const navigation = [
 ];
 export function MarketingBrand() {
   return (
-    <Link href="/" className={styles.brand} aria-label="Syncrate home">
+    <a href={WEBSITE_ORIGIN + "/"} className={styles.brand} aria-label="Syncrate home">
       <span aria-hidden="true" />
-    </Link>
+    </a>
   );
 }
 export function MarketingHeader() {

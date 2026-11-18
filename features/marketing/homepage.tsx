@@ -53,8 +53,8 @@ export async function MarketingHomepage() {
               <Link href={APP_ORIGIN} className={styles.primaryButton}>
                 Explore SGLD
               </Link>
-              <a href="/sysgld" className={styles.businessButton}>
-                For Businesses
+              <a href="mailto:team@syncrate.org" className={styles.businessButton}>
+                Talk to our team
               </a>
             </div>
             <div className={styles.heroFootnote}>
