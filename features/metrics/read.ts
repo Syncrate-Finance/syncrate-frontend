@@ -32,6 +32,8 @@ type ReadClient = Pick<
 };
 const unavailable = () => ({ state: "unavailable" as const, value: null });
 const MAX_UINT256 = (1n << 256n) - 1n;
+// Owner-reported institutional tokenization before the onchain launch, in USD cents.
+const SGLD_MARKET_CAP_BASE_CENTS = 100_000_000n;
 // Indicative display only. Permit a closed-market weekend, never silently use an older quote.
 export const MAX_GOLD_PRICE_AGE = 72n * 60n * 60n;
 
@@ -72,6 +74,7 @@ export function usdMarketCap(
   tokenDecimals: number,
   price: bigint,
   priceDecimals: number,
+  baseCents = 0n,
 ) {
   if (
     !Number.isInteger(tokenDecimals) ||
@@ -80,12 +83,13 @@ export function usdMarketCap(
     tokenDecimals > 36 ||
     priceDecimals < 2 ||
     priceDecimals > 18 ||
-    price <= 0n
+    price <= 0n ||
+    baseCents < 0n
   )
     throw new Error("Invalid valuation inputs");
   const divisor = 10n ** BigInt(tokenDecimals + priceDecimals - 2);
   const cents = (uint(amount) * price + divisor / 2n) / divisor;
-  return "$" + formatFixed(cents, 2, 2);
+  return "$" + formatFixed(cents + baseCents, 2, 2);
 }
 
 export async function readPublicMetrics(
@@ -203,6 +207,7 @@ export async function readPublicMetrics(
               sgld.value.decimals,
               oracle.value.answer,
               oracle.value.decimals,
+              SGLD_MARKET_CAP_BASE_CENTS,
             ),
           }
         : unavailable(),

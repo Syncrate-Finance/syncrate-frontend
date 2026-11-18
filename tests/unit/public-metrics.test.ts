@@ -75,7 +75,7 @@ function fixture(
 test("public valuation uses verified token supply and gold quote at one Base block", async () => {
   const { client, calls } = fixture();
   const data = await readPublicMetrics(client);
-  assert.equal(data.sgldMarketCap.value, "$8,000.00");
+  assert.equal(data.sgldMarketCap.value, "$1,008,000.00");
   assert.equal(data.inventory.value, "193");
   assert.equal(data.sgldSupply.value, "2.0000");
   assert.equal(data.unallocatedBullion.value, "191.0000");
@@ -101,12 +101,22 @@ test("USD rounding retains integer precision beyond Number.MAX_SAFE_INTEGER", ()
     "$360,299,090,187,807,812,165.72",
   );
   assert.equal(formatFixed(1999999999999999999n, 18, 2), "2.00");
+  assert.equal(
+    usdMarketCap(
+      90071992547409931234567890123456789n,
+      18,
+      400012345678n,
+      8,
+      100_000_000n,
+    ),
+    "$360,299,090,187,808,812,165.72",
+  );
 });
 
-test("zero supply is a real zero market cap rather than a missing value", async () => {
+test("zero onchain supply retains the institutional market cap baseline", async () => {
   const data = await readPublicMetrics(fixture({ supply: 0n }).client);
   assert.equal(data.sgldMarketCap.state, "ready");
-  assert.equal(data.sgldMarketCap.value, "$0.00");
+  assert.equal(data.sgldMarketCap.value, "$1,000,000.00");
   assert.equal(data.sgldSupply.value, "0.0000");
   assert.equal(data.unallocatedBullion.value, "193.0000");
 });
