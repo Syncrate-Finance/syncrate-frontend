@@ -353,6 +353,33 @@ export async function MarketingHomepage() {
               ))}
           </div>
         </section>
+        <section
+          id="audits"
+          className={`${styles.container} ${styles.insights}`}
+          aria-labelledby="audits-heading"
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>SMART CONTRACT SECURITY</p>
+              <h2 id="audits-heading">Audits</h2>
+            </div>
+          </div>
+          <div className={styles.documentList}>
+            <a
+              href="https://github.com/Syncrate-Finance/audits/blob/main/AstraSec-AuditReport-Syncrate-SGLD.pdf.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className={styles.documentNumber}>01</span>
+              <div>
+                <span className={styles.documentType}>SMART CONTRACT AUDIT</span>
+                <h3>AstraSec · SGLD</h3>
+                <p>Read the audit report on GitHub</p>
+              </div>
+              <ArrowUpRight size={22} strokeWidth={1.3} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
         <PartnerMarquee />
       </main>
 
