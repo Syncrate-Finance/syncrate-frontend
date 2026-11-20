@@ -7,6 +7,43 @@
   color: #223b3e;
   scroll-margin-top: 75px;
 }
+.intent {
+  border-bottom: 1px solid #e5e9ed;
+  padding: 14px 0;
+}
+.intent > div:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+}
+.intent code {
+  font-size: 10px;
+}
+.intentActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.queue .intentActions button,
+.queue form button {
+  background: #edf0f6;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #142d63;
+}
+.queue form {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+.queue form input {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid #e5e9ed;
+  border-radius: 8px;
+  padding: 10px;
+}
 .heading {
   display: flex;
   align-items: center;

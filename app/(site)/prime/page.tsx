@@ -162,7 +162,7 @@ function PrimeVaultAppUI() {
     redeemSharesWei = undefined
   }
 
-  const { data: previewNetAssets } = useReadContract({
+  const { data: previewNetAssets } = useReadContract({ chainId: 8453, 
     address: PRIME_VAULT_ADDRESS,
     abi: vaultAbi,
     functionName: 'previewRedeemNet',
@@ -200,7 +200,7 @@ function PrimeVaultAppUI() {
   } = useWriteContract()
 
   const { isLoading: isProcessConfirming, isSuccess: isProcessSuccess } =
-    useWaitForTransactionReceipt({ hash: processTxHash })
+    useWaitForTransactionReceipt({ chainId: 8453,  hash: processTxHash })
 
   useEffect(() => {
     if (isProcessPending || isProcessConfirming) setTxStatus('processing')
@@ -224,7 +224,7 @@ function PrimeVaultAppUI() {
   const handleProcess = () => {
     if (!address || !inputAmount || !sySgldData) return
     const sharesToRedeem = parseUnits(inputAmount, sySgldData.decimals)
-    writeProcess({
+    writeProcess({ chainId: 8453, 
       address: PRIME_VAULT_ADDRESS,
       abi: vaultAbi,
       functionName: 'redeem',

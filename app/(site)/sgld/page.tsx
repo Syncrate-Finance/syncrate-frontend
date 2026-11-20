@@ -72,9 +72,6 @@ export default function SgldPage() {
                 How it works
               </a>
             </div>
-            <span className={styles.network}>
-              <i aria-hidden="true" /> powered by Base
-            </span>
           </div>
           <div className={styles.goldVisual}>
             <Image

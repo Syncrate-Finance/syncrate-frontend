@@ -63,9 +63,6 @@ export default function SySgldPage() {
                 How it works <ChevronDown size={15} />
               </a>
             </div>
-            <span className={styles.network}>
-              <i aria-hidden="true" /> Built on Base
-            </span>
           </div>
         </section>
         <div className={styles.container}>

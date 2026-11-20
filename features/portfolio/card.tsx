@@ -35,7 +35,8 @@ function Help({
   );
 }
 function PortfolioBalanceCard({ showEarnings }: { showEarnings: boolean }) {
-  const { phase, snapshot, isFetching, refetch } = useSgldBalance();
+  const { phase, snapshot, isFetching, refetch, networkName } =
+    useSgldBalance(true);
   const balance = snapshot
     ? formatSgldBalance(snapshot.balance, snapshot.decimals)
     : "–";
@@ -65,8 +66,8 @@ function PortfolioBalanceCard({ showEarnings }: { showEarnings: boolean }) {
         {snapshot && <span className={styles.balanceUnit}>SGLD</span>}
         <Help label="portfolio balance">
           {snapshot
-            ? `Your SGLD balance on Base, read at block ${snapshot.blockNumber.toLocaleString("en-US")}. Dollar valuation is not available yet.`
-            : "Connect a wallet on Base to read its SGLD balance. Portfolio reads require no signature. Minting and redemption require separate wallet confirmations."}
+            ? `Your SGLD balance on ${networkName}, read at block ${snapshot.blockNumber.toLocaleString("en-US")}. Dollar valuation is not available yet.`
+            : "Connect a wallet on Base or Robinhood to read its SGLD balance. Portfolio reads require no signature. Minting and redemption require separate wallet confirmations."}
         </Help>
       </div>
       <div className={styles.portfolioStatus} role="status">
@@ -74,7 +75,7 @@ function PortfolioBalanceCard({ showEarnings }: { showEarnings: boolean }) {
           "Connect your wallet to view your holdings."}
         {phase === "connecting" && "Connecting to your wallet…"}
         {phase === "wrong-network" &&
-          "Switch your wallet to Base to view SGLD."}
+          "Switch your wallet to Base or Robinhood to view SGLD."}
         {phase === "loading" && "Reading your SGLD balance…"}
         {phase === "error" && (
           <>
@@ -92,7 +93,9 @@ function PortfolioBalanceCard({ showEarnings }: { showEarnings: boolean }) {
         {phase === "ready" && (
           <>
             <span className={styles.liveDot} />
-            {isFetching ? "Updating balance…" : "SGLD balance on Base"}
+            {isFetching
+              ? "Updating balance…"
+              : `SGLD balance on ${networkName}`}
           </>
         )}
       </div>

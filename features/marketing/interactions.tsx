@@ -138,7 +138,7 @@ export function MarketingHeader() {
               </div>
               <div className={styles.menuBottom}>
                 <span>
-                  Gold, built for onchain finance.<small>BUILT ON BASE</small>
+                  Gold, built for onchain finance.
                 </span>
                 <a href={APP_ORIGIN} onClick={close} className={styles.menuApp}>
                   Launch app
