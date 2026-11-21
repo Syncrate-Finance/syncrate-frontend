@@ -40,9 +40,15 @@ export function Brand(_props: { footer?: boolean } = {}) {
     </a>
   );
 }
-export function WalletControl({ compact = false }: { compact?: boolean }) {
+export function WalletControl({
+  compact = false,
+  requiredChainId = 8453,
+}: {
+  compact?: boolean;
+  requiredChainId?: number | null;
+}) {
   return (
-    <ConnectButton.Custom>
+    <ConnectButton.Custom requiredChainId={requiredChainId}>
       {({
         account,
         chain,
@@ -51,7 +57,17 @@ export function WalletControl({ compact = false }: { compact?: boolean }) {
         openConnectModal,
         mounted,
       }) => {
-        const wrongNetwork = account && chain?.id !== 8453;
+        const wrongNetwork =
+          account &&
+          (requiredChainId === null
+            ? chain?.unsupported
+            : chain?.id !== requiredChainId);
+        const networkName =
+          requiredChainId === 4663
+            ? "Robinhood"
+            : requiredChainId === 8453
+              ? "Base"
+              : "a supported network";
         return (
           <Button
             type="button"
@@ -69,15 +85,17 @@ export function WalletControl({ compact = false }: { compact?: boolean }) {
             aria-label={
               account
                 ? wrongNetwork
-                  ? "Switch wallet to Base"
+                  ? `Switch wallet to ${networkName}`
                   : "Open connected wallet"
                 : "Connect wallet"
             }
           >
             {account ? (
               <>
-                <BaseIcon />
-                {wrongNetwork ? "Switch to Base" : account.displayName}
+                {chain?.id === 8453 && <BaseIcon />}
+                {wrongNetwork
+                  ? `Switch to ${networkName}`
+                  : account.displayName}
                 <ChevronDown size={13} />
               </>
             ) : (
@@ -127,7 +145,7 @@ export function DashboardHeader({
           ))}
         </nav>
         <div className={styles.headerActions}>
-          <WalletControl />
+          <WalletControl requiredChainId={null} />
           <Dialog>
             <DialogTrigger asChild>
               <Button

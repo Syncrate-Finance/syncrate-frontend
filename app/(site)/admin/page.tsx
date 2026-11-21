@@ -24,14 +24,14 @@ export default function AdminDashboard() {
   const [newCap, setNewCap] = useState('')
 
   // --- READ: Current Cap from Contract ---
-  const { data: currentCapData, refetch: refetchCap } = useReadContract({
+  const { data: currentCapData, refetch: refetchCap } = useReadContract({ chainId: 8453, 
     address: SYNCRATE_ENGINE_ADDRESS as `0x${string}`,
     abi: engineAbi,
     functionName: 'reserveCap',
   })
 
   // --- READ: Check if Connected Wallet has RESERVE_MANAGER_ROLE ---
-  const { data: isReserveManager, isLoading: isRoleChecking } = useReadContract({
+  const { data: isReserveManager, isLoading: isRoleChecking } = useReadContract({ chainId: 8453, 
     address: SYNCRATE_ENGINE_ADDRESS as `0x${string}`,
     abi: engineAbi,
     functionName: 'hasRole',
@@ -45,7 +45,7 @@ export default function AdminDashboard() {
 
   // --- WRITE: Update Cap ---
   const { data: txHash, writeContract, isPending } = useWriteContract()
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ chainId: 8453, 
     hash: txHash,
   })
 
@@ -61,7 +61,7 @@ export default function AdminDashboard() {
 
     const parsedCap = parseUnits(newCap, 18)
 
-    writeContract({
+    writeContract({ chainId: 8453, 
       address: SYNCRATE_ENGINE_ADDRESS as `0x${string}`,
       abi: engineAbi,
       functionName: 'updateReserveCap',

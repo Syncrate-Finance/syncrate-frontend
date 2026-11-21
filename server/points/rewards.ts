@@ -1,4 +1,9 @@
-import { WEEKLY_POOL, type PointsAward } from "@/features/points/model";
+import {
+  WEEKLY_POOL,
+  BASE_BACKING_ESCROW,
+  RH_POINTS_TOKEN,
+  type PointsAward,
+} from "@/features/points/model";
 import { sgldInLiquidity } from "./tick-math";
 
 export const ZERO = "0x0000000000000000000000000000000000000000";
@@ -11,6 +16,8 @@ export const EXCLUDED = new Set([
   "0x03a520b32c04bf3beef7beb72e919cf822ed34f1",
   // Legacy custody is not a supported pass-through rewards venue.
   "0xba93aa354a3b47a936d713b8fb90126d4d35546b",
+  BASE_BACKING_ESCROW,
+  RH_POINTS_TOKEN,
 ]);
 export type Position = {
   owner: string;

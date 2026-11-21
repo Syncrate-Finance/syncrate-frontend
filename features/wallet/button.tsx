@@ -9,6 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { walletModal } from "./modal";
+import { isMintChain } from "@/config/networks";
 
 const subscribe = () => () => {};
 const clientSnapshot = () => true;
@@ -33,8 +34,10 @@ type Controls = {
 /** Keep the existing styled triggers; every trigger opens the same Reown modal. */
 function WalletControls({
   children,
+  requiredChainId = 8453,
 }: {
   children: (controls: Controls) => ReactNode;
+  requiredChainId?: number | null;
 }) {
   const wallet = useAccount();
   const mounted = useSyncExternalStore(
@@ -66,7 +69,10 @@ function WalletControls({
             ? {
                 id: wallet.chainId,
                 name: wallet.chain?.name ?? `Chain ${wallet.chainId}`,
-                unsupported: wallet.chainId !== 8453,
+                unsupported:
+                  requiredChainId === null
+                    ? !isMintChain(wallet.chainId)
+                    : wallet.chainId !== requiredChainId,
                 hasIcon: false,
               }
             : undefined,

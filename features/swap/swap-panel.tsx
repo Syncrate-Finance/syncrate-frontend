@@ -48,6 +48,29 @@ import {
   type PendingSwap,
 } from "./pending";
 import styles from "./swap.module.css";
+import dynamic from "next/dynamic";
+const RobinhoodPanel = dynamic(
+  () => import("./robinhood-panel").then((module) => module.RobinhoodPanel),
+  { loading: () => null },
+);
+const BridgePanel = dynamic(
+  () => import("./bridge-panel").then((module) => module.BridgePanel),
+  { loading: () => null },
+);
+
+export function SwapPanel() {
+  const wallet = useAccount();
+  const robinhoodSelected = wallet.isConnected && wallet.chainId === 4663;
+  return (
+    <div id="buy-sgld">
+      <div hidden={robinhoodSelected}>
+        <BaseSwapPanel />
+      </div>
+      {wallet.isConnected && <RobinhoodPanel active={robinhoodSelected} />}
+      {wallet.isConnected && <BridgePanel />}
+    </div>
+  );
+}
 
 type Review = {
   account: Address;
@@ -158,7 +181,7 @@ function QueuedPayouts({ account }: { account: Address }) {
   );
 }
 
-export function SwapPanel() {
+function BaseSwapPanel() {
   const wallet = useAccount(),
     config = useConfig(),
     client = usePublicClient({ chainId: 8453 });
@@ -439,11 +462,7 @@ export function SwapPanel() {
     }
   }
   return (
-    <section
-      className={styles.panel}
-      id="buy-sgld"
-      aria-labelledby="buy-sgld-heading"
-    >
+    <section className={styles.panel} aria-labelledby="buy-sgld-heading">
       <div className={styles.heading}>
         <h2 id="buy-sgld-heading">Buy SGLD</h2>
         <span>Base</span>

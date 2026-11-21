@@ -189,10 +189,10 @@ function MintingAppUI() {
   const sgldBalance = sgldBalanceRaw ? parseFloat(formatUnits(sgldBalanceRaw, 18)) : 0
 
   const { writeContract: writeApprove, data: approveTxHash, error: approveError, reset: resetApprove, isPending: isApprovePending } = useWriteContract()
-  const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({ hash: approveTxHash })
+  const { isLoading: isApprovalMining, isSuccess: isApprovalConfirmed } = useWaitForTransactionReceipt({ chainId: 8453,  hash: approveTxHash })
 
   const { writeContract: writeAction, data: actionTxHash, error: actionError, reset: resetAction, isPending: isActionPending } = useWriteContract()
-  const { isLoading: isActionMining, isSuccess: isActionConfirmed } = useWaitForTransactionReceipt({ hash: actionTxHash })
+  const { isLoading: isActionMining, isSuccess: isActionConfirmed } = useWaitForTransactionReceipt({ chainId: 8453,  hash: actionTxHash })
 
   useEffect(() => {
     if (isApprovalMining) setTxStatus('approving')
@@ -234,7 +234,7 @@ function MintingAppUI() {
       targetTokenAddress = activeConfig.sgld
     }
     if (targetTokenAddress === ZERO_ADDRESS) { alert('Contract addresses not yet configured for this network.'); return }
-    writeApprove({ address: targetTokenAddress, abi: ERC20_ABI, functionName: 'approve', args: [activeConfig.mintController, maxUint256] } as any)
+    writeApprove({ chainId: 8453,  address: targetTokenAddress, abi: ERC20_ABI, functionName: 'approve', args: [activeConfig.mintController, maxUint256] } as any)
   }
 
   const handleProcess = () => {
@@ -245,7 +245,7 @@ function MintingAppUI() {
 
     if (isMint) {
       const parsedAmount = parseUnits(inputAmount, activeStablecoinConfig.decimals)
-      writeAction({
+      writeAction({ chainId: 8453, 
         address: activeConfig.mintController,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'mint',
@@ -253,7 +253,7 @@ function MintingAppUI() {
       } as any)
     } else {
       const parsedAmount = parseUnits(inputAmount, 18)
-      writeAction({
+      writeAction({ chainId: 8453, 
         address: activeConfig.mintController,
         abi: MINT_CONTROLLER_ABI,
         functionName: 'redeem',

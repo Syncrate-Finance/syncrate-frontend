@@ -2,19 +2,26 @@ import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { createConfig, http } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { base } from "@reown/appkit/networks";
+import { robinhood } from "@/config/networks";
 import { readWalletProjectId } from "./settings";
 
 // This is a public application identifier, never a wallet key or RPC credential.
 export const walletProjectId = readWalletProjectId(
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
 );
-export const walletNetworks = [base] as [typeof base];
+export const walletNetworks = [base, robinhood] as [
+  typeof base,
+  typeof robinhood,
+];
 export const walletAdapter = walletProjectId
   ? new WagmiAdapter({
       projectId: walletProjectId,
       networks: walletNetworks,
       ssr: true,
-      transports: { [base.id]: http(base.rpcUrls.default.http[0]) },
+      transports: {
+        [base.id]: http(base.rpcUrls.default.http[0]),
+        [robinhood.id]: http(robinhood.rpcUrls.default.http[0]),
+      },
     })
   : undefined;
 
@@ -23,8 +30,11 @@ export const walletAdapter = walletProjectId
 export const walletConfig =
   walletAdapter?.wagmiConfig ??
   createConfig({
-    chains: [base],
+    chains: [base, robinhood],
     connectors: [injected()],
-    transports: { [base.id]: http(base.rpcUrls.default.http[0]) },
+    transports: {
+      [base.id]: http(base.rpcUrls.default.http[0]),
+      [robinhood.id]: http(robinhood.rpcUrls.default.http[0]),
+    },
     ssr: true,
   });

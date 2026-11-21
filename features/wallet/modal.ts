@@ -14,7 +14,7 @@ export const walletModal =
         projectId: walletProjectId,
         metadata: {
           name: "Syncrate",
-          description: "SGLD on Base",
+          description: "Syncrate Gold",
           url:
             typeof window === "undefined" ? APP_ORIGIN : window.location.origin,
           icons: [APP_ORIGIN + "/logo2.png"],
@@ -28,6 +28,7 @@ export const walletModal =
         defaultAccountTypes: { eip155: "eoa" },
         enableWallets: true,
         enableWalletConnect: true,
+        enableNetworkSwitch: true,
         enableMobileFullScreen: true,
         features: {
           email: false,
