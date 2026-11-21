@@ -179,7 +179,11 @@ export function pointsClient(rpcUrl = process.env.POINTS_RPC_URL) {
     transport: pointsTransport(
       rpcUrl,
       process.env.POINTS_BLOCK_RPC_URL || "https://mainnet.base.org",
-      { intervalMs: interval, history },
+      {
+        intervalMs: interval,
+        history,
+        stateUrl: process.env.POINTS_STATE_RPC_URL || undefined,
+      },
     ),
   });
 }

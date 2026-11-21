@@ -53,6 +53,7 @@ jobs:
         env:
           POINTS_RPC_URL: ${{ secrets.POINTS_RPC_URL }}
           POINTS_BLOCK_RPC_URL: https://mainnet.base.org
+          POINTS_STATE_RPC_URL: https://mainnet.base.org
           POINTS_ROBINHOOD_RPC_URL: ${{ secrets.POINTS_ROBINHOOD_RPC_URL }}
         run: |
           if [ -z "$POINTS_RPC_URL" ]; then

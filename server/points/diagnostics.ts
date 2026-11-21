@@ -28,7 +28,8 @@ export function diagnosePointsFailure(error: unknown) {
       method = item.pointsRpcMethod;
     if (
       item.pointsRpcSource === "headers" ||
-      item.pointsRpcSource === "archive"
+      item.pointsRpcSource === "archive" ||
+      item.pointsRpcSource === "state"
     )
       source = item.pointsRpcSource;
     if (

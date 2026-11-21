@@ -7,6 +7,24 @@
   color: #223b3e;
   scroll-margin-top: 75px;
 }
+.panel + .panel {
+  margin-top: 18px;
+}
+.bridgeSummary {
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 17px;
+}
+.bridgeSummary span {
+  display: block;
+  font-weight: 400;
+  font-size: 11px;
+  color: #65777b;
+  margin-top: 6px;
+}
+.panel code {
+  overflow-wrap: anywhere;
+}
 .intent {
   border-bottom: 1px solid #e5e9ed;
   padding: 14px 0;

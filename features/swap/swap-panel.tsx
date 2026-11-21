@@ -53,6 +53,10 @@ const RobinhoodPanel = dynamic(
   () => import("./robinhood-panel").then((module) => module.RobinhoodPanel),
   { loading: () => null },
 );
+const BridgePanel = dynamic(
+  () => import("./bridge-panel").then((module) => module.BridgePanel),
+  { loading: () => null },
+);
 
 export function SwapPanel() {
   const wallet = useAccount();
@@ -63,6 +67,7 @@ export function SwapPanel() {
         <BaseSwapPanel />
       </div>
       {wallet.isConnected && <RobinhoodPanel active={robinhoodSelected} />}
+      {wallet.isConnected && <BridgePanel />}
     </div>
   );
 }

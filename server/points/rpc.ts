@@ -17,9 +17,14 @@ export function pointsTransport(
     intervalMs?: number;
     history?: PointsHistory;
     chain?: Chain;
+    stateUrl?: string;
   } = {},
 ) {
-  for (const url of [archiveUrl, headerUrl])
+  for (const url of [
+    archiveUrl,
+    headerUrl,
+    ...(options.stateUrl ? [options.stateUrl] : []),
+  ])
     if (new URL(url).protocol !== "https:")
       throw Error("Points RPC must use HTTPS");
   const interval = options.intervalMs ?? 1000;
@@ -46,10 +51,31 @@ export function pointsTransport(
     })({ chain });
   const archive = endpoint(archiveUrl),
     headers = endpoint(headerUrl);
+  const state = options.stateUrl ? endpoint(options.stateUrl) : undefined;
+  let stateNetwork: Promise<void> | undefined;
   let headerNetwork: Promise<void> | undefined;
   const request = async (args: Parameters<typeof archive.request>[0]) => {
-    const source = metadataMethods.has(args.method) ? "headers" : "archive";
+    const source = metadataMethods.has(args.method)
+      ? "headers"
+      : state && args.method === "eth_call"
+        ? "state"
+        : "archive";
     try {
+      if (source === "state") {
+        stateNetwork ??= state!
+          .request({ method: "eth_chainId" })
+          .then((id) => {
+            if (
+              typeof id !== "string" ||
+              !/^0x[0-9a-f]+$/i.test(id) ||
+              BigInt(id) !== BigInt(chain.id)
+            )
+              throw Error("Wrong points state network");
+          });
+        await stateNetwork;
+        // Forward the exact historical block parameter, never substitute latest.
+        return await state!.request(args);
+      }
       if (metadataMethods.has(args.method)) {
         headerNetwork ??= headers
           .request({ method: "eth_chainId" })
@@ -69,8 +95,8 @@ export function pointsTransport(
       // Fixed method/source labels only; provider URLs and response text stay private.
       const label =
         cause instanceof Error &&
-        cause.message === "Wrong points header network"
-          ? "Wrong points header network"
+        /^Wrong points (header|state) network$/.test(cause.message)
+          ? cause.message
           : "Points RPC request failed";
       throw Object.assign(new Error(label, { cause }), {
         pointsRpcMethod: args.method,
