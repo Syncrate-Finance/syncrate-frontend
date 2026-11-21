@@ -7,6 +7,7 @@ import {
 } from "viem";
 import { CONTRACT_ADDRESSES } from "@/config/contracts";
 import { IMPLEMENTATION_SLOT } from "./model";
+import { readPaymentHistory } from "./payment-history";
 import {
   RH,
   rhAbi,
@@ -267,18 +268,13 @@ export async function readRobinhoodIntent(
   // A paid claim has no separate state enum. Read the indexed event, never infer "paid" from zero claimable.
   const paid =
     request.kind === 1 && state === 2
-      ? await remote
-          .getLogs({
-            address: RH.engine,
-            event: rhAbi.find(
-              (x) => x.type === "event" && x.name === "RedemptionPaid",
-            )!,
-            args: { id },
-            fromBlock: 119199050n,
-            toBlock: remoteBlock,
-          })
-          .catch(() => null)
-      : [];
+      ? await readPaymentHistory(
+          remote,
+          id,
+          request.usdgPrice.observedAt,
+          remoteBlock,
+        )
+      : false;
   return {
     id,
     request,
@@ -290,7 +286,7 @@ export async function readRobinhoodIntent(
     cancellationQueued: cancellationPayload !== "0x",
     claimable,
     expired: timestamp > request.deadline,
-    paid: paid === null ? null : paid.length > 0,
+    paid,
     minNet,
     feeBps,
     hasResponse: response !== ZERO_HASH,

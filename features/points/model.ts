@@ -8,6 +8,9 @@ export const POSITION_MANAGER = "0x03a520b32c04bf3beef7beb72e919cf822ed34f1";
 export const UNISWAP_FACTORY = "0x33128a8fc17869897dce68ed026d694621f6fdfd";
 export const USDC = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
 export const PROGRAM_VERSION = "sgld-holdings-v2";
+export const MULTICHAIN_VERSION = "sgld-holdings-v3";
+export const RH_POINTS_TOKEN = "0x8d1c9e4b54e143f56bbd33f861bc0fb9fb301ae9";
+export const BASE_BACKING_ESCROW = "0xddd8d43c21aa8a5ec60cf92c30b72a3cf4d8c08b";
 export const uintString = z
   .string()
   .regex(/^(0|[1-9][0-9]*)$/)
@@ -24,7 +27,7 @@ export const awardSchema = z
     lpPoints: uintString,
   })
   .strict();
-export const epochSchema = z
+const legacyEpochSchema = z
   .object({
     version: z.literal(PROGRAM_VERSION),
     start: dateTime,
@@ -38,9 +41,56 @@ export const epochSchema = z
     awards: z.array(awardSchema).max(100000),
   })
   .strict();
+export const chainEvidenceSchema = z
+  .object({
+    chainId: z.union([z.literal(8453), z.literal(4663)]),
+    token: walletAddress,
+    startBlock: uintString,
+    endBlock: uintString,
+    endBlockHash: hash,
+    deployed: z.boolean(),
+    deployment: z
+      .object({
+        block: uintString,
+        blockHash: hash,
+        transactionHash: hash,
+        timestamp: uintString,
+      })
+      .strict()
+      .optional(),
+    reconciliation: z
+      .object({ block: uintString, blockHash: hash, supply: uintString })
+      .strict()
+      .optional(),
+    weights: z
+      .array(
+        z
+          .object({
+            address: walletAddress,
+            walletSeconds: uintString,
+            lpSeconds: uintString,
+          })
+          .strict(),
+      )
+      .max(100000),
+  })
+  .strict();
+export const multichainEpochSchema = legacyEpochSchema
+  .extend({
+    version: z.literal(MULTICHAIN_VERSION),
+    chains: z.tuple([chainEvidenceSchema, chainEvidenceSchema]),
+  })
+  .strict();
+export const epochSchema = z.discriminatedUnion("version", [
+  legacyEpochSchema,
+  multichainEpochSchema,
+]);
 export const ledgerSchema = z
   .object({
-    version: z.literal(PROGRAM_VERSION),
+    version: z.union([
+      z.literal(PROGRAM_VERSION),
+      z.literal(MULTICHAIN_VERSION),
+    ]),
     chainId: z.literal(8453),
     pool: z.literal(POINTS_POOL),
     start: z.literal(PROGRAM_START),
@@ -77,7 +127,7 @@ export type PointsAccount = {
   }>;
 };
 export type PointsResponse = {
-  version: typeof PROGRAM_VERSION;
+  version: typeof PROGRAM_VERSION | typeof MULTICHAIN_VERSION;
   lastSettledAt: string;
   nextCutoff: string;
   weeklyPool: string;

@@ -48,6 +48,8 @@ jobs:
         env:
           BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
           POINTS_RPC_URL: ${{ secrets.POINTS_RPC_URL }}
+          POINTS_BLOCK_RPC_URL: https://mainnet.base.org
+          POINTS_ROBINHOOD_RPC_URL: ${{ secrets.POINTS_ROBINHOOD_RPC_URL }}
           DRY_RUN: ${{ inputs.dry_run }}
           VERIFY_CURRENT: ${{ inputs.verify_current }}
         run: |

@@ -132,7 +132,10 @@ export async function scanLogs<T>(
     // Provider range/result limits vary. Binary splitting remains complete.
     if (b - a < 1000n) {
       const error = Error("Blockchain log range unavailable", { cause: last });
-      Object.assign(error, { pointsFromBlock: a.toString(), pointsToBlock: b.toString() });
+      Object.assign(error, {
+        pointsFromBlock: a.toString(),
+        pointsToBlock: b.toString(),
+      });
       throw error;
     }
     const mid = (a + b) / 2n;
@@ -181,7 +184,13 @@ export function pointsClient(rpcUrl = process.env.POINTS_RPC_URL) {
   });
 }
 type Client = ReturnType<typeof pointsClient>;
-async function firstBlockAt(client: Client, timestamp: number, head: bigint) {
+export async function firstBlockAt(
+  client: {
+    getBlock: (args: { blockNumber: bigint }) => Promise<{ timestamp: bigint }>;
+  },
+  timestamp: number,
+  head: bigint,
+) {
   let lo = 0n,
     hi = head + 1n;
   while (lo < hi) {
@@ -277,12 +286,12 @@ async function verifyContracts(client: Client, blockNumber: bigint) {
   });
   if (canonical.toLowerCase() !== pool) throw Error("Noncanonical points pool");
 }
-export async function calculateHoldingsWeek(
+export async function calculateBaseHoldingsWeek(
   client: Client,
   start: number,
   end: number,
   progress: (message: string) => void = () => {},
-): Promise<PointsEpoch> {
+) {
   progress("Resolving finalized Base history.");
   const final = await client.getBlock({ blockTag: "finalized" });
   if (!final.number || !final.hash || Number(final.timestamp) < end)
@@ -302,7 +311,9 @@ export async function calculateHoldingsWeek(
     deploymentBlock(client, pool, endBlock),
   ]);
   progress("Verified Base contracts and finalized weekly block boundaries.");
-  progress(`Historical boundaries: token ${tokenCreated}, pool ${poolCreated}, reward blocks ${startBlock} through ${endBlock}.`);
+  progress(
+    `Historical boundaries: token ${tokenCreated}, pool ${poolCreated}, reward blocks ${startBlock} through ${endBlock}.`,
+  );
   let ranges = 0;
   const report = () => {
     ranges++;
@@ -452,7 +463,10 @@ export async function calculateHoldingsWeek(
         : timestamps.get(log.blockNumber.toString());
     if (time === undefined) throw Error("Missing event timestamp");
     if (log.blockNumber >= startBlock)
-      assertLogBlockHash(log.blockHash, blockHashes.get(log.blockNumber.toString()));
+      assertLogBlockHash(
+        log.blockHash,
+        blockHashes.get(log.blockNumber.toString()),
+      );
     return { block: log.blockNumber, index: log.logIndex, time };
   };
   const events: RewardEvent[] = [];
@@ -627,7 +641,7 @@ export async function calculateHoldingsWeek(
   progress(
     `Reconciled ${replay.balances.size} token accounts and all supported positions.`,
   );
-  return {
+  const epoch: PointsEpoch = {
     version: PROGRAM_VERSION,
     start: new Date(start * 1000).toISOString(),
     end: new Date(end * 1000).toISOString(),
@@ -637,4 +651,12 @@ export async function calculateHoldingsWeek(
     endBlockHash: endpoint.hash!,
     ...allocatePoints(replay.weights),
   };
+  return { epoch, weights: replay.weights };
+}
+
+/** Legacy Base-only calculator retained for reproducible historical tooling. */
+export async function calculateHoldingsWeek(
+  ...args: Parameters<typeof calculateBaseHoldingsWeek>
+): Promise<PointsEpoch> {
+  return (await calculateBaseHoldingsWeek(...args)).epoch;
 }

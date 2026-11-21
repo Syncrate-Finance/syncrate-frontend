@@ -59,14 +59,29 @@ test("block metadata uses verified Base while logs and contract state stay on th
     const host = new URL(String(input)).hostname;
     const body = JSON.parse(String(init?.body));
     calls.push({ host, method: body.method });
-    const result = body.method === "eth_chainId" ? "0x2105" : body.method === "eth_getLogs" ? [] : "0x";
+    const result =
+      body.method === "eth_chainId"
+        ? "0x2105"
+        : body.method === "eth_getLogs"
+          ? []
+          : "0x";
     return Response.json({ jsonrpc: "2.0", id: body.id, result });
   };
-  const transport = pointsTransport("https://archive.invalid/key", "https://headers.invalid", { fetchFn: fakeFetch, intervalMs: 0 })({});
-  await transport.request({ method: "eth_getBlockByNumber", params: ["0x100", false] });
+  const transport = pointsTransport(
+    "https://archive.invalid/key",
+    "https://headers.invalid",
+    { fetchFn: fakeFetch, intervalMs: 0 },
+  )({});
+  await transport.request({
+    method: "eth_getBlockByNumber",
+    params: ["0x100", false],
+  });
   await transport.request({ method: "eth_getLogs", params: [{}] });
   await transport.request({ method: "eth_getCode", params: [A, "0x100"] });
-  await transport.request({ method: "eth_call", params: [{ to: A, data: "0x18160ddd" }, "0x100"] });
+  await transport.request({
+    method: "eth_call",
+    params: [{ to: A, data: "0x18160ddd" }, "0x100"],
+  });
   assert.deepEqual(calls, [
     { host: "headers.invalid", method: "eth_chainId" },
     { host: "headers.invalid", method: "eth_getBlockByNumber" },
@@ -76,14 +91,35 @@ test("block metadata uses verified Base while logs and contract state stay on th
   ]);
 });
 test("mismatched header networks and log hashes fail before rewards can be published", async () => {
-  const transport = pointsTransport("https://archive.invalid", "https://headers.invalid", {
-    intervalMs: 0,
-    fetchFn: async (_input, init) => Response.json({ jsonrpc: "2.0", id: JSON.parse(String(init?.body)).id, result: "0x1" }),
-  })({});
-  await assert.rejects(transport.request({ method: "eth_getBlockByNumber", params: ["0x100", false] }), /Wrong points header network/);
+  const transport = pointsTransport(
+    "https://archive.invalid",
+    "https://headers.invalid",
+    {
+      intervalMs: 0,
+      fetchFn: async (_input, init) =>
+        Response.json({
+          jsonrpc: "2.0",
+          id: JSON.parse(String(init?.body)).id,
+          result: "0x1",
+        }),
+    },
+  )({});
+  await assert.rejects(
+    transport.request({
+      method: "eth_getBlockByNumber",
+      params: ["0x100", false],
+    }),
+    /Wrong points header network/,
+  );
   assert.doesNotThrow(() => assertLogBlockHash("0xabc", "0xabc"));
-  assert.throws(() => assertLogBlockHash("0xabc", "0xdef"), /block hash mismatch/);
-  assert.throws(() => assertLogBlockHash(null, undefined), /block hash mismatch/);
+  assert.throws(
+    () => assertLogBlockHash("0xabc", "0xdef"),
+    /block hash mismatch/,
+  );
+  assert.throws(
+    () => assertLogBlockHash(null, undefined),
+    /block hash mismatch/,
+  );
 });
 test("RPC diagnostics identify failures without exposing provider URLs or keys", () => {
   const secret = "never-log-this-provider-key";
@@ -92,14 +128,46 @@ test("RPC diagnostics identify failures without exposing provider URLs or keys",
     cause: { status: 429, code: -32005, message: `quota exceeded: ${secret}` },
   });
   assert.deepEqual(output, {
-    category: "provider-rate-limit", httpStatus: 429, rpcCode: -32005,
+    category: "provider-rate-limit",
+    httpStatus: 429,
+    rpcCode: -32005,
   });
   assert.ok(!JSON.stringify(output).includes(secret));
-  assert.equal(diagnosePointsFailure(new Error("missing trie node; archive state unavailable")).category,
-    "historical-state-unavailable");
-  assert.equal(diagnosePointsFailure(new Error("Points RPC network must be Base Mainnet (8453)")).category,
-    "wrong-network");
-  assert.deepEqual(diagnosePointsFailure(new Error(`Unexpected ${secret}`)), { category: "unclassified" });
+  assert.equal(
+    diagnosePointsFailure(
+      new Error("missing trie node; archive state unavailable"),
+    ).category,
+    "historical-state-unavailable",
+  );
+  assert.equal(
+    diagnosePointsFailure(
+      new Error("Points RPC network must be Base Mainnet (8453)"),
+    ).category,
+    "wrong-network",
+  );
+  assert.deepEqual(diagnosePointsFailure(new Error(`Unexpected ${secret}`)), {
+    category: "unclassified",
+  });
+  assert.deepEqual(
+    diagnosePointsFailure({
+      pointsRpcMethod: "eth_call",
+      pointsRpcSource: "archive",
+      cause: { code: -32603 },
+    }),
+    {
+      category: "unclassified",
+      method: "eth_call",
+      source: "archive",
+      rpcCode: -32603,
+    },
+  );
+  assert.deepEqual(
+    diagnosePointsFailure({
+      pointsRpcMethod: "eth_secretTOKEN",
+      pointsRpcSource: secret,
+    }),
+    { category: "unclassified" },
+  );
 });
 const transfer = (
   time: number,
@@ -140,17 +208,17 @@ test("same-block flash holdings and end-cutoff transfers cannot earn time", () =
 test("retired Prime custody earns no new holding or deposit points", () => {
   const prime = "0xba93aa354a3b47a936d713b8fb90126d4d35546b";
   const state = integrateHoldings(
-    [
-      transfer(0, 1n, ZERO, A, 100n),
-      transfer(10, 2n, A, prime, 100n),
-    ],
+    [transfer(0, 1n, ZERO, A, 100n), transfer(10, 2n, A, prime, 100n)],
     0,
     70,
   );
   assert.equal(state.weights.get(A)?.wallet, 1000n);
   assert.equal(state.weights.has(prime), false);
   const result = allocatePoints(state.weights, 700n);
-  assert.deepEqual(result.awards.map((row) => row.address), [A]);
+  assert.deepEqual(
+    result.awards.map((row) => row.address),
+    [A],
+  );
   assert.equal(result.awards[0].walletPoints, "700");
   assert.equal(result.awards[0].lpPoints, "0");
 });
@@ -349,7 +417,12 @@ test("the published first settlement matches its immutable epoch and conserves t
   assert.deepEqual(ledger.epochs[0], firstEpoch);
   assert.equal(firstEpoch.distributed, "10000000");
   assert.equal(firstEpoch.unallocated, "0");
-  assert.equal(firstEpoch.awards.filter(r => BigInt(r.walletPoints) + BigInt(r.lpPoints) > 0n).length, 12);
+  assert.equal(
+    firstEpoch.awards.filter(
+      (r) => BigInt(r.walletPoints) + BigInt(r.lpPoints) > 0n,
+    ).length,
+    12,
+  );
 });
 test("weekly settlements are consecutive, immutable, conserved and idempotent", () => {
   const epoch: PointsEpoch = {

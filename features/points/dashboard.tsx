@@ -16,11 +16,7 @@ import {
   Layers3,
 } from "lucide-react";
 import { APP_ORIGIN } from "@/config/site";
-import {
-  DashboardShell,
-  WalletControl,
-  BaseIcon,
-} from "@/features/dashboard/shell";
+import { DashboardShell, WalletControl } from "@/features/dashboard/shell";
 import { SAFFRON_POOL_URL } from "@/features/opportunities/catalog";
 import { useSgldBalance } from "@/features/portfolio/use-sgld-balance";
 import { formatSgldBalance } from "@/features/portfolio/sgld-read";
@@ -63,10 +59,7 @@ export function AccountSummary({ account }: { account: PointsAccount }) {
           <Wallet size={13} />
           {shortWallet(account.address)}
         </span>
-        <span className={styles.baseLabel}>
-          <BaseIcon />
-          Base
-        </span>
+        <span className={styles.baseLabel}>Base + Robinhood</span>
       </div>
       <span className={styles.smallLabel}>YOUR TOTAL POINTS</span>
       <strong className={styles.total}>{formatPoints(account.total)}</strong>
@@ -325,7 +318,7 @@ export function PointsDashboard() {
   const address = wallet.address?.toLowerCase();
   const connected = wallet.isConnected && Boolean(address);
   const query = useQuery({
-    queryKey: ["points-account", 8453, address],
+    queryKey: ["points-account", address],
     queryFn: ({ signal }) => requestPoints(address, undefined, signal),
     enabled: connected,
     staleTime: 60000,
@@ -346,7 +339,7 @@ export function PointsDashboard() {
       ? (candidate ?? undefined)
       : undefined;
   const program = publicQuery.isError ? undefined : publicQuery.data;
-  const holdings = useSgldBalance();
+  const holdings = useSgldBalance(true);
   return (
     <DashboardShell active="points">
       <main id="main-content" className={styles.container}>
@@ -359,8 +352,8 @@ export function PointsDashboard() {
             </h1>
             <p>
               Share 10 million SYNC points each Sunday, based on how much SGLD
-              you hold throughout the week. Eligible Uniswap liquidity receives
-              3× weighting.
+              on Base and Robinhood you hold throughout the week. Eligible
+              Uniswap liquidity receives 3× weighting.
             </p>
           </section>
           <section className={styles.summary} aria-labelledby="summary-title">
@@ -378,7 +371,7 @@ export function PointsDashboard() {
                   <br />
                   Connect to see your points and weekly distributions.
                 </p>
-                <WalletControl compact />
+                <WalletControl compact requiredChainId={null} />
                 <span>No signature required to view points.</span>
               </div>
             ) : query.isError ? (
@@ -403,7 +396,7 @@ export function PointsDashboard() {
         </div>
         <section className={styles.statusGrid} aria-label="Program status">
           <div>
-            <span>Your wallet-held SGLD</span>
+            <span>Your SGLD on {holdings.networkName}</span>
             <strong>
               {holdings.snapshot
                 ? formatSgldBalance(
@@ -415,9 +408,9 @@ export function PointsDashboard() {
             </strong>
             <p>
               {holdings.phase === "disconnected"
-                ? "Connect to read your Base holdings"
+                ? "Connect to read your holdings"
                 : holdings.phase === "wrong-network"
-                  ? "Switch to Base for live holdings"
+                  ? "Switch to Base or Robinhood for live holdings"
                   : holdings.phase === "error"
                     ? "Balance temporarily unavailable"
                     : "Wallet holdings receive 1× weighting"}
@@ -467,21 +460,27 @@ export function PointsDashboard() {
               <div>
                 <h3>SGLD in your wallet</h3>
                 <p>
-                  Hold SGLD on Base. Your time-weighted balance counts
-                  automatically.
+                  Hold SGLD on Base or Robinhood. Your time-weighted balance
+                  counts automatically.
                 </p>
               </div>
               <strong className={styles.multiplier}>1×</strong>
             </div>
             <div className={styles.venue}>
               <span className={styles.coin}>
-                <Image src="/uniswap-pool-icon.png" width={35} height={35} alt="" />
+                <Image
+                  src="/uniswap-pool-icon.png"
+                  width={35}
+                  height={35}
+                  alt=""
+                />
               </span>
               <div>
                 <h3>Uniswap liquidity</h3>
                 <span className={styles.via}>SGLD / USDC · Base</span>
                 <p>
-                  Supply both sides of SGLD/USDC liquidity on Uniswap for a 3x points boost.
+                  Supply both sides of SGLD/USDC liquidity on Uniswap for a 3x
+                  points boost.
                 </p>
                 <a
                   className={styles.poolLink}

@@ -3,11 +3,13 @@ import {
   WEEK_SECONDS,
   WEEKLY_POOL,
   nextSunday,
+  MULTICHAIN_VERSION,
   type PointsLedger,
   type PointsEpoch,
   type PointsResponse,
 } from "@/features/points/model";
 import { allocatePoints, EXCLUDED } from "./rewards";
+import { mergeChainWeights } from "./chain-weights";
 
 export function validateLedger(input: unknown): PointsLedger {
   const ledger = ledgerSchema.parse(input);
@@ -59,6 +61,41 @@ export function validateLedger(input: unknown): PointsLedger {
     );
     if (JSON.stringify(actual) !== JSON.stringify(expected.awards))
       throw Error("Weekly weights do not match points");
+    if (epoch.version === MULTICHAIN_VERSION) {
+      const base = epoch.chains[0];
+      const rh = epoch.chains[1];
+      if (
+        !rh.deployed &&
+        rh.deployment &&
+        Number(rh.deployment.timestamp) * 1000 < end.getTime()
+      )
+        throw Error("Invalid predeployment cutoff");
+      if (
+        rh.deployed &&
+        rh.deployment &&
+        Number(rh.deployment.timestamp) * 1000 >= end.getTime()
+      )
+        throw Error("Invalid deployed cutoff");
+      if (
+        base.startBlock !== epoch.startBlock ||
+        base.endBlock !== epoch.endBlock ||
+        base.endBlockHash !== epoch.endBlockHash
+      )
+        throw Error("Base chain evidence mismatch");
+      const combined = allocatePoints(mergeChainWeights(epoch.chains));
+      if (JSON.stringify(combined.awards) !== JSON.stringify(actual))
+        throw Error("Multichain weights do not match points");
+      if (ledger.version !== MULTICHAIN_VERSION)
+        throw Error("Multichain epoch requires versioned ledger");
+    } else if (
+      ledger.epochs
+        .slice(0, ledger.epochs.indexOf(epoch))
+        .some((e) => e.version === MULTICHAIN_VERSION)
+    ) {
+      throw Error(
+        "Cannot revert to Base-only settlement after multichain activation",
+      );
+    }
     expectedStart = epoch.end;
   }
   return ledger;
@@ -68,7 +105,14 @@ export function appendEpoch(input: unknown, epoch: PointsEpoch): PointsLedger {
   const ledger = validateLedger(input);
   if (ledger.epochs.some((e) => e.end === epoch.end))
     throw Error("Week already settled");
-  return validateLedger({ ...ledger, epochs: [...ledger.epochs, epoch] });
+  return validateLedger({
+    ...ledger,
+    version:
+      epoch.version === MULTICHAIN_VERSION
+        ? MULTICHAIN_VERSION
+        : ledger.version,
+    epochs: [...ledger.epochs, epoch],
+  });
 }
 export function projectPoints(
   ledger: PointsLedger,

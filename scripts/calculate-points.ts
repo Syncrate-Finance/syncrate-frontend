@@ -13,7 +13,8 @@ import {
   type PointsEpoch,
 } from "../features/points/model";
 import { validateLedger, appendEpoch } from "../server/points/ledger";
-import { calculateHoldingsWeek, pointsClient } from "../server/points/chain";
+import { pointsClient } from "../server/points/chain";
+import { calculateMultichainWeek } from "../server/points/multichain";
 import { diagnosePointsFailure } from "../server/points/diagnostics";
 
 const root = path.resolve("data/points");
@@ -57,11 +58,14 @@ async function main() {
       if ((await client.getChainId()) !== 8453)
         throw Error("Points RPC network must be Base Mainnet (8453)");
       console.log("Connected to Base Mainnet for historical verification.");
+      console.log(
+        "Reading finalized Base header; no rewards will be published.",
+      );
       const finalized = await client.getBlock({ blockTag: "finalized" });
       // Verify one actual reward interval, including an overdue completed week.
       const end = Math.min(Number(finalized.timestamp), start + WEEK_SECONDS);
       if (end <= start) throw Error("No finalized current interval");
-      const report = await calculateHoldingsWeek(
+      const report = await calculateMultichainWeek(
         client,
         start,
         end,
@@ -95,7 +99,7 @@ async function main() {
         epoch = JSON.parse(await readFile(file, "utf8"));
       } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-        epoch = await calculateHoldingsWeek(
+        epoch = await calculateMultichainWeek(
           pointsClient(),
           start,
           end,
