@@ -1,7 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 // The diagnostic is standalone Node JS so it can run before app/provider setup.
-// @ts-expect-error JS diagnostic has no declaration file.
 import {
   providerSummary,
   safeRpcFailure,
