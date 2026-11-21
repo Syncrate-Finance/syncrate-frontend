@@ -1,0 +1,44 @@
+name: Verify points history
+# Deferred from the deposits release at the owner's request. This run is read-only.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose-points-provider:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.22.1
+      - name: Inspect Chainnodes archive without publishing rewards
+        env:
+          POINTS_RPC_URL: ${{ secrets.POINTS_RPC_URL }}
+        run: |
+          if [ -z "$POINTS_RPC_URL" ]; then
+            echo '::notice::POINTS_RPC_URL is not configured.'
+          else
+            node scripts/diagnose-points-provider.mjs
+          fi
+  verify-points-history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.22.1
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Reconcile holdings without publishing awards
+        env:
+          POINTS_RPC_URL: ${{ secrets.POINTS_RPC_URL }}
+          POINTS_BLOCK_RPC_URL: https://mainnet.base.org
+          POINTS_STATE_RPC_URL: https://mainnet.base.org
+          POINTS_ROBINHOOD_RPC_URL: ${{ secrets.POINTS_ROBINHOOD_RPC_URL }}
+        run: node scripts/calculate-week.cjs --verify-current
