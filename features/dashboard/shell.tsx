@@ -210,9 +210,6 @@ export function DashboardFooter() {
       </div>
       <div className={styles.footerBottom}>
         <span>© 2026 Syncrate</span>
-        <span>
-          <BaseIcon /> Built on Base
-        </span>
       </div>
     </footer>
   );
