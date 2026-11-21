@@ -1,5 +1,7 @@
 # Robinhood launch and points
 
+November21 update: the owner explicitly chose to defer points as a deposit-launch prerequisite. External archive verification and the Chainnodes diagnostic are available in the separate manual **Verify points history** workflow. Foundation CI still runs every unit test, native PostgreSQL integration checks and the optimized build. The Sunday calculation workflow, old awards and full reconciliation rules are preserved. Historical points remain unverified beyond the last successful cutoff; this change does not publish new rewards. Wallet-held RH eligibility remains the intended policy once historical verification resumes.
+
 The owner approved wallet holdings on Base and Robinhood. There is no per-user USDG mint ceiling: the canonical backed inventory cap remains authoritative. Current inventory is 193 SGLD and can increase only through the authorized backed-inventory process.
 
 ## Points accounting
